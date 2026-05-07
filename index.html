@@ -1,857 +1,113 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Java Interview Complete Guide — Senior Level</title>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Java Interview Complete Guide — Senior Level</title>
 
-    <link
-      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Syne:wght@400;600;700;800&display=swap"
-      rel="stylesheet"
-    />
-    <style>
-      :root {
-        --bg: #0a0e1a;
-        --surface: #111827;
-        --surface2: #1a2235;
-        --border: #1e2d45;
-        --accent: #00d4ff;
-        --accent2: #ff6b35;
-        --accent3: #a855f7;
-        --green: #22c55e;
-        --yellow: #fbbf24;
-        --text: #e2e8f0;
-        --muted: #64748b;
-        --code-bg: #0d1117;
-      }
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-      body {
-        background: var(--bg);
-        color: var(--text);
-        font-family: "Syne", sans-serif;
-        min-height: 100vh;
-        overflow-x: hidden;
-      }
-      a {
-        color: inherit;
-        text-decoration: none;
-      }
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/theme.css">
 
-      /* TOPNAV */
-      .topnav {
-        background: var(--surface);
-        border-bottom: 1px solid var(--border);
-        padding: 0 40px;
-        display: flex;
-        align-items: center;
-        gap: 0;
-        height: 52px;
-        position: sticky;
-        top: 0;
-        z-index: 200;
-        backdrop-filter: blur(10px);
-        overflow-x: auto;
-      }
-      .topnav::-webkit-scrollbar {
-        display: none;
-      }
-      .nav-logo {
-        font-family: "JetBrains Mono", monospace;
-        font-weight: 700;
-        font-size: 14px;
-        color: var(--accent);
-        margin-right: 32px;
-        white-space: nowrap;
-        flex-shrink: 0;
-      }
-      .nav-links {
-        display: flex;
-        gap: 4px;
-      }
-      .nav-link {
-        padding: 6px 12px;
-        border-radius: 6px;
-        font-size: 12px;
-        font-weight: 600;
-        color: var(--muted);
-        white-space: nowrap;
-        transition: all 0.2s;
-        cursor: pointer;
-      }
-      .nav-link:hover {
-        color: var(--text);
-        background: var(--surface2);
-      }
-      .nav-link.active {
-        color: #000;
-      }
-
-      /* HEADER */
-      header {
-        padding: 48px 40px 32px;
-        border-bottom: 1px solid var(--border);
-        background: linear-gradient(135deg, #0a0e1a 0%, #0f1729 100%);
-        position: relative;
-        overflow: hidden;
-      }
-      header::before {
-        content: "";
-        position: absolute;
-        top: -80px;
-        right: -80px;
-        width: 400px;
-        height: 400px;
-        background: radial-gradient(
-          circle,
-          rgba(0, 212, 255, 0.08) 0%,
-          transparent 70%
-        );
-        pointer-events: none;
-      }
-      .header-tag {
-        font-family: "JetBrains Mono", monospace;
-        font-size: 11px;
-        color: var(--accent);
-        letter-spacing: 3px;
-        text-transform: uppercase;
-        margin-bottom: 12px;
-        opacity: 0.8;
-      }
-      h1 {
-        font-size: clamp(24px, 4vw, 48px);
-        font-weight: 800;
-        line-height: 1.1;
-        background: linear-gradient(
-          135deg,
-          #fff 0%,
-          var(--accent) 50%,
-          var(--accent3) 100%
-        );
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        margin-bottom: 12px;
-      }
-      .subtitle {
-        color: var(--muted);
-        font-size: 15px;
-        max-width: 500px;
-      }
-      .stats-row {
-        display: flex;
-        gap: 20px;
-        margin-top: 24px;
-        flex-wrap: wrap;
-      }
-      .stat {
-        background: var(--surface);
-        border: 1px solid var(--border);
-        border-radius: 8px;
-        padding: 8px 16px;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        font-size: 13px;
-      }
-      .stat-num {
-        font-family: "JetBrains Mono", monospace;
-        font-weight: 700;
-        color: var(--accent);
-      }
-
-      /* CONTROLS */
-      .controls {
-        padding: 16px 40px;
-        background: var(--surface);
-        border-bottom: 1px solid var(--border);
-        display: flex;
-        gap: 10px;
-        flex-wrap: wrap;
-        align-items: center;
-        position: sticky;
-        top: 52px;
-        z-index: 100;
-        backdrop-filter: blur(10px);
-      }
-      .search-wrap {
-        position: relative;
-        flex: 1;
-        min-width: 180px;
-        max-width: 360px;
-      }
-      .search-wrap svg {
-        position: absolute;
-        left: 10px;
-        top: 50%;
-        transform: translateY(-50%);
-        color: var(--muted);
-        pointer-events: none;
-      }
-      input[type="text"] {
-        width: 100%;
-        background: var(--bg);
-        border: 1px solid var(--border);
-        border-radius: 8px;
-        padding: 8px 10px 8px 34px;
-        color: var(--text);
-        font-family: "JetBrains Mono", monospace;
-        font-size: 13px;
-        outline: none;
-        transition: border-color 0.2s;
-      }
-      input[type="text"]:focus {
-        border-color: var(--accent);
-      }
-      input[type="text"]::placeholder {
-        color: var(--muted);
-      }
-      .filter-btn {
-        background: var(--bg);
-        border: 1px solid var(--border);
-        border-radius: 8px;
-        padding: 7px 13px;
-        color: var(--muted);
-        font-family: "Syne", sans-serif;
-        font-size: 12px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.2s;
-      }
-      .filter-btn:hover {
-        border-color: var(--accent);
-        color: var(--accent);
-      }
-      .filter-btn.active {
-        background: var(--accent);
-        border-color: var(--accent);
-        color: #000;
-      }
-      .expand-all {
-        margin-left: auto;
-        background: transparent;
-        border: 1px solid var(--border);
-        border-radius: 8px;
-        padding: 7px 13px;
-        color: var(--muted);
-        font-family: "Syne", sans-serif;
-        font-size: 12px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.2s;
-      }
-      .expand-all:hover {
-        border-color: var(--accent3);
-        color: var(--accent3);
-      }
-
-      /* LAYOUT */
-      .main {
-        display: flex;
-      }
-      .sidebar {
-        width: 240px;
-        min-width: 240px;
-        border-right: 1px solid var(--border);
-        padding: 20px 0;
-        position: sticky;
-        top: calc(52px + 56px);
-        height: calc(100vh - 108px);
-        overflow-y: auto;
-        background: var(--surface);
-      }
-      .sidebar::-webkit-scrollbar {
-        width: 3px;
-      }
-      .sidebar::-webkit-scrollbar-thumb {
-        background: var(--border);
-        border-radius: 2px;
-      }
-      .cat-header {
-        padding: 6px 16px;
-        font-size: 9px;
-        font-weight: 700;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-        color: var(--muted);
-      }
-      .sidebar-link {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        padding: 6px 16px 6px 24px;
-        font-size: 12px;
-        color: var(--muted);
-        cursor: pointer;
-        transition: all 0.15s;
-        border-left: 2px solid transparent;
-        font-weight: 500;
-      }
-      .sidebar-link:hover {
-        color: var(--text);
-        background: rgba(255, 255, 255, 0.03);
-      }
-      .sidebar-link.active {
-        color: var(--accent);
-        border-left-color: var(--accent);
-        background: rgba(0, 212, 255, 0.05);
-      }
-
-      /* CONTENT */
-      .content {
-        flex: 1;
-        padding: 24px 32px;
-        min-width: 0;
-      }
-      .section-title {
-        font-size: 11px;
-        font-weight: 700;
-        letter-spacing: 3px;
-        text-transform: uppercase;
-        color: var(--muted);
-        padding: 24px 0 12px;
-        border-bottom: 1px solid var(--border);
-        margin-bottom: 12px;
-      }
-
-      /* CARDS */
-      .card {
-        background: var(--surface);
-        border: 1px solid var(--border);
-        border-radius: 10px;
-        margin-bottom: 8px;
-        overflow: hidden;
-        transition: border-color 0.2s;
-      }
-      .card:hover {
-        border-color: #2a3f60;
-      }
-      .card.open {
-        border-color: #2a4a70;
-      }
-      .card.highlighted {
-        border-color: var(--accent);
-      }
-      .card-header {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        padding: 14px 16px;
-        cursor: pointer;
-        user-select: none;
-        transition: background 0.2s;
-      }
-      .card-header:hover {
-        background: var(--surface2);
-      }
-      .q-num {
-        font-family: "JetBrains Mono", monospace;
-        font-size: 11px;
-        color: var(--muted);
-        min-width: 28px;
-        font-weight: 600;
-      }
-      .q-title {
-        flex: 1;
-        font-size: 14px;
-        font-weight: 600;
-      }
-      .difficulty {
-        font-family: "JetBrains Mono", monospace;
-        font-size: 9px;
-        font-weight: 700;
-        letter-spacing: 1px;
-        padding: 3px 7px;
-        border-radius: 4px;
-      }
-      .diff-basic {
-        background: rgba(34, 197, 94, 0.15);
-        color: #22c55e;
-      }
-      .diff-mid {
-        background: rgba(251, 191, 36, 0.15);
-        color: #fbbf24;
-      }
-      .diff-adv {
-        background: rgba(255, 107, 53, 0.15);
-        color: #ff6b35;
-      }
-      .diff-exp {
-        background: rgba(168, 85, 247, 0.15);
-        color: #a855f7;
-      }
-      .chevron {
-        color: var(--muted);
-        transition: transform 0.3s;
-        flex-shrink: 0;
-      }
-      .card.open .chevron {
-        transform: rotate(180deg);
-      }
-      .card-body {
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.35s ease;
-      }
-      .card.open .card-body {
-        max-height: 9999px;
-      }
-      .card-inner {
-        border-top: 1px solid var(--border);
-        padding: 20px;
-      }
-      .answer p {
-        margin-bottom: 12px;
-        line-height: 1.7;
-        font-size: 14px;
-      }
-      .answer strong {
-        color: #fff;
-      }
-      .answer em {
-        color: var(--accent);
-        font-style: normal;
-        font-weight: 600;
-      }
-      .answer code {
-        font-family: "JetBrains Mono", monospace;
-        background: var(--code-bg);
-        padding: 2px 6px;
-        border-radius: 4px;
-        font-size: 12px;
-        color: #7dd3fc;
-      }
-      .answer pre {
-        font-family: "JetBrains Mono", monospace;
-        background: var(--code-bg);
-        border: 1px solid var(--border);
-        border-radius: 8px;
-        padding: 16px;
-        font-size: 12px;
-        line-height: 1.6;
-        overflow-x: auto;
-        margin: 12px 0;
-        color: #e2e8f0;
-        white-space: pre;
-      }
-      .answer table {
-        width: 100%;
-        border-collapse: collapse;
-        margin: 12px 0;
-        font-size: 13px;
-      }
-      .answer th,
-      .answer td {
-        padding: 8px 12px;
-        border: 1px solid var(--border);
-        text-align: left;
-      }
-      .answer th {
-        background: var(--surface2);
-        color: var(--accent);
-        font-weight: 700;
-        font-size: 11px;
-        letter-spacing: 0.5px;
-      }
-      .answer tr:nth-child(even) td {
-        background: rgba(255, 255, 255, 0.02);
-      }
-      .answer ul,
-      .answer ol {
-        padding-left: 20px;
-        margin: 8px 0 12px;
-      }
-      .answer li {
-        margin-bottom: 6px;
-        line-height: 1.6;
-        font-size: 14px;
-      }
-      .answer h4 {
-        color: var(--accent2);
-        font-size: 13px;
-        margin: 12px 0 6px;
-      }
-      .tip-box {
-        background: rgba(34, 197, 94, 0.08);
-        border: 1px solid rgba(34, 197, 94, 0.2);
-        border-radius: 8px;
-        padding: 12px 16px;
-        font-size: 13px;
-        margin: 12px 0;
-        line-height: 1.6;
-      }
-      .warn-box {
-        background: rgba(251, 191, 36, 0.08);
-        border: 1px solid rgba(251, 191, 36, 0.2);
-        border-radius: 8px;
-        padding: 12px 16px;
-        font-size: 13px;
-        margin: 12px 0;
-        line-height: 1.6;
-      }
-      .tag-list {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 6px;
-        margin-top: 12px;
-      }
-      .tag {
-        background: var(--surface2);
-        border: 1px solid var(--border);
-        border-radius: 4px;
-        padding: 3px 9px;
-        font-family: "JetBrains Mono", monospace;
-        font-size: 10px;
-        color: var(--muted);
-      }
-
-      /* INDEX PAGE */
-      .index-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-        gap: 20px;
-        padding: 40px;
-        max-width: 1200px;
-        margin: 0 auto;
-      }
-      .part-card {
-        background: var(--surface);
-        border: 1px solid var(--border);
-        border-radius: 12px;
-        padding: 28px;
-        cursor: pointer;
-        transition: all 0.25s;
-        display: block;
-        position: relative;
-        overflow: hidden;
-      }
-      .part-card::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 3px;
-        background: var(--card-color);
-      }
-      .part-card:hover {
-        border-color: #2a3f60;
-        transform: translateY(-2px);
-      }
-      .part-icon {
-        font-size: 32px;
-        margin-bottom: 14px;
-      }
-      .part-num {
-        font-family: "JetBrains Mono", monospace;
-        font-size: 10px;
-        color: var(--muted);
-        letter-spacing: 2px;
-        text-transform: uppercase;
-        margin-bottom: 6px;
-      }
-      .part-title {
-        font-size: 18px;
-        font-weight: 700;
-        margin-bottom: 8px;
-        color: var(--text);
-      }
-      .part-desc {
-        font-size: 13px;
-        color: var(--muted);
-        line-height: 1.6;
-        margin-bottom: 16px;
-      }
-      .part-count {
-        font-family: "JetBrains Mono", monospace;
-        font-size: 13px;
-        font-weight: 700;
-        color: var(--card-color);
-      }
-      .index-hero {
-        padding: 60px 40px 40px;
-        border-bottom: 1px solid var(--border);
-        background: linear-gradient(135deg, #0a0e1a 0%, #0f1729 100%);
-        position: relative;
-        overflow: hidden;
-        text-align: center;
-      }
-      .index-hero::before {
-        content: "";
-        position: absolute;
-        top: -100px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 600px;
-        height: 400px;
-        background: radial-gradient(
-          circle,
-          rgba(0, 212, 255, 0.06) 0%,
-          transparent 70%
-        );
-        pointer-events: none;
-      }
-      .hero-badge {
-        display: inline-block;
-        font-family: "JetBrains Mono", monospace;
-        font-size: 11px;
-        color: var(--accent);
-        letter-spacing: 3px;
-        text-transform: uppercase;
-        margin-bottom: 16px;
-        opacity: 0.8;
-      }
-      .hero-title {
-        font-size: clamp(32px, 6vw, 64px);
-        font-weight: 800;
-        line-height: 1.05;
-        background: linear-gradient(
-          135deg,
-          #fff 0%,
-          var(--accent) 50%,
-          var(--accent3) 100%
-        );
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        margin-bottom: 16px;
-      }
-      .hero-sub {
-        color: var(--muted);
-        font-size: 16px;
-        max-width: 560px;
-        margin: 0 auto 28px;
-      }
-      .hero-stats {
-        display: flex;
-        gap: 20px;
-        justify-content: center;
-        flex-wrap: wrap;
-      }
-      .hero-stat {
-        background: var(--surface);
-        border: 1px solid var(--border);
-        border-radius: 8px;
-        padding: 10px 20px;
-        text-align: center;
-      }
-      .hero-stat-num {
-        font-family: "JetBrains Mono", monospace;
-        font-size: 24px;
-        font-weight: 700;
-        color: var(--accent);
-      }
-      .hero-stat-label {
-        font-size: 11px;
-        color: var(--muted);
-        margin-top: 2px;
-      }
-
-      /* BREADCRUMB */
-      .breadcrumb {
-        padding: 12px 40px;
-        font-size: 12px;
-        color: var(--muted);
-        border-bottom: 1px solid var(--border);
-        background: var(--bg);
-        display: flex;
-        align-items: center;
-        gap: 8px;
-      }
-      .breadcrumb a {
-        color: var(--accent);
-      }
-      .breadcrumb a:hover {
-        text-decoration: underline;
-      }
-
-      @media (max-width: 768px) {
-        .sidebar {
-          display: none;
-        }
-        .topnav {
-          padding: 0 16px;
-        }
-        header,
-        .controls {
-          padding-left: 16px;
-          padding-right: 16px;
-        }
-        .content {
-          padding: 16px;
-        }
-        .index-grid {
-          padding: 20px;
-          grid-template-columns: 1fr;
-        }
-        .index-hero {
-          padding: 40px 20px;
-        }
-        .breadcrumb {
-          padding: 10px 16px;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <nav class="topnav">
-      <span class="nav-logo">// Java Interview</span>
-      <div class="nav-links">
-        <a
-          href="index.html"
-          class="nav-link active"
-          style="background: var(--accent); color: #000"
-          >🏠 Home</a
-        ><a href="basics.html" class="nav-link">☕ Basics</a
-        ><a href="versions.html" class="nav-link">🚀 Versions</a
-        ><a href="oop.html" class="nav-link">🧩 OOP</a
-        ><a href="collections.html" class="nav-link">📦 Collections</a
-        ><a href="exceptions.html" class="nav-link">⚠️ Exceptions</a
-        ><a href="concurrency.html" class="nav-link">⚡ Concurrency</a
-        ><a href="advanced-concurrency.html" class="nav-link">🔬 Advanced</a>
-        <a href="java-mastery.html" class="nav-link">☕ Mastery 478</a>
-    <a href="java-methods.html" class="nav-link">📋 Methods</a>
- 
-      </div>
-    </nav>
-    <div class="index-hero">
-      <div class="hero-badge">
-        // Senior Java Developer · 10 Years Experience
-      </div>
-      <h1 class="hero-title">Java Interview<br />Complete Guide</h1>
-      <p class="hero-sub">
-        A comprehensive question bank covering everything from JVM internals to
-        virtual threads — designed for senior-level interviews.
-      </p>
-      <div class="hero-stats">
-        <div class="hero-stat">
-          <div class="hero-stat-num">288+</div>
-          <div class="hero-stat-label">Questions</div>
-        </div>
-        <div class="hero-stat">
-          <div class="hero-stat-num">7</div>
-          <div class="hero-stat-label">Topic Areas</div>
-        </div>
-        <div class="hero-stat">
-          <div class="hero-stat-num">Java 21</div>
-          <div class="hero-stat-label">Up to Date</div>
-        </div>
-        <div class="hero-stat">
-          <div class="hero-stat-num">4</div>
-          <div class="hero-stat-label">Difficulty Levels</div>
-        </div>
-      </div>
+  <script>(function(){try{var t=localStorage.getItem("java-theme")||"light";document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+</head>
+<body>
+<nav class="topnav"><span class="nav-logo">// Java Interview</span><div class="nav-links"><a href="index.html" class="nav-link active">🏠 Home</a><a href="basics.html" class="nav-link">☕ Basics</a><a href="versions.html" class="nav-link">🚀 Versions</a><a href="oop.html" class="nav-link">🧩 OOP</a><a href="collections.html" class="nav-link">📦 Collections</a><a href="exceptions.html" class="nav-link">⚠️ Exceptions</a><a href="concurrency.html" class="nav-link">⚡ Concurrency</a><a href="advanced-concurrency.html" class="nav-link">🔬 Advanced</a><a href="mastery.html" class="nav-link">🧠 Mastery</a><a href="methods.html" class="nav-link">🛠️ Methods</a><a href="springboot.html" class="nav-link">🍃 Spring Boot</a></div><button class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme" onclick="toggleTheme()" type="button"><svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg><svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button></nav>
+<div class="index-hero">
+  <div class="hero-badge">// Senior Java Developer · 10 Years Experience</div>
+  <h1 class="hero-title">Java Interview<br>Complete Guide</h1>
+  <p class="hero-sub">A comprehensive question bank covering everything from JVM internals to virtual threads — designed for senior-level interviews.</p>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="hero-stat-num">299+</div>
+      <div class="hero-stat-label">Questions</div>
     </div>
-    <div class="index-grid">
-      <a href="basics.html" class="part-card" style="--card-color: #00d4ff">
-        <div class="part-icon">☕</div>
-        <div class="part-num">Part 1 · Q1–Q40</div>
-        <div class="part-title">Java Basics & Fundamentals</div>
-        <div class="part-desc">
-          Core Java concepts, OOP fundamentals, memory model, and language
-          basics every Java developer must know.
-        </div>
-        <div class="part-count">40 Questions →</div>
-      </a>
-      <a href="versions.html" class="part-card" style="--card-color: #22c55e">
-        <div class="part-icon">🚀</div>
-        <div class="part-num">Part 2 · Q41–Q75</div>
-        <div class="part-title">Java Versions & Evolution</div>
-        <div class="part-desc">
-          Java 5 through Java 21+ — generics, lambdas, streams, modules,
-          records, sealed classes, virtual threads.
-        </div>
-        <div class="part-count">35 Questions →</div>
-      </a>
-      <a href="oop.html" class="part-card" style="--card-color: #a855f7">
-        <div class="part-icon">🧩</div>
-        <div class="part-num">Part 3 · Q76–Q105</div>
-        <div class="part-title">OOP & SOLID Principles</div>
-        <div class="part-desc">
-          SOLID principles, design patterns, composition vs inheritance,
-          interfaces, abstract classes.
-        </div>
-        <div class="part-count">30 Questions →</div>
-      </a>
-      <a
-        href="collections.html"
-        class="part-card"
-        style="--card-color: #fbbf24"
-      >
-        <div class="part-icon">📦</div>
-        <div class="part-num">Part 4 · Q106–Q150</div>
-        <div class="part-title">Collections Framework</div>
-        <div class="part-desc">
-          List, Map, Set internals — ArrayList vs LinkedList, HashMap internals,
-          TreeMap, generics, iterators.
-        </div>
-        <div class="part-count">45 Questions →</div>
-      </a>
-      <a href="exceptions.html" class="part-card" style="--card-color: #ff6b35">
-        <div class="part-icon">⚠️</div>
-        <div class="part-num">Part 5 · Q151–Q175</div>
-        <div class="part-title">Exception Handling</div>
-        <div class="part-desc">
-          Exception hierarchy, checked vs unchecked, try-with-resources, custom
-          exceptions, best practices.
-        </div>
-        <div class="part-count">58 Questions →</div>
-      </a>
-      <a
-        href="concurrency.html"
-        class="part-card"
-        style="--card-color: #06b6d4"
-      >
-        <div class="part-icon">⚡</div>
-        <div class="part-num">Part 6 · Q301–Q380</div>
-        <div class="part-title">Multithreading & Concurrency</div>
-        <div class="part-desc">
-          Threads, locks, executors, concurrent collections, CompletableFuture,
-          virtual threads, Project Loom.
-        </div>
-        <div class="part-count">50 Questions →</div>
-      </a>
-      <a
-        href="advanced-concurrency.html"
-        class="part-card"
-        style="--card-color: #ec4899"
-      >
-        <div class="part-icon">🔬</div>
-        <div class="part-num">Part 7 · Q351–Q380</div>
-        <div class="part-title">Advanced Concurrency (Expert)</div>
-        <div class="part-desc">
-          StampedLock, Scoped Values, Disruptor, NUMA, reactive streams, JFR
-          profiling, expert-level patterns.
-        </div>
-        <div class="part-count">30 Questions →</div>
-      </a>
-      <a
-        href="java-mastery.html"
-        class="part-card"
-        style="--card-color: #ec4899"
-      >
-        <div class="part-icon">☕</div>
-        <div class="part-num">Part 8 · Q1–Q478</div>
-        <div class="part-title">Mastery 478</div>
-        <div class="part-desc">Interview-level patterns.</div>
-        <div class="part-count">478 Questions →</div>
-      </a>
-<a
-        href="java-methods.html"
-        class="part-card"
-        style="--card-color: #ec4899"
-      >
-        <div class="part-icon">📋</div>
-        <div class="part-num">All require methods</div>
-        <div class="part-title">Methods</div>
-        <div class="part-desc">All basic methods which help you in coding questions.</div>
-        <div class="part-count">many</div>
-      </a>
-
-    <a href="java-methods.html" class="nav-link">📋 Methods</a>
+    <div class="hero-stat">
+      <div class="hero-stat-num">10</div>
+      <div class="hero-stat-label">Topic Areas</div>
     </div>
-  </body>
+    <div class="hero-stat">
+      <div class="hero-stat-num">Java 21</div>
+      <div class="hero-stat-label">Up to Date</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">4</div>
+      <div class="hero-stat-label">Difficulty Levels</div>
+    </div>
+  </div>
+</div>
+<div class="index-grid">
+  
+  <a href="basics.html" class="part-card" style="--card-color:#00d4ff;">
+    <div class="part-icon">☕</div>
+    <div class="part-num">Part 1 · Q1–Q45</div>
+    <div class="part-title">Java Basics & Fundamentals</div>
+    <div class="part-desc">Core Java concepts, OOP fundamentals, memory model, and language basics every Java developer must know.</div>
+    <div class="part-count">45 Questions →</div>
+  </a>
+  <a href="versions.html" class="part-card" style="--card-color:#22c55e;">
+    <div class="part-icon">🚀</div>
+    <div class="part-num">Part 2 · Q41–Q75</div>
+    <div class="part-title">Java Versions & Evolution</div>
+    <div class="part-desc">Java 5 through Java 21+ — generics, lambdas, streams, modules, records, sealed classes, virtual threads.</div>
+    <div class="part-count">35 Questions →</div>
+  </a>
+  <a href="oop.html" class="part-card" style="--card-color:#a855f7;">
+    <div class="part-icon">🧩</div>
+    <div class="part-num">Part 3 · Q76–Q105</div>
+    <div class="part-title">OOP & SOLID Principles</div>
+    <div class="part-desc">SOLID principles, design patterns, composition vs inheritance, interfaces, abstract classes.</div>
+    <div class="part-count">30 Questions →</div>
+  </a>
+  <a href="collections.html" class="part-card" style="--card-color:#fbbf24;">
+    <div class="part-icon">📦</div>
+    <div class="part-num">Part 4 · Q106–Q153</div>
+    <div class="part-title">Collections Framework</div>
+    <div class="part-desc">List, Map, Set internals — ArrayList vs LinkedList, HashMap internals, TreeMap, generics, iterators.</div>
+    <div class="part-count">48 Questions →</div>
+  </a>
+  <a href="exceptions.html" class="part-card" style="--card-color:#ff6b35;">
+    <div class="part-icon">⚠️</div>
+    <div class="part-num">Part 5 · Q151–Q175</div>
+    <div class="part-title">Exception Handling</div>
+    <div class="part-desc">Exception hierarchy, checked vs unchecked, try-with-resources, custom exceptions, best practices.</div>
+    <div class="part-count">58 Questions →</div>
+  </a>
+  <a href="concurrency.html" class="part-card" style="--card-color:#06b6d4;">
+    <div class="part-icon">⚡</div>
+    <div class="part-num">Part 6 · Q301–Q353</div>
+    <div class="part-title">Multithreading & Concurrency</div>
+    <div class="part-desc">Threads, locks, executors, concurrent collections, CompletableFuture, virtual threads, Project Loom.</div>
+    <div class="part-count">53 Questions →</div>
+  </a>
+  <a href="advanced-concurrency.html" class="part-card" style="--card-color:#ec4899;">
+    <div class="part-icon">🔬</div>
+    <div class="part-num">Part 7 · Q351–Q380</div>
+    <div class="part-title">Advanced Concurrency (Expert)</div>
+    <div class="part-desc">StampedLock, Scoped Values, Disruptor, NUMA, reactive streams, JFR profiling, expert-level patterns.</div>
+    <div class="part-count">30 Questions →</div>
+  </a>
+  <a href="mastery.html" class="part-card" style="--card-color:#0ea5e9;">
+    <div class="part-icon">🧠</div>
+    <div class="part-num">Mastery · 22 Sections</div>
+    <div class="part-title">Tricky Questions &amp; Coding Patterns</div>
+    <div class="part-desc">Theory + tricky output puzzles + hands-on coding — Strings, Arrays, Collections, Maps, Streams, Optional, Comparator and real interview challenges.</div>
+    <div class="part-count">200+ Tricky Q&amp;A →</div>
+  </a>
+  <a href="methods.html" class="part-card" style="--card-color:#10b981;">
+    <div class="part-icon">🛠️</div>
+    <div class="part-num">Reference · 16 Categories</div>
+    <div class="part-title">Java Methods Reference</div>
+    <div class="part-desc">Quick revision tables for 320+ methods — String, Collections, Stream, Math, Optional, Comparator and more, with behavioral notes.</div>
+    <div class="part-count">320+ Methods →</div>
+  </a>
+  <a href="springboot.html" class="part-card" style="--card-color:#84cc16;">
+    <div class="part-icon">🍃</div>
+    <div class="part-num">Beginner → MAANG · 20 Sections</div>
+    <div class="part-title">Spring Boot Complete Guide</div>
+    <div class="part-desc">Spring Core, Boot internals, JPA, Security, Caching, AOP, Kafka, Resilience, Deployment, Scaling — collapsible sections, beginner to expert.</div>
+    <div class="part-count">282 Q&amp;A →</div>
+  </a>
+</div>
+<script src="assets/main.js" defer></script>
+</body>
 </html>

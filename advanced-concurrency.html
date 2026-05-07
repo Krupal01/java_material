@@ -1,969 +1,73 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>
-      PART 7: Advanced Java Concurrency — Expert Level (Q351–380) — Java
-      Interview Guide
-    </title>
-
-    <link
-      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Syne:wght@400;600;700;800&display=swap"
-      rel="stylesheet"
-    />
-    <style>
-      :root {
-        --bg: #0a0e1a;
-        --surface: #111827;
-        --surface2: #1a2235;
-        --border: #1e2d45;
-        --accent: #00d4ff;
-        --accent2: #ff6b35;
-        --accent3: #a855f7;
-        --green: #22c55e;
-        --yellow: #fbbf24;
-        --text: #e2e8f0;
-        --muted: #64748b;
-        --code-bg: #0d1117;
-      }
-
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
-      body {
-        background: var(--bg);
-        color: var(--text);
-        font-family: "Syne", sans-serif;
-        min-height: 100vh;
-        overflow-x: hidden;
-      }
-
-      a {
-        color: inherit;
-        text-decoration: none;
-      }
-
-      /* TOPNAV */
-      .topnav {
-        background: var(--surface);
-        border-bottom: 1px solid var(--border);
-        padding: 0 40px;
-        display: flex;
-        align-items: center;
-        gap: 0;
-        height: 52px;
-        position: sticky;
-        top: 0;
-        z-index: 200;
-        backdrop-filter: blur(10px);
-        overflow-x: auto;
-      }
-
-      .topnav::-webkit-scrollbar {
-        display: none;
-      }
-
-      .nav-logo {
-        font-family: "JetBrains Mono", monospace;
-        font-weight: 700;
-        font-size: 14px;
-        color: var(--accent);
-        margin-right: 32px;
-        white-space: nowrap;
-        flex-shrink: 0;
-      }
-
-      .nav-links {
-        display: flex;
-        gap: 4px;
-      }
-
-      .nav-link {
-        padding: 6px 12px;
-        border-radius: 6px;
-        font-size: 12px;
-        font-weight: 600;
-        color: var(--muted);
-        white-space: nowrap;
-        transition: all 0.2s;
-        cursor: pointer;
-      }
-
-      .nav-link:hover {
-        color: var(--text);
-        background: var(--surface2);
-      }
-
-      .nav-link.active {
-        color: #000;
-      }
-
-      /* HEADER */
-      header {
-        padding: 48px 40px 32px;
-        border-bottom: 1px solid var(--border);
-        background: linear-gradient(135deg, #0a0e1a 0%, #0f1729 100%);
-        position: relative;
-        overflow: hidden;
-      }
-
-      header::before {
-        content: "";
-        position: absolute;
-        top: -80px;
-        right: -80px;
-        width: 400px;
-        height: 400px;
-        background: radial-gradient(
-          circle,
-          rgba(0, 212, 255, 0.08) 0%,
-          transparent 70%
-        );
-        pointer-events: none;
-      }
-
-      .header-tag {
-        font-family: "JetBrains Mono", monospace;
-        font-size: 11px;
-        color: var(--accent);
-        letter-spacing: 3px;
-        text-transform: uppercase;
-        margin-bottom: 12px;
-        opacity: 0.8;
-      }
-
-      h1 {
-        font-size: clamp(24px, 4vw, 48px);
-        font-weight: 800;
-        line-height: 1.1;
-        background: linear-gradient(
-          135deg,
-          #fff 0%,
-          var(--accent) 50%,
-          var(--accent3) 100%
-        );
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        margin-bottom: 12px;
-      }
-
-      .subtitle {
-        color: var(--muted);
-        font-size: 15px;
-        max-width: 500px;
-      }
-
-      .stats-row {
-        display: flex;
-        gap: 20px;
-        margin-top: 24px;
-        flex-wrap: wrap;
-      }
-
-      .stat {
-        background: var(--surface);
-        border: 1px solid var(--border);
-        border-radius: 8px;
-        padding: 8px 16px;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        font-size: 13px;
-      }
-
-      .stat-num {
-        font-family: "JetBrains Mono", monospace;
-        font-weight: 700;
-        color: var(--accent);
-      }
-
-      /* CONTROLS */
-      .controls {
-        padding: 16px 40px;
-        background: var(--surface);
-        border-bottom: 1px solid var(--border);
-        display: flex;
-        gap: 10px;
-        flex-wrap: wrap;
-        align-items: center;
-        position: sticky;
-        top: 52px;
-        z-index: 100;
-        backdrop-filter: blur(10px);
-      }
-
-      .search-wrap {
-        position: relative;
-        flex: 1;
-        min-width: 180px;
-        max-width: 360px;
-      }
-
-      .search-wrap svg {
-        position: absolute;
-        left: 10px;
-        top: 50%;
-        transform: translateY(-50%);
-        color: var(--muted);
-        pointer-events: none;
-      }
-
-      input[type="text"] {
-        width: 100%;
-        background: var(--bg);
-        border: 1px solid var(--border);
-        border-radius: 8px;
-        padding: 8px 10px 8px 34px;
-        color: var(--text);
-        font-family: "JetBrains Mono", monospace;
-        font-size: 13px;
-        outline: none;
-        transition: border-color 0.2s;
-      }
-
-      input[type="text"]:focus {
-        border-color: var(--accent);
-      }
-
-      input[type="text"]::placeholder {
-        color: var(--muted);
-      }
-
-      .filter-btn {
-        background: var(--bg);
-        border: 1px solid var(--border);
-        border-radius: 8px;
-        padding: 7px 13px;
-        color: var(--muted);
-        font-family: "Syne", sans-serif;
-        font-size: 12px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.2s;
-      }
-
-      .filter-btn:hover {
-        border-color: var(--accent);
-        color: var(--accent);
-      }
-
-      .filter-btn.active {
-        background: var(--accent);
-        border-color: var(--accent);
-        color: #000;
-      }
-
-      .expand-all {
-        margin-left: auto;
-        background: transparent;
-        border: 1px solid var(--border);
-        border-radius: 8px;
-        padding: 7px 13px;
-        color: var(--muted);
-        font-family: "Syne", sans-serif;
-        font-size: 12px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.2s;
-      }
-
-      .expand-all:hover {
-        border-color: var(--accent3);
-        color: var(--accent3);
-      }
-
-      /* LAYOUT */
-      .main {
-        display: flex;
-      }
-
-      .sidebar {
-        width: 240px;
-        min-width: 240px;
-        border-right: 1px solid var(--border);
-        padding: 20px 0;
-        position: sticky;
-        top: calc(52px + 56px);
-        height: calc(100vh - 108px);
-        overflow-y: auto;
-        background: var(--surface);
-      }
-
-      .sidebar::-webkit-scrollbar {
-        width: 3px;
-      }
-
-      .sidebar::-webkit-scrollbar-thumb {
-        background: var(--border);
-        border-radius: 2px;
-      }
-
-      .cat-header {
-        padding: 6px 16px;
-        font-size: 9px;
-        font-weight: 700;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-        color: var(--muted);
-      }
-
-      .sidebar-link {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        padding: 6px 16px 6px 24px;
-        font-size: 12px;
-        color: var(--muted);
-        cursor: pointer;
-        transition: all 0.15s;
-        border-left: 2px solid transparent;
-        font-weight: 500;
-      }
-
-      .sidebar-link:hover {
-        color: var(--text);
-        background: rgba(255, 255, 255, 0.03);
-      }
-
-      .sidebar-link.active {
-        color: var(--accent);
-        border-left-color: var(--accent);
-        background: rgba(0, 212, 255, 0.05);
-      }
-
-      /* CONTENT */
-      .content {
-        flex: 1;
-        padding: 24px 32px;
-        min-width: 0;
-      }
-
-      .section-title {
-        font-size: 11px;
-        font-weight: 700;
-        letter-spacing: 3px;
-        text-transform: uppercase;
-        color: var(--muted);
-        padding: 24px 0 12px;
-        border-bottom: 1px solid var(--border);
-        margin-bottom: 12px;
-      }
-
-      /* CARDS */
-      .card {
-        background: var(--surface);
-        border: 1px solid var(--border);
-        border-radius: 10px;
-        margin-bottom: 8px;
-        overflow: hidden;
-        transition: border-color 0.2s;
-      }
-
-      .card:hover {
-        border-color: #2a3f60;
-      }
-
-      .card.open {
-        border-color: #2a4a70;
-      }
-
-      .card.highlighted {
-        border-color: var(--accent);
-      }
-
-      .card-header {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        padding: 14px 16px;
-        cursor: pointer;
-        user-select: none;
-        transition: background 0.2s;
-      }
-
-      .card-header:hover {
-        background: var(--surface2);
-      }
-
-      .q-num {
-        font-family: "JetBrains Mono", monospace;
-        font-size: 11px;
-        color: var(--muted);
-        min-width: 28px;
-        font-weight: 600;
-      }
-
-      .q-title {
-        flex: 1;
-        font-size: 14px;
-        font-weight: 600;
-      }
-
-      .difficulty {
-        font-family: "JetBrains Mono", monospace;
-        font-size: 9px;
-        font-weight: 700;
-        letter-spacing: 1px;
-        padding: 3px 7px;
-        border-radius: 4px;
-      }
-
-      .diff-basic {
-        background: rgba(34, 197, 94, 0.15);
-        color: #22c55e;
-      }
-
-      .diff-mid {
-        background: rgba(251, 191, 36, 0.15);
-        color: #fbbf24;
-      }
-
-      .diff-adv {
-        background: rgba(255, 107, 53, 0.15);
-        color: #ff6b35;
-      }
-
-      .diff-exp {
-        background: rgba(168, 85, 247, 0.15);
-        color: #a855f7;
-      }
-
-      .chevron {
-        color: var(--muted);
-        transition: transform 0.3s;
-        flex-shrink: 0;
-      }
-
-      .card.open .chevron {
-        transform: rotate(180deg);
-      }
-
-      .card-body {
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.35s ease;
-      }
-
-      .card.open .card-body {
-        max-height: 9999px;
-      }
-
-      .card-inner {
-        border-top: 1px solid var(--border);
-        padding: 20px;
-      }
-
-      .answer p {
-        margin-bottom: 12px;
-        line-height: 1.7;
-        font-size: 14px;
-      }
-
-      .answer strong {
-        color: #fff;
-      }
-
-      .answer em {
-        color: var(--accent);
-        font-style: normal;
-        font-weight: 600;
-      }
-
-      .answer code {
-        font-family: "JetBrains Mono", monospace;
-        background: var(--code-bg);
-        padding: 2px 6px;
-        border-radius: 4px;
-        font-size: 12px;
-        color: #7dd3fc;
-      }
-
-      .answer pre {
-        font-family: "JetBrains Mono", monospace;
-        background: var(--code-bg);
-        border: 1px solid var(--border);
-        border-radius: 8px;
-        padding: 16px;
-        font-size: 12px;
-        line-height: 1.6;
-        overflow-x: auto;
-        margin: 12px 0;
-        color: #e2e8f0;
-        white-space: pre;
-      }
-
-      .answer table {
-        width: 100%;
-        border-collapse: collapse;
-        margin: 12px 0;
-        font-size: 13px;
-      }
-
-      .answer th,
-      .answer td {
-        padding: 8px 12px;
-        border: 1px solid var(--border);
-        text-align: left;
-      }
-
-      .answer th {
-        background: var(--surface2);
-        color: var(--accent);
-        font-weight: 700;
-        font-size: 11px;
-        letter-spacing: 0.5px;
-      }
-
-      .answer tr:nth-child(even) td {
-        background: rgba(255, 255, 255, 0.02);
-      }
-
-      .answer ul,
-      .answer ol {
-        padding-left: 20px;
-        margin: 8px 0 12px;
-      }
-
-      .answer li {
-        margin-bottom: 6px;
-        line-height: 1.6;
-        font-size: 14px;
-      }
-
-      .answer h4 {
-        color: var(--accent2);
-        font-size: 13px;
-        margin: 12px 0 6px;
-      }
-
-      .tip-box {
-        background: rgba(34, 197, 94, 0.08);
-        border: 1px solid rgba(34, 197, 94, 0.2);
-        border-radius: 8px;
-        padding: 12px 16px;
-        font-size: 13px;
-        margin: 12px 0;
-        line-height: 1.6;
-      }
-
-      .warn-box {
-        background: rgba(251, 191, 36, 0.08);
-        border: 1px solid rgba(251, 191, 36, 0.2);
-        border-radius: 8px;
-        padding: 12px 16px;
-        font-size: 13px;
-        margin: 12px 0;
-        line-height: 1.6;
-      }
-
-      .tag-list {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 6px;
-        margin-top: 12px;
-      }
-
-      .tag {
-        background: var(--surface2);
-        border: 1px solid var(--border);
-        border-radius: 4px;
-        padding: 3px 9px;
-        font-family: "JetBrains Mono", monospace;
-        font-size: 10px;
-        color: var(--muted);
-      }
-
-      /* INDEX PAGE */
-      .index-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-        gap: 20px;
-        padding: 40px;
-        max-width: 1200px;
-        margin: 0 auto;
-      }
-
-      .part-card {
-        background: var(--surface);
-        border: 1px solid var(--border);
-        border-radius: 12px;
-        padding: 28px;
-        cursor: pointer;
-        transition: all 0.25s;
-        display: block;
-        position: relative;
-        overflow: hidden;
-      }
-
-      .part-card::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 3px;
-        background: var(--card-color);
-      }
-
-      .part-card:hover {
-        border-color: #2a3f60;
-        transform: translateY(-2px);
-      }
-
-      .part-icon {
-        font-size: 32px;
-        margin-bottom: 14px;
-      }
-
-      .part-num {
-        font-family: "JetBrains Mono", monospace;
-        font-size: 10px;
-        color: var(--muted);
-        letter-spacing: 2px;
-        text-transform: uppercase;
-        margin-bottom: 6px;
-      }
-
-      .part-title {
-        font-size: 18px;
-        font-weight: 700;
-        margin-bottom: 8px;
-        color: var(--text);
-      }
-
-      .part-desc {
-        font-size: 13px;
-        color: var(--muted);
-        line-height: 1.6;
-        margin-bottom: 16px;
-      }
-
-      .part-count {
-        font-family: "JetBrains Mono", monospace;
-        font-size: 13px;
-        font-weight: 700;
-        color: var(--card-color);
-      }
-
-      .index-hero {
-        padding: 60px 40px 40px;
-        border-bottom: 1px solid var(--border);
-        background: linear-gradient(135deg, #0a0e1a 0%, #0f1729 100%);
-        position: relative;
-        overflow: hidden;
-        text-align: center;
-      }
-
-      .index-hero::before {
-        content: "";
-        position: absolute;
-        top: -100px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 600px;
-        height: 400px;
-        background: radial-gradient(
-          circle,
-          rgba(0, 212, 255, 0.06) 0%,
-          transparent 70%
-        );
-        pointer-events: none;
-      }
-
-      .hero-badge {
-        display: inline-block;
-        font-family: "JetBrains Mono", monospace;
-        font-size: 11px;
-        color: var(--accent);
-        letter-spacing: 3px;
-        text-transform: uppercase;
-        margin-bottom: 16px;
-        opacity: 0.8;
-      }
-
-      .hero-title {
-        font-size: clamp(32px, 6vw, 64px);
-        font-weight: 800;
-        line-height: 1.05;
-        background: linear-gradient(
-          135deg,
-          #fff 0%,
-          var(--accent) 50%,
-          var(--accent3) 100%
-        );
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        margin-bottom: 16px;
-      }
-
-      .hero-sub {
-        color: var(--muted);
-        font-size: 16px;
-        max-width: 560px;
-        margin: 0 auto 28px;
-      }
-
-      .hero-stats {
-        display: flex;
-        gap: 20px;
-        justify-content: center;
-        flex-wrap: wrap;
-      }
-
-      .hero-stat {
-        background: var(--surface);
-        border: 1px solid var(--border);
-        border-radius: 8px;
-        padding: 10px 20px;
-        text-align: center;
-      }
-
-      .hero-stat-num {
-        font-family: "JetBrains Mono", monospace;
-        font-size: 24px;
-        font-weight: 700;
-        color: var(--accent);
-      }
-
-      .hero-stat-label {
-        font-size: 11px;
-        color: var(--muted);
-        margin-top: 2px;
-      }
-
-      /* BREADCRUMB */
-      .breadcrumb {
-        padding: 12px 40px;
-        font-size: 12px;
-        color: var(--muted);
-        border-bottom: 1px solid var(--border);
-        background: var(--bg);
-        display: flex;
-        align-items: center;
-        gap: 8px;
-      }
-
-      .breadcrumb a {
-        color: var(--accent);
-      }
-
-      .breadcrumb a:hover {
-        text-decoration: underline;
-      }
-
-      @media (max-width: 768px) {
-        .sidebar {
-          display: none;
-        }
-
-        .topnav {
-          padding: 0 16px;
-        }
-
-        header,
-        .controls {
-          padding-left: 16px;
-          padding-right: 16px;
-        }
-
-        .content {
-          padding: 16px;
-        }
-
-        .index-grid {
-          padding: 20px;
-          grid-template-columns: 1fr;
-        }
-
-        .index-hero {
-          padding: 40px 20px;
-        }
-
-        .breadcrumb {
-          padding: 10px 16px;
-        }
-      }
-    </style>
-  </head>
-
-  <body>
-    <nav class="topnav">
-      <span class="nav-logo">// Java Interview</span>
-      <div class="nav-links">
-        <a href="index.html" class="nav-link">🏠 Home</a
-        ><a href="basics.html" class="nav-link">☕ Basics</a
-        ><a href="versions.html" class="nav-link">🚀 Versions</a
-        ><a href="oop.html" class="nav-link">🧩 OOP</a
-        ><a href="collections.html" class="nav-link">📦 Collections</a
-        ><a href="exceptions.html" class="nav-link">⚠️ Exceptions</a
-        ><a href="concurrency.html" class="nav-link">⚡ Concurrency</a
-        ><a
-          href="advanced-concurrency.html"
-          class="nav-link active"
-          style="background: var(--accent); color: #000"
-          >🔬 Advanced</a
-        >
-        <a href="java-mastery.html" class="nav-link">☕ Mastery 478</a>
-    <a href="java-methods.html" class="nav-link">📋 Methods</a>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PART 7: Advanced Java Concurrency — Expert Level (Q351–380) — Java Interview Guide</title>
+
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/theme.css">
+
+  <script>(function(){try{var t=localStorage.getItem("java-theme")||"light";document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+</head>
+<body>
+<nav class="topnav"><span class="nav-logo">// Java Interview</span><div class="nav-links"><a href="index.html" class="nav-link">🏠 Home</a><a href="basics.html" class="nav-link">☕ Basics</a><a href="versions.html" class="nav-link">🚀 Versions</a><a href="oop.html" class="nav-link">🧩 OOP</a><a href="collections.html" class="nav-link">📦 Collections</a><a href="exceptions.html" class="nav-link">⚠️ Exceptions</a><a href="concurrency.html" class="nav-link">⚡ Concurrency</a><a href="advanced-concurrency.html" class="nav-link active">🔬 Advanced</a><a href="mastery.html" class="nav-link">🧠 Mastery</a><a href="methods.html" class="nav-link">🛠️ Methods</a><a href="springboot.html" class="nav-link">🍃 Spring Boot</a></div><button class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme" onclick="toggleTheme()" type="button"><svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg><svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button></nav>
+<div class="breadcrumb">
+  <a href="index.html">Home</a> › PART 7: Advanced Java Concurrency — Expert Level (Q351–380)
+</div>
+<header>
+  <div class="header-tag">// Java Interview — Senior Level</div>
+  <h1>🔬 PART 7: Advanced Java Concurrency — Expert Level (Q351–380)</h1>
+  <p class="subtitle">StampedLock, Scoped Values, Disruptor, NUMA, reactive streams, JFR profiling, expert-level patterns.</p>
+  <div class="stats-row">
+    <div class="stat"><span class="stat-num">30</span> Questions</div>
+    
+    <div class='stat'><span class='stat-num'>2</span> Mid</div>
+    <div class='stat'><span class='stat-num'>11</span> Advanced</div>
+    <div class='stat'><span class='stat-num'>17</span> Expert</div>
+  </div>
+</header>
+<div class="controls">
+  <div class="search-wrap">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input type="text" id="searchInput" placeholder="Search questions..." oninput="filterCards()">
+  </div>
+  <button class="filter-btn active" onclick="filterBy('all',this)">All</button>
+  
+  <button class='filter-btn' onclick='filterBy("mid",this)'>Mid</button>
+  <button class='filter-btn' onclick='filterBy("adv",this)'>Advanced</button>
+  <button class='filter-btn' onclick='filterBy("exp",this)'>Expert</button>
+  <button class="expand-all" onclick="toggleAll()">Expand All</button>
+</div>
+<div class="main">
+  <aside class="sidebar">
+    <div class="cat-header">Questions</div>
+    <div class="sidebar-link" data-target="q351" onclick="scrollToCard('q351')">Q351. . StampedLock (Java 8+)</div>
+<div class="sidebar-link" data-target="q354" onclick="scrollToCard('q354')">Q354. . Project Loom Impact on Architecture</div>
+<div class="sidebar-link" data-target="q357" onclick="scrollToCard('q357')">Q357. . Disruptor Pattern (LMAX Disruptor)</div>
+<div class="sidebar-link" data-target="q360" onclick="scrollToCard('q360')">Q360. . Concurrent Data Structures — Concurren...</div>
+<div class="sidebar-link" data-target="q363" onclick="scrollToCard('q363')">Q363. . Thread Interruption Protocol</div>
+<div class="sidebar-link" data-target="q366" onclick="scrollToCard('q366')">Q366. . Fork-Join Best Practices</div>
+<div class="sidebar-link" data-target="q369" onclick="scrollToCard('q369')">Q369. . Concurrency Patterns — Active Object P...</div>
+<div class="sidebar-link" data-target="q372" onclick="scrollToCard('q372')">Q372. . Virtual Threads and Thread-Local Best ...</div>
+<div class="sidebar-link" data-target="q375" onclick="scrollToCard('q375')">Q375. . Performance Monitoring for Concurrent ...</div>
+<div class="sidebar-link" data-target="q378" onclick="scrollToCard('q378')">Q378. . Intrinsic Lock Optimization in JVM</div>
+
+  </aside>
+  <div class="content">
+    
+    <div class="card" id="q351">
+      <div class="card-header" onclick="toggle(this)">
+        <span class="q-num">351</span>
+        <span class="q-title">. StampedLock (Java 8+)</span>
+        <span class="difficulty diff-exp">EXPERT</span>
+        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
       </div>
-    </nav>
-    <div class="breadcrumb">
-      <a href="index.html">Home</a> › PART 7: Advanced Java Concurrency — Expert
-      Level (Q351–380)
-    </div>
-    <header>
-      <div class="header-tag">// Java Interview — Senior Level</div>
-      <h1>🔬 PART 7: Advanced Java Concurrency — Expert Level (Q351–380)</h1>
-      <p class="subtitle">
-        StampedLock, Scoped Values, Disruptor, NUMA, reactive streams, JFR
-        profiling, expert-level patterns.
-      </p>
-      <div class="stats-row">
-        <div class="stat"><span class="stat-num">30</span> Questions</div>
-
-        <div class="stat"><span class="stat-num">2</span> Mid</div>
-        <div class="stat"><span class="stat-num">11</span> Advanced</div>
-        <div class="stat"><span class="stat-num">17</span> Expert</div>
-      </div>
-    </header>
-    <div class="controls">
-      <div class="search-wrap">
-        <svg
-          width="14"
-          height="14"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-        >
-          <circle cx="11" cy="11" r="8" />
-          <line x1="21" y1="21" x2="16.65" y2="16.65" />
-        </svg>
-        <input
-          type="text"
-          id="searchInput"
-          placeholder="Search questions..."
-          oninput="filterCards()"
-        />
-      </div>
-      <button class="filter-btn active" onclick="filterBy('all', this)">
-        All
-      </button>
-
-      <button class="filter-btn" onclick="filterBy('mid', this)">Mid</button>
-      <button class="filter-btn" onclick="filterBy('adv', this)">
-        Advanced
-      </button>
-      <button class="filter-btn" onclick="filterBy('exp', this)">Expert</button>
-      <button class="expand-all" onclick="toggleAll()">Expand All</button>
-    </div>
-    <div class="main">
-      <aside class="sidebar">
-        <div class="cat-header">Questions</div>
-        <div
-          class="sidebar-link"
-          data-target="q351"
-          onclick="scrollToCard('q351')"
-        >
-          Q351. . StampedLock (Java 8+)
-        </div>
-        <div
-          class="sidebar-link"
-          data-target="q354"
-          onclick="scrollToCard('q354')"
-        >
-          Q354. . Project Loom Impact on Architecture
-        </div>
-        <div
-          class="sidebar-link"
-          data-target="q357"
-          onclick="scrollToCard('q357')"
-        >
-          Q357. . Disruptor Pattern (LMAX Disruptor)
-        </div>
-        <div
-          class="sidebar-link"
-          data-target="q360"
-          onclick="scrollToCard('q360')"
-        >
-          Q360. . Concurrent Data Structures — Concurren...
-        </div>
-        <div
-          class="sidebar-link"
-          data-target="q363"
-          onclick="scrollToCard('q363')"
-        >
-          Q363. . Thread Interruption Protocol
-        </div>
-        <div
-          class="sidebar-link"
-          data-target="q366"
-          onclick="scrollToCard('q366')"
-        >
-          Q366. . Fork-Join Best Practices
-        </div>
-        <div
-          class="sidebar-link"
-          data-target="q369"
-          onclick="scrollToCard('q369')"
-        >
-          Q369. . Concurrency Patterns — Active Object P...
-        </div>
-        <div
-          class="sidebar-link"
-          data-target="q372"
-          onclick="scrollToCard('q372')"
-        >
-          Q372. . Virtual Threads and Thread-Local Best ...
-        </div>
-        <div
-          class="sidebar-link"
-          data-target="q375"
-          onclick="scrollToCard('q375')"
-        >
-          Q375. . Performance Monitoring for Concurrent ...
-        </div>
-        <div
-          class="sidebar-link"
-          data-target="q378"
-          onclick="scrollToCard('q378')"
-        >
-          Q378. . Intrinsic Lock Optimization in JVM
-        </div>
-      </aside>
-      <div class="content">
-        <div class="card" id="q351">
-          <div class="card-header" onclick="toggle(this)">
-            <span class="q-num">351</span>
-            <span class="q-title">. StampedLock (Java 8+)</span>
-            <span class="difficulty diff-exp">EXPERT</span>
-            <svg
-              class="chevron"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <polyline points="6 9 12 15 18 9" />
-            </svg>
-          </div>
-          <div class="card-body">
-            <div class="card-inner">
-              <div class="answer">
-                <p>
-                  <code>StampedLock</code> is a higher-performance alternative
-                  to <code>ReadWriteLock</code> with three modes:
-                </p>
-                <pre>
-StampedLock lock = new StampedLock();
+      <div class="card-body">
+        <div class="card-inner">
+          <div class="answer">
+            <p><code>StampedLock</code> is a higher-performance alternative to <code>ReadWriteLock</code> with three modes:</p>
+<pre>StampedLock lock = new StampedLock();
 
 // Optimistic read — no lock acquired, just get a stamp
 long stamp = lock.tryOptimisticRead();
@@ -977,242 +81,131 @@ if (!lock.validate(stamp)) { // check if write happened during read
 // Write lock
 long writeStamp = lock.writeLock();
 try { this.x = newX; this.y = newY; }
-finally { lock.unlock(writeStamp); }</pre
-                >
-                <p>
-                  <strong>Optimistic reads</strong> are perfect for
-                  read-dominant workloads: no lock acquisition, just validate
-                  that no write occurred. Falls back to pessimistic if
-                  invalidated.
-                </p>
-                <p>
-                  > <code>StampedLock</code> is NOT reentrant (unlike
-                  ReentrantReadWriteLock). Calling a stamped lock method from a
-                  thread that already holds it causes deadlock.
-                </p>
-              </div>
-            </div>
+finally { lock.unlock(writeStamp); }</pre>
+<p><strong>Optimistic reads</strong> are perfect for read-dominant workloads: no lock acquisition, just validate that no write occurred. Falls back to pessimistic if invalidated.</p>
+<p>> <code>StampedLock</code> is NOT reentrant (unlike ReentrantReadWriteLock). Calling a stamped lock method from a thread that already holds it causes deadlock.</p>
           </div>
         </div>
-        <div class="card" id="q352">
-          <div class="card-header" onclick="toggle(this)">
-            <span class="q-num">352</span>
-            <span class="q-title">. Scoped Values (Java 21)</span>
-            <span class="difficulty diff-exp">EXPERT</span>
-            <svg
-              class="chevron"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <polyline points="6 9 12 15 18 9" />
-            </svg>
-          </div>
-          <div class="card-body">
-            <div class="card-inner">
-              <div class="answer">
-                <p>
-                  <code>ScopedValue</code> is the recommended replacement for
-                  <code>ThreadLocal</code> in the virtual thread era:
-                </p>
-                <pre>
-static final ScopedValue&lt;User&gt; CURRENT_USER = ScopedValue.newInstance();
+      </div>
+    </div>
+    <div class="card" id="q352">
+      <div class="card-header" onclick="toggle(this)">
+        <span class="q-num">352</span>
+        <span class="q-title">. Scoped Values (Java 21)</span>
+        <span class="difficulty diff-exp">EXPERT</span>
+        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="card-body">
+        <div class="card-inner">
+          <div class="answer">
+            <p><code>ScopedValue</code> is the recommended replacement for <code>ThreadLocal</code> in the virtual thread era:</p>
+<pre>static final ScopedValue&lt;User&gt; CURRENT_USER = ScopedValue.newInstance();
 
 // Bind a value for the scope of a computation
 ScopedValue.where(CURRENT_USER, authenticatedUser)
            .run(() -&gt; processRequest()); // value visible in entire call subtree
 
 // Access anywhere in the call tree
-User user = CURRENT_USER.get();</pre
-                >
-                <p>
-                  <strong
-                    >Why better than ThreadLocal for virtual threads:</strong
-                  >
-                </p>
-                <ul>
-                  <li>
-                    Immutable — value can't be changed during scope (thread-safe
-                    by design)
-                  </li>
-                  <li>
-                    Automatically cleaned up when scope ends (no
-                    <code>remove()</code> needed)
-                  </li>
-                  <li>
-                    Works correctly with structured concurrency (child tasks
-                    inherit parent's values)
-                  </li>
-                  <li>No risk of memory leaks in thread pools</li>
-                </ul>
-              </div>
-            </div>
+User user = CURRENT_USER.get();</pre>
+<p><strong>Why better than ThreadLocal for virtual threads:</strong></p>
+<ul>
+<li>Immutable — value can't be changed during scope (thread-safe by design)</li>
+<li>Automatically cleaned up when scope ends (no <code>remove()</code> needed)</li>
+<li>Works correctly with structured concurrency (child tasks inherit parent's values)</li>
+<li>No risk of memory leaks in thread pools</li>
+</ul>
           </div>
         </div>
-        <div class="card" id="q353">
-          <div class="card-header" onclick="toggle(this)">
-            <span class="q-num">353</span>
-            <span class="q-title">. Virtual Threads Deep Dive (Java 21)</span>
-            <span class="difficulty diff-exp">EXPERT</span>
-            <svg
-              class="chevron"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <polyline points="6 9 12 15 18 9" />
-            </svg>
-          </div>
-          <div class="card-body">
-            <div class="card-inner">
-              <div class="answer">
-                <p>
-                  Virtual threads are
-                  <strong>lightweight JVM-managed threads</strong> (not OS
-                  threads). You can create millions with minimal overhead.
-                </p>
-                <pre>
-// Create virtual thread
+      </div>
+    </div>
+    <div class="card" id="q353">
+      <div class="card-header" onclick="toggle(this)">
+        <span class="q-num">353</span>
+        <span class="q-title">. Virtual Threads Deep Dive (Java 21)</span>
+        <span class="difficulty diff-exp">EXPERT</span>
+        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="card-body">
+        <div class="card-inner">
+          <div class="answer">
+            <p>Virtual threads are <strong>lightweight JVM-managed threads</strong> (not OS threads). You can create millions with minimal overhead.</p>
+<pre>// Create virtual thread
 Thread.ofVirtual().start(() -&gt; blockingIO());
 
 // Virtual thread executor — one virtual thread per task
 try (var executor = Executors.newVirtualThreadPerTaskExecutor()) {
     for (int i = 0; i &lt; 1_000_000; i++)
         executor.submit(this::handleRequest);
-}</pre
-                >
-                <p><strong>Internals:</strong></p>
-                <ul>
-                  <li>Mapped M:N onto platform (OS carrier) threads</li>
-                  <li>
-                    When a virtual thread blocks (I/O, sleep, lock), it
-                    <em>unmounts</em> from carrier thread; carrier serves other
-                    virtual threads
-                  </li>
-                  <li>
-                    Stack is heap-allocated, starts ~kilobytes vs ~1MB for OS
-                    threads
-                  </li>
-                  <li>No changes to Thread API — drop-in compatible</li>
-                </ul>
-                <p>
-                  <strong>Pinning problem</strong> — virtual thread is pinned
-                  (can't unmount) when:
-                </p>
-                <ul>
-                  <li>
-                    Inside a <code>synchronized</code> block that does I/O
-                  </li>
-                  <li>Calling native (JNI) code</li>
-                </ul>
-                <pre>
-// BEFORE: synchronized (causes pinning in virtual thread era)
+}</pre>
+<p><strong>Internals:</strong></p>
+<ul>
+<li>Mapped M:N onto platform (OS carrier) threads</li>
+<li>When a virtual thread blocks (I/O, sleep, lock), it <em>unmounts</em> from carrier thread; carrier serves other virtual threads</li>
+<li>Stack is heap-allocated, starts ~kilobytes vs ~1MB for OS threads</li>
+<li>No changes to Thread API — drop-in compatible</li>
+</ul>
+<p><strong>Pinning problem</strong> — virtual thread is pinned (can't unmount) when:</p>
+<ul>
+<li>Inside a <code>synchronized</code> block that does I/O</li>
+<li>Calling native (JNI) code</li>
+</ul>
+<pre>// BEFORE: synchronized (causes pinning in virtual thread era)
 synchronized (this) { jdbcConnection.executeQuery(); } // pins!
 
 // AFTER: use ReentrantLock instead
 ReentrantLock lock = new ReentrantLock();
 lock.lock();
 try { jdbcConnection.executeQuery(); } // virtual thread can unmount
-finally { lock.unlock(); }</pre
-                >
-              </div>
-            </div>
+finally { lock.unlock(); }</pre>
           </div>
         </div>
-        <div class="card" id="q354">
-          <div class="card-header" onclick="toggle(this)">
-            <span class="q-num">354</span>
-            <span class="q-title">. Project Loom Impact on Architecture</span>
-            <span class="difficulty diff-exp">EXPERT</span>
-            <svg
-              class="chevron"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <polyline points="6 9 12 15 18 9" />
-            </svg>
-          </div>
-          <div class="card-body">
-            <div class="card-inner">
-              <div class="answer">
-                <p>
-                  Project Loom (finalized Java 21) fundamentally changes Java
-                  concurrency with virtual threads and structured concurrency.
-                </p>
-                <p><strong>Impact on existing code:</strong></p>
-                <ul>
-                  <li>Blocking JDBC, HTTP clients, file I/O become scalable</li>
-                  <li>
-                    Thread-per-request model (Tomcat, Spring MVC) now handles
-                    millions of concurrent requests
-                  </li>
-                  <li>
-                    No need to rewrite to reactive (WebFlux) for scalability
-                  </li>
-                </ul>
-                <p><strong>Framework support:</strong></p>
-                <ul>
-                  <li>
-                    Spring Boot 3.2+:
-                    <code>spring.threads.virtual.enabled=true</code>
-                  </li>
-                  <li>Tomcat/Jetty: virtual thread executor support</li>
-                  <li>
-                    JDBC: most drivers compatible (except if synchronized
-                    internally)
-                  </li>
-                </ul>
-                <p><strong>When to still use reactive:</strong></p>
-                <ul>
-                  <li>Built-in backpressure operators</li>
-                  <li>Fine-grained streaming pipelines</li>
-                  <li>
-                    Existing reactive codebase (refactoring cost not worth it)
-                  </li>
-                </ul>
-              </div>
-            </div>
+      </div>
+    </div>
+    <div class="card" id="q354">
+      <div class="card-header" onclick="toggle(this)">
+        <span class="q-num">354</span>
+        <span class="q-title">. Project Loom Impact on Architecture</span>
+        <span class="difficulty diff-exp">EXPERT</span>
+        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="card-body">
+        <div class="card-inner">
+          <div class="answer">
+            <p>Project Loom (finalized Java 21) fundamentally changes Java concurrency with virtual threads and structured concurrency.</p>
+<p><strong>Impact on existing code:</strong></p>
+<ul>
+<li>Blocking JDBC, HTTP clients, file I/O become scalable</li>
+<li>Thread-per-request model (Tomcat, Spring MVC) now handles millions of concurrent requests</li>
+<li>No need to rewrite to reactive (WebFlux) for scalability</li>
+</ul>
+<p><strong>Framework support:</strong></p>
+<ul>
+<li>Spring Boot 3.2+: <code>spring.threads.virtual.enabled=true</code></li>
+<li>Tomcat/Jetty: virtual thread executor support</li>
+<li>JDBC: most drivers compatible (except if synchronized internally)</li>
+</ul>
+<p><strong>When to still use reactive:</strong></p>
+<ul>
+<li>Built-in backpressure operators</li>
+<li>Fine-grained streaming pipelines</li>
+<li>Existing reactive codebase (refactoring cost not worth it)</li>
+</ul>
           </div>
         </div>
-        <div class="card" id="q355">
-          <div class="card-header" onclick="toggle(this)">
-            <span class="q-num">355</span>
-            <span class="q-title">. Memory Visibility with final Fields</span>
-            <span class="difficulty diff-exp">EXPERT</span>
-            <svg
-              class="chevron"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <polyline points="6 9 12 15 18 9" />
-            </svg>
-          </div>
-          <div class="card-body">
-            <div class="card-inner">
-              <div class="answer">
-                <p>
-                  The Java Memory Model gives <code>final</code> fields special
-                  guarantees: their values are guaranteed visible to all threads
-                  <strong>without synchronization</strong> after the object's
-                  constructor completes (as long as <code>this</code> doesn't
-                  escape the constructor).
-                </p>
-                <pre>
-class ImmutablePoint {
+      </div>
+    </div>
+    <div class="card" id="q355">
+      <div class="card-header" onclick="toggle(this)">
+        <span class="q-num">355</span>
+        <span class="q-title">. Memory Visibility with final Fields</span>
+        <span class="difficulty diff-exp">EXPERT</span>
+        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="card-body">
+        <div class="card-inner">
+          <div class="answer">
+            <p>The Java Memory Model gives <code>final</code> fields special guarantees: their values are guaranteed visible to all threads <strong>without synchronization</strong> after the object's constructor completes (as long as <code>this</code> doesn't escape the constructor).</p>
+<pre>class ImmutablePoint {
     final int x;
     final int y;
 
@@ -1224,53 +217,31 @@ class ImmutablePoint {
 }
 
 // Safe publication — another thread reading x and y after the constructor
-// sees the correct values without synchronization</pre
-                >
-                <p>
-                  <strong>Unsafe publication</strong> — sharing object reference
-                  before constructor completes:
-                </p>
-                <pre>
-// DON&#x27;T DO THIS
+// sees the correct values without synchronization</pre>
+<p><strong>Unsafe publication</strong> — sharing object reference before constructor completes:</p>
+<pre>// DON&#x27;T DO THIS
 ImmutablePoint point;
 ImmutablePoint(int x, int y) {
     ExternalRegistry.register(this); // &#x27;this&#x27; escapes before fields are set!
     this.x = x;
     this.y = y;
-}</pre
-                >
-              </div>
-            </div>
+}</pre>
           </div>
         </div>
-        <div class="card" id="q356">
-          <div class="card-header" onclick="toggle(this)">
-            <span class="q-num">356</span>
-            <span class="q-title"
-              >. Java Flight Recorder (JFR) for Concurrency Profiling</span
-            >
-            <span class="difficulty diff-exp">EXPERT</span>
-            <svg
-              class="chevron"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <polyline points="6 9 12 15 18 9" />
-            </svg>
-          </div>
-          <div class="card-body">
-            <div class="card-inner">
-              <div class="answer">
-                <p>
-                  JFR (built into JVM since Java 11) is invaluable for
-                  diagnosing concurrency issues in production:
-                </p>
-                <pre>
-# Start recording
+      </div>
+    </div>
+    <div class="card" id="q356">
+      <div class="card-header" onclick="toggle(this)">
+        <span class="q-num">356</span>
+        <span class="q-title">. Java Flight Recorder (JFR) for Concurrency Profiling</span>
+        <span class="difficulty diff-exp">EXPERT</span>
+        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="card-body">
+        <div class="card-inner">
+          <div class="answer">
+            <p>JFR (built into JVM since Java 11) is invaluable for diagnosing concurrency issues in production:</p>
+<pre># Start recording
 jcmd &lt;pid&gt; JFR.start duration=60s filename=app.jfr
 
 # Or programmatically
@@ -1279,182 +250,94 @@ recording.enable(&quot;jdk.ThreadStart&quot;);
 recording.enable(&quot;jdk.MonitorEnter&quot;);
 recording.enable(&quot;jdk.MonitorWait&quot;);
 recording.enable(&quot;jdk.ThreadSleep&quot;);
-recording.start();</pre
-                >
-                <p><strong>Key JFR events for concurrency:</strong></p>
-                <ul>
-                  <li>
-                    <code>jdk.MonitorEnter</code> — lock acquisition attempts
-                    (detect contention)
-                  </li>
-                  <li>
-                    <code>jdk.MonitorWait</code> — wait() calls with durations
-                  </li>
-                  <li>
-                    <code>jdk.ThreadBlocked</code> — threads blocked on locks
-                  </li>
-                  <li><code>jdk.ThreadSleep</code> — sleep events</li>
-                  <li>
-                    <code>jdk.VirtualThreadPinned</code> — virtual thread
-                    pinning events (Java 21+)
-                  </li>
-                </ul>
-                <p>
-                  <strong>Analyze with JDK Mission Control (JMC):</strong> Flame
-                  graphs, lock contention, thread activity timelines.
-                </p>
-              </div>
-            </div>
+recording.start();</pre>
+<p><strong>Key JFR events for concurrency:</strong></p>
+<ul>
+<li><code>jdk.MonitorEnter</code> — lock acquisition attempts (detect contention)</li>
+<li><code>jdk.MonitorWait</code> — wait() calls with durations</li>
+<li><code>jdk.ThreadBlocked</code> — threads blocked on locks</li>
+<li><code>jdk.ThreadSleep</code> — sleep events</li>
+<li><code>jdk.VirtualThreadPinned</code> — virtual thread pinning events (Java 21+)</li>
+</ul>
+<p><strong>Analyze with JDK Mission Control (JMC):</strong> Flame graphs, lock contention, thread activity timelines.</p>
           </div>
         </div>
-        <div class="card" id="q357">
-          <div class="card-header" onclick="toggle(this)">
-            <span class="q-num">357</span>
-            <span class="q-title">. Disruptor Pattern (LMAX Disruptor)</span>
-            <span class="difficulty diff-exp">EXPERT</span>
-            <svg
-              class="chevron"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <polyline points="6 9 12 15 18 9" />
-            </svg>
-          </div>
-          <div class="card-body">
-            <div class="card-inner">
-              <div class="answer">
-                <p>
-                  The LMAX Disruptor is a high-performance inter-thread
-                  messaging library that achieves
-                  <strong>extremely low latency</strong> by using:
-                </p>
-                <pre>
-Traditional Queue:    Disruptor:
+      </div>
+    </div>
+    <div class="card" id="q357">
+      <div class="card-header" onclick="toggle(this)">
+        <span class="q-num">357</span>
+        <span class="q-title">. Disruptor Pattern (LMAX Disruptor)</span>
+        <span class="difficulty diff-exp">EXPERT</span>
+        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="card-body">
+        <div class="card-inner">
+          <div class="answer">
+            <p>The LMAX Disruptor is a high-performance inter-thread messaging library that achieves <strong>extremely low latency</strong> by using:</p>
+<pre>Traditional Queue:    Disruptor:
 Producer → Queue → Consumer    Producer → RingBuffer → Consumer
-         (locks, GC)                    (lock-free, pre-allocated)</pre
-                >
-                <p><strong>Key concepts:</strong></p>
-                <ul>
-                  <li>
-                    <strong>RingBuffer</strong>: Fixed-size circular array,
-                    pre-allocated; no GC pressure
-                  </li>
-                  <li>
-                    <strong>Sequence</strong>: Atomic counter tracking progress
-                    for each producer/consumer
-                  </li>
-                  <li>
-                    <strong>WaitStrategy</strong>: How consumers wait for events
-                    (BusySpin, Yielding, Blocking, Sleeping)
-                  </li>
-                  <li>
-                    <strong>EventProcessor</strong>: Threads consuming events
-                    from the ring buffer
-                  </li>
-                </ul>
-                <p><strong>Why faster than BlockingQueue:</strong></p>
-                <ul>
-                  <li>No locks (CAS only)</li>
-                  <li>Cache-friendly (array, not linked nodes)</li>
-                  <li>No garbage (pre-allocated event objects reused)</li>
-                  <li>False sharing avoided with padding</li>
-                </ul>
-                <p>
-                  Used by: Log4j2's async loggers, financial trading systems,
-                  game engines.
-                </p>
-              </div>
-            </div>
+         (locks, GC)                    (lock-free, pre-allocated)</pre>
+<p><strong>Key concepts:</strong></p>
+<ul>
+<li><strong>RingBuffer</strong>: Fixed-size circular array, pre-allocated; no GC pressure</li>
+<li><strong>Sequence</strong>: Atomic counter tracking progress for each producer/consumer</li>
+<li><strong>WaitStrategy</strong>: How consumers wait for events (BusySpin, Yielding, Blocking, Sleeping)</li>
+<li><strong>EventProcessor</strong>: Threads consuming events from the ring buffer</li>
+</ul>
+<p><strong>Why faster than BlockingQueue:</strong></p>
+<ul>
+<li>No locks (CAS only)</li>
+<li>Cache-friendly (array, not linked nodes)</li>
+<li>No garbage (pre-allocated event objects reused)</li>
+<li>False sharing avoided with padding</li>
+</ul>
+<p>Used by: Log4j2's async loggers, financial trading systems, game engines.</p>
           </div>
         </div>
-        <div class="card" id="q358">
-          <div class="card-header" onclick="toggle(this)">
-            <span class="q-num">358</span>
-            <span class="q-title">. Thread Affinity and NUMA Awareness</span>
-            <span class="difficulty diff-exp">EXPERT</span>
-            <svg
-              class="chevron"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <polyline points="6 9 12 15 18 9" />
-            </svg>
-          </div>
-          <div class="card-body">
-            <div class="card-inner">
-              <div class="answer">
-                <p>
-                  For ultra-low-latency systems, thread-to-CPU core affinity
-                  eliminates OS scheduling overhead:
-                </p>
-                <pre>
-// Using Java Thread Affinity library (OpenHFT)
+      </div>
+    </div>
+    <div class="card" id="q358">
+      <div class="card-header" onclick="toggle(this)">
+        <span class="q-num">358</span>
+        <span class="q-title">. Thread Affinity and NUMA Awareness</span>
+        <span class="difficulty diff-exp">EXPERT</span>
+        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="card-body">
+        <div class="card-inner">
+          <div class="answer">
+            <p>For ultra-low-latency systems, thread-to-CPU core affinity eliminates OS scheduling overhead:</p>
+<pre>// Using Java Thread Affinity library (OpenHFT)
 try (AffinityLock lock = AffinityLock.acquireCore()) {
     // This thread is now pinned to a specific core
     performLatencySensitiveWork();
-}</pre
-                >
-                <p>
-                  <strong>NUMA (Non-Uniform Memory Access):</strong> In
-                  multi-socket servers, memory access cost depends on which
-                  socket the memory is on. Threads should access memory local to
-                  their CPU socket.
-                </p>
-                <pre>
-# JVM NUMA awareness
+}</pre>
+<p><strong>NUMA (Non-Uniform Memory Access):</strong> In multi-socket servers, memory access cost depends on which socket the memory is on. Threads should access memory local to their CPU socket.</p>
+<pre># JVM NUMA awareness
 -XX:+UseNUMA
--XX:+UseParallelGC  # GC that&#x27;s NUMA-aware</pre
-                >
-                <p><strong>ForkJoinPool NUMA:</strong></p>
-                <ul>
-                  <li>
-                    Java 14+: <code>ForkJoinPool</code> has NUMA-aware
-                    allocation option
-                  </li>
-                  <li>
-                    Critical for big-data processing on multi-socket machines
-                  </li>
-                </ul>
-              </div>
-            </div>
+-XX:+UseParallelGC  # GC that&#x27;s NUMA-aware</pre>
+<p><strong>ForkJoinPool NUMA:</strong></p>
+<ul>
+<li>Java 14+: <code>ForkJoinPool</code> has NUMA-aware allocation option</li>
+<li>Critical for big-data processing on multi-socket machines</li>
+</ul>
           </div>
         </div>
-        <div class="card" id="q359">
-          <div class="card-header" onclick="toggle(this)">
-            <span class="q-num">359</span>
-            <span class="q-title"
-              >. Non-Blocking I/O (NIO) and Concurrency</span
-            >
-            <span class="difficulty diff-adv">ADVANCED</span>
-            <svg
-              class="chevron"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <polyline points="6 9 12 15 18 9" />
-            </svg>
-          </div>
-          <div class="card-body">
-            <div class="card-inner">
-              <div class="answer">
-                <p>
-                  Java NIO's <code>Selector</code> enables one thread to manage
-                  many I/O channels:
-                </p>
-                <pre>
-Selector selector = Selector.open();
+      </div>
+    </div>
+    <div class="card" id="q359">
+      <div class="card-header" onclick="toggle(this)">
+        <span class="q-num">359</span>
+        <span class="q-title">. Non-Blocking I/O (NIO) and Concurrency</span>
+        <span class="difficulty diff-adv">ADVANCED</span>
+        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="card-body">
+        <div class="card-inner">
+          <div class="answer">
+            <p>Java NIO's <code>Selector</code> enables one thread to manage many I/O channels:</p>
+<pre>Selector selector = Selector.open();
 ServerSocketChannel serverChannel = ServerSocketChannel.open();
 serverChannel.configureBlocking(false);
 serverChannel.register(selector, SelectionKey.OP_ACCEPT);
@@ -1469,55 +352,30 @@ while (true) {
         if (key.isReadable()) { handleRead(key); }
         iter.remove();
     }
-}</pre
-                >
-                <p>
-                  <strong>NIO.2 Async I/O (Java 7+):</strong> Callback-based, no
-                  selector needed:
-                </p>
-                <pre>
-AsynchronousFileChannel channel = AsynchronousFileChannel.open(path);
+}</pre>
+<p><strong>NIO.2 Async I/O (Java 7+):</strong> Callback-based, no selector needed:</p>
+<pre>AsynchronousFileChannel channel = AsynchronousFileChannel.open(path);
 channel.read(buffer, 0, null, new CompletionHandler&lt;Integer, Void&gt;() {
     public void completed(Integer bytesRead, Void attachment) { process(buffer); }
     public void failed(Throwable exc, Void attachment) { handleError(exc); }
-});</pre
-                >
-                <p>
-                  With virtual threads, blocking I/O is now equivalent in
-                  scalability to NIO for most use cases.
-                </p>
-              </div>
-            </div>
+});</pre>
+<p>With virtual threads, blocking I/O is now equivalent in scalability to NIO for most use cases.</p>
           </div>
         </div>
-        <div class="card" id="q360">
-          <div class="card-header" onclick="toggle(this)">
-            <span class="q-num">360</span>
-            <span class="q-title"
-              >. Concurrent Data Structures — ConcurrentSkipListMap</span
-            >
-            <span class="difficulty diff-exp">EXPERT</span>
-            <svg
-              class="chevron"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <polyline points="6 9 12 15 18 9" />
-            </svg>
-          </div>
-          <div class="card-body">
-            <div class="card-inner">
-              <div class="answer">
-                <p>
-                  <code>ConcurrentSkipListMap</code> is a
-                  <strong>lock-free, sorted, thread-safe</strong> map:
-                </p>
-                <pre>
-ConcurrentSkipListMap&lt;Integer, String&gt; map = new ConcurrentSkipListMap&lt;&gt;();
+      </div>
+    </div>
+    <div class="card" id="q360">
+      <div class="card-header" onclick="toggle(this)">
+        <span class="q-num">360</span>
+        <span class="q-title">. Concurrent Data Structures — ConcurrentSkipListMap</span>
+        <span class="difficulty diff-exp">EXPERT</span>
+        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="card-body">
+        <div class="card-inner">
+          <div class="answer">
+            <p><code>ConcurrentSkipListMap</code> is a <strong>lock-free, sorted, thread-safe</strong> map:</p>
+<pre>ConcurrentSkipListMap&lt;Integer, String&gt; map = new ConcurrentSkipListMap&lt;&gt;();
 map.put(3, &quot;three&quot;);
 map.put(1, &quot;one&quot;);
 map.put(2, &quot;two&quot;);
@@ -1528,49 +386,25 @@ map.lastKey();           // 3
 map.headMap(2);          // {1=one}
 map.tailMap(2);          // {2=two, 3=three}
 map.floorKey(2);         // 2 (greatest key ≤ 2)
-map.ceilingKey(2);       // 2 (smallest key ≥ 2)</pre
-                >
-                <p>
-                  <strong>Skip list internal:</strong> Probabilistic data
-                  structure with multiple layers. Each level skips over more
-                  elements. Expected O(log n) for all operations, fully
-                  lock-free using CAS.
-                </p>
-                <p>
-                  <strong>When to use over ConcurrentHashMap:</strong> When you
-                  need sorted key access + range queries + concurrent writes.
-                </p>
-              </div>
-            </div>
+map.ceilingKey(2);       // 2 (smallest key ≥ 2)</pre>
+<p><strong>Skip list internal:</strong> Probabilistic data structure with multiple layers. Each level skips over more elements. Expected O(log n) for all operations, fully lock-free using CAS.</p>
+<p><strong>When to use over ConcurrentHashMap:</strong> When you need sorted key access + range queries + concurrent writes.</p>
           </div>
         </div>
-        <div class="card" id="q361">
-          <div class="card-header" onclick="toggle(this)">
-            <span class="q-num">361</span>
-            <span class="q-title">. Reactive Streams Specification</span>
-            <span class="difficulty diff-exp">EXPERT</span>
-            <svg
-              class="chevron"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <polyline points="6 9 12 15 18 9" />
-            </svg>
-          </div>
-          <div class="card-body">
-            <div class="card-inner">
-              <div class="answer">
-                <p>
-                  The Reactive Streams specification (Java 9
-                  <code>java.util.concurrent.Flow</code>) defines a standard for
-                  asynchronous stream processing with non-blocking backpressure:
-                </p>
-                <pre>
-// Publisher produces items
+      </div>
+    </div>
+    <div class="card" id="q361">
+      <div class="card-header" onclick="toggle(this)">
+        <span class="q-num">361</span>
+        <span class="q-title">. Reactive Streams Specification</span>
+        <span class="difficulty diff-exp">EXPERT</span>
+        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="card-body">
+        <div class="card-inner">
+          <div class="answer">
+            <p>The Reactive Streams specification (Java 9 <code>java.util.concurrent.Flow</code>) defines a standard for asynchronous stream processing with non-blocking backpressure:</p>
+<pre>// Publisher produces items
 Publisher&lt;T&gt; publisher = ...;
 
 // Subscriber consumes items
@@ -1587,52 +421,28 @@ publisher.subscribe(new Subscriber&lt;T&gt;() {
     }
     public void onError(Throwable t) { handleError(t); }
     public void onComplete() { cleanup(); }
-});</pre
-                >
-                <p>
-                  <strong>Project Reactor</strong> (Spring WebFlux) and
-                  <strong>RxJava</strong> implement this spec. Key types:
-                </p>
-                <ul>
-                  <li>
-                    <code>Mono&lt;T&gt;</code>: 0 or 1 item asynchronously
-                  </li>
-                  <li>
-                    <code>Flux&lt;T&gt;</code>: 0 to N items asynchronously
-                  </li>
-                </ul>
-              </div>
-            </div>
+});</pre>
+<p><strong>Project Reactor</strong> (Spring WebFlux) and <strong>RxJava</strong> implement this spec. Key types:</p>
+<ul>
+<li><code>Mono&lt;T&gt;</code>: 0 or 1 item asynchronously</li>
+<li><code>Flux&lt;T&gt;</code>: 0 to N items asynchronously</li>
+</ul>
           </div>
         </div>
-        <div class="card" id="q362">
-          <div class="card-header" onclick="toggle(this)">
-            <span class="q-num">362</span>
-            <span class="q-title"
-              >. Executor Shutdown and Graceful Termination</span
-            >
-            <span class="difficulty diff-mid">MID</span>
-            <svg
-              class="chevron"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <polyline points="6 9 12 15 18 9" />
-            </svg>
-          </div>
-          <div class="card-body">
-            <div class="card-inner">
-              <div class="answer">
-                <p>
-                  Proper executor shutdown is critical for production
-                  applications:
-                </p>
-                <pre>
-ExecutorService executor = Executors.newFixedThreadPool(4);
+      </div>
+    </div>
+    <div class="card" id="q362">
+      <div class="card-header" onclick="toggle(this)">
+        <span class="q-num">362</span>
+        <span class="q-title">. Executor Shutdown and Graceful Termination</span>
+        <span class="difficulty diff-mid">MID</span>
+        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="card-body">
+        <div class="card-inner">
+          <div class="answer">
+            <p>Proper executor shutdown is critical for production applications:</p>
+<pre>ExecutorService executor = Executors.newFixedThreadPool(4);
 
 // Submit tasks...
 
@@ -1648,58 +458,34 @@ try {
 } catch (InterruptedException e) {
     executor.shutdownNow();
     Thread.currentThread().interrupt(); // preserve interrupt status
-}</pre
-                >
-                <p><strong>Spring Boot graceful shutdown:</strong></p>
-                <pre>
-server:
+}</pre>
+<p><strong>Spring Boot graceful shutdown:</strong></p>
+<pre>server:
   shutdown: graceful
 spring:
   lifecycle:
-    timeout-per-shutdown-phase: 30s</pre
-                >
-                <p>
-                  <strong
-                    >Virtual thread executor with try-with-resources (Java
-                    19+):</strong
-                  >
-                </p>
-                <pre>
-try (ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor()) {
+    timeout-per-shutdown-phase: 30s</pre>
+<p><strong>Virtual thread executor with try-with-resources (Java 19+):</strong></p>
+<pre>try (ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor()) {
     // executor.close() called automatically — waits for all tasks to complete
     IntStream.range(0, 1000).forEach(i -&gt; executor.submit(() -&gt; handleRequest(i)));
-}</pre
-                >
-              </div>
-            </div>
+}</pre>
           </div>
         </div>
-        <div class="card" id="q363">
-          <div class="card-header" onclick="toggle(this)">
-            <span class="q-num">363</span>
-            <span class="q-title">. Thread Interruption Protocol</span>
-            <span class="difficulty diff-adv">ADVANCED</span>
-            <svg
-              class="chevron"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <polyline points="6 9 12 15 18 9" />
-            </svg>
-          </div>
-          <div class="card-body">
-            <div class="card-inner">
-              <div class="answer">
-                <p>
-                  Proper thread interruption is important for clean
-                  cancellation:
-                </p>
-                <pre>
-// WRONG: Swallowing interrupt
+      </div>
+    </div>
+    <div class="card" id="q363">
+      <div class="card-header" onclick="toggle(this)">
+        <span class="q-num">363</span>
+        <span class="q-title">. Thread Interruption Protocol</span>
+        <span class="difficulty diff-adv">ADVANCED</span>
+        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="card-body">
+        <div class="card-inner">
+          <div class="answer">
+            <p>Proper thread interruption is important for clean cancellation:</p>
+<pre>// WRONG: Swallowing interrupt
 try {
     Thread.sleep(1000);
 } catch (InterruptedException e) {
@@ -1717,45 +503,23 @@ try {
 // Check interrupt in long-running loops
 while (!Thread.currentThread().isInterrupted()) {
     doWork();
-}</pre
-                >
-                <p>
-                  <strong
-                    ><code>interrupt()</code> vs <code>stop()</code>:</strong
-                  >
-                  <code>stop()</code> is deprecated (unsafe — leaves objects in
-                  inconsistent state). <code>interrupt()</code> is the
-                  cooperative cancellation mechanism — the thread must check and
-                  respond to the interrupt.
-                </p>
-              </div>
-            </div>
+}</pre>
+<p><strong><code>interrupt()</code> vs <code>stop()</code>:</strong> <code>stop()</code> is deprecated (unsafe — leaves objects in inconsistent state). <code>interrupt()</code> is the cooperative cancellation mechanism — the thread must check and respond to the interrupt.</p>
           </div>
         </div>
-        <div class="card" id="q364">
-          <div class="card-header" onclick="toggle(this)">
-            <span class="q-num">364</span>
-            <span class="q-title"
-              >. CompletableFuture Exception Handling Patterns</span
-            >
-            <span class="difficulty diff-adv">ADVANCED</span>
-            <svg
-              class="chevron"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <polyline points="6 9 12 15 18 9" />
-            </svg>
-          </div>
-          <div class="card-body">
-            <div class="card-inner">
-              <div class="answer">
-                <pre>
-// handle() — runs on success OR failure, transforms result
+      </div>
+    </div>
+    <div class="card" id="q364">
+      <div class="card-header" onclick="toggle(this)">
+        <span class="q-num">364</span>
+        <span class="q-title">. CompletableFuture Exception Handling Patterns</span>
+        <span class="difficulty diff-adv">ADVANCED</span>
+        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="card-body">
+        <div class="card-inner">
+          <div class="answer">
+            <pre>// handle() — runs on success OR failure, transforms result
 CompletableFuture&lt;String&gt; result = fetchUser()
     .handle((user, ex) -&gt; {
         if (ex != null) return &quot;default-user&quot;; // on error
@@ -1775,65 +539,30 @@ fetchUser().exceptionally(ex -&gt; User.anonymous());
 // Timeout (Java 9+)
 fetchUser()
     .orTimeout(5, TimeUnit.SECONDS)          // complete exceptionally on timeout
-    .completeOnTimeout(User.anonymous(), 5, TimeUnit.SECONDS); // provide default</pre
-                >
-              </div>
-            </div>
+    .completeOnTimeout(User.anonymous(), 5, TimeUnit.SECONDS); // provide default</pre>
           </div>
         </div>
-        <div class="card" id="q365">
-          <div class="card-header" onclick="toggle(this)">
-            <span class="q-num">365</span>
-            <span class="q-title">. ThreadPoolExecutor Rejection Policies</span>
-            <span class="difficulty diff-exp">EXPERT</span>
-            <svg
-              class="chevron"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <polyline points="6 9 12 15 18 9" />
-            </svg>
-          </div>
-          <div class="card-body">
-            <div class="card-inner">
-              <div class="answer">
-                <p>
-                  When the thread pool queue is full and all threads are busy,
-                  the <code>RejectedExecutionHandler</code> decides what to do:
-                </p>
-                <table>
-                  <tr>
-                    <th>Policy</th>
-                    <th>Behavior</th>
-                    <th>Use Case</th>
-                  </tr>
-                  <tr>
-                    <td><code>AbortPolicy</code> (default)</td>
-                    <td>Throws <code>RejectedExecutionException</code></td>
-                    <td>Fail fast; caller handles</td>
-                  </tr>
-                  <tr>
-                    <td><code>CallerRunsPolicy</code></td>
-                    <td>Caller thread executes the task</td>
-                    <td>Natural backpressure; slows producer</td>
-                  </tr>
-                  <tr>
-                    <td><code>DiscardPolicy</code></td>
-                    <td>Silently discards the task</td>
-                    <td>Fire-and-forget, acceptable loss</td>
-                  </tr>
-                  <tr>
-                    <td><code>DiscardOldestPolicy</code></td>
-                    <td>Removes oldest queued task, retries</td>
-                    <td>Fresh tasks are priority</td>
-                  </tr>
-                </table>
-                <pre>
-// Custom rejection policy — log + fallback
+      </div>
+    </div>
+    <div class="card" id="q365">
+      <div class="card-header" onclick="toggle(this)">
+        <span class="q-num">365</span>
+        <span class="q-title">. ThreadPoolExecutor Rejection Policies</span>
+        <span class="difficulty diff-exp">EXPERT</span>
+        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="card-body">
+        <div class="card-inner">
+          <div class="answer">
+            <p>When the thread pool queue is full and all threads are busy, the <code>RejectedExecutionHandler</code> decides what to do:</p>
+<table>
+<tr><th>Policy</th><th>Behavior</th><th>Use Case</th></tr>
+<tr><td><code>AbortPolicy</code> (default)</td><td>Throws <code>RejectedExecutionException</code></td><td>Fail fast; caller handles</td></tr>
+<tr><td><code>CallerRunsPolicy</code></td><td>Caller thread executes the task</td><td>Natural backpressure; slows producer</td></tr>
+<tr><td><code>DiscardPolicy</code></td><td>Silently discards the task</td><td>Fire-and-forget, acceptable loss</td></tr>
+<tr><td><code>DiscardOldestPolicy</code></td><td>Removes oldest queued task, retries</td><td>Fresh tasks are priority</td></tr>
+</table>
+<pre>// Custom rejection policy — log + fallback
 new ThreadPoolExecutor(4, 8, 60L, SECONDS,
     new ArrayBlockingQueue&lt;&gt;(200),
     (task, executor) -&gt; {
@@ -1841,34 +570,22 @@ new ThreadPoolExecutor(4, 8, 60L, SECONDS,
         log.warn(&quot;Task rejected, falling back to sync execution&quot;);
         if (!executor.isShutdown()) task.run(); // run in caller&#x27;s thread
     }
-);</pre
-                >
-              </div>
-            </div>
+);</pre>
           </div>
         </div>
-        <div class="card" id="q366">
-          <div class="card-header" onclick="toggle(this)">
-            <span class="q-num">366</span>
-            <span class="q-title">. Fork-Join Best Practices</span>
-            <span class="difficulty diff-adv">ADVANCED</span>
-            <svg
-              class="chevron"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <polyline points="6 9 12 15 18 9" />
-            </svg>
-          </div>
-          <div class="card-body">
-            <div class="card-inner">
-              <div class="answer">
-                <pre>
-// GOOD: Use fork() for async subtask, compute() for current thread&#x27;s work
+      </div>
+    </div>
+    <div class="card" id="q366">
+      <div class="card-header" onclick="toggle(this)">
+        <span class="q-num">366</span>
+        <span class="q-title">. Fork-Join Best Practices</span>
+        <span class="difficulty diff-adv">ADVANCED</span>
+        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="card-body">
+        <div class="card-inner">
+          <div class="answer">
+            <pre>// GOOD: Use fork() for async subtask, compute() for current thread&#x27;s work
 protected Long compute() {
     if (size &lt;= THRESHOLD) {
         return computeSequentially();
@@ -1882,176 +599,92 @@ protected Long compute() {
 
 // BAD: Forking both and joining both
 left.fork(); right.fork();
-return left.join() + right.join(); // current thread sits idle during both joins!</pre
-                >
-                <p><strong>Tuning ForkJoinPool:</strong></p>
-                <pre>
-ForkJoinPool pool = new ForkJoinPool(
+return left.join() + right.join(); // current thread sits idle during both joins!</pre>
+<p><strong>Tuning ForkJoinPool:</strong></p>
+<pre>ForkJoinPool pool = new ForkJoinPool(
     Runtime.getRuntime().availableProcessors(),
     ForkJoinPool.defaultForkJoinWorkerThreadFactory,
     null,    // uncaught exception handler
     true     // asyncMode (FIFO vs LIFO for local queue)
-);</pre
-                >
-              </div>
-            </div>
+);</pre>
           </div>
         </div>
-        <div class="card" id="q367">
-          <div class="card-header" onclick="toggle(this)">
-            <span class="q-num">367</span>
-            <span class="q-title"
-              >. Concurrent Collections Performance Comparison</span
-            >
-            <span class="difficulty diff-exp">EXPERT</span>
-            <svg
-              class="chevron"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <polyline points="6 9 12 15 18 9" />
-            </svg>
-          </div>
-          <div class="card-body">
-            <div class="card-inner">
-              <div class="answer">
-                <table>
-                  <tr>
-                    <th>Use Case</th>
-                    <th>Best Choice</th>
-                    <th>Why</th>
-                  </tr>
-                  <tr>
-                    <td>Read-heavy map (no order needed)</td>
-                    <td><code>ConcurrentHashMap</code></td>
-                    <td>Lock-free reads</td>
-                  </tr>
-                  <tr>
-                    <td>Sorted concurrent map</td>
-                    <td><code>ConcurrentSkipListMap</code></td>
-                    <td>Lock-free, sorted</td>
-                  </tr>
-                  <tr>
-                    <td>High-contention counter</td>
-                    <td><code>LongAdder</code></td>
-                    <td>Striped cells reduce contention</td>
-                  </tr>
-                  <tr>
-                    <td>Single-producer/consumer queue</td>
-                    <td><code>ArrayBlockingQueue</code></td>
-                    <td>Simple, bounded</td>
-                  </tr>
-                  <tr>
-                    <td>Multi-producer/consumer queue</td>
-                    <td><code>LinkedTransferQueue</code></td>
-                    <td>Better throughput</td>
-                  </tr>
-                  <tr>
-                    <td>Read-dominant list</td>
-                    <td><code>CopyOnWriteArrayList</code></td>
-                    <td>Lock-free reads</td>
-                  </tr>
-                  <tr>
-                    <td>Priority-based work queue</td>
-                    <td><code>PriorityBlockingQueue</code></td>
-                    <td>Heap-based, thread-safe</td>
-                  </tr>
-                </table>
-              </div>
-            </div>
+      </div>
+    </div>
+    <div class="card" id="q367">
+      <div class="card-header" onclick="toggle(this)">
+        <span class="q-num">367</span>
+        <span class="q-title">. Concurrent Collections Performance Comparison</span>
+        <span class="difficulty diff-exp">EXPERT</span>
+        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="card-body">
+        <div class="card-inner">
+          <div class="answer">
+            <table>
+<tr><th>Use Case</th><th>Best Choice</th><th>Why</th></tr>
+<tr><td>Read-heavy map (no order needed)</td><td><code>ConcurrentHashMap</code></td><td>Lock-free reads</td></tr>
+<tr><td>Sorted concurrent map</td><td><code>ConcurrentSkipListMap</code></td><td>Lock-free, sorted</td></tr>
+<tr><td>High-contention counter</td><td><code>LongAdder</code></td><td>Striped cells reduce contention</td></tr>
+<tr><td>Single-producer/consumer queue</td><td><code>ArrayBlockingQueue</code></td><td>Simple, bounded</td></tr>
+<tr><td>Multi-producer/consumer queue</td><td><code>LinkedTransferQueue</code></td><td>Better throughput</td></tr>
+<tr><td>Read-dominant list</td><td><code>CopyOnWriteArrayList</code></td><td>Lock-free reads</td></tr>
+<tr><td>Priority-based work queue</td><td><code>PriorityBlockingQueue</code></td><td>Heap-based, thread-safe</td></tr>
+</table>
           </div>
         </div>
-        <div class="card" id="q368">
-          <div class="card-header" onclick="toggle(this)">
-            <span class="q-num">368</span>
-            <span class="q-title">. Memory Leaks in Concurrent Code</span>
-            <span class="difficulty diff-adv">ADVANCED</span>
-            <svg
-              class="chevron"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <polyline points="6 9 12 15 18 9" />
-            </svg>
-          </div>
-          <div class="card-body">
-            <div class="card-inner">
-              <div class="answer">
-                <p><strong>Common sources:</strong></p>
-                <ol>
-                  <li><strong>ThreadLocal without remove():</strong></li>
-                </ol>
-                <pre>
-// In thread pools, ThreadLocal values survive thread reuse
+      </div>
+    </div>
+    <div class="card" id="q368">
+      <div class="card-header" onclick="toggle(this)">
+        <span class="q-num">368</span>
+        <span class="q-title">. Memory Leaks in Concurrent Code</span>
+        <span class="difficulty diff-adv">ADVANCED</span>
+        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="card-body">
+        <div class="card-inner">
+          <div class="answer">
+            <p><strong>Common sources:</strong></p>
+<ol>
+<li><strong>ThreadLocal without remove():</strong></li>
+</ol>
+<pre>// In thread pools, ThreadLocal values survive thread reuse
 static final ThreadLocal&lt;HeavyObject&gt; tl = new ThreadLocal&lt;&gt;();
-// After request: tl.remove() MUST be called!</pre
-                >
-                <ol>
-                  <li>
-                    <strong>Static ConcurrentHashMap growing unbounded:</strong>
-                  </li>
-                </ol>
-                <pre>
-static final Map&lt;String, byte[]&gt; cache = new ConcurrentHashMap&lt;&gt;();
+// After request: tl.remove() MUST be called!</pre>
+<ol>
+<li><strong>Static ConcurrentHashMap growing unbounded:</strong></li>
+</ol>
+<pre>static final Map&lt;String, byte[]&gt; cache = new ConcurrentHashMap&lt;&gt;();
 // No eviction policy → heap exhaustion over time
-// Fix: Use Caffeine/Guava Cache with size/time eviction</pre
-                >
-                <ol>
-                  <li><strong>Listener/Observer not unregistered:</strong></li>
-                </ol>
-                <pre>
-eventBus.subscribe(this); // strong reference from eventBus to this
+// Fix: Use Caffeine/Guava Cache with size/time eviction</pre>
+<ol>
+<li><strong>Listener/Observer not unregistered:</strong></li>
+</ol>
+<pre>eventBus.subscribe(this); // strong reference from eventBus to this
 // If &#x27;this&#x27; is expected to be garbage collected, it won&#x27;t be
-// Fix: Use WeakReference listeners or explicit unsubscribe</pre
-                >
-                <ol>
-                  <li><strong>Async tasks holding references:</strong></li>
-                </ol>
-                <pre>
-CompletableFuture.supplyAsync(() -&gt; process(largeObject)); // largeObject captured
-// If the future is stored, largeObject stays alive until future completes</pre
-                >
-              </div>
-            </div>
+// Fix: Use WeakReference listeners or explicit unsubscribe</pre>
+<ol>
+<li><strong>Async tasks holding references:</strong></li>
+</ol>
+<pre>CompletableFuture.supplyAsync(() -&gt; process(largeObject)); // largeObject captured
+// If the future is stored, largeObject stays alive until future completes</pre>
           </div>
         </div>
-        <div class="card" id="q369">
-          <div class="card-header" onclick="toggle(this)">
-            <span class="q-num">369</span>
-            <span class="q-title"
-              >. Concurrency Patterns — Active Object Pattern</span
-            >
-            <span class="difficulty diff-adv">ADVANCED</span>
-            <svg
-              class="chevron"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <polyline points="6 9 12 15 18 9" />
-            </svg>
-          </div>
-          <div class="card-body">
-            <div class="card-inner">
-              <div class="answer">
-                <p>
-                  The Active Object pattern decouples method execution from
-                  invocation. Each active object has its own thread and a queue
-                  for method requests:
-                </p>
-                <pre>
-class ActiveLogger {
+      </div>
+    </div>
+    <div class="card" id="q369">
+      <div class="card-header" onclick="toggle(this)">
+        <span class="q-num">369</span>
+        <span class="q-title">. Concurrency Patterns — Active Object Pattern</span>
+        <span class="difficulty diff-adv">ADVANCED</span>
+        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="card-body">
+        <div class="card-inner">
+          <div class="answer">
+            <p>The Active Object pattern decouples method execution from invocation. Each active object has its own thread and a queue for method requests:</p>
+<pre>class ActiveLogger {
     private final BlockingQueue&lt;Runnable&gt; queue = new LinkedBlockingQueue&lt;&gt;();
     private final Thread worker;
 
@@ -2070,58 +703,31 @@ class ActiveLogger {
     public void log(String message) {
         queue.offer(() -&gt; writeToFile(message)); // non-blocking submit
     }
-}</pre
-                >
-                <p>
-                  Used in: Async logging (Log4j2's async appender), actor
-                  frameworks (Akka), UI event loops.
-                </p>
-              </div>
-            </div>
+}</pre>
+<p>Used in: Async logging (Log4j2's async appender), actor frameworks (Akka), UI event loops.</p>
           </div>
         </div>
-        <div class="card" id="q370">
-          <div class="card-header" onclick="toggle(this)">
-            <span class="q-num">370</span>
-            <span class="q-title">. Java Memory Model — Safe Publication</span>
-            <span class="difficulty diff-exp">EXPERT</span>
-            <svg
-              class="chevron"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <polyline points="6 9 12 15 18 9" />
-            </svg>
-          </div>
-          <div class="card-body">
-            <div class="card-inner">
-              <div class="answer">
-                <p>
-                  <strong>Safe publication</strong> means making an object
-                  reference available to other threads in a way that guarantees
-                  they see the object's fully initialized state.
-                </p>
-                <p><strong>Safe publication mechanisms:</strong></p>
-                <ol>
-                  <li>
-                    Initialize in static initializer (class loading guarantees
-                    visibility)
-                  </li>
-                  <li>Store in <code>volatile</code> field</li>
-                  <li>
-                    Store in <code>final</code> field (JMM final field
-                    guarantee)
-                  </li>
-                  <li>
-                    Store via lock: synchronized block or concurrent collection
-                  </li>
-                </ol>
-                <pre>
-// UNSAFE publication
+      </div>
+    </div>
+    <div class="card" id="q370">
+      <div class="card-header" onclick="toggle(this)">
+        <span class="q-num">370</span>
+        <span class="q-title">. Java Memory Model — Safe Publication</span>
+        <span class="difficulty diff-exp">EXPERT</span>
+        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="card-body">
+        <div class="card-inner">
+          <div class="answer">
+            <p><strong>Safe publication</strong> means making an object reference available to other threads in a way that guarantees they see the object's fully initialized state.</p>
+<p><strong>Safe publication mechanisms:</strong></p>
+<ol>
+<li>Initialize in static initializer (class loading guarantees visibility)</li>
+<li>Store in <code>volatile</code> field</li>
+<li>Store in <code>final</code> field (JMM final field guarantee)</li>
+<li>Store via lock: synchronized block or concurrent collection</li>
+</ol>
+<pre>// UNSAFE publication
 class Holder {
     private int n;
     Holder(int n) { this.n = n; }
@@ -2135,83 +741,50 @@ public Holder holder; // non-volatile, non-final — unsafe!
 public volatile Holder holder;       // option 1
 public final Holder holder = ...;   // option 2 (if in constructor)
 // store in ConcurrentHashMap       // option 3
-// store in synchronized block      // option 4</pre
-                >
-              </div>
-            </div>
+// store in synchronized block      // option 4</pre>
           </div>
         </div>
-        <div class="card" id="q371">
-          <div class="card-header" onclick="toggle(this)">
-            <span class="q-num">371</span>
-            <span class="q-title"
-              >. Concurrent Programming with Records (Java 16+)</span
-            >
-            <span class="difficulty diff-adv">ADVANCED</span>
-            <svg
-              class="chevron"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <polyline points="6 9 12 15 18 9" />
-            </svg>
-          </div>
-          <div class="card-body">
-            <div class="card-inner">
-              <div class="answer">
-                <p>Records are inherently thread-safe due to immutability:</p>
-                <pre>
-// Record components are final — naturally thread-safe
+      </div>
+    </div>
+    <div class="card" id="q371">
+      <div class="card-header" onclick="toggle(this)">
+        <span class="q-num">371</span>
+        <span class="q-title">. Concurrent Programming with Records (Java 16+)</span>
+        <span class="difficulty diff-adv">ADVANCED</span>
+        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="card-body">
+        <div class="card-inner">
+          <div class="answer">
+            <p>Records are inherently thread-safe due to immutability:</p>
+<pre>// Record components are final — naturally thread-safe
 record Transaction(String id, BigDecimal amount, Instant timestamp) {}
 
 // Safe to share across threads without synchronization
 Transaction tx = new Transaction(uuid, amount, Instant.now());
-// Multiple threads can read tx concurrently — no sync needed</pre
-                >
-                <p><strong>Records in concurrent maps:</strong></p>
-                <pre>
-// Records make excellent ConcurrentHashMap keys (final hashCode/equals)
+// Multiple threads can read tx concurrently — no sync needed</pre>
+<p><strong>Records in concurrent maps:</strong></p>
+<pre>// Records make excellent ConcurrentHashMap keys (final hashCode/equals)
 ConcurrentHashMap&lt;TransactionKey, TransactionResult&gt; results = new ConcurrentHashMap&lt;&gt;();
 
 record TransactionKey(String accountId, String transactionId) {}
-// hashCode and equals generated from final components — always consistent</pre
-                >
-              </div>
-            </div>
+// hashCode and equals generated from final components — always consistent</pre>
           </div>
         </div>
-        <div class="card" id="q372">
-          <div class="card-header" onclick="toggle(this)">
-            <span class="q-num">372</span>
-            <span class="q-title"
-              >. Virtual Threads and Thread-Local Best Practices</span
-            >
-            <span class="difficulty diff-exp">EXPERT</span>
-            <svg
-              class="chevron"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <polyline points="6 9 12 15 18 9" />
-            </svg>
-          </div>
-          <div class="card-body">
-            <div class="card-inner">
-              <div class="answer">
-                <p>
-                  With virtual threads, <code>ThreadLocal</code> use requires
-                  extra care:
-                </p>
-                <pre>
-// PROBLEM: ThreadLocal in virtual threads
+      </div>
+    </div>
+    <div class="card" id="q372">
+      <div class="card-header" onclick="toggle(this)">
+        <span class="q-num">372</span>
+        <span class="q-title">. Virtual Threads and Thread-Local Best Practices</span>
+        <span class="difficulty diff-exp">EXPERT</span>
+        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="card-body">
+        <div class="card-inner">
+          <div class="answer">
+            <p>With virtual threads, <code>ThreadLocal</code> use requires extra care:</p>
+<pre>// PROBLEM: ThreadLocal in virtual threads
 // Each virtual thread gets its own ThreadLocal copy — potentially millions of copies!
 static final ThreadLocal&lt;HeavyConnectionPool&gt; pool = new ThreadLocal&lt;&gt;();
 // With 1M virtual threads → 1M ConnectionPool instances → OOM
@@ -2225,40 +798,23 @@ void process(Connection conn, Data data) { ... } // explicit is clear
 
 // SOLUTION 3: If ThreadLocal is needed, keep values lightweight
 static final ThreadLocal&lt;SimpleDateFormat&gt; formatter = // OK — lightweight
-    ThreadLocal.withInitial(() -&gt; new SimpleDateFormat(&quot;yyyy-MM-dd&quot;));</pre
-                >
-              </div>
-            </div>
+    ThreadLocal.withInitial(() -&gt; new SimpleDateFormat(&quot;yyyy-MM-dd&quot;));</pre>
           </div>
         </div>
-        <div class="card" id="q373">
-          <div class="card-header" onclick="toggle(this)">
-            <span class="q-num">373</span>
-            <span class="q-title"
-              >. Concurrency in Microservices — Distributed Locking</span
-            >
-            <span class="difficulty diff-exp">EXPERT</span>
-            <svg
-              class="chevron"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <polyline points="6 9 12 15 18 9" />
-            </svg>
-          </div>
-          <div class="card-body">
-            <div class="card-inner">
-              <div class="answer">
-                <p>
-                  In distributed systems, local Java locks don't work across JVM
-                  instances. Need distributed coordination:
-                </p>
-                <pre>
-// Redis-based distributed lock (Redisson)
+      </div>
+    </div>
+    <div class="card" id="q373">
+      <div class="card-header" onclick="toggle(this)">
+        <span class="q-num">373</span>
+        <span class="q-title">. Concurrency in Microservices — Distributed Locking</span>
+        <span class="difficulty diff-exp">EXPERT</span>
+        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="card-body">
+        <div class="card-inner">
+          <div class="answer">
+            <p>In distributed systems, local Java locks don't work across JVM instances. Need distributed coordination:</p>
+<pre>// Redis-based distributed lock (Redisson)
 RLock lock = redissonClient.getLock(&quot;order-processing-lock-&quot; + orderId);
 try {
     boolean locked = lock.tryLock(10, 30, TimeUnit.SECONDS); // wait 10s, hold 30s
@@ -2273,54 +829,29 @@ try {
 public class Order {
     @Version
     private Long version; // automatically incremented, conflicts detected
-}</pre
-                >
-                <p><strong>Distributed lock challenges:</strong></p>
-                <ul>
-                  <li>
-                    Clock drift between nodes can cause lock expiry issues
-                  </li>
-                  <li>
-                    Network partitions can cause split-brain (two nodes think
-                    they hold the lock)
-                  </li>
-                  <li>
-                    Redlock algorithm (multiple Redis masters) reduces risk but
-                    has controversies
-                  </li>
-                </ul>
-              </div>
-            </div>
+}</pre>
+<p><strong>Distributed lock challenges:</strong></p>
+<ul>
+<li>Clock drift between nodes can cause lock expiry issues</li>
+<li>Network partitions can cause split-brain (two nodes think they hold the lock)</li>
+<li>Redlock algorithm (multiple Redis masters) reduces risk but has controversies</li>
+</ul>
           </div>
         </div>
-        <div class="card" id="q374">
-          <div class="card-header" onclick="toggle(this)">
-            <span class="q-num">374</span>
-            <span class="q-title">. Concurrency Anti-Patterns</span>
-            <span class="difficulty diff-adv">ADVANCED</span>
-            <svg
-              class="chevron"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <polyline points="6 9 12 15 18 9" />
-            </svg>
-          </div>
-          <div class="card-body">
-            <div class="card-inner">
-              <div class="answer">
-                <p>
-                  <strong
-                    >1. Double-Checked Locking without volatile (pre-Java 5 bug,
-                    still seen):</strong
-                  >
-                </p>
-                <pre>
-// BROKEN (without volatile):
+      </div>
+    </div>
+    <div class="card" id="q374">
+      <div class="card-header" onclick="toggle(this)">
+        <span class="q-num">374</span>
+        <span class="q-title">. Concurrency Anti-Patterns</span>
+        <span class="difficulty diff-adv">ADVANCED</span>
+        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="card-body">
+        <div class="card-inner">
+          <div class="answer">
+            <p><strong>1. Double-Checked Locking without volatile (pre-Java 5 bug, still seen):</strong></p>
+<pre>// BROKEN (without volatile):
 private static Singleton instance;
 if (instance == null) {
     synchronized (Singleton.class) {
@@ -2328,63 +859,39 @@ if (instance == null) {
             instance = new Singleton(); // object partially visible without volatile!
     }
 }
-// FIX: Add volatile to instance field</pre
-                >
-                <p><strong>2. Synchronized on non-final field:</strong></p>
-                <pre>
-// BROKEN: lock object can change
+// FIX: Add volatile to instance field</pre>
+<p><strong>2. Synchronized on non-final field:</strong></p>
+<pre>// BROKEN: lock object can change
 private Object lock = new Object();
 synchronized(lock) { ... }
 // If another thread assigns: lock = new Object(); — different lock!
-// FIX: Make lock field final</pre
-                >
-                <p>
-                  <strong>3. Calling wait() without holding the lock:</strong>
-                </p>
-                <pre>
-// BROKEN: IllegalMonitorStateException
-lock.wait(); // must be inside synchronized(lock)</pre
-                >
-                <p><strong>4. Using HashMap in multi-threaded code:</strong></p>
-                <pre>
-// In Java 7: causes infinite loop (resize causes circular linked list)
+// FIX: Make lock field final</pre>
+<p><strong>3. Calling wait() without holding the lock:</strong></p>
+<pre>// BROKEN: IllegalMonitorStateException
+lock.wait(); // must be inside synchronized(lock)</pre>
+<p><strong>4. Using HashMap in multi-threaded code:</strong></p>
+<pre>// In Java 7: causes infinite loop (resize causes circular linked list)
 // In Java 8+: race conditions, wrong results
-// ALWAYS use ConcurrentHashMap for shared maps</pre
-                >
-                <p><strong>5. sleep() as synchronization mechanism:</strong></p>
-                <pre>
-// BROKEN: Timing-based, fragile
-Thread.sleep(1000); // hope the other thread is done by now</pre
-                >
-              </div>
-            </div>
+// ALWAYS use ConcurrentHashMap for shared maps</pre>
+<p><strong>5. sleep() as synchronization mechanism:</strong></p>
+<pre>// BROKEN: Timing-based, fragile
+Thread.sleep(1000); // hope the other thread is done by now</pre>
           </div>
         </div>
-        <div class="card" id="q375">
-          <div class="card-header" onclick="toggle(this)">
-            <span class="q-num">375</span>
-            <span class="q-title"
-              >. Performance Monitoring for Concurrent Apps</span
-            >
-            <span class="difficulty diff-adv">ADVANCED</span>
-            <svg
-              class="chevron"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <polyline points="6 9 12 15 18 9" />
-            </svg>
-          </div>
-          <div class="card-body">
-            <div class="card-inner">
-              <div class="answer">
-                <p><strong>Key metrics to monitor:</strong></p>
-                <pre>
-// Thread pool monitoring via JMX
+      </div>
+    </div>
+    <div class="card" id="q375">
+      <div class="card-header" onclick="toggle(this)">
+        <span class="q-num">375</span>
+        <span class="q-title">. Performance Monitoring for Concurrent Apps</span>
+        <span class="difficulty diff-adv">ADVANCED</span>
+        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="card-body">
+        <div class="card-inner">
+          <div class="answer">
+            <p><strong>Key metrics to monitor:</strong></p>
+<pre>// Thread pool monitoring via JMX
 ThreadPoolExecutor tpe = (ThreadPoolExecutor) executorService;
 int active = tpe.getActiveCount();       // actively executing threads
 long completed = tpe.getCompletedTaskCount();
@@ -2394,64 +901,38 @@ int poolSize = tpe.getPoolSize();
 // Expose via Micrometer (Spring Boot Actuator)
 new ExecutorServiceMetrics(executorService, &quot;myPool&quot;, tags)
     .bindTo(meterRegistry);
-// Exposes: pool.size, active.threads, queued.tasks, completed.tasks</pre
-                >
-                <p><strong>JVM thread metrics:</strong></p>
-                <pre>
-# Via jstat
+// Exposes: pool.size, active.threads, queued.tasks, completed.tasks</pre>
+<p><strong>JVM thread metrics:</strong></p>
+<pre># Via jstat
 jstat -gcutil &lt;pid&gt; 1000  # GC stats every second
 
 # Via JFR analysis
 - Thread blocked time
 - Lock contention heat map
-- Thread CPU time breakdown</pre
-                >
-                <p><strong>Alerts to set:</strong></p>
-                <ul>
-                  <li>
-                    Queue size > 80% of capacity → producer-consumer imbalance
-                  </li>
-                  <li>
-                    Active threads = pool size → all threads busy, consider
-                    scaling
-                  </li>
-                  <li>Rejected task rate > 0 → pool overloaded</li>
-                  <li>
-                    Average task duration trending up → downstream degradation
-                  </li>
-                </ul>
-              </div>
-            </div>
+- Thread CPU time breakdown</pre>
+<p><strong>Alerts to set:</strong></p>
+<ul>
+<li>Queue size > 80% of capacity → producer-consumer imbalance</li>
+<li>Active threads = pool size → all threads busy, consider scaling</li>
+<li>Rejected task rate > 0 → pool overloaded</li>
+<li>Average task duration trending up → downstream degradation</li>
+</ul>
           </div>
         </div>
-        <div class="card" id="q376">
-          <div class="card-header" onclick="toggle(this)">
-            <span class="q-num">376</span>
-            <span class="q-title"
-              >. Async Exception Handling Across Threads</span
-            >
-            <span class="difficulty diff-mid">MID</span>
-            <svg
-              class="chevron"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <polyline points="6 9 12 15 18 9" />
-            </svg>
-          </div>
-          <div class="card-body">
-            <div class="card-inner">
-              <div class="answer">
-                <p>
-                  Exceptions in background threads that aren't handled silently
-                  die:
-                </p>
-                <pre>
-// PROBLEM: Exception in thread dies silently
+      </div>
+    </div>
+    <div class="card" id="q376">
+      <div class="card-header" onclick="toggle(this)">
+        <span class="q-num">376</span>
+        <span class="q-title">. Async Exception Handling Across Threads</span>
+        <span class="difficulty diff-mid">MID</span>
+        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="card-body">
+        <div class="card-inner">
+          <div class="answer">
+            <p>Exceptions in background threads that aren't handled silently die:</p>
+<pre>// PROBLEM: Exception in thread dies silently
 ExecutorService executor = Executors.newFixedThreadPool(4);
 executor.submit(() -&gt; {
     throw new RuntimeException(&quot;This silently disappears!&quot;);
@@ -2478,183 +959,93 @@ ThreadFactory factory = r -&gt; {
 
 // SOLUTION 3: CompletableFuture with exceptionally
 CompletableFuture.runAsync(() -&gt; riskyWork())
-    .exceptionally(ex -&gt; { handleError(ex); return null; });</pre
-                >
-              </div>
-            </div>
+    .exceptionally(ex -&gt; { handleError(ex); return null; });</pre>
           </div>
         </div>
-        <div class="card" id="q377">
-          <div class="card-header" onclick="toggle(this)">
-            <span class="q-num">377</span>
-            <span class="q-title"
-              >. Concurrent Collections — ConcurrentLinkedQueue vs
-              LinkedBlockingQueue</span
-            >
-            <span class="difficulty diff-adv">ADVANCED</span>
-            <svg
-              class="chevron"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <polyline points="6 9 12 15 18 9" />
-            </svg>
-          </div>
-          <div class="card-body">
-            <div class="card-inner">
-              <div class="answer">
-                <table>
-                  <tr>
-                    <th></th>
-                    <th>ConcurrentLinkedQueue</th>
-                    <th>LinkedBlockingQueue</th>
-                  </tr>
-                  <tr>
-                    <td>Blocking</td>
-                    <td>No (returns null/false)</td>
-                    <td>Yes (take/put block)</td>
-                  </tr>
-                  <tr>
-                    <td>Bounded</td>
-                    <td>No (unbounded)</td>
-                    <td>Optional (can be bounded)</td>
-                  </tr>
-                  <tr>
-                    <td>Algorithm</td>
-                    <td>Lock-free (CAS)</td>
-                    <td>Two-lock (head lock + tail lock)</td>
-                  </tr>
-                  <tr>
-                    <td>Best for</td>
-                    <td>Non-blocking producers/consumers</td>
-                    <td>Blocking producer-consumer pattern</td>
-                  </tr>
-                  <tr>
-                    <td>Size</td>
-                    <td><code>size()</code> is O(n) (traverse)</td>
-                    <td><code>size()</code> is O(1)</td>
-                  </tr>
-                </table>
-                <pre>
-// Non-blocking usage with ConcurrentLinkedQueue
+      </div>
+    </div>
+    <div class="card" id="q377">
+      <div class="card-header" onclick="toggle(this)">
+        <span class="q-num">377</span>
+        <span class="q-title">. Concurrent Collections — ConcurrentLinkedQueue vs LinkedBlockingQueue</span>
+        <span class="difficulty diff-adv">ADVANCED</span>
+        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="card-body">
+        <div class="card-inner">
+          <div class="answer">
+            <table>
+<tr><th></th><th>ConcurrentLinkedQueue</th><th>LinkedBlockingQueue</th></tr>
+<tr><td>Blocking</td><td>No (returns null/false)</td><td>Yes (take/put block)</td></tr>
+<tr><td>Bounded</td><td>No (unbounded)</td><td>Optional (can be bounded)</td></tr>
+<tr><td>Algorithm</td><td>Lock-free (CAS)</td><td>Two-lock (head lock + tail lock)</td></tr>
+<tr><td>Best for</td><td>Non-blocking producers/consumers</td><td>Blocking producer-consumer pattern</td></tr>
+<tr><td>Size</td><td><code>size()</code> is O(n) (traverse)</td><td><code>size()</code> is O(1)</td></tr>
+</table>
+<pre>// Non-blocking usage with ConcurrentLinkedQueue
 ConcurrentLinkedQueue&lt;Task&gt; queue = new ConcurrentLinkedQueue&lt;&gt;();
 Task task = queue.poll(); // returns null if empty (non-blocking)
 if (task != null) process(task);
 
 // Blocking usage with LinkedBlockingQueue
 LinkedBlockingQueue&lt;Task&gt; queue = new LinkedBlockingQueue&lt;&gt;(100);
-Task task = queue.take(); // blocks until element available</pre
-                >
-              </div>
-            </div>
+Task task = queue.take(); // blocks until element available</pre>
           </div>
         </div>
-        <div class="card" id="q378">
-          <div class="card-header" onclick="toggle(this)">
-            <span class="q-num">378</span>
-            <span class="q-title">. Intrinsic Lock Optimization in JVM</span>
-            <span class="difficulty diff-exp">EXPERT</span>
-            <svg
-              class="chevron"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <polyline points="6 9 12 15 18 9" />
-            </svg>
-          </div>
-          <div class="card-body">
-            <div class="card-inner">
-              <div class="answer">
-                <p>
-                  Modern JVMs heavily optimize <code>synchronized</code> via
-                  several techniques:
-                </p>
-                <p>
-                  <strong
-                    >1. Biased Locking (Java 1.6–14, removed in Java
-                    21):</strong
-                  >
-                </p>
-                <ul>
-                  <li>
-                    First thread to acquire a lock "biases" the object toward
-                    itself
-                  </li>
-                  <li>
-                    Subsequent acquisitions by the same thread are nearly free
-                    (no CAS)
-                  </li>
-                  <li>Only pays cost when another thread contends</li>
-                </ul>
-                <p><strong>2. Lightweight Locking (thin lock):</strong></p>
-                <ul>
-                  <li>
-                    Low-contention case: object's mark word stores a CAS-based
-                    lock
-                  </li>
-                  <li>No OS mutex, no thread blocking — just spinning</li>
-                </ul>
-                <p><strong>3. Heavyweight Locking (inflated lock):</strong></p>
-                <ul>
-                  <li>
-                    High-contention: inflates to OS mutex with thread blocking
-                  </li>
-                  <li>Standard monitor semantics</li>
-                </ul>
-                <p><strong>4. Lock Elision:</strong></p>
-                <ul>
-                  <li>
-                    JIT detects that a lock is not accessible to other threads
-                  </li>
-                  <li>
-                    Removes the lock entirely (e.g., synchronized on a local
-                    variable)
-                  </li>
-                </ul>
-                <p><strong>5. Lock Coarsening:</strong></p>
-                <ul>
-                  <li>
-                    JIT merges adjacent synchronized blocks on the same monitor
-                    into one larger block
-                  </li>
-                  <li>Reduces lock/unlock overhead in tight loops</li>
-                </ul>
-              </div>
-            </div>
+      </div>
+    </div>
+    <div class="card" id="q378">
+      <div class="card-header" onclick="toggle(this)">
+        <span class="q-num">378</span>
+        <span class="q-title">. Intrinsic Lock Optimization in JVM</span>
+        <span class="difficulty diff-exp">EXPERT</span>
+        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="card-body">
+        <div class="card-inner">
+          <div class="answer">
+            <p>Modern JVMs heavily optimize <code>synchronized</code> via several techniques:</p>
+<p><strong>1. Biased Locking (Java 1.6–14, removed in Java 21):</strong></p>
+<ul>
+<li>First thread to acquire a lock "biases" the object toward itself</li>
+<li>Subsequent acquisitions by the same thread are nearly free (no CAS)</li>
+<li>Only pays cost when another thread contends</li>
+</ul>
+<p><strong>2. Lightweight Locking (thin lock):</strong></p>
+<ul>
+<li>Low-contention case: object's mark word stores a CAS-based lock</li>
+<li>No OS mutex, no thread blocking — just spinning</li>
+</ul>
+<p><strong>3. Heavyweight Locking (inflated lock):</strong></p>
+<ul>
+<li>High-contention: inflates to OS mutex with thread blocking</li>
+<li>Standard monitor semantics</li>
+</ul>
+<p><strong>4. Lock Elision:</strong></p>
+<ul>
+<li>JIT detects that a lock is not accessible to other threads</li>
+<li>Removes the lock entirely (e.g., synchronized on a local variable)</li>
+</ul>
+<p><strong>5. Lock Coarsening:</strong></p>
+<ul>
+<li>JIT merges adjacent synchronized blocks on the same monitor into one larger block</li>
+<li>Reduces lock/unlock overhead in tight loops</li>
+</ul>
           </div>
         </div>
-        <div class="card" id="q379">
-          <div class="card-header" onclick="toggle(this)">
-            <span class="q-num">379</span>
-            <span class="q-title"
-              >. Working with CompletableFuture in Spring</span
-            >
-            <span class="difficulty diff-adv">ADVANCED</span>
-            <svg
-              class="chevron"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <polyline points="6 9 12 15 18 9" />
-            </svg>
-          </div>
-          <div class="card-body">
-            <div class="card-inner">
-              <div class="answer">
-                <pre>
-@Service
+      </div>
+    </div>
+    <div class="card" id="q379">
+      <div class="card-header" onclick="toggle(this)">
+        <span class="q-num">379</span>
+        <span class="q-title">. Working with CompletableFuture in Spring</span>
+        <span class="difficulty diff-adv">ADVANCED</span>
+        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="card-body">
+        <div class="card-inner">
+          <div class="answer">
+            <pre>@Service
 public class DashboardService {
 
     @Async(&quot;asyncExecutor&quot;) // runs on asyncExecutor thread pool
@@ -2694,212 +1085,40 @@ public class AsyncConfig {
         executor.initialize();
         return executor;
     }
-}</pre
-                >
-              </div>
-            </div>
+}</pre>
           </div>
         </div>
-        <div class="card" id="q380">
-          <div class="card-header" onclick="toggle(this)">
-            <span class="q-num">380</span>
-            <span class="q-title"
-              >. Concurrency Interview Questions — Expert-Level Answers</span
-            >
-            <span class="difficulty diff-exp">EXPERT</span>
-            <svg
-              class="chevron"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <polyline points="6 9 12 15 18 9" />
-            </svg>
-          </div>
-          <div class="card-body">
-            <div class="card-inner">
-              <div class="answer">
-                <p>
-                  <strong
-                    >Q: How does ConcurrentHashMap achieve lock-free
-                    reads?</strong
-                  >
-                </p>
-                <p>
-                  A: Each <code>Node</code> in the array has a
-                  <code>volatile</code> value field. Reads traverse nodes using
-                  <code>volatile</code> reads which have happens-before
-                  guarantees with the last <code>volatile</code> write. No lock
-                  needed because: (1) array reference is volatile, (2) node
-                  values are volatile, (3) structural modifications use CAS +
-                  synchronized on bin head which establish happens-before with
-                  readers.
-                </p>
-                <p>
-                  <strong
-                    >Q: Why is <code>volatile long</code> needed for 64-bit
-                    values on 32-bit JVMs?</strong
-                  >
-                </p>
-                <p>
-                  A: 64-bit <code>long</code> and
-                  <code>double</code> reads/writes are not guaranteed to be
-                  atomic on 32-bit JVMs (JMM allows tearing — two separate
-                  32-bit operations). <code>volatile</code> upgrades these to
-                  atomic 64-bit operations.
-                </p>
-                <p>
-                  <strong
-                    >Q: Can you deadlock with ReentrantLock and no nested
-                    locking?</strong
-                  >
-                </p>
-                <p>
-                  A: Yes. If a thread acquires a ReentrantLock and the thread is
-                  interrupted/killed before calling <code>unlock()</code>, the
-                  lock is never released. Always use lock in try block with
-                  <code>unlock()</code> in finally.
-                </p>
-                <p>
-                  <strong
-                    >Q: What is a memory barrier and when does Java insert
-                    one?</strong
-                  >
-                </p>
-                <p>
-                  A: A memory barrier (fence) is a CPU instruction that prevents
-                  instruction reordering across it and forces cache flush. Java
-                  inserts barriers: before/after volatile read/write, on lock
-                  acquire/release, on
-                  <code>Thread.start()</code>/<code>Thread.join()</code>. This
-                  implements happens-before.
-                </p>
-                <p>
-                  <strong
-                    >Q: Explain the difference between <code>submit()</code> and
-                    <code>execute()</code> in ExecutorService.</strong
-                  >
-                </p>
-                <p>
-                  A: <code>execute(Runnable)</code> is fire-and-forget — no way
-                  to know when it completes or if it threw an exception.
-                  <code>submit()</code> returns a <code>Future</code> — you can
-                  call <code>get()</code> to block and retrieve results, and any
-                  exception thrown is wrapped in
-                  <code>ExecutionException</code> which you can access via
-                  <code>future.get()</code>.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div style="height: 60px"></div>
       </div>
     </div>
+    <div class="card" id="q380">
+      <div class="card-header" onclick="toggle(this)">
+        <span class="q-num">380</span>
+        <span class="q-title">. Concurrency Interview Questions — Expert-Level Answers</span>
+        <span class="difficulty diff-exp">EXPERT</span>
+        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="card-body">
+        <div class="card-inner">
+          <div class="answer">
+            <p><strong>Q: How does ConcurrentHashMap achieve lock-free reads?</strong></p>
+<p>A: Each <code>Node</code> in the array has a <code>volatile</code> value field. Reads traverse nodes using <code>volatile</code> reads which have happens-before guarantees with the last <code>volatile</code> write. No lock needed because: (1) array reference is volatile, (2) node values are volatile, (3) structural modifications use CAS + synchronized on bin head which establish happens-before with readers.</p>
+<p><strong>Q: Why is <code>volatile long</code> needed for 64-bit values on 32-bit JVMs?</strong></p>
+<p>A: 64-bit <code>long</code> and <code>double</code> reads/writes are not guaranteed to be atomic on 32-bit JVMs (JMM allows tearing — two separate 32-bit operations). <code>volatile</code> upgrades these to atomic 64-bit operations.</p>
+<p><strong>Q: Can you deadlock with ReentrantLock and no nested locking?</strong></p>
+<p>A: Yes. If a thread acquires a ReentrantLock and the thread is interrupted/killed before calling <code>unlock()</code>, the lock is never released. Always use lock in try block with <code>unlock()</code> in finally.</p>
+<p><strong>Q: What is a memory barrier and when does Java insert one?</strong></p>
+<p>A: A memory barrier (fence) is a CPU instruction that prevents instruction reordering across it and forces cache flush. Java inserts barriers: before/after volatile read/write, on lock acquire/release, on <code>Thread.start()</code>/<code>Thread.join()</code>. This implements happens-before.</p>
+<p><strong>Q: Explain the difference between <code>submit()</code> and <code>execute()</code> in ExecutorService.</strong></p>
+<p>A: <code>execute(Runnable)</code> is fire-and-forget — no way to know when it completes or if it threw an exception. <code>submit()</code> returns a <code>Future</code> — you can call <code>get()</code> to block and retrieve results, and any exception thrown is wrapped in <code>ExecutionException</code> which you can access via <code>future.get()</code>.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="height:60px"></div>
+  </div>
+</div>
 
-    <script>
-      function toggle(header) {
-        const card = header.parentElement;
-        card.classList.toggle("open");
-      }
-      let allExpanded = false;
-      function toggleAll() {
-        allExpanded = !allExpanded;
-        document.querySelectorAll(".card").forEach((c) => {
-          if (allExpanded) c.classList.add("open");
-          else c.classList.remove("open");
-        });
-        const btn = document.querySelector(".expand-all");
-        if (btn) btn.textContent = allExpanded ? "Collapse All" : "Expand All";
-      }
-      let activeFilter = "all";
-      function filterBy(level, btn) {
-        activeFilter = level;
-        document
-          .querySelectorAll(".filter-btn")
-          .forEach((b) => b.classList.remove("active"));
-        btn.classList.add("active");
-        applyFilters();
-      }
-      function filterCards() {
-        applyFilters();
-      }
-      function applyFilters() {
-        const input = document.getElementById("searchInput");
-        const query = input ? input.value.toLowerCase() : "";
-        document.querySelectorAll(".card").forEach((card) => {
-          const title = card.querySelector(".q-title")
-            ? card.querySelector(".q-title").textContent.toLowerCase()
-            : "";
-          const body = card.querySelector(".answer")
-            ? card.querySelector(".answer").textContent.toLowerCase()
-            : "";
-          const diff = card.querySelector(".difficulty");
-          const diffClass = diff ? diff.className : "";
-          const matchesText =
-            !query || title.includes(query) || body.includes(query);
-          const matchesFilter =
-            activeFilter === "all" ||
-            diffClass.includes("diff-" + activeFilter);
-          if (matchesText && matchesFilter) {
-            card.style.display = "";
-            if (query) card.classList.add("open");
-          } else {
-            card.style.display = "none";
-          }
-        });
-        document.querySelectorAll(".section-title").forEach((st) => {
-          let next = st.nextElementSibling;
-          let hasVisible = false;
-          while (next && !next.classList.contains("section-title")) {
-            if (next.style.display !== "none") hasVisible = true;
-            next = next.nextElementSibling;
-          }
-          st.style.display = hasVisible ? "" : "none";
-        });
-      }
-      function scrollToCard(id) {
-        const el = document.getElementById(id);
-        if (el) {
-          el.scrollIntoView({ behavior: "smooth", block: "start" });
-          el.classList.add("open", "highlighted");
-          setTimeout(() => el.classList.remove("highlighted"), 2000);
-          document
-            .querySelectorAll(".sidebar-link")
-            .forEach((l) => l.classList.remove("active"));
-          const link = document.querySelector(
-            '.sidebar-link[data-target="' + id + '"]',
-          );
-          if (link) link.classList.add("active");
-        }
-      }
-      const observer =
-        typeof IntersectionObserver !== "undefined"
-          ? new IntersectionObserver(
-              (entries) => {
-                entries.forEach((e) => {
-                  if (e.isIntersecting) {
-                    const id = e.target.id;
-                    document
-                      .querySelectorAll(".sidebar-link")
-                      .forEach((l) => l.classList.remove("active"));
-                    const link = document.querySelector(
-                      '.sidebar-link[data-target="' + id + '"]',
-                    );
-                    if (link) link.classList.add("active");
-                  }
-                });
-              },
-              { threshold: 0.3, rootMargin: "-100px 0px -50% 0px" },
-            )
-          : null;
-      if (observer)
-        document
-          .querySelectorAll(".card[id]")
-          .forEach((c) => observer.observe(c));
-    </script>
-  </body>
+<script src="assets/main.js" defer></script>
+
+</body>
 </html>

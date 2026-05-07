@@ -6,481 +6,23 @@
 <title>PART 4: Collections Framework (Q106–150) — Java Interview Guide</title>
 
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg: #0a0e1a;
-    --surface: #111827;
-    --surface2: #1a2235;
-    --border: #1e2d45;
-    --accent: #00d4ff;
-    --accent2: #ff6b35;
-    --accent3: #a855f7;
-    --green: #22c55e;
-    --yellow: #fbbf24;
-    --text: #e2e8f0;
-    --muted: #64748b;
-    --code-bg: #0d1117;
-  }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Syne', sans-serif;
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
-  a { color: inherit; text-decoration: none; }
+<link rel="stylesheet" href="assets/theme.css">
 
-  /* TOPNAV */
-  .topnav {
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-    padding: 0 40px;
-    display: flex;
-    align-items: center;
-    gap: 0;
-    height: 52px;
-    position: sticky;
-    top: 0;
-    z-index: 200;
-    backdrop-filter: blur(10px);
-    overflow-x: auto;
-  }
-  .topnav::-webkit-scrollbar { display: none; }
-  .nav-logo {
-    font-family: 'JetBrains Mono', monospace;
-    font-weight: 700;
-    font-size: 14px;
-    color: var(--accent);
-    margin-right: 32px;
-    white-space: nowrap;
-    flex-shrink: 0;
-  }
-  .nav-links { display: flex; gap: 4px; }
-  .nav-link {
-    padding: 6px 12px;
-    border-radius: 6px;
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--muted);
-    white-space: nowrap;
-    transition: all 0.2s;
-    cursor: pointer;
-  }
-  .nav-link:hover { color: var(--text); background: var(--surface2); }
-  .nav-link.active { color: #000; }
-
-  /* HEADER */
-  header {
-    padding: 48px 40px 32px;
-    border-bottom: 1px solid var(--border);
-    background: linear-gradient(135deg, #0a0e1a 0%, #0f1729 100%);
-    position: relative;
-    overflow: hidden;
-  }
-  header::before {
-    content: '';
-    position: absolute;
-    top: -80px; right: -80px;
-    width: 400px; height: 400px;
-    background: radial-gradient(circle, rgba(0,212,255,0.08) 0%, transparent 70%);
-    pointer-events: none;
-  }
-  .header-tag {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    color: var(--accent);
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    margin-bottom: 12px;
-    opacity: 0.8;
-  }
-  h1 {
-    font-size: clamp(24px, 4vw, 48px);
-    font-weight: 800;
-    line-height: 1.1;
-    background: linear-gradient(135deg, #fff 0%, var(--accent) 50%, var(--accent3) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: 12px;
-  }
-  .subtitle { color: var(--muted); font-size: 15px; max-width: 500px; }
-  .stats-row { display: flex; gap: 20px; margin-top: 24px; flex-wrap: wrap; }
-  .stat {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 8px 16px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 13px;
-  }
-  .stat-num { font-family: 'JetBrains Mono', monospace; font-weight: 700; color: var(--accent); }
-
-  /* CONTROLS */
-  .controls {
-    padding: 16px 40px;
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    align-items: center;
-    position: sticky;
-    top: 52px;
-    z-index: 100;
-    backdrop-filter: blur(10px);
-  }
-  .search-wrap { position: relative; flex: 1; min-width: 180px; max-width: 360px; }
-  .search-wrap svg { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--muted); pointer-events: none; }
-  input[type="text"] {
-    width: 100%;
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 8px 10px 8px 34px;
-    color: var(--text);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 13px;
-    outline: none;
-    transition: border-color 0.2s;
-  }
-  input[type="text"]:focus { border-color: var(--accent); }
-  input[type="text"]::placeholder { color: var(--muted); }
-  .filter-btn {
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 7px 13px;
-    color: var(--muted);
-    font-family: 'Syne', sans-serif;
-    font-size: 12px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  .filter-btn:hover { border-color: var(--accent); color: var(--accent); }
-  .filter-btn.active { background: var(--accent); border-color: var(--accent); color: #000; }
-  .expand-all {
-    margin-left: auto;
-    background: transparent;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 7px 13px;
-    color: var(--muted);
-    font-family: 'Syne', sans-serif;
-    font-size: 12px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  .expand-all:hover { border-color: var(--accent3); color: var(--accent3); }
-
-  /* LAYOUT */
-  .main { display: flex; }
-  .sidebar {
-    width: 240px;
-    min-width: 240px;
-    border-right: 1px solid var(--border);
-    padding: 20px 0;
-    position: sticky;
-    top: calc(52px + 56px);
-    height: calc(100vh - 108px);
-    overflow-y: auto;
-    background: var(--surface);
-  }
-  .sidebar::-webkit-scrollbar { width: 3px; }
-  .sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
-  .cat-header {
-    padding: 6px 16px;
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
-  .sidebar-link {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 6px 16px 6px 24px;
-    font-size: 12px;
-    color: var(--muted);
-    cursor: pointer;
-    transition: all 0.15s;
-    border-left: 2px solid transparent;
-    font-weight: 500;
-  }
-  .sidebar-link:hover { color: var(--text); background: rgba(255,255,255,0.03); }
-  .sidebar-link.active { color: var(--accent); border-left-color: var(--accent); background: rgba(0,212,255,0.05); }
-
-  /* CONTENT */
-  .content { flex: 1; padding: 24px 32px; min-width: 0; }
-  .section-title {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--muted);
-    padding: 24px 0 12px;
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 12px;
-  }
-
-  /* CARDS */
-  .card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    margin-bottom: 8px;
-    overflow: hidden;
-    transition: border-color 0.2s;
-  }
-  .card:hover { border-color: #2a3f60; }
-  .card.open { border-color: #2a4a70; }
-  .card.highlighted { border-color: var(--accent); }
-  .card-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 14px 16px;
-    cursor: pointer;
-    user-select: none;
-    transition: background 0.2s;
-  }
-  .card-header:hover { background: var(--surface2); }
-  .q-num {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    color: var(--muted);
-    min-width: 28px;
-    font-weight: 600;
-  }
-  .q-title { flex: 1; font-size: 14px; font-weight: 600; }
-  .difficulty {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    padding: 3px 7px;
-    border-radius: 4px;
-  }
-  .diff-basic { background: rgba(34,197,94,0.15); color: #22c55e; }
-  .diff-mid { background: rgba(251,191,36,0.15); color: #fbbf24; }
-  .diff-adv { background: rgba(255,107,53,0.15); color: #ff6b35; }
-  .diff-exp { background: rgba(168,85,247,0.15); color: #a855f7; }
-  .chevron { color: var(--muted); transition: transform 0.3s; flex-shrink: 0; }
-  .card.open .chevron { transform: rotate(180deg); }
-  .card-body { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
-  .card.open .card-body { max-height: 9999px; }
-  .card-inner { border-top: 1px solid var(--border); padding: 20px; }
-  .answer p { margin-bottom: 12px; line-height: 1.7; font-size: 14px; }
-  .answer strong { color: #fff; }
-  .answer em { color: var(--accent); font-style: normal; font-weight: 600; }
-  .answer code {
-    font-family: 'JetBrains Mono', monospace;
-    background: var(--code-bg);
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-size: 12px;
-    color: #7dd3fc;
-  }
-  .answer pre {
-    font-family: 'JetBrains Mono', monospace;
-    background: var(--code-bg);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 16px;
-    font-size: 12px;
-    line-height: 1.6;
-    overflow-x: auto;
-    margin: 12px 0;
-    color: #e2e8f0;
-    white-space: pre;
-  }
-  .answer table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 12px 0;
-    font-size: 13px;
-  }
-  .answer th, .answer td {
-    padding: 8px 12px;
-    border: 1px solid var(--border);
-    text-align: left;
-  }
-  .answer th { background: var(--surface2); color: var(--accent); font-weight: 700; font-size: 11px; letter-spacing: 0.5px; }
-  .answer tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
-  .answer ul, .answer ol { padding-left: 20px; margin: 8px 0 12px; }
-  .answer li { margin-bottom: 6px; line-height: 1.6; font-size: 14px; }
-  .answer h4 { color: var(--accent2); font-size: 13px; margin: 12px 0 6px; }
-  .tip-box {
-    background: rgba(34,197,94,0.08);
-    border: 1px solid rgba(34,197,94,0.2);
-    border-radius: 8px;
-    padding: 12px 16px;
-    font-size: 13px;
-    margin: 12px 0;
-    line-height: 1.6;
-  }
-  .warn-box {
-    background: rgba(251,191,36,0.08);
-    border: 1px solid rgba(251,191,36,0.2);
-    border-radius: 8px;
-    padding: 12px 16px;
-    font-size: 13px;
-    margin: 12px 0;
-    line-height: 1.6;
-  }
-  .tag-list { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
-  .tag {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 3px 9px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    color: var(--muted);
-  }
-
-  /* INDEX PAGE */
-  .index-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 20px;
-    padding: 40px;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  .part-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 28px;
-    cursor: pointer;
-    transition: all 0.25s;
-    display: block;
-    position: relative;
-    overflow: hidden;
-  }
-  .part-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 3px;
-    background: var(--card-color);
-  }
-  .part-card:hover { border-color: #2a3f60; transform: translateY(-2px); }
-  .part-icon { font-size: 32px; margin-bottom: 14px; }
-  .part-num {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    color: var(--muted);
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    margin-bottom: 6px;
-  }
-  .part-title { font-size: 18px; font-weight: 700; margin-bottom: 8px; color: var(--text); }
-  .part-desc { font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 16px; }
-  .part-count {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--card-color);
-  }
-  .index-hero {
-    padding: 60px 40px 40px;
-    border-bottom: 1px solid var(--border);
-    background: linear-gradient(135deg, #0a0e1a 0%, #0f1729 100%);
-    position: relative;
-    overflow: hidden;
-    text-align: center;
-  }
-  .index-hero::before {
-    content: '';
-    position: absolute;
-    top: -100px; left: 50%;
-    transform: translateX(-50%);
-    width: 600px; height: 400px;
-    background: radial-gradient(circle, rgba(0,212,255,0.06) 0%, transparent 70%);
-    pointer-events: none;
-  }
-  .hero-badge {
-    display: inline-block;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    color: var(--accent);
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    margin-bottom: 16px;
-    opacity: 0.8;
-  }
-  .hero-title {
-    font-size: clamp(32px, 6vw, 64px);
-    font-weight: 800;
-    line-height: 1.05;
-    background: linear-gradient(135deg, #fff 0%, var(--accent) 50%, var(--accent3) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: 16px;
-  }
-  .hero-sub { color: var(--muted); font-size: 16px; max-width: 560px; margin: 0 auto 28px; }
-  .hero-stats { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
-  .hero-stat {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 10px 20px;
-    text-align: center;
-  }
-  .hero-stat-num { font-family: 'JetBrains Mono', monospace; font-size: 24px; font-weight: 700; color: var(--accent); }
-  .hero-stat-label { font-size: 11px; color: var(--muted); margin-top: 2px; }
-
-  /* BREADCRUMB */
-  .breadcrumb {
-    padding: 12px 40px;
-    font-size: 12px;
-    color: var(--muted);
-    border-bottom: 1px solid var(--border);
-    background: var(--bg);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .breadcrumb a { color: var(--accent); }
-  .breadcrumb a:hover { text-decoration: underline; }
-
-  @media (max-width: 768px) {
-    .sidebar { display: none; }
-    .topnav { padding: 0 16px; }
-    header, .controls { padding-left: 16px; padding-right: 16px; }
-    .content { padding: 16px; }
-    .index-grid { padding: 20px; grid-template-columns: 1fr; }
-    .index-hero { padding: 40px 20px; }
-    .breadcrumb { padding: 10px 16px; }
-  }
-</style>
-
+  <script>(function(){try{var t=localStorage.getItem("java-theme")||"light";document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
 </head>
 <body>
-<nav class="topnav"><span class="nav-logo">// Java Interview</span><div class="nav-links"><a href="index.html" class="nav-link">🏠 Home</a><a href="basics.html" class="nav-link">☕ Basics</a><a href="versions.html" class="nav-link">🚀 Versions</a><a href="oop.html" class="nav-link">🧩 OOP</a><a href="collections.html" class="nav-link active" style="background:var(--accent);color:#000;">📦 Collections</a><a href="exceptions.html" class="nav-link">⚠️ Exceptions</a><a href="concurrency.html" class="nav-link">⚡ Concurrency</a><a href="advanced-concurrency.html" class="nav-link">🔬 Advanced</a>
-        <a href="java-mastery.html" class="nav-link">☕ Mastery 478</a>
-      
-    <a href="java-methods.html" class="nav-link">📋 Methods</a></div></nav>
+<nav class="topnav"><span class="nav-logo">// Java Interview</span><div class="nav-links"><a href="index.html" class="nav-link">🏠 Home</a><a href="basics.html" class="nav-link">☕ Basics</a><a href="versions.html" class="nav-link">🚀 Versions</a><a href="oop.html" class="nav-link">🧩 OOP</a><a href="collections.html" class="nav-link active">📦 Collections</a><a href="exceptions.html" class="nav-link">⚠️ Exceptions</a><a href="concurrency.html" class="nav-link">⚡ Concurrency</a><a href="advanced-concurrency.html" class="nav-link">🔬 Advanced</a><a href="mastery.html" class="nav-link">🧠 Mastery</a><a href="methods.html" class="nav-link">🛠️ Methods</a><a href="springboot.html" class="nav-link">🍃 Spring Boot</a></div><button class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme" onclick="toggleTheme()" type="button"><svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg><svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button></nav>
 <div class="breadcrumb">
   <a href="index.html">Home</a> › PART 4: Collections Framework (Q106–150)
 </div>
 <header>
   <div class="header-tag">// Java Interview — Senior Level</div>
-  <h1>📦 PART 4: Collections Framework (Q106–150)</h1>
+  <h1>📦 PART 4: Collections Framework (Q106–153)</h1>
   <p class="subtitle">List, Map, Set internals — ArrayList vs LinkedList, HashMap internals, TreeMap, generics, iterators.</p>
   <div class="stats-row">
-    <div class="stat"><span class="stat-num">45</span> Questions</div>
-    
-    <div class='stat'><span class='stat-num'>18</span> Mid</div>
+    <div class="stat"><span class="stat-num">49</span> Questions</div>
+
+    <div class='stat'><span class='stat-num'>21</span> Mid</div>
     <div class='stat'><span class='stat-num'>24</span> Advanced</div>
     <div class='stat'><span class='stat-num'>3</span> Expert</div>
   </div>
@@ -515,6 +57,8 @@
 <div class="sidebar-link" data-target="q142" onclick="scrollToCard('q142')">Q142. . How to make collections thread-safe?</div>
 <div class="sidebar-link" data-target="q145" onclick="scrollToCard('q145')">Q145. . What causes memory leak in HashMap?</div>
 <div class="sidebar-link" data-target="q148" onclick="scrollToCard('q148')">Q148. . Immutability in collections?</div>
+<div class="sidebar-link" data-target="q151" onclick="scrollToCard('q151')">Q151. HashMap vs ConcurrentHashMap null handling?</div>
+<div class="sidebar-link" data-target="q154" onclick="scrollToCard('q154')">Q49. What is BitSet?</div>
 
   </aside>
   <div class="content">
@@ -1820,82 +1364,151 @@ Map&lt;String, Integer&gt; copy = Map.copyOf(existingMap);</pre>
         </div>
       </div>
     </div>
+    <div class="card" id="q151">
+      <div class="card-header" onclick="toggle(this)">
+        <span class="q-num">151</span>
+        <span class="q-title">Why does HashMap allow null keys/values but ConcurrentHashMap does not?</span>
+        <span class="difficulty diff-adv">ADVANCED</span>
+        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="card-body">
+        <div class="card-inner">
+          <div class="answer">
+            <p><strong><code>HashMap</code></strong> permits one <code>null</code> key (stored in bucket 0 with hash 0) and any number of <code>null</code> values.</p>
+<p><strong><code>ConcurrentHashMap</code></strong> rejects both — <code>put(null, x)</code>, <code>put(k, null)</code>, and <code>get(null)</code> all throw <code>NullPointerException</code>.</p>
+<p><strong>Why the difference?</strong> In a concurrent map, <code>map.get(k) == null</code> is ambiguous — it could mean "absent" or "present with null value". Without locks, you can't disambiguate using <code>containsKey</code>; the entry could be added or removed between the two calls. Doug Lea (the author) chose to ban <code>null</code> entirely so the API is unambiguous and lock-free reads stay correct.</p>
+<pre>// HashMap — works
+Map&lt;String, String&gt; m = new HashMap&lt;&gt;();
+m.put(null, "x");
+m.put("k", null);
+
+// ConcurrentHashMap — NPE
+Map&lt;String, String&gt; cm = new ConcurrentHashMap&lt;&gt;();
+cm.put(null, "x");   // NPE
+cm.put("k", null);   // NPE</pre>
+<p>The same restriction applies to <code>ConcurrentSkipListMap</code> and <code>Hashtable</code> (Hashtable for the same disambiguation reason in its synchronized API).</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card" id="q152">
+      <div class="card-header" onclick="toggle(this)">
+        <span class="q-num">152</span>
+        <span class="q-title">Collections.synchronizedMap vs ConcurrentHashMap — which and when?</span>
+        <span class="difficulty diff-adv">ADVANCED</span>
+        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="card-body">
+        <div class="card-inner">
+          <div class="answer">
+            <table>
+<tr><th>Aspect</th><th>Collections.synchronizedMap</th><th>ConcurrentHashMap</th></tr>
+<tr><td>Locking</td><td>Single lock on the whole map</td><td>Fine-grained — per-bin CAS + synchronized</td></tr>
+<tr><td>Read concurrency</td><td>Blocks readers during writes</td><td>Readers do not block</td></tr>
+<tr><td>Iterator</td><td>Fail-fast (<code>ConcurrentModificationException</code>); needs external <code>synchronized</code> block</td><td>Weakly consistent — never throws CME</td></tr>
+<tr><td>null support</td><td>Allowed</td><td>Not allowed</td></tr>
+<tr><td>Compound ops</td><td>Need explicit lock</td><td><code>putIfAbsent</code>, <code>compute</code>, <code>merge</code> are atomic</td></tr>
+</table>
+<p><strong>Rule of thumb:</strong> if you need a thread-safe map, default to <code>ConcurrentHashMap</code>. Use <code>synchronizedMap</code> only when:</p>
+<ul>
+<li>You need to support null keys/values, OR</li>
+<li>You need to lock the map for a multi-step operation and want one obvious lock object.</li>
+</ul>
+<pre>// Compound op done correctly on ConcurrentHashMap
+cm.compute("counter", (k, v) -&gt; v == null ? 1 : v + 1);
+
+// Same on synchronizedMap — must lock externally
+synchronized (sm) {
+  Integer v = sm.get("counter");
+  sm.put("counter", v == null ? 1 : v + 1);
+}</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card" id="q153">
+      <div class="card-header" onclick="toggle(this)">
+        <span class="q-num">153</span>
+        <span class="q-title">When would you choose LinkedHashMap over HashMap?</span>
+        <span class="difficulty diff-mid">MID</span>
+        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="card-body">
+        <div class="card-inner">
+          <div class="answer">
+            <p><code>LinkedHashMap</code> extends <code>HashMap</code> and maintains a <strong>doubly-linked list</strong> across all entries, giving predictable iteration order at a small memory cost (two extra pointers per entry).</p>
+<p><strong>Two iteration modes:</strong></p>
+<ul>
+<li><strong>Insertion order</strong> (default): entries iterate in the order they were first inserted.</li>
+<li><strong>Access order</strong>: pass <code>accessOrder=true</code>; <code>get</code>/<code>put</code> moves the entry to the tail. This is the foundation for an LRU cache.</li>
+</ul>
+<pre>// Bounded LRU cache in ~5 lines
+Map&lt;K, V&gt; lru = new LinkedHashMap&lt;&gt;(16, 0.75f, true) {
+  protected boolean removeEldestEntry(Map.Entry&lt;K, V&gt; e) {
+    return size() &gt; MAX_ENTRIES;
+  }
+};</pre>
+<p><strong>Use it when:</strong></p>
+<ul>
+<li>You need stable iteration order (e.g. JSON serialisation, deterministic test output).</li>
+<li>You're building a simple LRU cache and don't need concurrency.</li>
+<li>You'd otherwise post-process by sorting — the linked list is cheaper.</li>
+</ul>
+<div class="warn-box"><code>LinkedHashMap</code> is <strong>not thread-safe</strong>. For concurrent LRU semantics, prefer Caffeine or <code>ConcurrentHashMap</code> with a separate eviction policy.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card" id="q154">
+      <div class="card-header" onclick="toggle(this)">
+        <span class="q-num">49</span>
+        <span class="q-title">What is BitSet in Java?</span>
+        <span class="difficulty diff-mid">MID</span>
+        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="card-body">
+        <div class="card-inner">
+          <div class="answer">
+            <p><code>BitSet</code> (in <code>java.util</code>) is a special-purpose collection that stores a sequence of bits (0s and 1s). Each bit can be <strong>set</strong>, <strong>cleared</strong>, or <strong>flipped</strong>, and the set grows automatically as needed.</p>
+<p><strong>Key methods:</strong></p>
+<ul>
+<li><code>set(int bitIndex)</code> — sets the bit at index to <code>true</code></li>
+<li><code>clear(int bitIndex)</code> — sets the bit to <code>false</code></li>
+<li><code>get(int bitIndex)</code> — returns the current bit value</li>
+<li><code>flip(int bitIndex)</code> — toggles the bit</li>
+<li><code>and(BitSet set)</code>, <code>or(BitSet set)</code>, <code>xor(BitSet set)</code> — bitwise operations</li>
+<li><code>cardinality()</code> — number of bits set to <code>true</code></li>
+<li><code>size()</code> / <code>length()</code> — capacity vs. highest set index + 1</li>
+</ul>
+<pre>BitSet bs = new BitSet(8);
+bs.set(0);
+bs.set(3);
+bs.set(7);
+System.out.println(bs);        // {0, 3, 7}
+System.out.println(bs.get(3)); // true
+bs.clear(3);
+System.out.println(bs);        // {0, 7}
+
+BitSet bs2 = new BitSet(8);
+bs2.set(0);
+bs2.set(5);
+bs.and(bs2);
+System.out.println(bs);        // {0}  — only bit 0 was common</pre>
+<p><strong>Memory efficiency:</strong> <code>BitSet</code> internally uses a <code>long[]</code> array — each <code>long</code> holds 64 bits. This makes it far more memory-efficient than <code>boolean[]</code> for large flag sets (64× compression).</p>
+<p><strong>Common use cases:</strong></p>
+<ul>
+<li>Sieve of Eratosthenes (finding primes efficiently)</li>
+<li>Tracking visited nodes in graph algorithms</li>
+<li>Bloom filters and other probabilistic structures</li>
+<li>Efficient set-membership testing for integer ranges</li>
+</ul>
+<div class="warn-box"><code>BitSet</code> is <strong>not thread-safe</strong>. For concurrent use, wrap it or use <code>AtomicLongArray</code> with manual bit manipulation.</div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div style="height:60px"></div>
   </div>
 </div>
 
-<script>
-function toggle(header) {
-  const card = header.parentElement;
-  card.classList.toggle('open');
-}
-let allExpanded = false;
-function toggleAll() {
-  allExpanded = !allExpanded;
-  document.querySelectorAll('.card').forEach(c => {
-    if (allExpanded) c.classList.add('open'); else c.classList.remove('open');
-  });
-  const btn = document.querySelector('.expand-all');
-  if (btn) btn.textContent = allExpanded ? 'Collapse All' : 'Expand All';
-}
-let activeFilter = 'all';
-function filterBy(level, btn) {
-  activeFilter = level;
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  applyFilters();
-}
-function filterCards() { applyFilters(); }
-function applyFilters() {
-  const input = document.getElementById('searchInput');
-  const query = input ? input.value.toLowerCase() : '';
-  document.querySelectorAll('.card').forEach(card => {
-    const title = card.querySelector('.q-title') ? card.querySelector('.q-title').textContent.toLowerCase() : '';
-    const body = card.querySelector('.answer') ? card.querySelector('.answer').textContent.toLowerCase() : '';
-    const diff = card.querySelector('.difficulty');
-    const diffClass = diff ? diff.className : '';
-    const matchesText = !query || title.includes(query) || body.includes(query);
-    const matchesFilter = activeFilter === 'all' || diffClass.includes('diff-' + activeFilter);
-    if (matchesText && matchesFilter) {
-      card.style.display = '';
-      if (query) card.classList.add('open');
-    } else {
-      card.style.display = 'none';
-    }
-  });
-  document.querySelectorAll('.section-title').forEach(st => {
-    let next = st.nextElementSibling;
-    let hasVisible = false;
-    while (next && !next.classList.contains('section-title')) {
-      if (next.style.display !== 'none') hasVisible = true;
-      next = next.nextElementSibling;
-    }
-    st.style.display = hasVisible ? '' : 'none';
-  });
-}
-function scrollToCard(id) {
-  const el = document.getElementById(id);
-  if (el) {
-    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    el.classList.add('open', 'highlighted');
-    setTimeout(() => el.classList.remove('highlighted'), 2000);
-    document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
-    const link = document.querySelector('.sidebar-link[data-target="' + id + '"]');
-    if (link) link.classList.add('active');
-  }
-}
-const observer = typeof IntersectionObserver !== 'undefined' ? new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      const id = e.target.id;
-      document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
-      const link = document.querySelector('.sidebar-link[data-target="' + id + '"]');
-      if (link) link.classList.add('active');
-    }
-  });
-}, { threshold: 0.3, rootMargin: '-100px 0px -50% 0px' }) : null;
-if (observer) document.querySelectorAll('.card[id]').forEach(c => observer.observe(c));
-</script>
-
-</body>
-</html>
+<script src="assets/main.js" defer></script>
