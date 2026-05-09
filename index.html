@@ -11,7 +11,7 @@
   <script>(function(){try{var t=localStorage.getItem("java-theme")||"light";document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
 </head>
 <body>
-<nav class="topnav"><span class="nav-logo">// Java Interview</span><div class="nav-links"><a href="index.html" class="nav-link active">🏠 Home</a><a href="basics.html" class="nav-link">☕ Basics</a><a href="versions.html" class="nav-link">🚀 Versions</a><a href="oop.html" class="nav-link">🧩 OOP</a><a href="collections.html" class="nav-link">📦 Collections</a><a href="exceptions.html" class="nav-link">⚠️ Exceptions</a><a href="concurrency.html" class="nav-link">⚡ Concurrency</a><a href="advanced-concurrency.html" class="nav-link">🔬 Advanced</a><a href="mastery.html" class="nav-link">🧠 Mastery</a><a href="methods.html" class="nav-link">🛠️ Methods</a><a href="springboot.html" class="nav-link">🍃 Spring Boot</a></div><button class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme" onclick="toggleTheme()" type="button"><svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg><svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button></nav>
+<nav class="topnav"><span class="nav-logo">// Java Interview</span><div class="nav-links"><a href="index.html" class="nav-link active">🏠 Home</a><a href="oop.html" class="nav-link">🧩 OOPS</a><a href="basics.html" class="nav-link">☕ Basic</a><a href="versions.html" class="nav-link">🚀 Version</a><a href="collections.html" class="nav-link">📦 Collection</a><a href="exceptions.html" class="nav-link">⚠️ Exception</a><a href="concurrency.html" class="nav-link">⚡ Concurrency + Advance</a><a href="methods.html" class="nav-link">🛠️ Methods</a><a href="mastery.html" class="nav-link">🧠 Mastry</a><a href="springboot.html" class="nav-link">🍃 Spring</a><a href="backend-track.html" class="nav-link">🧱 Backend</a></div><button class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme" onclick="toggleTheme()" type="button"><svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg><svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button></nav>
 <div class="index-hero">
   <div class="hero-badge">// Senior Java Developer · 10 Years Experience</div>
   <h1 class="hero-title">Java Interview<br>Complete Guide</h1>
@@ -102,10 +102,38 @@
   </a>
   <a href="springboot.html" class="part-card" style="--card-color:#84cc16;">
     <div class="part-icon">🍃</div>
-    <div class="part-num">Beginner → MAANG · 20 Sections</div>
-    <div class="part-title">Spring Boot Complete Guide</div>
-    <div class="part-desc">Spring Core, Boot internals, JPA, Security, Caching, AOP, Kafka, Resilience, Deployment, Scaling — collapsible sections, beginner to expert.</div>
+    <div class="part-num">Overview · 3 Focused Sections</div>
+    <div class="part-title">Spring Boot — Overview</div>
+    <div class="part-desc">Spring overview and original comprehensive Q&amp;A (282+ questions). Choose a focused deep-dive section below.</div>
     <div class="part-count">282 Q&amp;A →</div>
+  </a>
+  <a href="spring-core.html" class="part-card" style="--card-color:#22c55e;">
+    <div class="part-icon">🌱</div>
+    <div class="part-num">Beginner → Advanced · 5 Sections</div>
+    <div class="part-title">Spring Core &amp; Annotations</div>
+    <div class="part-desc">IoC, DI, Bean lifecycle, core annotations, auto-configuration, Profiles, REST API and validation — deeply explained with real-world analogies and code.</div>
+    <div class="part-count">Deep Guide →</div>
+  </a>
+  <a href="spring-advanced.html" class="part-card" style="--card-color:#f59e0b;">
+    <div class="part-icon">⚙️</div>
+    <div class="part-num">Intermediate → Expert · 4 Sections</div>
+    <div class="part-title">Advanced Spring &amp; Patterns</div>
+    <div class="part-desc">Security filter chain, JWT from scratch, AOP internals, @Cacheable, @Async, Testcontainers testing — production-depth implementation detail.</div>
+    <div class="part-count">Deep Guide →</div>
+  </a>
+  <a href="spring-db.html" class="part-card" style="--card-color:#8b5cf6;">
+    <div class="part-icon">🗄️</div>
+    <div class="part-num">Advanced → Expert · 4 Sections</div>
+    <div class="part-title">DB, Messaging &amp; Architecture</div>
+    <div class="part-desc">JPA Persistence Context, N+1 fixes, @Transactional, Kafka delivery guarantees, Resilience4j circuit breaker, zero-downtime K8s deployment.</div>
+    <div class="part-count">Deep Guide →</div>
+  </a>
+  <a href="backend-track.html" class="part-card" style="--card-color:#14b8a6;">
+    <div class="part-icon">🧱</div>
+    <div class="part-num">MAANG Track · 5 Specialized Pages</div>
+    <div class="part-title">Backend Complete Interview Track</div>
+    <div class="part-desc">Separate deep pages for Databases, Architecture, Cloud/Deployment, CI/CD + Tooling, and Observability + Analytics with beginner-to-expert progression.</div>
+    <div class="part-count">Open Backend Track →</div>
   </a>
 </div>
 <script src="assets/main.js" defer></script>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Spring Boot — Beginner to Advanced Guide</title>
+<title>Advanced Spring — Security, AOP, Caching, Async & Testing</title>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/theme.css">
 <script>(function(){try{var t=localStorage.getItem("java-theme")||"light";document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
@@ -11,102 +11,29 @@
 <body class="mastery-page">
 <nav class="topnav"><span class="nav-logo">// Java Interview</span><div class="nav-links"><a href="index.html" class="nav-link">🏠 Home</a><a href="oop.html" class="nav-link">🧩 OOPS</a><a href="basics.html" class="nav-link">☕ Basic</a><a href="versions.html" class="nav-link">🚀 Version</a><a href="collections.html" class="nav-link">📦 Collection</a><a href="exceptions.html" class="nav-link">⚠️ Exception</a><a href="concurrency.html" class="nav-link">⚡ Concurrency + Advance</a><a href="methods.html" class="nav-link">🛠️ Methods</a><a href="mastery.html" class="nav-link">🧠 Mastry</a><a href="springboot.html" class="nav-link active">🍃 Spring</a><a href="backend-track.html" class="nav-link">🧱 Backend</a></div><button class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme" onclick="toggleTheme()" type="button"><svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg><svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button></nav>
 <div class="breadcrumb">
-  <a href="index.html">Home</a> › Spring Boot Guide
+  <a href="index.html">Home</a> › <a href="springboot.html">Spring Boot</a> › Advanced Spring &amp; Patterns
+</div>
+<div style="max-width:1100px;margin:0 auto 1rem;padding:0 1rem;display:flex;gap:.55rem;flex-wrap:wrap;">
+  <a href="springboot.html" class="filter-btn" style="text-decoration:none;">🍃 Overview</a>
+  <a href="spring-core.html" class="filter-btn" style="text-decoration:none;">🌱 Core</a>
+  <a href="spring-advanced.html" class="filter-btn active" style="text-decoration:none;">⚙️ Advanced</a>
+  <a href="spring-db.html" class="filter-btn" style="text-decoration:none;">🗄️ DB &amp; Architecture</a>
 </div>
 <header>
-  <div class="header-tag">// Choose a focused section below</div>
-  <h1>🍃 Spring Boot — Complete Guide</h1>
-  <p class="subtitle">The Spring guide is now split into <strong>3 focused sections</strong> — each deeply explained for both beginners and senior developers. Pick the section you need, or browse all Q&amp;A below.</p>
-</header>
-<style>
-.spring-landing { max-width: 960px; margin: 0 auto; padding: 1.5rem 1.5rem 3rem; }
-.spring-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin: 1.5rem 0 2.5rem; }
-.spring-card { background: var(--surface); border: 1.5px solid var(--border); border-radius: 16px; padding: 1.75rem; text-decoration: none; color: var(--text); transition: border-color .2s, transform .2s, box-shadow .2s; display: block; }
-.spring-card:hover { border-color: var(--accent); transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,184,212,.12); }
-.spring-card-icon { font-size: 2.5rem; margin-bottom: .75rem; }
-.spring-card-label { font-size: .7rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); margin-bottom: .4rem; }
-.spring-card-title { font-size: 1.2rem; font-weight: 700; color: var(--text-strong); margin-bottom: .6rem; }
-.spring-card-desc { font-size: .88rem; color: var(--muted); line-height: 1.55; margin-bottom: 1rem; }
-.spring-card-topics { display: flex; flex-wrap: wrap; gap: .4rem; }
-.spring-card-topic { font-size: .72rem; background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; padding: .2rem .55rem; color: var(--muted); }
-.spring-card-cta { display: inline-block; margin-top: 1.25rem; font-size: .82rem; font-weight: 700; color: var(--accent); }
-.spring-divider { border: none; border-top: 1.5px solid var(--border); margin: 2rem 0 1.5rem; }
-.spring-old-note { text-align: center; color: var(--muted); font-size: .9rem; margin-bottom: 1.5rem; }
-</style>
-<div class="spring-landing">
-  <div class="spring-cards">
-    <a href="spring-core.html" class="spring-card">
-      <div class="spring-card-icon">🌱</div>
-      <div class="spring-card-label">Start Here</div>
-      <div class="spring-card-title">Spring Core &amp; Annotations</div>
-      <div class="spring-card-desc">The foundation: IoC, Dependency Injection, Bean lifecycle, core annotations, Spring Boot auto-configuration, REST API, and Profiles — explained step by step with real-world analogies.</div>
-      <div class="spring-card-topics">
-        <span class="spring-card-topic">IoC / DI</span>
-        <span class="spring-card-topic">Bean Lifecycle</span>
-        <span class="spring-card-topic">@Autowired</span>
-        <span class="spring-card-topic">Auto-Config</span>
-        <span class="spring-card-topic">Profiles</span>
-        <span class="spring-card-topic">@Value</span>
-        <span class="spring-card-topic">REST</span>
-        <span class="spring-card-topic">Validation</span>
-      </div>
-      <span class="spring-card-cta">Open Section →</span>
-    </a>
-    <a href="spring-advanced.html" class="spring-card">
-      <div class="spring-card-icon">⚙️</div>
-      <div class="spring-card-label">Advanced Patterns</div>
-      <div class="spring-card-title">Advanced Spring &amp; Patterns</div>
-      <div class="spring-card-desc">Security filter chain and JWT from scratch, AOP internals and the self-invocation trap, caching strategies, @Async internals, and testing with MockMvc and Testcontainers.</div>
-      <div class="spring-card-topics">
-        <span class="spring-card-topic">Security Filter Chain</span>
-        <span class="spring-card-topic">JWT</span>
-        <span class="spring-card-topic">AOP Proxies</span>
-        <span class="spring-card-topic">@Cacheable</span>
-        <span class="spring-card-topic">@Async</span>
-        <span class="spring-card-topic">@WebMvcTest</span>
-        <span class="spring-card-topic">Testcontainers</span>
-      </div>
-      <span class="spring-card-cta">Open Section →</span>
-    </a>
-    <a href="spring-db.html" class="spring-card">
-      <div class="spring-card-icon">🗄️</div>
-      <div class="spring-card-label">Data &amp; Infrastructure</div>
-      <div class="spring-card-title">DB, Messaging &amp; Architecture</div>
-      <div class="spring-card-desc">JPA Persistence Context, dirty checking, N+1 problem solved every way, @Transactional deep dive, Kafka delivery guarantees, Resilience4j, and zero-downtime deployment.</div>
-      <div class="spring-card-topics">
-        <span class="spring-card-topic">Persistence Context</span>
-        <span class="spring-card-topic">N+1 Problem</span>
-        <span class="spring-card-topic">@Transactional</span>
-        <span class="spring-card-topic">Spring Data</span>
-        <span class="spring-card-topic">Kafka</span>
-        <span class="spring-card-topic">Circuit Breaker</span>
-        <span class="spring-card-topic">Deployment</span>
-      </div>
-      <span class="spring-card-cta">Open Section →</span>
-    </a>
-    <!-- <a href="backend-track.html" class="spring-card">
-      <div class="spring-card-icon">🧱</div>
-      <div class="spring-card-label">MAANG Backend Track</div>
-      <div class="spring-card-title">Beyond Spring — Full Backend Prep</div>
-      <div class="spring-card-desc">Separate deep pages for databases (SQL/PostgreSQL/MongoDB/Oracle), architecture, cloud/deployment, CI/CD, tooling, observability, and analytics.</div>
-      <div class="spring-card-topics">
-        <span class="spring-card-topic">DB Engines</span>
-        <span class="spring-card-topic">System Design</span>
-        <span class="spring-card-topic">Cloud</span>
-        <span class="spring-card-topic">CI/CD</span>
-        <span class="spring-card-topic">Observability</span>
-        <span class="spring-card-topic">Analytics</span>
-      </div>
-      <span class="spring-card-cta">Open Backend Track →</span>
-    </a> -->
+  <div class="header-tag">// Intermediate → Advanced → Expert</div>
+  <h1>⚙️ Advanced Spring &amp; Patterns</h1>
+  <p class="subtitle">Spring Security filter chain &amp; JWT, AOP internals, Caching strategies, @Async &amp; CompletableFuture, Application Events, Testing with MockMvc &amp; Testcontainers — with deep implementation detail.</p>
+  <div class="stats-row">
+    <div class="stat"><span class="stat-num" id="statTotal">0</span> Questions</div>
+    <div class="stat"><span class="stat-num" id="statSections">0</span> Sections</div>
+    <div class="stat"><span class="stat-num">3</span> Difficulty Levels</div>
+    <div class="stat"><span class="stat-num">Deep</span> Coverage</div>
   </div>
-  <hr class="spring-divider">
-  <p class="spring-old-note">⬇️ The original comprehensive Q&amp;A (280+ questions) is preserved below</p>
-</div>
+</header>
 <div class="controls">
   <div class="search-wrap">
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-    <input type="text" id="searchInput" placeholder="Search any concept, annotation, or code..." oninput="filterCards()">
+    <input type="text" id="searchInput" placeholder="Search JWT, AOP, @Cacheable, @Async, Testcontainers..." oninput="filterCards()">
   </div>
   <button class="filter-btn active" onclick="filterBy('all',this)">All</button>
   <button class="filter-btn" onclick="filterBy('beginner',this)">🟢 Beginner</button>
@@ -122,10 +49,10 @@
   </div>
 </div>
 
-<script src="assets/springboot-data.js"></script>
+<script src="assets/spring-advanced-data.js"></script>
 <script>
 (function () {
-  var data = window.SPRING_DATA;
+  var data = window.SPRING_ADV_DATA;
   if (!data) return;
 
   var sidebar = document.getElementById('msidebar');
@@ -149,14 +76,12 @@
       sectionCount++;
       var secId = 'sec-' + sec.id;
 
-      // Sidebar link
       var link = el('div', 'sidebar-link');
       link.dataset.target = secId;
       link.textContent = '§' + sec.n + ' ' + sec.title;
       link.addEventListener('click', function () { scrollToSection(secId); });
       sidebar.appendChild(link);
 
-      // Section card (collapsible)
       var section = el('section', 'section-card card');
       section.id = secId;
 
@@ -176,7 +101,6 @@
         inner.appendChild(desc);
       }
 
-      // Question cards inside section
       sec.questions.forEach(function (q) {
         totalQ++;
         var diffsHtml = q.d.map(function (d) {
@@ -205,7 +129,6 @@
   document.getElementById('statTotal').textContent = totalQ;
   document.getElementById('statSections').textContent = sectionCount;
 
-  /* Scroll to section and auto-open it */
   window.scrollToSection = function (id) {
     var el = document.getElementById(id);
     if (!el) return;
@@ -216,7 +139,6 @@
     if (link) link.classList.add('active');
   };
 
-  /* Expand/collapse all SECTIONS (not nested questions) */
   var allSectionsOpen = false;
   window.toggleAllSections = function () {
     allSectionsOpen = !allSectionsOpen;

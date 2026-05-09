@@ -250,6 +250,12 @@ input[type="text"]::placeholder { color: var(--muted); }
   cursor: pointer;
   transition: all 0.2s;
 }
+a.filter-btn {
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
 .filter-btn:hover { border-color: var(--accent); color: var(--accent); }
 .filter-btn.active { background: var(--accent); border-color: var(--accent); color: var(--nav-active-fg); }
 .expand-all {

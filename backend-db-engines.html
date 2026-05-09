@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Backend Databases — SQL, PostgreSQL, MongoDB, Oracle</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/theme.css">
+<script>(function(){try{var t=localStorage.getItem("java-theme")||"light";document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+</head>
+<body class="mastery-page">
+<nav class="topnav"><span class="nav-logo">// Java Interview</span><div class="nav-links"><a href="index.html" class="nav-link">🏠 Home</a><a href="oop.html" class="nav-link">🧩 OOPS</a><a href="basics.html" class="nav-link">☕ Basic</a><a href="versions.html" class="nav-link">🚀 Version</a><a href="collections.html" class="nav-link">📦 Collection</a><a href="exceptions.html" class="nav-link">⚠️ Exception</a><a href="concurrency.html" class="nav-link">⚡ Concurrency + Advance</a><a href="methods.html" class="nav-link">🛠️ Methods</a><a href="mastery.html" class="nav-link">🧠 Mastry</a><a href="springboot.html" class="nav-link">🍃 Spring</a><a href="backend-track.html" class="nav-link active">🧱 Backend</a></div><button class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme" onclick="toggleTheme()" type="button"><svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg><svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button></nav>
+<div class="breadcrumb"><a href="index.html">Home</a> › <a href="backend-track.html">Backend MAANG Track</a> › Databases</div>
+<header>
+  <div class="header-tag">// Beginner → Advanced → MAANG Interview</div>
+  <h1>🗃️ Backend Databases Deep Guide</h1>
+  <p class="subtitle">SQL and NoSQL fundamentals, PostgreSQL internals, MongoDB internals, Oracle enterprise use cases, indexing, transactions, replication, sharding, and zero-downtime migrations.</p>
+  <div class="stats-row"><div class="stat"><span class="stat-num" id="statTotal">0</span> Questions</div><div class="stat"><span class="stat-num" id="statSections">0</span> Sections</div><div class="stat"><span class="stat-num">4</span> DB Engines</div><div class="stat"><span class="stat-num">MAANG</span> Focus</div></div>
+</header>
+<div class="controls">
+  <div class="search-wrap"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input type="text" id="searchInput" placeholder="Search PostgreSQL, MongoDB, Oracle, indexing, sharding..." oninput="filterCards()"></div>
+  <button class="filter-btn active" onclick="filterBy('all',this)">All</button><button class="filter-btn" onclick="filterBy('beginner',this)">🟢 Beginner</button><button class="filter-btn" onclick="filterBy('intermediate',this)">🟡 Intermediate</button><button class="filter-btn" onclick="filterBy('advanced',this)">🟠 Advanced</button><button class="filter-btn" onclick="filterBy('expert',this)">🔥 Expert</button><button class="expand-all" onclick="toggleAllSections()">Expand All Sections</button>
+</div>
+<div class="main"><aside class="sidebar" id="msidebar"></aside><div class="content" id="mcontent"><div class="no-results" id="noResults">No questions match your search.</div></div></div>
+<script src="assets/backend-db-engines-data.js"></script>
+<script>
+(function(){
+  var data = window.BACKEND_DB_ENGINES_DATA; if(!data) return;
+  var sidebar=document.getElementById('msidebar'); var content=document.getElementById('mcontent'); var totalQ=0, sectionCount=0;
+  var CHEVRON='<svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>';
+  function el(tag,cls,html){var e=document.createElement(tag); if(cls)e.className=cls; if(html!=null)e.innerHTML=html; return e;}
+  data.parts.forEach(function(part){ var partHeader=el('div','cat-header'); partHeader.textContent=part.label; sidebar.appendChild(partHeader);
+    part.sections.forEach(function(sec){ sectionCount++; var secId='sec-'+sec.id;
+      var link=el('div','sidebar-link'); link.dataset.target=secId; link.textContent='§'+sec.n+' '+sec.title; link.addEventListener('click', function(){scrollToSection(secId);}); sidebar.appendChild(link);
+      var section=el('section','section-card card'); section.id=secId;
+      var header=el('div','card-header'); header.setAttribute('onclick','toggle(this)'); header.innerHTML='<h2><span class="sec-num">§'+sec.n+'</span> '+sec.title+'</h2>'+'<span class="q-count">'+sec.questions.length+' Q</span>'+CHEVRON; section.appendChild(header);
+      var body=el('div','card-body'); var inner=el('div','card-inner'); if(sec.desc){var desc=el('div','section-desc'); desc.innerHTML=sec.desc; inner.appendChild(desc);} 
+      sec.questions.forEach(function(q){ totalQ++; var diffsHtml=q.d.map(function(d){return '<span class="difficulty diff-'+d+'">'+d.toUpperCase()+'</span>';}).join('');
+        var card=el('div','card'); card.id='q-'+sec.id+'-'+q.n; card.innerHTML='<div class="card-header" onclick="toggle(this)">'+'<span class="q-num">Q'+q.n+'</span>'+'<span class="q-title">'+q.t+'</span>'+'<span class="diff-stack">'+diffsHtml+'</span>'+CHEVRON+'</div>'+'<div class="card-body"><div class="card-inner"><div class="answer">'+q.a+'</div></div></div>'; inner.appendChild(card);
+      });
+      body.appendChild(inner); section.appendChild(body); content.appendChild(section);
+    });
+  });
+  document.getElementById('statTotal').textContent=totalQ; document.getElementById('statSections').textContent=sectionCount;
+  window.scrollToSection=function(id){var x=document.getElementById(id); if(!x)return; x.classList.add('open'); x.scrollIntoView({behavior:'smooth', block:'start'}); document.querySelectorAll('.sidebar-link').forEach(function(l){l.classList.remove('active');}); var link=document.querySelector('.sidebar-link[data-target="'+id+'"]'); if(link)link.classList.add('active');};
+  var allSectionsOpen=false; window.toggleAllSections=function(){allSectionsOpen=!allSectionsOpen; document.querySelectorAll('.section-card').forEach(function(s){if(allSectionsOpen)s.classList.add('open'); else s.classList.remove('open');}); var btn=document.querySelector('.expand-all'); if(btn)btn.textContent=allSectionsOpen?'Collapse All Sections':'Expand All Sections';};
+})();
+</script>
+<script src="assets/main.js" defer></script>
+</body>
+</html>
