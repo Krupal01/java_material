@@ -7,10 +7,16 @@ window.BACKEND_CICD_TOOLS_DATA = {
       label: "PART 1 · CI/CD FUNDAMENTALS & PIPELINE ARCHITECTURE",
       sections: [
         {
-          id: "cicd-fundamentals", n: 1, title: "Continuous Integration & Continuous Deployment Concepts",
+          id: "cicd-fundamentals",
+          n: 1,
+          title: "Continuous Integration & Continuous Deployment Concepts",
           desc: "Core concepts every backend engineer must know.",
           questions: [
-            {n:1, t:"What is CI (Continuous Integration) and why does it matter?", d:["beginner","intermediate"], a:`
+            {
+              n: 1,
+              t: "What is CI (Continuous Integration) and why does it matter?",
+              d: ["beginner", "intermediate"],
+              a: `
 <ul>
   <li><strong>CI:</strong> Automatically build, test, and validate code changes on every commit.</li>
   <li><strong>Benefits:</strong>
@@ -22,8 +28,13 @@ window.BACKEND_CICD_TOOLS_DATA = {
     </ul>
   </li>
   <li><strong>Pipeline stages:</strong> Checkout → Lint → Build → Unit Test → Integration Test → Artifact Publish.</li>
-</ul>`},
-            {n:2, t:"What is CD (Continuous Deployment) vs Continuous Delivery?", d:["beginner","intermediate"], a:`
+</ul>`,
+            },
+            {
+              n: 2,
+              t: "What is CD (Continuous Deployment) vs Continuous Delivery?",
+              d: ["beginner", "intermediate"],
+              a: `
 <ul>
   <li><strong>Continuous Delivery (CD):</strong> Automated deployment to production-ready state; manual trigger for final release.</li>
   <li><strong>Continuous Deployment (CD):</strong> Automated deployment all the way to production; no manual gate.</li>
@@ -33,8 +44,13 @@ window.BACKEND_CICD_TOOLS_DATA = {
       <li>Continuous Deployment: High-trust teams, feature flags protect users.</li>
     </ul>
   </li>
-</ul>`},
-            {n:3, t:"Pipeline architecture — stages, gates, and feedback loops?", d:["intermediate","advanced"], a:`
+</ul>`,
+            },
+            {
+              n: 3,
+              t: "Pipeline architecture — stages, gates, and feedback loops?",
+              d: ["intermediate", "advanced"],
+              a: `
 <ul>
   <li><strong>Stage 1: Source Trigger</strong> — PR opened or commit pushed to branch.</li>
   <li><strong>Stage 2: Lint & Build</strong> — Code format, compile, fast checks (< 2 min).</li>
@@ -43,8 +59,13 @@ window.BACKEND_CICD_TOOLS_DATA = {
   <li><strong>Stage 5: Artifact Creation</strong> — Build Docker image, publish to registry, tag with commit SHA.</li>
   <li><strong>Stage 6: Deploy to Staging</strong> — Run smoke tests, e2e tests (< 15 min).</li>
   <li><strong>Stage 7: Deploy to Production</strong> — Canary or blue-green, health checks, traffic shift.</li>
-</ul>`},
-            {n:4, t:"Fast feedback vs comprehensive tests — how to balance in CI?", d:["intermediate","advanced"], a:`
+</ul>`,
+            },
+            {
+              n: 4,
+              t: "Fast feedback vs comprehensive tests — how to balance in CI?",
+              d: ["intermediate", "advanced"],
+              a: `
 <ul>
   <li><strong>Fast feedback (goal < 5 min):</strong> Lint, unit tests, quick builds. Catch 80% of issues quickly.</li>
   <li><strong>Comprehensive (15-30 min):</strong> Integration tests, e2e tests, performance tests. Run in parallel or after approval.</li>
@@ -55,8 +76,13 @@ window.BACKEND_CICD_TOOLS_DATA = {
       <li>Pre-prod: canary smoke tests; rollback if issues.</li>
     </ul>
   </li>
-</ul>`},
-            {n:5, t:"Immutable artifacts — why rebuild defeats the purpose?", d:["intermediate","advanced"], a:`
+</ul>`,
+            },
+            {
+              n: 5,
+              t: "Immutable artifacts — why rebuild defeats the purpose?",
+              d: ["intermediate", "advanced"],
+              a: `
 <ul>
   <li><strong>Problem:</strong> If you rebuild the same code later, you get different bits (dependencies changed, compiler version, etc.).</li>
   <li><strong>Solution:</strong> Build once during CI; promote the same binary/image through staging → prod.</li>
@@ -68,8 +94,13 @@ window.BACKEND_CICD_TOOLS_DATA = {
     </ul>
   </li>
   <li><strong>Versioning:</strong> Tag with commit SHA or semantic version + build timestamp (e.g., v1.2.3-build.2026050812).</li>
-</ul>`},
-            {n:6, t:"How to measure CI/CD pipeline health?", d:["advanced"], a:`
+</ul>`,
+            },
+            {
+              n: 6,
+              t: "How to measure CI/CD pipeline health?",
+              d: ["advanced"],
+              a: `
 <ul>
   <li><strong>Metrics:</strong>
     <ul>
@@ -80,19 +111,26 @@ window.BACKEND_CICD_TOOLS_DATA = {
       <li>Mean time to recovery (MTTR): how fast can we rollback (< 5 min).</li>
     </ul>
   </li>
-</ul>`}
-          ]
-        }
-      ]
+</ul>`,
+            },
+          ],
+        },
+      ],
     },
     {
       label: "PART 2 · GITHUB ACTIONS, GITLAB CI, JENKINS",
       sections: [
         {
-          id: "ci-tools", n: 2, title: "Popular CI/CD Tools and Platforms",
+          id: "ci-tools",
+          n: 2,
+          title: "Popular CI/CD Tools and Platforms",
           desc: "When to use each tool.",
           questions: [
-            {n:7, t:"GitHub Actions — workflow syntax and when to use?", d:["intermediate","advanced"], a:`
+            {
+              n: 7,
+              t: "GitHub Actions — workflow syntax and when to use?",
+              d: ["intermediate", "advanced"],
+              a: `
 <ul>
   <li><strong>Workflow file:</strong> YAML in .github/workflows/ directory; triggered on events (push, PR, schedule).</li>
   <li><strong>Example:</strong>
@@ -129,8 +167,13 @@ jobs:
   </li>
   <li><strong>Strengths:</strong> Free for public repos, native GitHub integration, abundant actions marketplace.</li>
   <li><strong>Limitations:</strong> Limited concurrency on free tier, GitHub-only (not multi-cloud).</li>
-</ul>`},
-            {n:8, t:"GitLab CI — pipeline YAML and advantages over GitHub Actions?", d:["intermediate","advanced"], a:`
+</ul>`,
+            },
+            {
+              n: 8,
+              t: "GitLab CI — pipeline YAML and advantages over GitHub Actions?",
+              d: ["intermediate", "advanced"],
+              a: `
 <ul>
   <li><strong>Pipeline file:</strong> .gitlab-ci.yml in repo root; triggers on push/merge requests.</li>
   <li><strong>Example:</strong>
@@ -171,8 +214,13 @@ deploy:
 </pre>
   </li>
   <li><strong>Strengths:</strong> Powerful matrix builds, GitLab Runner (self-hosted), built-in container registry, better enterprise features.</li>
-</ul>`},
-            {n:9, t:"Jenkins — distributed builds and declarative pipelines?", d:["advanced"], a:`
+</ul>`,
+            },
+            {
+              n: 9,
+              t: "Jenkins — distributed builds and declarative pipelines?",
+              d: ["advanced"],
+              a: `
 <ul>
   <li><strong>Architecture:</strong> Master node orchestrates; agents/executors run jobs in parallel.</li>
   <li><strong>Declarative Pipeline Example:</strong>
@@ -225,8 +273,13 @@ pipeline {
   </li>
   <li><strong>Strengths:</strong> Mature, extensible, self-hosted control, powerful for complex pipelines.</li>
   <li><strong>Limitations:</strong> Higher operational overhead; less polished than GitHub Actions.</li>
-</ul>`},
-            {n:10, t:"GitHub Actions vs GitLab CI vs Jenkins — comparison?", d:["advanced"], a:`
+</ul>`,
+            },
+            {
+              n: 10,
+              t: "GitHub Actions vs GitLab CI vs Jenkins — comparison?",
+              d: ["advanced"],
+              a: `
 <table>
   <tr><th>Feature</th><th>GitHub Actions</th><th>GitLab CI</th><th>Jenkins</th></tr>
   <tr><td>Setup</td><td>Easiest (SaaS)</td><td>Easy (SaaS + self-hosted)</td><td>Hardest (self-hosted)</td></tr>
@@ -235,8 +288,13 @@ pipeline {
   <tr><td>Enterprise features</td><td>Growing</td><td>Strong</td><td>Mature</td></tr>
   <tr><td>Multi-cloud support</td><td>Yes (self-hosted)</td><td>Yes (self-hosted)</td><td>Yes</td></tr>
 </table>
-<p><strong>Rule:</strong> GitHub Actions if GitHub + simple pipelines. GitLab CI for enterprise. Jenkins if on-prem required.</p>`},
-            {n:11, t:"Self-hosted vs managed runners — when to self-host?", d:["advanced"], a:`
+<p><strong>Rule:</strong> GitHub Actions if GitHub + simple pipelines. GitLab CI for enterprise. Jenkins if on-prem required.</p>`,
+            },
+            {
+              n: 11,
+              t: "Self-hosted vs managed runners — when to self-host?",
+              d: ["advanced"],
+              a: `
 <ul>
   <li><strong>Managed (GitHub Actions, GitLab.com runners):</strong> Easy, no ops, but limited customization.</li>
   <li><strong>Self-hosted (GitHub Actions runners, GitLab Runner, Jenkins agents):</strong> Full control, can run Docker, access private networks.</li>
@@ -248,19 +306,26 @@ pipeline {
       <li>Compliance requires air-gap or on-prem.</li>
     </ul>
   </li>
-</ul>`}
-          ]
-        }
-      ]
+</ul>`,
+            },
+          ],
+        },
+      ],
     },
     {
       label: "PART 3 · TESTING & QUALITY GATES",
       sections: [
         {
-          id: "testing-quality", n: 3, title: "Testing Strategies and Quality Assurance in CI",
+          id: "testing-quality",
+          n: 3,
+          title: "Testing Strategies and Quality Assurance in CI",
           desc: "Comprehensive testing for confidence.",
           questions: [
-            {n:12, t:"Test pyramid — unit, integration, e2e distribution?", d:["intermediate","advanced"], a:`
+            {
+              n: 12,
+              t: "Test pyramid — unit, integration, e2e distribution?",
+              d: ["intermediate", "advanced"],
+              a: `
 <ul>
   <li><strong>Test Pyramid:</strong>
     <ul>
@@ -277,8 +342,13 @@ pipeline {
     </ul>
   </li>
   <li><strong>Anti-pattern:</strong> Too many e2e tests (slow CI); too many mocks (miss real bugs).</li>
-</ul>`},
-            {n:13, t:"Unit tests in Java — JUnit, Mockito, AssertJ?", d:["intermediate","advanced"], a:`
+</ul>`,
+            },
+            {
+              n: 13,
+              t: "Unit tests in Java — JUnit, Mockito, AssertJ?",
+              d: ["intermediate", "advanced"],
+              a: `
 <ul>
   <li><strong>JUnit5 example:</strong>
 <pre>
@@ -317,8 +387,13 @@ class UserServiceTest {
 }
 </pre>
   </li>
-</ul>`},
-            {n:14, t:"Integration tests with testcontainers?", d:["intermediate","advanced"], a:`
+</ul>`,
+            },
+            {
+              n: 14,
+              t: "Integration tests with testcontainers?",
+              d: ["intermediate", "advanced"],
+              a: `
 <ul>
   <li><strong>Problem:</strong> Manual Docker setup for integration tests; brittle tests.</li>
   <li><strong>Solution:</strong> Testcontainers spins up containers programmatically.</li>
@@ -347,8 +422,13 @@ class UserRepositoryTest {
 </pre>
   </li>
   <li><strong>Benefits:</strong> Real database, no mocks, runs in CI easily (Docker required).</li>
-</ul>`},
-            {n:15, t:"Contract testing and API mocking in CI?", d:["advanced"], a:`
+</ul>`,
+            },
+            {
+              n: 15,
+              t: "Contract testing and API mocking in CI?",
+              d: ["advanced"],
+              a: `
 <ul>
   <li><strong>Problem:</strong> Service A depends on Service B's API; Service B not always available in test.</li>
   <li><strong>Solution:</strong> Contract tests verify API contract; mock service for integration tests.</li>
@@ -372,8 +452,13 @@ class PaymentServiceTest {
 }
 </pre>
   </li>
-</ul>`},
-            {n:16, t:"Code coverage metrics and thresholds in CI?", d:["intermediate","advanced"], a:`
+</ul>`,
+            },
+            {
+              n: 16,
+              t: "Code coverage metrics and thresholds in CI?",
+              d: ["intermediate", "advanced"],
+              a: `
 <ul>
   <li><strong>Coverage tools:</strong> JaCoCo, Cobertura, Clover.</li>
   <li><strong>Metrics:</strong>
@@ -411,8 +496,13 @@ class PaymentServiceTest {
 </plugin>
 </pre>
   </li>
-</ul>`},
-            {n:17, t:"Static analysis and SAST — SonarQube, SpotBugs, PMD?", d:["advanced"], a:`
+</ul>`,
+            },
+            {
+              n: 17,
+              t: "Static analysis and SAST — SonarQube, SpotBugs, PMD?",
+              d: ["advanced"],
+              a: `
 <ul>
   <li><strong>SonarQube:</strong> Central hub; code quality, security vulnerabilities, technical debt.</li>
   <li><strong>SpotBugs:</strong> Detects common Java bugs (null dereference, resource leaks).</li>
@@ -429,19 +519,26 @@ mvn clean verify sonar:sonar \
 # Fails if quality gate doesn't pass
 </pre>
   </li>
-</ul>`}
-          ]
-        }
-      ]
+</ul>`,
+            },
+          ],
+        },
+      ],
     },
     {
       label: "PART 4 · ARTIFACT MANAGEMENT & VERSIONING",
       sections: [
         {
-          id: "artifacts-versioning", n: 4, title: "Building, Versioning, and Publishing Artifacts",
+          id: "artifacts-versioning",
+          n: 4,
+          title: "Building, Versioning, and Publishing Artifacts",
           desc: "Creating immutable, reproducible builds.",
           questions: [
-            {n:18, t:"Docker image build — best practices for size and security?", d:["intermediate","advanced"], a:`
+            {
+              n: 18,
+              t: "Docker image build — best practices for size and security?",
+              d: ["intermediate", "advanced"],
+              a: `
 <ul>
   <li><strong>Base image:</strong> Use minimal base (alpine, distroless) instead of ubuntu/centos.</li>
   <li><strong>Multi-stage build:</strong> Separate compile stage from runtime stage.</li>
@@ -465,8 +562,13 @@ CMD ["java", "-Xmx256m", "-jar", "app.jar"]
     Result: ~200MB instead of 1GB.
   </li>
   <li><strong>Security:</strong> Scan for CVEs, use distroless (no shell, no package manager), don't run as root.</li>
-</ul>`},
-            {n:19, t:"Semantic versioning and tag strategy?", d:["intermediate","advanced"], a:`
+</ul>`,
+            },
+            {
+              n: 19,
+              t: "Semantic versioning and tag strategy?",
+              d: ["intermediate", "advanced"],
+              a: `
 <ul>
   <li><strong>Semantic Versioning (semver):</strong> MAJOR.MINOR.PATCH (e.g., 1.2.3)</li>
   <li><strong>MAJOR:</strong> Breaking changes.</li>
@@ -481,8 +583,13 @@ CMD ["java", "-Xmx256m", "-jar", "app.jar"]
     </ul>
   </li>
   <li><strong>Best practice:</strong> Always push with commit SHA; also tag release versions for easy rollback.</li>
-</ul>`},
-            {n:20, t:"Container registries — Docker Hub, ECR, GCR, ACR?", d:["intermediate","advanced"], a:`
+</ul>`,
+            },
+            {
+              n: 20,
+              t: "Container registries — Docker Hub, ECR, GCR, ACR?",
+              d: ["intermediate", "advanced"],
+              a: `
 <table>
   <tr><th>Registry</th><th>Cloud</th><th>Cost</th><th>Features</th></tr>
   <tr><td>Docker Hub</td><td>Public</td><td>Free (public) / $ (private)</td><td>Simple, good for open-source</td></tr>
@@ -490,8 +597,13 @@ CMD ["java", "-Xmx256m", "-jar", "app.jar"]
   <tr><td>GCR</td><td>GCP</td><td>$ (Cloud Storage)</td><td>Good GCP integration</td></tr>
   <tr><td>ACR</td><td>Azure</td><td>$ (per SKU)</td><td>Managed identity support</td></tr>
 </table>
-<p><strong>Rule:</strong> Use cloud-native registry (ECR, GCR, ACR) for private images; push only after CI passes.</p>`},
-            {n:21, t:"Image scanning and vulnerability management in CI?", d:["advanced"], a:`
+<p><strong>Rule:</strong> Use cloud-native registry (ECR, GCR, ACR) for private images; push only after CI passes.</p>`,
+            },
+            {
+              n: 21,
+              t: "Image scanning and vulnerability management in CI?",
+              d: ["advanced"],
+              a: `
 <ul>
   <li><strong>Scanning tools:</strong> Trivy, Grype, Anchore, Docker Scout.</li>
   <li><strong>CI integration:</strong> Scan after build; fail if critical/high vulnerabilities found.</li>
@@ -508,8 +620,13 @@ CMD ["java", "-Xmx256m", "-jar", "app.jar"]
 </pre>
   </li>
   <li><strong>Policy:</strong> No image deploys to prod with critical CVEs; low/medium OK if documented.</li>
-</ul>`},
-            {n:22, t:"SBOM (Software Bill of Materials) and provenance?", d:["advanced","expert"], a:`
+</ul>`,
+            },
+            {
+              n: 22,
+              t: "SBOM (Software Bill of Materials) and provenance?",
+              d: ["advanced", "expert"],
+              a: `
 <ul>
   <li><strong>SBOM:</strong> List of all dependencies and versions in artifact (for audit, compliance, CVE tracking).</li>
   <li><strong>Provenance:</strong> Metadata: who built it, when, from what source, what tests passed.</li>
@@ -524,19 +641,26 @@ cosign attest --predicate sbom.json --key cosign.key myapp:v1.2.3
 </pre>
   </li>
   <li><strong>Benefits:</strong> CVE tracking, license compliance, secure supply chain, audit trail.</li>
-</ul>`}
-          ]
-        }
-      ]
+</ul>`,
+            },
+          ],
+        },
+      ],
     },
     {
       label: "PART 5 · DEPLOYMENT STRATEGIES & ORCHESTRATION",
       sections: [
         {
-          id: "deploy-strategies", n: 5, title: "Safe Deployment Strategies and Progressive Rollout",
+          id: "deploy-strategies",
+          n: 5,
+          title: "Safe Deployment Strategies and Progressive Rollout",
           desc: "Zero-downtime deployments.",
           questions: [
-            {n:23, t:"Rolling deployment — how Kubernetes handles progressive rollout?", d:["intermediate","advanced"], a:`
+            {
+              n: 23,
+              t: "Rolling deployment — how Kubernetes handles progressive rollout?",
+              d: ["intermediate", "advanced"],
+              a: `
 <ul>
   <li><strong>Process:</strong>
     <ol>
@@ -559,8 +683,13 @@ spec:
   </li>
   <li><strong>Advantage:</strong> No extra infrastructure, simple.</li>
   <li><strong>Disadvantage:</strong> Mixed versions briefly; if bugs, users see them.</li>
-</ul>`},
-            {n:24, t:"Blue-Green deployment — instant switchover and rollback?", d:["advanced","expert"], a:`
+</ul>`,
+            },
+            {
+              n: 24,
+              t: "Blue-Green deployment — instant switchover and rollback?",
+              d: ["advanced", "expert"],
+              a: `
 <ul>
   <li><strong>Setup:</strong> Two identical environments (blue active, green idle); traffic router points to blue.</li>
   <li><strong>Process:</strong>
@@ -576,8 +705,13 @@ spec:
   </li>
   <li><strong>Advantages:</strong> Instant rollback, zero mixed versions, full test environment.</li>
   <li><strong>Cost:</strong> 2x infrastructure (mitigated if green scales down after deploy).</li>
-</ul>`},
-            {n:25, t:"Canary deployment — controlled risk with monitoring?", d:["advanced","expert"], a:`
+</ul>`,
+            },
+            {
+              n: 25,
+              t: "Canary deployment — controlled risk with monitoring?",
+              d: ["advanced", "expert"],
+              a: `
 <ul>
   <li><strong>Process:</strong>
     <ol>
@@ -597,8 +731,13 @@ spec:
     </ul>
   </li>
   <li><strong>Tools:</strong> Istio/Flagger for automated canary; ArgoCD for progressive delivery.</li>
-</ul>`},
-            {n:26, t:"Feature flags — enabling/disabling code without redeploy?", d:["advanced","expert"], a:`
+</ul>`,
+            },
+            {
+              n: 26,
+              t: "Feature flags — enabling/disabling code without redeploy?",
+              d: ["advanced", "expert"],
+              a: `
 <ul>
   <li><strong>Purpose:</strong> Toggle risky features on/off without deployment; kill switch for bugs.</li>
   <li><strong>Types:</strong>
@@ -620,8 +759,13 @@ public String processPayment(Payment payment) {
 </pre>
   </li>
   <li><strong>Tools:</strong> LaunchDarkly, Unleash, custom Redis-based flags.</li>
-</ul>`},
-            {n:27, t:"Deployment validation — smoke tests and health checks?", d:["intermediate","advanced"], a:`
+</ul>`,
+            },
+            {
+              n: 27,
+              t: "Deployment validation — smoke tests and health checks?",
+              d: ["intermediate", "advanced"],
+              a: `
 <ul>
   <li><strong>Smoke tests (immediate, 2-5 sec each):</strong>
     <ul>
@@ -648,19 +792,26 @@ public ResponseEntity<Health> health() {
 }
 </pre>
   </li>
-</ul>`}
-          ]
-        }
-      ]
+</ul>`,
+            },
+          ],
+        },
+      ],
     },
     {
       label: "PART 6 · GITOPS & INFRASTRUCTURE-AS-CODE",
       sections: [
         {
-          id: "gitops-iac", n: 6, title: "GitOps, ArgoCD, Terraform, Helm",
+          id: "gitops-iac",
+          n: 6,
+          title: "GitOps, ArgoCD, Terraform, Helm",
           desc: "Declarative infrastructure and deployment.",
           questions: [
-            {n:28, t:"GitOps principles — Git as single source of truth?", d:["intermediate","advanced"], a:`
+            {
+              n: 28,
+              t: "GitOps principles — Git as single source of truth?",
+              d: ["intermediate", "advanced"],
+              a: `
 <ul>
   <li><strong>Principle:</strong> Desired state stored in Git; controllers reconcile cluster to Git state.</li>
   <li><strong>Workflow:</strong>
@@ -679,8 +830,13 @@ public ResponseEntity<Health> health() {
       <li>Disaster recovery: clone Git repo, re-apply to new cluster.</li>
     </ul>
   </li>
-</ul>`},
-            {n:29, t:"ArgoCD — declarative GitOps for Kubernetes?", d:["advanced"], a:`
+</ul>`,
+            },
+            {
+              n: 29,
+              t: "ArgoCD — declarative GitOps for Kubernetes?",
+              d: ["advanced"],
+              a: `
 <ul>
   <li><strong>What it does:</strong> Watches Git repo for manifests; syncs Kubernetes cluster to Git state.</li>
   <li><strong>Setup:</strong>
@@ -709,8 +865,13 @@ spec:
   </li>
   <li><strong>Workflow:</strong> PR changes manifests → review/merge → ArgoCD auto-syncs (or manual sync).</li>
   <li><strong>Multi-env example:</strong> Separate apps for dev, staging, prod; each points to different branch or overlay.</li>
-</ul>`},
-            {n:30, t:"Terraform — infrastructure as code for cloud resources?", d:["intermediate","advanced"], a:`
+</ul>`,
+            },
+            {
+              n: 30,
+              t: "Terraform — infrastructure as code for cloud resources?",
+              d: ["intermediate", "advanced"],
+              a: `
 <ul>
   <li><strong>What it does:</strong> Declare infrastructure (VPC, DB, LB) in HCL; Terraform manages lifecycle.</li>
   <li><strong>Example:</strong>
@@ -762,8 +923,13 @@ output "app_ips" {
 </pre>
   </li>
   <li><strong>Commands:</strong> <code>terraform plan</code> (preview), <code>terraform apply</code> (execute), <code>terraform destroy</code> (teardown).</li>
-</ul>`},
-            {n:31, t:"Helm — Kubernetes package manager and templating?", d:["intermediate","advanced"], a:`
+</ul>`,
+            },
+            {
+              n: 31,
+              t: "Helm — Kubernetes package manager and templating?",
+              d: ["intermediate", "advanced"],
+              a: `
 <ul>
   <li><strong>What it does:</strong> Templates for Kubernetes manifests; packages called Charts.</li>
   <li><strong>Chart structure:</strong>
@@ -799,8 +965,13 @@ spec:
 </pre>
   </li>
   <li><code>helm install myapp ./chart -f values-prod.yaml</code> deploys with overrides.</li>
-</ul>`},
-            {n:32, t:"Kustomize — alternative to Helm for overlays?", d:["advanced"], a:`
+</ul>`,
+            },
+            {
+              n: 32,
+              t: "Kustomize — alternative to Helm for overlays?",
+              d: ["advanced"],
+              a: `
 <ul>
   <li><strong>vs Helm:</strong> Simpler (no templating engine), pure YAML, git-friendly.</li>
   <li><strong>Structure:</strong>
@@ -840,19 +1011,26 @@ configMapGenerator:
 </pre>
   </li>
   <li><strong>When to use:</strong> Simpler apps without complex templating; git-native.</li>
-</ul>`}
-          ]
-        }
-      ]
+</ul>`,
+            },
+          ],
+        },
+      ],
     },
     {
       label: "PART 7 · SECURITY IN CI/CD PIPELINES",
       sections: [
         {
-          id: "cicd-security", n: 7, title: "Secrets, Credentials, and Supply Chain Security",
+          id: "cicd-security",
+          n: 7,
+          title: "Secrets, Credentials, and Supply Chain Security",
           desc: "Protecting sensitive data in pipelines.",
           questions: [
-            {n:33, t:"Secret management in CI/CD — never hardcode?", d:["intermediate","advanced"], a:`
+            {
+              n: 33,
+              t: "Secret management in CI/CD — never hardcode?",
+              d: ["intermediate", "advanced"],
+              a: `
 <ul>
   <li><strong>Problem:</strong> DB passwords, API keys, deploy tokens must be available in pipeline; can't commit to Git.</li>
   <li><strong>Solution:</strong> Use secret manager; pipeline fetches at runtime.</li>
@@ -890,8 +1068,13 @@ pipeline {
 </pre>
   </li>
   <li><strong>Best practice:</strong> Rotate secrets every 90 days; limit who can read; audit access.</li>
-</ul>`},
-            {n:34, t:"Short-lived credentials vs long-lived API keys?", d:["advanced"], a:`
+</ul>`,
+            },
+            {
+              n: 34,
+              t: "Short-lived credentials vs long-lived API keys?",
+              d: ["advanced"],
+              a: `
 <ul>
   <li><strong>Short-lived (recommended):</strong>
     <ul>
@@ -908,8 +1091,13 @@ pipeline {
     </ul>
   </li>
   <li><strong>In AWS:</strong> Use OIDC provider (GitHub Actions, GitLab CI) to assume role directly; no static key needed.</li>
-</ul>`},
-            {n:35, t:"SBOM and software supply chain security (SLSA)?", d:["advanced","expert"], a:`
+</ul>`,
+            },
+            {
+              n: 35,
+              t: "SBOM and software supply chain security (SLSA)?",
+              d: ["advanced", "expert"],
+              a: `
 <ul>
   <li><strong>SLSA (Supply Chain Levels for Software Artifacts):</strong> Framework to track artifact provenance.</li>
   <li><strong>Levels:</strong>
@@ -931,8 +1119,13 @@ cosign attach sbom artifact.tar.gz
 cosign verify-blob --key cosign.pub artifact.tar.gz --signature artifact.tar.gz.sig
 </pre>
   </li>
-</ul>`},
-            {n:36, t:"Dependency scanning and vulnerability management?", d:["advanced"], a:`
+</ul>`,
+            },
+            {
+              n: 36,
+              t: "Dependency scanning and vulnerability management?",
+              d: ["advanced"],
+              a: `
 <ul>
   <li><strong>Problem:</strong> Dependencies (Maven, npm, Go) have CVEs; must detect and update.</li>
   <li><strong>Tools:</strong> Snyk, Dependabot, WhiteSource, npm audit.</li>
@@ -953,8 +1146,13 @@ cosign verify-blob --key cosign.pub artifact.tar.gz --signature artifact.tar.gz.
     args: --severity-threshold=high --fail-on=upgraded
 </pre>
   </li>
-</ul>`},
-            {n:37, t:"Scanning for secrets in source code?", d:["advanced"], a:`
+</ul>`,
+            },
+            {
+              n: 37,
+              t: "Scanning for secrets in source code?",
+              d: ["advanced"],
+              a: `
 <ul>
   <li><strong>Problem:</strong> Developer accidentally commits API key, password, etc. to Git.</li>
   <li><strong>Prevention:</strong> Pre-commit hooks scan for secrets before commit (local).</li>
@@ -976,19 +1174,26 @@ repos:
     fail: true
 </pre>
   </li>
-</ul>`}
-          ]
-        }
-      ]
+</ul>`,
+            },
+          ],
+        },
+      ],
     },
     {
       label: "PART 8 · MONITORING PIPELINES & METRICS",
       sections: [
         {
-          id: "pipeline-monitoring", n: 8, title: "Pipeline Performance, Observability, and DORA Metrics",
+          id: "pipeline-monitoring",
+          n: 8,
+          title: "Pipeline Performance, Observability, and DORA Metrics",
           desc: "Measuring delivery health.",
           questions: [
-            {n:38, t:"DORA metrics — measuring software delivery performance?", d:["intermediate","advanced"], a:`
+            {
+              n: 38,
+              t: "DORA metrics — measuring software delivery performance?",
+              d: ["intermediate", "advanced"],
+              a: `
 <ul>
   <li><strong>4 Key Metrics (DORA):</strong>
     <ul>
@@ -1000,8 +1205,13 @@ repos:
   </li>
   <li><strong>Why they matter:</strong> Predict team performance, business value delivery, stability.</li>
   <li><strong>Measurement:</strong> Track in CI/CD tool; publish dashboards; use as guide for improvement.</li>
-</ul>`},
-            {n:39, t:"Build time and test execution time — optimizing pipeline speed?", d:["intermediate","advanced"], a:`
+</ul>`,
+            },
+            {
+              n: 39,
+              t: "Build time and test execution time — optimizing pipeline speed?",
+              d: ["intermediate", "advanced"],
+              a: `
 <ul>
   <li><strong>Goal:</strong> Feedback in < 5-10 minutes (fast enough to not context-switch).</li>
   <li><strong>Optimization strategies:</strong>
@@ -1022,8 +1232,13 @@ strategy:
 </pre>
     Runs 6 combinations in parallel.
   </li>
-</ul>`},
-            {n:40, t:"Flaky tests and test reliability — building trust in CI?", d:["intermediate","advanced"], a:`
+</ul>`,
+            },
+            {
+              n: 40,
+              t: "Flaky tests and test reliability — building trust in CI?",
+              d: ["intermediate", "advanced"],
+              a: `
 <ul>
   <li><strong>Problem:</strong> Tests that fail randomly; teams ignore failures or retry blindly.</li>
   <li><strong>Solutions:</strong>
@@ -1036,8 +1251,13 @@ strategy:
   </li>
   <li><strong>Tools:</strong> Gradle Testretry plugin, flaky-tests-detector.</li>
   <li><strong>Policy:</strong> Never skip tests to make pipeline pass; fix or quarantine.</li>
-</ul>`},
-            {n:41, t:"Pipeline metrics and observability — what to track?", d:["advanced"], a:`
+</ul>`,
+            },
+            {
+              n: 41,
+              t: "Pipeline metrics and observability — what to track?",
+              d: ["advanced"],
+              a: `
 <ul>
   <li><strong>Metrics to track:</strong>
     <ul>
@@ -1050,19 +1270,26 @@ strategy:
   </li>
   <li><strong>Alerting:</strong> If build time > 15 min or flake rate > 10%, investigate.</li>
   <li><strong>Tools:</strong> Datadog, CloudWatch, Prometheus; most CI tools have built-in metrics.</li>
-</ul>`}
-          ]
-        }
-      ]
+</ul>`,
+            },
+          ],
+        },
+      ],
     },
     {
       label: "PART 9 · INCIDENT RESPONSE & ON-CALL READINESS",
       sections: [
         {
-          id: "incident-response", n: 9, title: "On-Call Rotations, Runbooks, Postmortems, Game Days",
+          id: "incident-response",
+          n: 9,
+          title: "On-Call Rotations, Runbooks, Postmortems, Game Days",
           desc: "Operational excellence beyond coding.",
           questions: [
-            {n:42, t:"On-call rotation structure — fairness and coverage?", d:["advanced"], a:`
+            {
+              n: 42,
+              t: "On-call rotation structure — fairness and coverage?",
+              d: ["advanced"],
+              a: `
 <ul>
   <li><strong>Rotation models:</strong>
     <ul>
@@ -1075,8 +1302,13 @@ strategy:
   <li><strong>Coverage for timezones:</strong> Multiple regions → on-call in each region (24/7 coverage).</li>
   <li><strong>Fairness:</strong> Track on-call frequency; rotations should be equal over time.</li>
   <li><strong>Tools:</strong> PagerDuty, OpsGenie, VictorOps.</li>
-</ul>`},
-            {n:43, t:"Alert routing and escalation — severity-based response?", d:["advanced"], a:`
+</ul>`,
+            },
+            {
+              n: 43,
+              t: "Alert routing and escalation — severity-based response?",
+              d: ["advanced"],
+              a: `
 <ul>
   <li><strong>Severity levels:</strong>
     <ul>
@@ -1094,8 +1326,13 @@ strategy:
     </ul>
   </li>
   <li><strong>Escalation:</strong> If primary doesn't ACK in 5 min, alert secondary. If secondary doesn't ACK in 5 min, alert manager.</li>
-</ul>`},
-            {n:44, t:"Runbooks and incident response procedures?", d:["advanced"], a:`
+</ul>`,
+            },
+            {
+              n: 44,
+              t: "Runbooks and incident response procedures?",
+              d: ["advanced"],
+              a: `
 <ul>
   <li><strong>Runbook contents:</strong>
     <ul>
@@ -1129,8 +1366,13 @@ If not fixed in 5 min:
 3. Page on-call database engineer
 </pre>
   </li>
-</ul>`},
-            {n:45, t:"Postmortems — learning from failures without blame?", d:["advanced"], a:`
+</ul>`,
+            },
+            {
+              n: 45,
+              t: "Postmortems — learning from failures without blame?",
+              d: ["advanced"],
+              a: `
 <ul>
   <li><strong>Blameless culture:</strong> Goal is learning, not punishment; no finger-pointing.</li>
   <li><strong>Postmortem structure:</strong>
@@ -1162,8 +1404,13 @@ Actions:
 3. Add DB query performance profiling to CI [@charlie by next sprint]
 </pre>
   </li>
-</ul>`},
-            {n:46, t:"Game days — practicing disaster recovery and incident response?", d:["advanced","expert"], a:`
+</ul>`,
+            },
+            {
+              n: 46,
+              t: "Game days — practicing disaster recovery and incident response?",
+              d: ["advanced", "expert"],
+              a: `
 <ul>
   <li><strong>What it is:</strong> Simulated incident; team practices response without affecting real users.</li>
   <li><strong>Example scenario:</strong>
@@ -1176,19 +1423,26 @@ Actions:
   </li>
   <li><strong>Benefits:</strong> Team confidence, identify runbook gaps, practice under pressure.</li>
   <li><strong>Frequency:</strong> Monthly for critical systems; quarterly for others.</li>
-</ul>`}
-          ]
-        }
-      ]
+</ul>`,
+            },
+          ],
+        },
+      ],
     },
     {
       label: "PART 10 · BEST PRACTICES & ANTI-PATTERNS",
       sections: [
         {
-          id: "best-practices", n: 10, title: "CI/CD Excellence and Common Pitfalls",
+          id: "best-practices",
+          n: 10,
+          title: "CI/CD Excellence and Common Pitfalls",
           desc: "What separates good teams from great ones.",
           questions: [
-            {n:47, t:"Fast feedback loop — why 10+ min pipeline is too slow?", d:["intermediate","advanced"], a:`
+            {
+              n: 47,
+              t: "Fast feedback loop — why 10+ min pipeline is too slow?",
+              d: ["intermediate", "advanced"],
+              a: `
 <ul>
   <li><strong>Problem:</strong> Developer commits; waits 15 min for pipeline; context-switched to something else; result comes back → confused.</li>
   <li><strong>Solution:</strong> Keep pipeline < 5-10 min; developers stay engaged.</li>
@@ -1200,8 +1454,13 @@ Actions:
       <li>Use matrix jobs to distribute work.</li>
     </ul>
   </li>
-</ul>`},
-            {n:48, t:"Promote same artifact across environments — why rebuild is risky?", d:["intermediate","advanced"], a:`
+</ul>`,
+            },
+            {
+              n: 48,
+              t: "Promote same artifact across environments — why rebuild is risky?",
+              d: ["intermediate", "advanced"],
+              a: `
 <ul>
   <li><strong>Anti-pattern:</strong> Rebuild from source at each deploy (dev → staging → prod).</li>
   <li><strong>Problem:</strong> Different bits each build; testing cert doesn't apply to prod version.</li>
@@ -1213,8 +1472,13 @@ Actions:
       <li>Prod deploy: Same image myapp:sha-a1b2c3</li>
     </ul>
   </li>
-</ul>`},
-            {n:49, t:"Gating decisions on fast tests, not slow tests?", d:["intermediate","advanced"], a:`
+</ul>`,
+            },
+            {
+              n: 49,
+              t: "Gating decisions on fast tests, not slow tests?",
+              d: ["intermediate", "advanced"],
+              a: `
 <ul>
   <li><strong>Pattern:</strong>
     <ul>
@@ -1224,8 +1488,13 @@ Actions:
     </ul>
   </li>
   <li><strong>Why:</strong> Fast feedback for developers. Comprehensive tests detect issues earlier but don't block shipping.</li>
-</ul>`},
-            {n:50, t:"Never skip tests to make pipeline pass — anti-pattern?", d:["intermediate","advanced"], a:`
+</ul>`,
+            },
+            {
+              n: 50,
+              t: "Never skip tests to make pipeline pass — anti-pattern?",
+              d: ["intermediate", "advanced"],
+              a: `
 <ul>
   <li><strong>Anti-pattern:</strong> Team marks tests as @Ignore or skips them to speed up pipeline.</li>
   <li><strong>Consequence:</strong> Unknown bugs slip to prod; team loses confidence in tests.</li>
@@ -1236,8 +1505,13 @@ Actions:
       <li>If test is wrong: fix or delete; don't leave confusing test.</li>
     </ul>
   </li>
-</ul>`},
-            {n:51, t:"Rollback is not always safe — when forward fix is better?", d:["advanced","expert"], a:`
+</ul>`,
+            },
+            {
+              n: 51,
+              t: "Rollback is not always safe — when forward fix is better?",
+              d: ["advanced", "expert"],
+              a: `
 <ul>
   <li><strong>Rollback scenario:</strong> New version breaks reporting; revert to old version.</li>
   <li><strong>Problem:</strong> Data created with new version might be incompatible with old version.</li>
@@ -1256,8 +1530,13 @@ Actions:
       <li>Most bugs (fix better than rollback).</li>
     </ul>
   </li>
-</ul>`},
-            {n:52, t:"Zero-downtime deployment checklist — what not to forget?", d:["advanced","expert"], a:`
+</ul>`,
+            },
+            {
+              n: 52,
+              t: "Zero-downtime deployment checklist — what not to forget?",
+              d: ["advanced", "expert"],
+              a: `
 <ul>
   <li><strong>Before deployment:</strong>
     <ul>
@@ -1282,19 +1561,26 @@ Actions:
       <li>Clean up old code/schema after confirmation (contract phase).</li>
     </ul>
   </li>
-</ul>`}
-          ]
-        }
-      ]
+</ul>`,
+            },
+          ],
+        },
+      ],
     },
     {
       label: "PART 11 · MAANG INTERVIEW QUESTIONS ON CI/CD",
       sections: [
         {
-          id: "maang-cicd", n: 11, title: "Expert-Level Interview Questions on Deployment and DevOps",
+          id: "maang-cicd",
+          n: 11,
+          title: "Expert-Level Interview Questions on Deployment and DevOps",
           desc: "What MAANG interviews expect.",
           questions: [
-            {n:53, t:"Design a CI/CD pipeline for a microservices system with 50+ services?", d:["expert"], a:`
+            {
+              n: 53,
+              t: "Design a CI/CD pipeline for a microservices system with 50+ services?",
+              d: ["expert"],
+              a: `
 <ul>
   <li><strong>Challenge:</strong> Each service has its own repo, deploy schedule, rollback policy.</li>
   <li><strong>Architecture:</strong>
@@ -1316,8 +1602,13 @@ Actions:
   </li>
   <li><strong>Cross-service testing:</strong> Contract tests (Pact) verify API contracts between services.</li>
   <li><strong>Observability:</strong> DORA metrics per service; dashboard for visibility.</li>
-</ul>`},
-            {n:54, t:"How to implement progressive deployment (canary) for a service?", d:["expert"], a:`
+</ul>`,
+            },
+            {
+              n: 54,
+              t: "How to implement progressive deployment (canary) for a service?",
+              d: ["expert"],
+              a: `
 <ul>
   <li><strong>Requirements:</strong> 99.99% SLA; canary detects bugs before 100% rollout.</li>
   <li><strong>Setup:</strong>
@@ -1347,8 +1638,13 @@ Final: 100% traffic
 </pre>
   </li>
   <li><strong>Automation:</strong> Use Flagger + Prometheus or ArgoCD with Argo Rollouts.</li>
-</ul>`},
-            {n:55, t:"Database migration strategy for zero-downtime deployments?", d:["expert"], a:`
+</ul>`,
+            },
+            {
+              n: 55,
+              t: "Database migration strategy for zero-downtime deployments?",
+              d: ["expert"],
+              a: `
 <ul>
   <li><strong>Problem:</strong> Schema changes incompatible with old code; downtime if not careful.</li>
   <li><strong>Strategy: Expand → Deploy → Contract</strong>
@@ -1376,8 +1672,13 @@ ALTER TABLE orders DROP COLUMN status;
 </pre>
   </li>
   <li><strong>Tools:</strong> Flyway, Liquibase, gh-ost (GitHub's online schema migration).</li>
-</ul>`},
-            {n:56, t:"How to handle secrets rotation in CI/CD without re-deploys?", d:["expert"], a:`
+</ul>`,
+            },
+            {
+              n: 56,
+              t: "How to handle secrets rotation in CI/CD without re-deploys?",
+              d: ["expert"],
+              a: `
 <ul>
   <li><strong>Problem:</strong> DB password rotated monthly; redeploy every app to use new password?</li>
   <li><strong>Solution:</strong> Apps read secrets at runtime, not build time.</li>
@@ -1413,8 +1714,13 @@ public class SecretsConfig {
 }
 </pre>
   </li>
-</ul>`},
-            {n:57, t:"Incident response: service down, unknown cause — debugging in prod?", d:["expert"], a:`
+</ul>`,
+            },
+            {
+              n: 57,
+              t: "Incident response: service down, unknown cause — debugging in prod?",
+              d: ["expert"],
+              a: `
 <ul>
   <li><strong>Steps (under 5-min pressure):</strong>
     <ol>
@@ -1434,8 +1740,13 @@ public class SecretsConfig {
     </ul>
   </li>
   <li><strong>If can't fix in 5 min:</strong> Page senior engineer / database team; escalate severity.</li>
-</ul>`},
-            {n:58, t:"Building confidence in deployment process — how do you prevent bugs?", d:["expert"], a:`
+</ul>`,
+            },
+            {
+              n: 58,
+              t: "Building confidence in deployment process — how do you prevent bugs?",
+              d: ["expert"],
+              a: `
 <ul>
   <li><strong>Multi-layer defense:</strong>
     <ul>
@@ -1455,19 +1766,26 @@ public class SecretsConfig {
     </ul>
   </li>
   <li><strong>Culture:</strong> Blameless postmortems, psychological safety to deploy, ownership mindset.</li>
-</ul>`}
-          ]
-        }
-      ]
+</ul>`,
+            },
+          ],
+        },
+      ],
     },
     {
       label: "PART 12 · DEVOPS CULTURE & TEAM DYNAMICS",
       sections: [
         {
-          id: "devops-culture", n: 12, title: "Building High-Performance DevOps Teams",
+          id: "devops-culture",
+          n: 12,
+          title: "Building High-Performance DevOps Teams",
           desc: "Beyond tools: culture and practices.",
           questions: [
-            {n:59, t:"Shared on-call responsibility vs dedicated ops team?", d:["advanced","expert"], a:`
+            {
+              n: 59,
+              t: "Shared on-call responsibility vs dedicated ops team?",
+              d: ["advanced", "expert"],
+              a: `
 <ul>
   <li><strong>Shared model (DevOps, you build it you run it):</strong>
     <ul>
@@ -1486,8 +1804,13 @@ public class SecretsConfig {
     </ul>
   </li>
   <li><strong>Hybrid:</strong> Engineers on-call with SRE backup; SRE handles complexity (database failover, multi-region issues).</li>
-</ul>`},
-            {n:60, t:"Scaling CI/CD for growing team — shared vs dedicated infrastructure?", d:["advanced","expert"], a:`
+</ul>`,
+            },
+            {
+              n: 60,
+              t: "Scaling CI/CD for growing team — shared vs dedicated infrastructure?",
+              d: ["advanced", "expert"],
+              a: `
 <ul>
   <li><strong>Early stage (< 20 engineers):</strong>
     <ul>
@@ -1510,10 +1833,11 @@ public class SecretsConfig {
       <li>Self-service: teams can provision infra via Terraform + GitOps.</li>
     </ul>
   </li>
-</ul>`}
-          ]
-        }
-      ]
-    }
-  ]
+</ul>`,
+            },
+          ],
+        },
+      ],
+    },
+  ],
 };

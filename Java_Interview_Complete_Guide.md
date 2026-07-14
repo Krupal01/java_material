@@ -1,4 +1,5 @@
 # Java Interview Guide – 10 Years Experience Level
+
 ## PART 1: Java Basics & Fundamentals (Q1–40)
 
 ---
@@ -38,6 +39,7 @@ Java source code (.java) is compiled by `javac` into **bytecode** (.class files)
 The **JVM (Java Virtual Machine)** is platform-specific – there are different JVM implementations for Windows, Linux, macOS, ARM, x86. The JVM is the abstraction layer that interprets or JIT-compiles bytecode into native instructions specific to that platform.
 
 So:
+
 - **Source code → bytecode** (platform-independent)
 - **Bytecode → native code** (done by JVM at runtime, platform-specific)
 
@@ -48,19 +50,22 @@ Important nuance at senior level: **The JVM itself is NOT platform-independent**
 ### Q3. What is the difference between JDK, JRE, and JVM?
 
 **JVM (Java Virtual Machine)**
+
 - Abstract computing machine that executes bytecode
 - Manages memory (heap, stack, metaspace), GC, JIT compilation
 - Just an execution engine; it cannot compile Java source code
 
 **JRE (Java Runtime Environment)**
+
 - JVM + standard class libraries (java.lang, java.util, java.io, etc.)
-- Everything needed to *run* a Java application
+- Everything needed to _run_ a Java application
 - Does NOT include compiler (`javac`)
 - In Java 9+, modular JRE concept; separate JRE distributions are largely deprecated in favor of custom runtimes with `jlink`
 
 **JDK (Java Development Kit)**
+
 - JRE + development tools: `javac`, `javadoc`, `jdb`, `jar`, `jshell`, profilers, etc.
-- Everything needed to *develop and run* Java applications
+- Everything needed to _develop and run_ Java applications
 - What developers install
 
 Hierarchy: **JDK ⊃ JRE ⊃ JVM**
@@ -79,6 +84,7 @@ Bytecode is the **compiled output of Java source code**, stored in `.class` file
 - More compact and faster to execute than re-interpreting source code
 
 When the JVM starts:
+
 1. ClassLoader loads `.class` files
 2. Bytecode verifier checks for safety (no illegal operations, type violations)
 3. JVM interprets bytecode OR the **JIT compiler** compiles frequently-executed ("hot") methods to native machine code
@@ -111,11 +117,13 @@ At senior level: mention **tiered compilation** (Java 8+). Methods start interpr
 ### Q6. Why is Java strongly typed?
 
 Java is strongly typed because:
+
 - Every variable, parameter, return value must have a declared type
 - The compiler enforces type correctness at **compile time**
 - No implicit coercions between unrelated types (e.g., you can't assign a `String` to an `int` without explicit conversion)
 
 Benefits:
+
 - **Early error detection**: type errors caught at compile time, not runtime
 - **IDE support**: autocomplete, refactoring, find usages all rely on type info
 - **Performance**: JVM can optimize knowing exact types
@@ -132,13 +140,14 @@ Java is NOT perfectly type-safe – raw types (pre-generics), casts, and reflect
 Access modifiers control **visibility** of classes, fields, methods, constructors.
 
 | Modifier    | Same Class | Same Package | Subclass (diff pkg) | Everywhere |
-|-------------|------------|--------------|---------------------|------------|
+| ----------- | ---------- | ------------ | ------------------- | ---------- |
 | `private`   | ✅         | ❌           | ❌                  | ❌         |
 | `default`   | ✅         | ✅           | ❌                  | ❌         |
 | `protected` | ✅         | ✅           | ✅                  | ❌         |
 | `public`    | ✅         | ✅           | ✅                  | ✅         |
 
 Key senior points:
+
 - **Default (package-private)** is often the right choice for internal implementation classes
 - `protected` is primarily for inheritance – use sparingly (violates encapsulation)
 - Outer classes can only be `public` or default; inner classes can be any
@@ -154,7 +163,8 @@ See table above. Key distinctions:
 
 **default (package-private)**: No keyword. Useful for classes/methods meant to be used only within a package. Common in well-structured libraries.
 
-**protected**: Confusing for beginners. Allows subclass access, but only to the *subclass's own inherited members*, not to other instances of the parent class in a different package.
+**protected**: Confusing for beginners. Allows subclass access, but only to the _subclass's own inherited members_, not to other instances of the parent class in a different package.
+
 ```java
 // In different package:
 class Child extends Parent {
@@ -179,6 +189,7 @@ package com.company.service;
 ```
 
 Packages serve to:
+
 1. **Organize code** logically (domain, layer, feature)
 2. **Prevent naming conflicts** – two classes can have the same name if in different packages
 3. **Control access** – package-private (default) access
@@ -212,6 +223,7 @@ java -cp ".:./lib/*:./build/classes" com.example.Main
 ```
 
 Classpath elements:
+
 - Directories containing .class files
 - JAR files
 - ZIP files
@@ -219,6 +231,7 @@ Classpath elements:
 In modern development, **build tools (Maven, Gradle) manage the classpath** automatically. Spring Boot's fat JAR bundles all dependencies with a custom classloader.
 
 Issues with classpath:
+
 - **Classpath hell**: multiple JARs with same class – first one on classpath wins
 - **ClassNotFoundException**: class not found on classpath
 - **NoClassDefFoundError**: class was present at compile time but missing at runtime
@@ -230,6 +243,7 @@ Java 9+ modules replace classpath with the **module path**, providing stronger i
 ### Q12. What is an object?
 
 An object is an **instance of a class** – a runtime entity that has:
+
 - **State** (fields/instance variables)
 - **Behavior** (methods)
 - **Identity** (unique reference/address in heap memory)
@@ -243,6 +257,7 @@ Person person = new Person("Alice", 30);
 Under the hood: `new` allocates memory on the **heap**, calls the constructor, returns a reference. The reference is stored on the stack (for local variables) or in another heap object (for fields).
 
 Object layout in JVM (HotSpot):
+
 - **Mark word** (8 bytes): GC info, lock state, hash code
 - **Class pointer** (4-8 bytes): points to Class metadata
 - **Instance fields**: actual field values
@@ -252,15 +267,15 @@ Object layout in JVM (HotSpot):
 
 ### Q13. Difference between class and object?
 
-| Class | Object |
-|-------|--------|
-| Blueprint/template | Instance of a class |
-| Defined at compile time | Created at runtime |
+| Class                         | Object                  |
+| ----------------------------- | ----------------------- |
+| Blueprint/template            | Instance of a class     |
+| Defined at compile time       | Created at runtime      |
 | Exists once (per ClassLoader) | Can have many instances |
-| Stored in Metaspace | Stored in Heap |
-| `class Person {}` | `new Person()` |
+| Stored in Metaspace           | Stored in Heap          |
+| `class Person {}`             | `new Person()`          |
 
-A class defines *what an object is* (structure, behavior). An object *is* an actual thing with actual data.
+A class defines _what an object is_ (structure, behavior). An object _is_ an actual thing with actual data.
 
 Class itself is an object in Java: `Person.class` is a `java.lang.Class` instance, also stored in Metaspace.
 
@@ -271,6 +286,7 @@ Class itself is an object in Java: `Person.class` is a `java.lang.Class` instanc
 Encapsulation is the **bundling of data (fields) and methods that operate on that data within a class**, while **hiding the internal state** from outside access.
 
 Implementation:
+
 - Fields are `private`
 - Access via `public` getters/setters (with validation if needed)
 - Internal implementation can change without affecting callers
@@ -278,22 +294,23 @@ Implementation:
 ```java
 public class BankAccount {
     private double balance; // hidden
-    
+
     public void deposit(double amount) {
         if (amount <= 0) throw new IllegalArgumentException();
         this.balance += amount;
     }
-    
+
     public double getBalance() { return balance; }
 }
 ```
 
 Benefits:
+
 1. **Control**: validate data before setting (no `account.balance = -1000`)
 2. **Flexibility**: change internal representation without breaking API
 3. **Maintainability**: localized changes
 
-Senior note: Records (Java 16+) are immutable data carriers – they encapsulate data without traditional setters. Lombok's `@Value` achieves similar. Encapsulation doesn't always mean getter/setter – it means *controlled access*.
+Senior note: Records (Java 16+) are immutable data carriers – they encapsulate data without traditional setters. Lombok's `@Value` achieves similar. Encapsulation doesn't always mean getter/setter – it means _controlled access_.
 
 ---
 
@@ -309,7 +326,7 @@ public class Vehicle {
 
 public class Car extends Vehicle {
     private int doors;
-    
+
     @Override
     public void start() {
         super.start();
@@ -321,6 +338,7 @@ public class Car extends Vehicle {
 Java supports **single inheritance** for classes (unlike C++), but multiple inheritance for interfaces.
 
 Types in Java:
+
 - **Single**: A extends B
 - **Multilevel**: A extends B, B extends C
 - **Hierarchical**: B extends A, C extends A
@@ -337,6 +355,7 @@ When NOT to use inheritance: "Is-A" relationship must be genuine. `Stack extends
 Polymorphism means "**many forms**" – the ability of a reference to behave differently based on the actual object it points to.
 
 **Compile-time polymorphism (static dispatch)**: Method overloading
+
 ```java
 void print(int x) {}
 void print(String s) {}
@@ -344,6 +363,7 @@ void print(String s) {}
 ```
 
 **Runtime polymorphism (dynamic dispatch)**: Method overriding
+
 ```java
 Animal animal = new Dog(); // Animal reference, Dog object
 animal.speak(); // calls Dog.speak(), not Animal.speak()
@@ -363,6 +383,7 @@ Polymorphism enables **Open/Closed Principle**: add new behavior (new subclass) 
 Abstraction means **hiding implementation complexity and exposing only essential features**.
 
 Two mechanisms in Java:
+
 1. **Abstract classes** (0–100% abstract)
 2. **Interfaces** (100% abstract pre-Java 8; can have defaults now)
 
@@ -370,7 +391,7 @@ Two mechanisms in Java:
 // Abstract class
 public abstract class Shape {
     abstract double area(); // must be implemented
-    
+
     void printArea() { // concrete method
         System.out.println("Area: " + area());
     }
@@ -391,17 +412,18 @@ Abstraction is about **"what" not "how"**. Encapsulation is about **hiding "how"
 
 ### Q18. Difference between method overloading and overriding?
 
-| Aspect | Overloading | Overriding |
-|--------|-------------|------------|
-| Definition | Same name, different parameters | Same signature in subclass |
-| Resolution | Compile time (static dispatch) | Runtime (dynamic dispatch) |
-| Inheritance | Not required | Required |
-| Return type | Can differ | Must be same or covariant |
-| Access modifier | Can differ freely | Can't be more restrictive |
-| Static methods | Can be overloaded | Cannot be overridden (hidden) |
-| Exception | No restriction | Can't add new checked exceptions |
+| Aspect          | Overloading                     | Overriding                       |
+| --------------- | ------------------------------- | -------------------------------- |
+| Definition      | Same name, different parameters | Same signature in subclass       |
+| Resolution      | Compile time (static dispatch)  | Runtime (dynamic dispatch)       |
+| Inheritance     | Not required                    | Required                         |
+| Return type     | Can differ                      | Must be same or covariant        |
+| Access modifier | Can differ freely               | Can't be more restrictive        |
+| Static methods  | Can be overloaded               | Cannot be overridden (hidden)    |
+| Exception       | No restriction                  | Can't add new checked exceptions |
 
 **Overloading pitfall**: Widening + autoboxing + varargs precedence rules are complex:
+
 ```java
 void test(long x) {}
 void test(Integer x) {}
@@ -409,6 +431,7 @@ test(5); // calls test(long) - widening takes priority over autoboxing
 ```
 
 **Overriding rules**:
+
 - `@Override` annotation is highly recommended (compile-time check)
 - `private`, `static`, `final` methods cannot be overridden
 - Overriding method can't throw broader checked exceptions
@@ -421,6 +444,7 @@ test(5); // calls test(long) - widening takes priority over autoboxing
 `static` means the member **belongs to the class**, not to any instance.
 
 **Static fields**: Shared across all instances; one copy per class
+
 ```java
 public class Counter {
     private static int count = 0; // class-level
@@ -471,17 +495,20 @@ Why? Runtime polymorphism (dynamic dispatch) requires a vtable lookup based on t
 `main()` is `static` so the JVM can invoke it **without creating an instance of the class**.
 
 When the JVM starts, it:
+
 1. Loads the class
 2. Calls `public static void main(String[] args)` directly
 
 If `main()` were an instance method, the JVM would need to instantiate the class first – but which constructor to call? What arguments? By making it static, this bootstrapping problem is avoided.
 
 Note (Java 21+): With **unnamed classes** (JEP 445, preview), you can write:
+
 ```java
 void main() {
     System.out.println("Hello");
 }
 ```
+
 The JVM handles the static entrypoint transparently. But in standard Java, `public static void main(String[] args)` is required.
 
 ---
@@ -491,6 +518,7 @@ The JVM handles the static entrypoint transparently. But in standard Java, `publ
 A constructor is a **special method** used to initialize an object when it is created with `new`.
 
 Properties:
+
 - Same name as the class
 - No return type (not even `void`)
 - Called automatically by `new`
@@ -501,12 +529,12 @@ Properties:
 public class Person {
     private String name;
     private int age;
-    
+
     public Person(String name, int age) {
         this.name = name;
         this.age = age;
     }
-    
+
     // Delegating constructor
     public Person(String name) {
         this(name, 0); // calls above constructor
@@ -522,15 +550,15 @@ Constructors are NOT inherited. Subclass constructor must call `super(...)` expl
 
 ### Q23. Constructor vs method?
 
-| Constructor | Method |
-|-------------|--------|
-| Same name as class | Any valid name |
-| No return type | Must have return type |
-| Called by `new` | Called on object/class |
-| Used for initialization | Used for behavior |
-| Not inherited | Inherited (if not private) |
-| Not called on existing object | Called on existing object |
-| `this()`/`super()` allowed | Not applicable |
+| Constructor                   | Method                     |
+| ----------------------------- | -------------------------- |
+| Same name as class            | Any valid name             |
+| No return type                | Must have return type      |
+| Called by `new`               | Called on object/class     |
+| Used for initialization       | Used for behavior          |
+| Not inherited                 | Inherited (if not private) |
+| Not called on existing object | Called on existing object  |
+| `this()`/`super()` allowed    | Not applicable             |
 
 Constructors ARE methods in bytecode terms (they appear as `<init>` in the class file). The JVM invokes them via `invokespecial`.
 
@@ -541,30 +569,36 @@ Static initializer blocks (`static {}`) run before the constructor, at class loa
 ### Q24. Types of constructors?
 
 1. **Default constructor**: No-arg, inserted by compiler if none defined
+
 ```java
 class Foo {} // compiler adds: Foo() { super(); }
 ```
 
 2. **No-arg constructor**: Explicitly written with no parameters
+
 ```java
 class Foo { public Foo() { init(); } }
 ```
 
 3. **Parameterized constructor**: Takes arguments
+
 ```java
 class Foo { public Foo(String name, int value) {} }
 ```
 
 4. **Copy constructor**: Takes an instance of the same class
+
 ```java
 class Foo {
     String data;
     public Foo(Foo other) { this.data = other.data; }
 }
 ```
+
 Java doesn't have built-in copy constructor support (unlike C++), but it's a common pattern.
 
 5. **Private constructor**: Prevents instantiation (Singleton, utility classes)
+
 ```java
 class MathUtils { private MathUtils() {} }
 ```
@@ -576,22 +610,27 @@ class MathUtils { private MathUtils() {} }
 `this` refers to the **current instance** of the class.
 
 Uses:
+
 1. **Disambiguate field vs parameter**:
+
 ```java
 public Person(String name) { this.name = name; }
 ```
 
 2. **Call another constructor** (`this()` – must be first statement):
+
 ```java
 public Person() { this("Unknown", 0); }
 ```
 
 3. **Pass current instance** to another method/constructor:
+
 ```java
 EventBus.register(this);
 ```
 
 4. **Return current instance** (method chaining / fluent API):
+
 ```java
 public Builder name(String n) { this.name = n; return this; }
 ```
@@ -607,7 +646,9 @@ public Builder name(String n) { this.name = n; return this; }
 `super` refers to the **parent class** (immediate superclass).
 
 Uses:
+
 1. **Access parent class field** (when shadowed by subclass):
+
 ```java
 class Parent { String name = "Parent"; }
 class Child extends Parent {
@@ -617,6 +658,7 @@ class Child extends Parent {
 ```
 
 2. **Call parent class method** (when overridden):
+
 ```java
 @Override
 public String toString() {
@@ -625,6 +667,7 @@ public String toString() {
 ```
 
 3. **Call parent constructor** (`super()` – must be first statement in constructor):
+
 ```java
 public Dog(String name) {
     super(name); // calls Animal(String name)
@@ -642,6 +685,7 @@ If subclass constructor doesn't call `super(...)`, compiler inserts `super()` (n
 A `final` variable can be **assigned only once**.
 
 Types:
+
 1. **final local variable**: Must be assigned before use; can be assigned in any branch as long as it's assigned exactly once
 2. **final instance variable**: Must be assigned in constructor or initializer; effectively makes the reference constant (not the object it points to)
 3. **final static variable (constant)**: `public static final double PI = 3.14159;`
@@ -668,6 +712,7 @@ public final class Integer { ... }
 ```
 
 Uses:
+
 1. **Security**: Prevents malicious subclassing (someone overriding sensitive methods)
 2. **Immutability**: String's immutability relies on it being final (can't subclass and add mutability)
 3. **Performance**: JVM can devirtualize method calls (no vtable lookup needed)
@@ -684,6 +729,7 @@ Sealed classes (Java 17+) are a more nuanced alternative: restrict which classes
 **No.** Constructors cannot be `final`, `static`, or `abstract`.
 
 Reasoning:
+
 - `final` prevents overriding, but constructors aren't inherited and can't be overridden anyway
 - `static` is meaningless since constructors are always tied to instance creation
 - `abstract` requires implementation in subclass, but constructors aren't inherited
@@ -699,6 +745,7 @@ If you want to prevent instantiation, make the **constructor** `private`.
 An immutable object's **state cannot change after construction**.
 
 How to make a class immutable:
+
 1. Declare class `final` (prevent subclass from adding mutability)
 2. All fields `private final`
 3. No setters
@@ -710,15 +757,15 @@ How to make a class immutable:
 public final class Money {
     private final BigDecimal amount;
     private final Currency currency;
-    
+
     public Money(BigDecimal amount, Currency currency) {
         this.amount = Objects.requireNonNull(amount);
         this.currency = Objects.requireNonNull(currency);
     }
-    
+
     public BigDecimal getAmount() { return amount; }
     public Currency getCurrency() { return currency; }
-    
+
     public Money add(Money other) {
         // Return new instance instead of modifying
         return new Money(this.amount.add(other.amount), this.currency);
@@ -757,6 +804,7 @@ For mutable string operations: use `StringBuilder` (not thread-safe, faster) or 
 ### Q32. Difference between == and .equals()?
 
 **`==`**: Compares **references** (memory addresses) for objects, or **values** for primitives.
+
 ```java
 String a = new String("hello");
 String b = new String("hello");
@@ -764,11 +812,13 @@ a == b; // false - different objects on heap
 ```
 
 **`.equals()`**: Compares **logical equality** (content), as defined by the class's `equals()` implementation.
+
 ```java
 a.equals(b); // true - same content
 ```
 
 **String pool trap**:
+
 ```java
 String x = "hello"; // pool
 String y = "hello"; // same pool object
@@ -785,6 +835,7 @@ Default `Object.equals()` is the same as `==`. Classes must override it for mean
 ### Q33. Why override hashCode() when overriding equals()?
 
 The **general contract** (from `java.lang.Object` Javadoc):
+
 - If `a.equals(b)` is true, then `a.hashCode() == b.hashCode()` MUST be true
 - If `a.hashCode() != b.hashCode()`, then `a.equals(b)` MUST be false
 - Equal objects must produce the same hash code
@@ -792,6 +843,7 @@ The **general contract** (from `java.lang.Object` Javadoc):
 **What breaks if you don't?**
 
 HashMap, HashSet, Hashtable use `hashCode()` to find the bucket, then `equals()` to find the exact key:
+
 ```java
 Map<Person, String> map = new HashMap<>();
 Person p1 = new Person("Alice", 30);
@@ -803,6 +855,7 @@ map.get(p2); // returns null if hashCode not overridden!
 ```
 
 Best practice for `hashCode()`:
+
 - Use all fields used in `equals()`
 - Use `Objects.hash(field1, field2, ...)` (easy but slightly slower)
 - Or manual: `31 * result + field.hashCode()` (31 is a prime, reduces collisions)
@@ -814,18 +867,19 @@ Best practice for `hashCode()`:
 
 Wrapper classes wrap primitive types into objects.
 
-| Primitive | Wrapper |
-|-----------|---------|
-| `byte`    | `Byte`  |
-| `short`   | `Short` |
-| `int`     | `Integer` |
-| `long`    | `Long`  |
-| `float`   | `Float` |
-| `double`  | `Double` |
+| Primitive | Wrapper     |
+| --------- | ----------- |
+| `byte`    | `Byte`      |
+| `short`   | `Short`     |
+| `int`     | `Integer`   |
+| `long`    | `Long`      |
+| `float`   | `Float`     |
+| `double`  | `Double`    |
 | `char`    | `Character` |
-| `boolean` | `Boolean` |
+| `boolean` | `Boolean`   |
 
 Why needed:
+
 1. **Generics** require objects (`List<Integer>`, not `List<int>`)
 2. **Null value**: primitives can't be null; wrappers can
 3. **Utility methods**: `Integer.parseInt()`, `Integer.toBinaryString()`, `Double.isNaN()`
@@ -833,6 +887,7 @@ Why needed:
 5. **Reflection**: Method parameters/return types use wrapper classes
 
 Wrapper classes are **immutable** and have a **cache**:
+
 - `Integer.valueOf(int)` caches values from -128 to 127 (configurable via `-XX:AutoBoxCacheMax`)
 - Same for `Byte`, `Short`, `Long`, `Character` (0–127)
 - `Boolean.TRUE` and `Boolean.FALSE` are singletons
@@ -847,6 +902,7 @@ Integer c = 128; Integer d = 128; c == d; // false (not cached)
 ### Q35. Autoboxing vs unboxing?
 
 **Autoboxing**: Automatic conversion from primitive to wrapper by the compiler.
+
 ```java
 Integer x = 5; // compiler: Integer x = Integer.valueOf(5);
 List<Integer> list = new ArrayList<>();
@@ -854,6 +910,7 @@ list.add(3); // compiler: list.add(Integer.valueOf(3));
 ```
 
 **Unboxing**: Automatic conversion from wrapper to primitive.
+
 ```java
 Integer y = Integer.valueOf(10);
 int z = y; // compiler: int z = y.intValue();
@@ -863,12 +920,14 @@ int sum = y + 5; // y is unboxed
 **Pitfalls**:
 
 1. **NullPointerException**:
+
 ```java
 Integer value = null;
 int result = value; // NPE at runtime during unboxing
 ```
 
 2. **Performance**: Autoboxing in loops creates many objects
+
 ```java
 Long sum = 0L; // wrapper
 for (long i = 0; i < 1_000_000; i++) sum += i; // creates ~1M Long objects!
@@ -876,6 +935,7 @@ for (long i = 0; i < 1_000_000; i++) sum += i; // creates ~1M Long objects!
 ```
 
 3. **== comparison confusion**:
+
 ```java
 Integer a = 1000, b = 1000;
 a == b; // false (not cached), use a.equals(b)
@@ -887,16 +947,16 @@ a == b; // false (not cached), use a.equals(b)
 
 ### Q36. Difference between primitive and object?
 
-| Aspect | Primitive | Object |
-|--------|-----------|--------|
-| Types | 8 types (int, long, etc.) | Any class |
-| Memory | Stack (local vars) | Heap |
-| Default value | 0, false, '\0' | null |
-| Nullable | No | Yes |
-| Generics | Not directly | Yes |
-| Method calls | No | Yes |
-| Performance | Faster | Slower (heap alloc, GC) |
-| Size | Fixed (int=4 bytes) | Variable (object header overhead) |
+| Aspect        | Primitive                 | Object                            |
+| ------------- | ------------------------- | --------------------------------- |
+| Types         | 8 types (int, long, etc.) | Any class                         |
+| Memory        | Stack (local vars)        | Heap                              |
+| Default value | 0, false, '\0'            | null                              |
+| Nullable      | No                        | Yes                               |
+| Generics      | Not directly              | Yes                               |
+| Method calls  | No                        | Yes                               |
+| Performance   | Faster                    | Slower (heap alloc, GC)           |
+| Size          | Fixed (int=4 bytes)       | Variable (object header overhead) |
 
 Primitives are **value types**: when assigned/passed, the value is copied.
 Objects are **reference types**: when assigned/passed, the reference is copied (both point to same object).
@@ -910,12 +970,14 @@ Java (pre-Valhalla) has no user-defined value types. **Project Valhalla** (Java 
 Java is **strictly pass-by-value**. Always. No exceptions.
 
 For **primitives**: The value is copied.
+
 ```java
 void modify(int x) { x = 99; }
 int a = 5; modify(a); // a is still 5
 ```
 
 For **objects**: The **reference value** (memory address) is copied. The method receives a copy of the reference, both pointing to the same object.
+
 ```java
 void modify(List<String> list) { list.add("new"); }
 // This DOES modify the original list - same object is modified
@@ -935,22 +997,26 @@ This is different from pass-by-reference (C++, C# `ref`), where you get a refere
 Java cannot truly do pass-by-reference, but you can simulate effects:
 
 1. **Return the modified value**:
+
 ```java
 int increment(int x) { return x + 1; }
 ```
 
 2. **Wrap in a mutable container** (array trick):
+
 ```java
 void increment(int[] x) { x[0]++; }
 int[] val = {5}; increment(val); // val[0] is now 6
 ```
 
 3. **Use AtomicInteger or a holder class**:
+
 ```java
 void increment(AtomicInteger x) { x.incrementAndGet(); }
 ```
 
 4. **Return multiple values via a record/tuple**:
+
 ```java
 record Pair(int a, int b) {}
 Pair swap(int a, int b) { return new Pair(b, a); }
@@ -965,6 +1031,7 @@ These are all workarounds – Java is fundamentally pass-by-value and this is by
 The **heap** is the JVM's runtime memory area where **all objects and arrays** are allocated.
 
 Structure (generational GC):
+
 - **Young Generation**: Newly created objects
   - **Eden space**: Where objects are born
   - **Survivor spaces (S0, S1)**: Objects that survive minor GC
@@ -972,6 +1039,7 @@ Structure (generational GC):
 - **Metaspace** (Java 8+): Class metadata (not technically heap, but JVM-managed)
 
 Heap sizing:
+
 ```bash
 -Xms512m  # initial heap size
 -Xmx4g    # maximum heap size
@@ -989,12 +1057,14 @@ Objects on heap are managed by the **Garbage Collector**. Heap is shared across 
 The **stack** holds **method execution frames**. Each thread has its own stack.
 
 Each frame contains:
+
 - **Local variables** (including primitives and object references)
 - **Operand stack** (working area for computations)
 - **Reference to runtime constant pool**
 - **Return address**
 
 Properties:
+
 - **Thread-private**: No sharing, no synchronization needed
 - **LIFO**: Frames pushed on method call, popped on return
 - **Fixed size per thread**: Default typically 256KB–1MB (`-Xss` flag)
@@ -1009,6 +1079,7 @@ Thread 1 Stack:     Thread 2 Stack:     Heap (shared):
 [main frame]        [main frame]        [Object A]
 [methodA frame]     [processData frame] [Object B]
 ```
+
 ## PART 2: Java Versions & Evolution (Q41–75)
 
 ---
@@ -1051,6 +1122,7 @@ String s = list.get(0); // No cast needed, type-safe
 **Type erasure**: At compile time, `List<String>` is checked. At runtime, it becomes `List` (raw type). Generic info is mostly lost.
 
 **Wildcards**:
+
 - `? extends T` (upper bounded): read-only, covariant. "Producer Extends"
 - `? super T` (lower bounded): write-capable, contravariant. "Consumer Super"
 - **PECS rule** (Producer Extends, Consumer Super)
@@ -1063,6 +1135,7 @@ String s = list.get(0); // No cast needed, type-safe
 ```
 
 **Bounded type parameters**:
+
 ```java
 <T extends Comparable<T>> T max(T a, T b) { return a.compareTo(b) > 0 ? a : b; }
 ```
@@ -1088,6 +1161,7 @@ for (String name : names) { System.out.println(name); }
 ```
 
 Under the hood, for `Iterable`, the compiler generates:
+
 ```java
 Iterator<String> it = names.iterator();
 while (it.hasNext()) {
@@ -1099,6 +1173,7 @@ while (it.hasNext()) {
 For arrays, it generates a traditional index-based loop.
 
 **Limitations**:
+
 - Can't modify the collection during iteration (ConcurrentModificationException)
 - Can't access index
 - Can't iterate multiple collections simultaneously
@@ -1148,7 +1223,8 @@ try (Connection conn = dataSource.getConnection();
 
 **Close order**: Resources closed in reverse order of opening (stmt closed before conn).
 
-**Suppressed exceptions**: If body throws AND close() throws, the close() exception is *suppressed* and attached to the primary exception:
+**Suppressed exceptions**: If body throws AND close() throws, the close() exception is _suppressed_ and attached to the primary exception:
+
 ```java
 try {
     Throwable t = e.getSuppressed()[0]; // access suppressed exception
@@ -1156,6 +1232,7 @@ try {
 ```
 
 Java 9 improvement: Can reference effectively-final variables:
+
 ```java
 Connection conn = getConnection();
 try (conn) { // no need to redeclare
@@ -1251,6 +1328,7 @@ prefix = "Hi"; // This would make lambda illegal
 **Method references** are lambdas in disguise: `String::toUpperCase` = `s -> s.toUpperCase()`
 
 Types of method references:
+
 - Static: `Integer::parseInt`
 - Instance (bound): `str::contains` (specific instance)
 - Instance (unbound): `String::toUpperCase` (called on parameter)
@@ -1265,18 +1343,20 @@ A functional interface has **exactly one abstract method**. Lambdas can be used 
 `@FunctionalInterface` annotation: Optional but recommended (compile-time check).
 
 Built-in functional interfaces (`java.util.function`):
-| Interface | Signature | Use |
-|-----------|-----------|-----|
-| `Runnable` | `() -> void` | Run code |
-| `Supplier<T>` | `() -> T` | Produce value |
-| `Consumer<T>` | `T -> void` | Consume value |
-| `Function<T,R>` | `T -> R` | Transform |
-| `Predicate<T>` | `T -> boolean` | Test condition |
-| `BiFunction<T,U,R>` | `(T,U) -> R` | Two-arg transform |
-| `UnaryOperator<T>` | `T -> T` | Transform same type |
-| `BinaryOperator<T>` | `(T,T) -> T` | Reduce same type |
+
+| Interface           | Signature      | Use                 |
+| ------------------- | -------------- | ------------------- |
+| `Runnable`          | `() -> void`   | Run code            |
+| `Supplier<T>`       | `() -> T`      | Produce value       |
+| `Consumer<T>`       | `T -> void`    | Consume value       |
+| `Function<T,R>`     | `T -> R`       | Transform           |
+| `Predicate<T>`      | `T -> boolean` | Test condition      |
+| `BiFunction<T,U,R>` | `(T,U) -> R`   | Two-arg transform   |
+| `UnaryOperator<T>`  | `T -> T`       | Transform same type |
+| `BinaryOperator<T>` | `(T,T) -> T`   | Reduce same type    |
 
 Functional interfaces **can** have:
+
 - Default methods
 - Static methods
 - Methods from `Object` (`equals`, `toString`, etc.) – don't count as abstract
@@ -1286,6 +1366,7 @@ Functional interfaces **can** have:
 ### Q50. Predicate vs Function?
 
 **`Predicate<T>`**: Takes T, returns `boolean`
+
 ```java
 Predicate<String> isLong = s -> s.length() > 10;
 isLong.test("Hello World!"); // true
@@ -1297,6 +1378,7 @@ Predicate<String> isShort = isLong.negate();
 ```
 
 **`Function<T, R>`**: Takes T, returns R
+
 ```java
 Function<String, Integer> length = String::length;
 length.apply("Hello"); // 5
@@ -1338,12 +1420,14 @@ List<String> result = names.stream()
 ```
 
 **Key characteristics**:
+
 1. **Lazy**: Intermediate operations don't execute until a terminal operation is called
 2. **Single use**: Streams can't be reused
 3. **Non-interfering**: Should not modify the source during processing
 4. **Stateless** (mostly): Operations should be side-effect-free for parallel safety
 
 **Operations**:
+
 - **Intermediate** (lazy): `filter`, `map`, `flatMap`, `sorted`, `distinct`, `limit`, `skip`, `peek`
 - **Terminal** (trigger execution): `collect`, `forEach`, `reduce`, `count`, `findFirst`, `anyMatch`, `allMatch`, `toList()` (Java 16)
 
@@ -1358,15 +1442,15 @@ IntStream.of(1, 2, 3).average(); // OptionalDouble
 
 ### Q52. How does Stream differ from Collection?
 
-| Collection | Stream |
-|-----------|--------|
-| Stores data | Processes data |
-| In-memory data structure | Computational pipeline |
-| Can be traversed multiple times | Single-use |
-| Eager: elements computed when added | Lazy: computed on demand |
-| Mutate elements | No mutation (produces new stream/result) |
-| Has size | May be infinite (`Stream.iterate`, `Stream.generate`) |
-| `Iterable` | `BaseStream` |
+| Collection                          | Stream                                                |
+| ----------------------------------- | ----------------------------------------------------- |
+| Stores data                         | Processes data                                        |
+| In-memory data structure            | Computational pipeline                                |
+| Can be traversed multiple times     | Single-use                                            |
+| Eager: elements computed when added | Lazy: computed on demand                              |
+| Mutate elements                     | No mutation (produces new stream/result)              |
+| Has size                            | May be infinite (`Stream.iterate`, `Stream.generate`) |
+| `Iterable`                          | `BaseStream`                                          |
 
 Key distinction: A Collection **is** data. A Stream **processes** data.
 
@@ -1407,6 +1491,7 @@ User found = user.orElseThrow(() -> new UserNotFoundException(id));
 ```
 
 **Methods**:
+
 - `isPresent()`, `isEmpty()` (Java 11)
 - `get()` (throws if empty – use cautiously)
 - `orElse(default)` – always evaluates default
@@ -1418,6 +1503,7 @@ User found = user.orElseThrow(() -> new UserNotFoundException(id));
 - `stream()` (Java 9) – 0 or 1 element stream
 
 **When NOT to use Optional**:
+
 - As method parameter (use overloads or nullability annotations instead)
 - As field in a class (not serializable, overhead)
 - In collections (use empty collection instead of Optional<List>)
@@ -1441,11 +1527,13 @@ module com.company.service {
 ```
 
 **Goals**:
+
 1. **Strong encapsulation**: Even public types in unexported packages aren't accessible
 2. **Reliable configuration**: Explicit dependency graph; missing modules detected at startup
 3. **Scalable platform**: Build custom JREs with only needed modules (`jlink`)
 
 **Module types**:
+
 - Named module: Has `module-info.java`
 - Unnamed module: Classpath code (backward compatible)
 - Automatic module: JAR on module path without `module-info.java`
@@ -1467,6 +1555,7 @@ jlink --module-path $JAVA_HOME/jmods:mods \
 ```
 
 Benefits:
+
 - **Smaller deployments**: Runtime can be 20–50MB vs 200MB+ full JDK
 - **Faster startup**: Fewer classes to load
 - **Security**: Reduced attack surface
@@ -1497,19 +1586,22 @@ var conn = (HttpURLConnection) url.openConnection();
 `var` is **not a type** – it's syntactic sugar for type inference in local variables. The compiler infers the type from the right-hand side; the type is still static.
 
 **Where var can be used**:
+
 - Local variable declarations with initializer
 - for-loop index and enhanced for-loop
 - try-with-resources
 
 **Where var CANNOT be used**:
+
 - Method parameters or return types
 - Fields
 - `var x = null;` (can't infer from null)
 - Lambda parameters (actually CAN in Java 11: `(var x, var y) -> x + y`)
 
 **Senior considerations**:
+
 - Improves readability for complex generic types
-- Can *harm* readability with primitives or unclear types: `var result = compute();` – what type is result?
+- Can _harm_ readability with primitives or unclear types: `var result = compute();` – what type is result?
 - Good practice: use var when the type is obvious from the right side
 - `var` is a reserved type name, not a keyword – `int var = 5;` is still valid (terrible style, but compiles)
 
@@ -1538,17 +1630,17 @@ Java 11 (2018) – LTS release, major features:
 
 Key differences for a senior developer:
 
-| Area | Java 8 | Java 11 |
-|------|--------|---------|
-| String API | No `isBlank()`, `lines()`, `strip()` | Added these |
-| HTTP Client | HttpURLConnection (old) | java.net.http (modern, async) |
-| Local var | No `var` | `var` in lambdas |
-| GC | CMS (deprecated), G1 default | ZGC (experimental), Epsilon |
-| Single file | Must compile first | `java File.java` directly |
-| Java EE | javax.* modules included | Removed (must add as deps) |
-| Optional | No `isEmpty()`, `or()`, `ifPresentOrElse()` | Added in 9/10 |
-| Collection | No `List.copyOf()` etc. | Added in 10 |
-| Modules | Not available | JPMS available (since 9) |
+| Area        | Java 8                                      | Java 11                       |
+| ----------- | ------------------------------------------- | ----------------------------- |
+| String API  | No `isBlank()`, `lines()`, `strip()`        | Added these                   |
+| HTTP Client | HttpURLConnection (old)                     | java.net.http (modern, async) |
+| Local var   | No `var`                                    | `var` in lambdas              |
+| GC          | CMS (deprecated), G1 default                | ZGC (experimental), Epsilon   |
+| Single file | Must compile first                          | `java File.java` directly     |
+| Java EE     | javax.* modules included                    | Removed (must add as deps)    |
+| Optional    | No `isEmpty()`, `or()`, `ifPresentOrElse()` | Added in 9/10                 |
+| Collection  | No `List.copyOf()` etc.                     | Added in 10                   |
+| Modules     | Not available                               | JPMS available (since 9)      |
 
 Practically: Java 8 → Java 11 migration requires: removing Java EE dependencies (add explicitly), updating deprecated APIs, checking module compatibility.
 
@@ -1579,6 +1671,7 @@ future.thenApply(HttpResponse::body).thenAccept(System.out::println);
 ```
 
 Features:
+
 - HTTP/1.1 and HTTP/2 support
 - WebSocket support
 - Async (CompletableFuture)
@@ -1590,11 +1683,13 @@ Features:
 ### Q61. Java 12–13 useful features?
 
 **Java 12**:
+
 - `switch` expressions (preview): `yield` keyword
 - `String.indent()`, `String.transform()`
 - `Collectors.teeing()` – combine two collectors
 
 **Java 13**:
+
 - `switch` expressions (second preview)
 - Text blocks (preview): Multi-line strings
 
@@ -1633,12 +1728,14 @@ int numLetters = switch (day) {
 ```
 
 Benefits:
+
 - **Expression** (produces a value, can be used in assignments)
 - **Exhaustiveness**: Compiler checks all cases covered (for enums)
 - **No fall-through**: Arrow form doesn't fall through
 - **Cleaner**: No `break` statements
 
 Pattern matching in switch (Java 21):
+
 ```java
 Object obj = ...;
 String result = switch (obj) {
@@ -1674,27 +1771,30 @@ public record Point(int x, int y) {}
 ```
 
 Customization:
+
 ```java
 public record Range(int min, int max) {
     // Compact constructor (validates)
     Range {
         if (min > max) throw new IllegalArgumentException("min > max");
     }
-    
+
     // Custom method
     public int size() { return max - min; }
-    
+
     // Custom accessor
     @Override public int min() { return Math.abs(min); } // override accessor
 }
 ```
 
 Records can:
+
 - Implement interfaces
 - Have static fields/methods
 - Have instance methods
 
 Records cannot:
+
 - Extend classes (implicitly extend Record)
 - Be extended
 - Have instance fields beyond record components
@@ -1705,11 +1805,13 @@ Records cannot:
 ### Q64. Use cases of records?
 
 1. **DTOs (Data Transfer Objects)**: API request/response models
+
 ```java
 public record UserDTO(String name, String email, int age) {}
 ```
 
 2. **Value objects** (DDD): Domain primitives
+
 ```java
 public record Money(BigDecimal amount, Currency currency) {}
 public record EmailAddress(String value) {
@@ -1718,23 +1820,27 @@ public record EmailAddress(String value) {
 ```
 
 3. **Multiple return values**:
+
 ```java
 public record PagedResult<T>(List<T> items, int totalCount) {}
 ```
 
 4. **Composite map keys**:
+
 ```java
 record CacheKey(String region, Long id) {} // equals/hashCode auto-generated
 Map<CacheKey, Object> cache = new HashMap<>();
 ```
 
 5. **Intermediate stream results**:
+
 ```java
 .map(person -> new PersonScore(person.name(), calculateScore(person)))
 .filter(ps -> ps.score() > 50)
 ```
 
 Records work well with **pattern matching** (Java 21):
+
 ```java
 if (obj instanceof Point(int x, int y)) { // deconstruct
     System.out.println("x=" + x + " y=" + y);
@@ -1768,6 +1874,7 @@ public sealed class Triangle extends Shape
 Permitted classes must be: in the same package (or module), and must be `final`, `sealed`, or `non-sealed`.
 
 **Benefits**:
+
 1. **Controlled hierarchy**: Know all possible subtypes at compile time
 2. **Pattern matching exhaustiveness**: Compiler knows all cases
 3. **Domain modeling**: Express algebraic data types
@@ -1806,6 +1913,7 @@ if (obj instanceof String s && s.length() > 5) {
 ```
 
 Pattern matching in switch (Java 21):
+
 ```java
 static String describe(Object obj) {
     return switch (obj) {
@@ -1820,6 +1928,7 @@ static String describe(Object obj) {
 ```
 
 Record patterns (Java 21):
+
 ```java
 if (obj instanceof Point(int x, int y) p) {
     System.out.println("Point at " + x + ", " + y);
@@ -1833,12 +1942,14 @@ if (obj instanceof Point(int x, int y) p) {
 Java 17 (September 2021) is an **LTS (Long-Term Support)** release – the most significant LTS since Java 11 and Java 8.
 
 **Why it matters**:
+
 - Oracle provides 8+ years of support
 - Most enterprises use LTS releases in production
 - Spring Boot 3+ requires Java 17 minimum
 - Many frameworks aligned to Java 17 as baseline
 
 **New features finalized in Java 17**:
+
 - Sealed classes (Java 15 preview)
 - Pattern matching for instanceof (Java 14 preview)
 - Records (Java 14 preview)
@@ -1846,6 +1957,7 @@ Java 17 (September 2021) is an **LTS (Long-Term Support)** release – the most 
 - Text blocks (Java 13 preview)
 
 **Deprecations/Removals**:
+
 - Applet API deprecated for removal
 - Security Manager deprecated
 - RMI Activation removed
@@ -1855,19 +1967,21 @@ Java 17 (September 2021) is an **LTS (Long-Term Support)** release – the most 
 
 ### Q68. Garbage collection improvements post Java 8?
 
-| GC | Introduced | Characteristics |
-|----|-----------|-----------------|
-| G1 (Garbage First) | Java 7, default from 9 | Region-based, aims for predictable pause times |
-| ZGC | Java 11 (experimental), 15 (production) | Sub-millisecond pauses, scalable to TBs |
-| Shenandoah | Java 12 (RedHat), 15 OpenJDK | Low-pause, concurrent, scale with heap |
-| Epsilon | Java 11 | No-op GC, for performance testing |
+| GC                 | Introduced                              | Characteristics                                |
+| ------------------ | --------------------------------------- | ---------------------------------------------- |
+| G1 (Garbage First) | Java 7, default from 9                  | Region-based, aims for predictable pause times |
+| ZGC                | Java 11 (experimental), 15 (production) | Sub-millisecond pauses, scalable to TBs        |
+| Shenandoah         | Java 12 (RedHat), 15 OpenJDK            | Low-pause, concurrent, scale with heap         |
+| Epsilon            | Java 11                                 | No-op GC, for performance testing              |
 
 G1 improvements over time:
+
 - Java 10: Parallel Full GC
 - Java 12: Promptly return memory to OS
 - Java 14: NUMA-aware memory allocation
 
 ZGC evolution:
+
 - Java 11: 4TB max heap, requires 8-core+
 - Java 15: Production-ready
 - Java 16: Thread-local handshakes, improved latency
@@ -1895,6 +2009,7 @@ try (var executor = Executors.newVirtualThreadPerTaskExecutor()) {
 ```
 
 **Why it matters**:
+
 - Platform threads: ~1MB stack, OS-limited (~thousands)
 - Virtual threads: ~few KB, JVM-limited (millions possible)
 - Virtual threads **block without blocking OS thread** – when a virtual thread blocks (I/O, sleep), the carrier OS thread is freed to run other virtual threads
@@ -1902,12 +2017,14 @@ try (var executor = Executors.newVirtualThreadPerTaskExecutor()) {
 **One-thread-per-request model** becomes viable again for high-concurrency I/O workloads.
 
 **Not a replacement for async**: Same mental model as blocking code, but with performance of reactive. You write:
+
 ```java
 String response = httpClient.get(url); // looks blocking
 // but virtual thread is suspended, OS thread is freed
 ```
 
 Considerations:
+
 - Don't use with `ThreadLocal` that holds expensive resources (use `ScopedValue` instead)
 - `synchronized` blocks still pin virtual thread to carrier (use `ReentrantLock` for fine-grained locking)
 - Not beneficial for CPU-bound tasks (no concurrency gain)
@@ -1917,24 +2034,27 @@ Considerations:
 ### Q70. Java 19+ Loom overview?
 
 Project Loom delivered over multiple releases:
+
 - **Java 19**: Virtual threads (preview)
 - **Java 20**: Virtual threads (second preview), Structured Concurrency (incubator)
 - **Java 21**: Virtual threads (GA!), Structured Concurrency (preview), Scoped Values (preview)
 
 **Structured Concurrency** (Java 21 preview):
+
 ```java
 try (var scope = new StructuredTaskScope.ShutdownOnFailure()) {
     Future<User> user = scope.fork(() -> fetchUser(id));
     Future<Order> order = scope.fork(() -> fetchOrder(id));
-    
+
     scope.join().throwIfFailed();
-    
+
     return new Response(user.resultNow(), order.resultNow());
 }
 // scope.close() cancels subtasks if any fail
 ```
 
 Benefits:
+
 - Subtask lifetimes are bound to parent scope
 - Error handling and cancellation are structured
 - Easier to reason about than CompletableFuture chains
@@ -1957,17 +2077,20 @@ Benefits:
 ### Q72. Backward compatibility in Java?
 
 Java has a strong commitment to **backward compatibility**:
+
 - Programs compiled with Java 5 generally run on Java 21 JVM
 - `--release` flag: `javac --release 8 Source.java` compiles for Java 8 target
 - **Deprecation process**: Features deprecated before removal (usually multiple versions)
 
 Breaking changes DO happen:
+
 - **Strong encapsulation**: `--add-opens` needed for deep reflection
-- **Module system**: Some internal APIs (sun.*, com.sun.*) no longer accessible
+- **Module system**: Some internal APIs (sun._, com.sun._) no longer accessible
 - **Removed APIs**: CMS GC removed (Java 14), Nashorn (Java 15), Applet API (Java 17)
 - **JEE modules removed** in Java 11
 
 **Tooling**:
+
 - `jdeprscan`: Find usage of deprecated APIs
 - `--illegal-access=warn`: Identify reflective access that will break in future versions
 - Migration guides on OpenJDK site
@@ -1976,16 +2099,16 @@ Breaking changes DO happen:
 
 ### Q73. Removed features in newer Java?
 
-| Feature | Removed Version |
-|---------|----------------|
-| PermGen | Java 8 (replaced by Metaspace) |
-| Java EE/CORBA modules | Java 11 |
-| Nashorn JS engine | Java 15 |
-| CMS GC | Java 14 |
-| RMI Activation | Java 15 |
-| Applet API | Java 17 (deprecated), removal pending |
-| Security Manager | Java 17 (deprecated), pending |
-| `finalize()` | Java 18 (deprecated), pending |
+| Feature               | Removed Version                       |
+| --------------------- | ------------------------------------- |
+| PermGen               | Java 8 (replaced by Metaspace)        |
+| Java EE/CORBA modules | Java 11                               |
+| Nashorn JS engine     | Java 15                               |
+| CMS GC                | Java 14                               |
+| RMI Activation        | Java 15                               |
+| Applet API            | Java 17 (deprecated), removal pending |
+| Security Manager      | Java 17 (deprecated), pending         |
+| `finalize()`          | Java 18 (deprecated), pending         |
 
 ---
 
@@ -2055,6 +2178,7 @@ Introduced by Robert C. Martin ("Uncle Bob"). Not a strict rulebook but guidelin
 A class should have **only one reason to change** – it should have one primary responsibility.
 
 **Violation**:
+
 ```java
 class UserService {
     void createUser(User user) { ... } // business logic
@@ -2065,6 +2189,7 @@ class UserService {
 ```
 
 **Correct**:
+
 ```java
 class UserService { void createUser(User user) { ... } }
 class UserRepository { void save(User user) { ... } }
@@ -2083,6 +2208,7 @@ SRP doesn't mean "one method per class" – it means one cohesive responsibility
 Software entities should be **open for extension, closed for modification**.
 
 **Violation**: Adding a new shape requires modifying existing code:
+
 ```java
 class AreaCalculator {
     double area(Object shape) {
@@ -2093,6 +2219,7 @@ class AreaCalculator {
 ```
 
 **Correct**: Extend by adding new implementations:
+
 ```java
 interface Shape { double area(); }
 class Circle implements Shape { public double area() { return Math.PI * r * r; } }
@@ -2118,6 +2245,7 @@ Objects of a subclass must be **substitutable for objects of the superclass** wi
 Formally: If S is a subtype of T, then objects of type T may be replaced with objects of type S without altering any of the desirable properties of the program.
 
 **Classic violation – Rectangle/Square**:
+
 ```java
 class Rectangle {
     void setWidth(int w) { this.width = w; }
@@ -2137,6 +2265,7 @@ void test(Rectangle r) {
 ```
 
 **Rules**:
+
 - Preconditions can only be weakened in subtype (accept more)
 - Postconditions can only be strengthened in subtype (promise more)
 - Invariants of supertype must be maintained
@@ -2151,6 +2280,7 @@ void test(Rectangle r) {
 Clients should not be forced to depend on interfaces they don't use.
 
 **Violation**:
+
 ```java
 interface Worker {
     void work();
@@ -2166,6 +2296,7 @@ class Robot implements Worker {
 ```
 
 **Correct**:
+
 ```java
 interface Workable { void work(); }
 interface Eatable { void eat(); }
@@ -2175,7 +2306,7 @@ class Human implements Workable, Eatable, Sleepable { ... }
 class Robot implements Workable { ... }
 ```
 
-**Senior nuance**: Don't over-segregate. Splitting into too many tiny interfaces creates interface explosion. Balance based on client needs. ISP is about designing interfaces from the *client's perspective*, not the implementor's.
+**Senior nuance**: Don't over-segregate. Splitting into too many tiny interfaces creates interface explosion. Balance based on client needs. ISP is about designing interfaces from the _client's perspective_, not the implementor's.
 
 ---
 
@@ -2185,6 +2316,7 @@ class Robot implements Workable { ... }
 2. Abstractions should not depend on details. Details should depend on abstractions.
 
 **Violation**:
+
 ```java
 class OrderService { // high-level
     private MySQLOrderRepository repo = new MySQLOrderRepository(); // depends on concrete
@@ -2192,6 +2324,7 @@ class OrderService { // high-level
 ```
 
 **Correct**:
+
 ```java
 interface OrderRepository { void save(Order o); }
 
@@ -2200,14 +2333,14 @@ class MongoOrderRepository implements OrderRepository { ... }
 
 class OrderService { // high-level
     private final OrderRepository repo; // depends on abstraction
-    
+
     public OrderService(OrderRepository repo) { this.repo = repo; } // inject
 }
 ```
 
 DIP enables **Dependency Injection (DI)** – the practice of providing dependencies from outside. Spring is essentially a DI container implementing DIP.
 
-**Inversion**: Traditionally, high-level code creates low-level dependencies. DIP *inverts* this – the framework/container provides them.
+**Inversion**: Traditionally, high-level code creates low-level dependencies. DIP _inverts_ this – the framework/container provides them.
 
 ---
 
@@ -2228,9 +2361,9 @@ class LoggingList extends ArrayList<String> {
 // Composition (safer)
 class LoggingList<E> implements List<E> {
     private final List<E> delegate = new ArrayList<>();
-    
+
     @Override public boolean add(E e) { log(e); return delegate.add(e); }
-    @Override public boolean addAll(Collection<? extends E> c) { 
+    @Override public boolean addAll(Collection<? extends E> c) {
         c.forEach(this::log); return delegate.addAll(c); // explicit control
     }
     // ... other delegations
@@ -2269,7 +2402,7 @@ class OrderController {
 // Loose - depends on abstraction
 class OrderController {
     private final NotificationService notificationService; // interface
-    
+
     public OrderController(NotificationService service) { // injected
         this.notificationService = service;
     }
@@ -2277,6 +2410,7 @@ class OrderController {
 ```
 
 Loose coupling enables:
+
 - **Testability**: Inject mock/stub in tests
 - **Flexibility**: Swap implementations without changing dependent code
 - **Maintainability**: Changes are localized
@@ -2287,13 +2421,14 @@ Metrics: **Afferent coupling (Ca)** – how many depend on this. **Efferent coup
 
 ### Q85. Cohesion vs coupling?
 
-**Cohesion**: How *related* the elements within a module/class are. **High cohesion = good**.
+**Cohesion**: How _related_ the elements within a module/class are. **High cohesion = good**.
 
-**Coupling**: How *dependent* modules/classes are on each other. **Low coupling = good**.
+**Coupling**: How _dependent_ modules/classes are on each other. **Low coupling = good**.
 
 Goal: **High cohesion, low coupling**.
 
 Types of cohesion (weakest to strongest):
+
 - Coincidental (random things together – worst)
 - Logical (similar logic but unrelated)
 - Temporal (used at same time)
@@ -2303,6 +2438,7 @@ Types of cohesion (weakest to strongest):
 - Functional (single well-defined purpose – best)
 
 Example of poor cohesion:
+
 ```java
 class UtilityBag {
     void parseXML() {}
@@ -2319,12 +2455,14 @@ These are unrelated – poor cohesion. Split into `XmlParser`, `EmailService`, `
 ### Q86. What is IS-A vs HAS-A?
 
 **IS-A**: Expressed via inheritance or interface implementation.
+
 ```java
 class Dog extends Animal {} // Dog IS-A Animal
 class Circle implements Shape {} // Circle IS-A Shape
 ```
 
 **HAS-A**: Expressed via composition (field containing another object).
+
 ```java
 class Car {
     private Engine engine; // Car HAS-A Engine
@@ -2347,6 +2485,7 @@ public interface Remote {}       // marker
 ```
 
 The JVM/frameworks check `instanceof` to determine behavior:
+
 ```java
 if (obj instanceof Serializable) {
     // proceed with serialization
@@ -2364,6 +2503,7 @@ Marker interfaces still have one advantage: **compile-time type checking**. A me
 `Serializable` signals to the Java **Object Serialization** mechanism (ObjectOutputStream/ObjectInputStream) that a class can be serialized to a byte stream.
 
 No methods needed because:
+
 - The serialization mechanism is implemented in `ObjectOutputStream` using reflection
 - It just needs to know "is this class serializable?" – a boolean property
 - No specific method contracts are needed (the serialization logic handles everything)
@@ -2371,6 +2511,7 @@ No methods needed because:
 If a class doesn't implement `Serializable` but you try to serialize it: `NotSerializableException` at runtime.
 
 Pitfalls:
+
 - `serialVersionUID` should be declared to control version compatibility
 - Transient fields are excluded from serialization
 - Custom serialization: implement `writeObject()` / `readObject()` (private methods found by reflection)
@@ -2382,24 +2523,26 @@ Modern alternatives: Jackson JSON, Protobuf, Avro – all more flexible and safe
 
 ### Q89. Abstract class vs interface?
 
-| Aspect | Abstract Class | Interface |
-|--------|---------------|-----------|
-| Instantiation | No | No |
-| Multiple inheritance | No (single) | Yes (multiple) |
-| Instance fields | Yes | No (only static final) |
-| Constructors | Yes | No |
-| Method implementations | Yes (can mix) | Default/static only (Java 8+) |
-| Access modifiers | Any | Methods public by default |
-| `extends` / `implements` | `extends` | `implements` |
-| State | Can have mutable state | Cannot have instance state |
+| Aspect                   | Abstract Class         | Interface                     |
+| ------------------------ | ---------------------- | ----------------------------- |
+| Instantiation            | No                     | No                            |
+| Multiple inheritance     | No (single)            | Yes (multiple)                |
+| Instance fields          | Yes                    | No (only static final)        |
+| Constructors             | Yes                    | No                            |
+| Method implementations   | Yes (can mix)          | Default/static only (Java 8+) |
+| Access modifiers         | Any                    | Methods public by default     |
+| `extends` / `implements` | `extends`              | `implements`                  |
+| State                    | Can have mutable state | Cannot have instance state    |
 
 **Use abstract class when**:
+
 - Sharing code among closely related classes
 - Non-public members needed
 - Need to manage state
 - Template Method pattern
 
 **Use interface when**:
+
 - Unrelated classes implement it (Comparable, Serializable)
 - Multiple inheritance of type needed
 - Defining a type that doesn't care about implementation hierarchy
@@ -2428,6 +2571,7 @@ Multiple class inheritance is avoided to prevent the **Diamond Problem** and com
 For interfaces: if two interfaces have the same default method, implementing class MUST override it (compiler forces resolution).
 
 Rule of thumb for multiple interface conflict resolution:
+
 1. Class/override wins over interface
 2. More specific interface wins
 3. Must explicitly resolve ambiguity
@@ -2444,7 +2588,7 @@ interface Collection<E> {
     default Stream<E> stream() {
         return StreamSupport.stream(spliterator(), false);
     }
-    
+
     default void forEach(Consumer<? super E> action) {
         for (E e : this) action.accept(e);
     }
@@ -2452,11 +2596,13 @@ interface Collection<E> {
 ```
 
 Use cases:
+
 1. **Evolving APIs**: Add new methods without breaking existing code
 2. **Mixin-like behavior**: Provide optional implementations
 3. **Interface adapter pattern**: Interface with default no-ops; class overrides only needed
 
 Pitfalls:
+
 - Diamond problem must be resolved explicitly
 - Default methods complicate interface design ("fat interface")
 - They DO have implementations but NOT state – can call other interface methods and parameters
@@ -2482,6 +2628,7 @@ The diamond problem occurs in multiple inheritance when a class inherits from tw
 Java solves this for classes by **not allowing multiple class inheritance**.
 
 For interfaces (Java 8+ with defaults):
+
 ```java
 interface A { default void hello() { print("A"); } }
 interface B extends A { default void hello() { print("B"); } }
@@ -2502,11 +2649,12 @@ The rule: A **class override** always wins over interface defaults. A **more spe
 ### Q93. When to use abstract class?
 
 1. **Template Method Pattern**: Skeleton algorithm with steps for subclasses to fill in
+
 ```java
 abstract class DataProcessor {
     // Template method
     final void process() { readData(); processData(); writeData(); }
-    
+
     abstract void readData();
     abstract void processData();
     void writeData() { /* default impl */ }
@@ -2514,13 +2662,14 @@ abstract class DataProcessor {
 ```
 
 2. **Common state and behavior**: Subclasses share fields and some implementations
+
 ```java
 abstract class Vehicle {
     protected String brand; // shared state
     protected int year;
-    
+
     public abstract void fuelType();
-    
+
     public String describe() { // shared behavior
         return brand + " (" + year + ")";
     }
@@ -2556,6 +2705,7 @@ In API design: expose interfaces, hide implementations. `List<T> createList()` n
 Factory Pattern provides a way to **create objects without specifying the exact concrete class**.
 
 **Simple Factory** (not a GoF pattern):
+
 ```java
 class ShapeFactory {
     public static Shape create(String type) {
@@ -2569,10 +2719,11 @@ class ShapeFactory {
 ```
 
 **Factory Method** (GoF):
+
 ```java
 abstract class Application {
     abstract Button createButton(); // factory method
-    
+
     void render() {
         Button btn = createButton(); // uses factory method
         btn.paint();
@@ -2585,6 +2736,7 @@ class WindowsApp extends Application {
 ```
 
 **Abstract Factory**:
+
 ```java
 interface GUIFactory {
     Button createButton();
@@ -2632,7 +2784,7 @@ public static synchronized Singleton getInstance() { ... }
 // Approach 2: Double-checked locking (Java 5+, needs volatile)
 public class Singleton {
     private volatile static Singleton instance;
-    
+
     public static Singleton getInstance() {
         if (instance == null) {
             synchronized (Singleton.class) {
@@ -2684,12 +2836,14 @@ User user = User.builder()
 ```
 
 Use when:
+
 1. Many constructor parameters (especially optional ones)
 2. Immutable object with many fields
 3. Step-by-step construction
 4. Complex validation before construction
 
 Implementation styles:
+
 - Classic GoF: Director + ConcreteBuilder
 - Fluent/chained (most common in Java): `return this` from setters
 - Lombok `@Builder`: Auto-generates builder
@@ -2708,7 +2862,7 @@ interface Prototype {
 
 class ConcretePrototype implements Cloneable {
     private List<String> items;
-    
+
     @Override protected ConcretePrototype clone() {
         try {
             ConcretePrototype clone = (ConcretePrototype) super.clone();
@@ -2720,6 +2874,7 @@ class ConcretePrototype implements Cloneable {
 ```
 
 Java's `Cloneable` + `Object.clone()` is notoriously broken:
+
 - `clone()` is protected in Object
 - `Cloneable` is a marker but `Object.clone()` must still be overridden
 - Default clone is **shallow** – must manually deep copy mutable fields
@@ -2749,13 +2904,13 @@ class QuickSort implements SortStrategy {
 
 class DataProcessor {
     private SortStrategy strategy;
-    
+
     public DataProcessor(SortStrategy strategy) {
         this.strategy = strategy;
     }
-    
+
     public void setStrategy(SortStrategy s) { this.strategy = s; }
-    
+
     public void process(int[] data) {
         strategy.sort(data);
         // ... more processing
@@ -2783,10 +2938,10 @@ interface Observer { void update(String event); }
 
 class EventBus {
     private List<Observer> observers = new ArrayList<>();
-    
+
     public void subscribe(Observer o) { observers.add(o); }
     public void unsubscribe(Observer o) { observers.remove(o); }
-    
+
     public void publish(String event) {
         observers.forEach(o -> o.update(event));
     }
@@ -2796,11 +2951,12 @@ class EventBus {
 Java built-in: `java.util.Observable` (deprecated Java 9), `java.util.EventListener`.
 
 Modern Java: `PropertyChangeListener`, Spring's `ApplicationEventPublisher`:
+
 ```java
 @Component
 class OrderService {
     @Autowired ApplicationEventPublisher publisher;
-    
+
     public void createOrder(Order order) {
         // ...
         publisher.publishEvent(new OrderCreatedEvent(order));
@@ -2847,6 +3003,7 @@ Coffee coffee = new MilkDecorator(new MilkDecorator(new SimpleCoffee()));
 ```
 
 Java IO is decorator pattern:
+
 ```java
 new BufferedInputStream(new FileInputStream("file.txt"))
 new PrintWriter(new BufferedWriter(new FileWriter("out.txt")))
@@ -2863,9 +3020,9 @@ Pass a request along a **chain of handlers** until one handles it.
 ```java
 abstract class Handler {
     protected Handler next;
-    
+
     public Handler setNext(Handler next) { this.next = next; return next; }
-    
+
     public abstract void handle(Request request);
 }
 
@@ -2905,7 +3062,7 @@ interface Command {
 
 class TextEditor {
     StringBuilder text = new StringBuilder();
-    
+
     void appendText(String s) { text.append(s); }
     void deleteText(int from, int to) { text.delete(from, to); }
 }
@@ -2913,7 +3070,7 @@ class TextEditor {
 class AppendCommand implements Command {
     private TextEditor editor;
     private String text;
-    
+
     public AppendCommand(TextEditor e, String t) { editor = e; text = t; }
     public void execute() { editor.appendText(text); }
     public void undo() { editor.deleteText(editor.text.length() - text.length(), editor.text.length()); }
@@ -2921,7 +3078,7 @@ class AppendCommand implements Command {
 
 class CommandHistory {
     private Deque<Command> history = new ArrayDeque<>();
-    
+
     public void executeCommand(Command cmd) { cmd.execute(); history.push(cmd); }
     public void undoLastCommand() { if (!history.isEmpty()) history.pop().undo(); }
 }
@@ -2960,6 +3117,7 @@ Used in: Transaction management, Undo/Redo, Job queuing, Spring Batch steps.
 13. **Excessive inheritance**: Deep hierarchies. Prefer composition.
 
 14. **Static state abuse**: Static mutable state is global, untestable, thread-unsafe.
+
 ## PART 4: Collections Framework (Q106–150)
 
 ---
@@ -3006,29 +3164,29 @@ Map<K,V> (does NOT extend Collection)
 
 ### Q107. Difference between List, Set, Map?
 
-| | List | Set | Map |
-|-|------|-----|-----|
-| Duplicates | Allowed | Not allowed | Keys unique, values allowed |
-| Order | Insertion order maintained | Depends on impl | Depends on impl |
-| Null | Allowed (multiple) | One null (HashSet) | One null key (HashMap) |
-| Interface | `List<E>` | `Set<E>` | `Map<K,V>` |
-| Access | Index (O(1) for ArrayList) | No index | By key |
-| Extends | Collection | Collection | Nothing (standalone) |
+|            | List                       | Set                | Map                         |
+| ---------- | -------------------------- | ------------------ | --------------------------- |
+| Duplicates | Allowed                    | Not allowed        | Keys unique, values allowed |
+| Order      | Insertion order maintained | Depends on impl    | Depends on impl             |
+| Null       | Allowed (multiple)         | One null (HashSet) | One null key (HashMap)      |
+| Interface  | `List<E>`                  | `Set<E>`           | `Map<K,V>`                  |
+| Access     | Index (O(1) for ArrayList) | No index           | By key                      |
+| Extends    | Collection                 | Collection         | Nothing (standalone)        |
 
 ---
 
 ### Q108. ArrayList vs LinkedList?
 
-| | ArrayList | LinkedList |
-|-|-----------|-----------|
-| Internal | Dynamic array | Doubly-linked list |
-| Random access `get(i)` | O(1) | O(n) |
-| Insert/delete at middle | O(n) – shift elements | O(1) – just relink nodes |
-| Insert/delete at end | O(1) amortized | O(1) |
-| Insert/delete at beginning | O(n) | O(1) |
-| Memory | Compact (array) | More overhead (node objects) |
-| Implements | List | List, Deque, Queue |
-| Cache performance | Better (contiguous memory) | Poor (scattered nodes) |
+|                            | ArrayList                  | LinkedList                   |
+| -------------------------- | -------------------------- | ---------------------------- |
+| Internal                   | Dynamic array              | Doubly-linked list           |
+| Random access `get(i)`     | O(1)                       | O(n)                         |
+| Insert/delete at middle    | O(n) – shift elements      | O(1) – just relink nodes     |
+| Insert/delete at end       | O(1) amortized             | O(1)                         |
+| Insert/delete at beginning | O(n)                       | O(1)                         |
+| Memory                     | Compact (array)            | More overhead (node objects) |
+| Implements                 | List                       | List, Deque, Queue           |
+| Cache performance          | Better (contiguous memory) | Poor (scattered nodes)       |
 
 **Default choice**: `ArrayList`. Use `LinkedList` only when frequent O(1) insertions/deletions at head/middle with iteration. In practice, ArrayList is almost always faster due to CPU cache effects even for some "LinkedList scenarios".
 
@@ -3037,6 +3195,7 @@ Map<K,V> (does NOT extend Collection)
 ### Q109. When to use LinkedList?
 
 LinkedList excels as a **Deque (double-ended queue)**:
+
 ```java
 LinkedList<String> deque = new LinkedList<>();
 deque.addFirst("first"); // O(1)
@@ -3046,6 +3205,7 @@ deque.removeLast();       // O(1)
 ```
 
 Use cases:
+
 1. **Queue/Deque implementation**: Where you frequently add/remove from both ends
 2. **LRU Cache**: Remove from tail, add to head (but `LinkedHashMap` is usually better)
 3. **Stack with frequent push/pop at head**
@@ -3057,13 +3217,14 @@ Use cases:
 ### Q110. Vector vs ArrayList?
 
 Both are resizable arrays, but:
-| | Vector | ArrayList |
-|-|--------|----------|
-| Thread safety | Synchronized (all methods) | Not synchronized |
-| Performance | Slower (sync overhead) | Faster |
-| Growth | Doubles by default | Grows by 50% |
-| Legacy | Java 1.0 | Java 1.2 (Collections) |
-| Recommendation | Legacy/avoid | Preferred |
+
+|                | Vector                     | ArrayList              |
+| -------------- | -------------------------- | ---------------------- |
+| Thread safety  | Synchronized (all methods) | Not synchronized       |
+| Performance    | Slower (sync overhead)     | Faster                 |
+| Growth         | Doubles by default         | Grows by 50%           |
+| Legacy         | Java 1.0                   | Java 1.2 (Collections) |
+| Recommendation | Legacy/avoid               | Preferred              |
 
 **Vector is legacy** – use `ArrayList` + explicit synchronization (`Collections.synchronizedList()`) or `CopyOnWriteArrayList` for concurrent use.
 
@@ -3071,12 +3232,14 @@ Both are resizable arrays, but:
 
 ### Q111. Why Vector is legacy?
 
-Vector synchronizes *every* method at the object level, even when no concurrent access is happening. This is:
+Vector synchronizes _every_ method at the object level, even when no concurrent access is happening. This is:
+
 1. **Too coarse-grained**: Even iteration requires locking every element access
 2. **Not composable**: `if (!v.isEmpty()) v.get(0)` is still NOT thread-safe (race between isEmpty and get)
 3. **Performance penalty**: Even single-threaded code pays sync cost
 
 Modern alternatives:
+
 - `ArrayList` for non-concurrent
 - `CopyOnWriteArrayList` for read-heavy concurrent
 - `Collections.synchronizedList(new ArrayList<>())` for simple sync need
@@ -3099,6 +3262,7 @@ Array (buckets):
 ```
 
 **put(key, value) flow**:
+
 1. `key.hashCode()` computed
 2. Hash spread: `h ^ (h >>> 16)` (reduces clustering)
 3. Bucket index: `hash & (capacity - 1)` (bitwise AND, fast when capacity is power of 2)
@@ -3108,6 +3272,7 @@ Array (buckets):
    - Key not found: append (add to tree if chain ≥ 8)
 
 **get(key) flow**:
+
 1. Compute hash → bucket index
 2. Traverse nodes in bucket comparing with `equals()`
 3. Return value or null
@@ -3130,6 +3295,7 @@ Example: Default map with 16 capacity, threshold = 12. When 13th entry is added,
 **Why 0.75?** Balance between time (fewer collisions, bigger array) and space (fewer rehashes, smaller array). Below 0.6 = too many empty buckets. Above 0.85 = too many collisions.
 
 **Pre-sizing**: If you know approximate size, provide it:
+
 ```java
 Map<String, String> map = new HashMap<>(expectedSize / 0.75 + 1);
 // Or use Guava: Maps.newHashMapWithExpectedSize(expectedSize)
@@ -3143,7 +3309,8 @@ Collision: two keys hash to the same bucket.
 
 **Java 7**: **Separate chaining with linked list**. New entries added to head (causes a subtle ABA problem in concurrent use that leads to infinite loops in multi-threaded HashMap – don't use HashMap from multiple threads!).
 
-**Java 8**: 
+**Java 8**:
+
 - Linked list for ≤ 8 nodes per bucket
 - **Red-black tree** for > 8 nodes (if capacity ≥ 64)
 - Tree degrades back to list when nodes ≤ 6
@@ -3156,15 +3323,15 @@ String's `hashCode()` is deterministic and used to be exploitable – Java uses 
 
 ### Q115. HashMap vs Hashtable?
 
-| | HashMap | Hashtable |
-|-|---------|-----------|
-| Thread safety | Not synchronized | All methods synchronized |
-| Null keys | One null key allowed | No null keys |
-| Null values | Allowed | Not allowed |
-| Performance | Faster | Slower |
-| Legacy | No | Yes (Java 1.0) |
-| Iterator | Fail-fast | Enumerator (old API) |
-| Extends | AbstractMap | Dictionary (ancient) |
+|               | HashMap              | Hashtable                |
+| ------------- | -------------------- | ------------------------ |
+| Thread safety | Not synchronized     | All methods synchronized |
+| Null keys     | One null key allowed | No null keys             |
+| Null values   | Allowed              | Not allowed              |
+| Performance   | Faster               | Slower                   |
+| Legacy        | No                   | Yes (Java 1.0)           |
+| Iterator      | Fail-fast            | Enumerator (old API)     |
+| Extends       | AbstractMap          | Dictionary (ancient)     |
 
 **Hashtable is legacy** – use `ConcurrentHashMap` for thread-safe map (much better than Hashtable).
 
@@ -3172,19 +3339,20 @@ String's `hashCode()` is deterministic and used to be exploitable – Java uses 
 
 ### Q116. HashMap vs ConcurrentHashMap?
 
-| | HashMap | ConcurrentHashMap |
-|-|---------|-------------------|
-| Thread safety | No | Yes |
-| Null keys | Yes | No |
-| Locking | None | Segment-level (Java 7) / CAS + bucket-level (Java 8) |
-| Performance (single-thread) | Faster | Slightly slower |
-| Performance (multi-thread) | Dangerous | Designed for it |
-| Concurrent reads | Unsafe (may see inconsistent state) | Safe, non-blocking |
-| Iterator | Fail-fast | Weakly consistent |
+|                             | HashMap                             | ConcurrentHashMap                                    |
+| --------------------------- | ----------------------------------- | ---------------------------------------------------- |
+| Thread safety               | No                                  | Yes                                                  |
+| Null keys                   | Yes                                 | No                                                   |
+| Locking                     | None                                | Segment-level (Java 7) / CAS + bucket-level (Java 8) |
+| Performance (single-thread) | Faster                              | Slightly slower                                      |
+| Performance (multi-thread)  | Dangerous                           | Designed for it                                      |
+| Concurrent reads            | Unsafe (may see inconsistent state) | Safe, non-blocking                                   |
+| Iterator                    | Fail-fast                           | Weakly consistent                                    |
 
 **Java 8 ConcurrentHashMap internals**: No segment locks. Uses CAS for most operations. Only locks individual buckets during tree restructuring. `size()` uses `LongAdder`-like approach.
 
 **Key methods**:
+
 - `putIfAbsent(k, v)`: Atomic put-if-missing
 - `computeIfAbsent(k, fn)`: Compute and store if missing
 - `merge(k, v, fn)`: Atomic merge
@@ -3194,16 +3362,17 @@ String's `hashCode()` is deterministic and used to be exploitable – Java uses 
 
 ### Q117. TreeMap vs HashMap?
 
-| | HashMap | TreeMap |
-|-|---------|---------|
-| Internal structure | Hash table | Red-black tree |
-| Ordering | No guaranteed order | **Sorted by key** |
-| Performance | O(1) average | O(log n) |
-| Null keys | One allowed | No null keys (comparison) |
-| Navigation | No | `floorKey`, `ceilingKey`, `subMap`, `headMap`, `tailMap` |
-| Implements | Map | SortedMap, NavigableMap |
+|                    | HashMap             | TreeMap                                                  |
+| ------------------ | ------------------- | -------------------------------------------------------- |
+| Internal structure | Hash table          | Red-black tree                                           |
+| Ordering           | No guaranteed order | **Sorted by key**                                        |
+| Performance        | O(1) average        | O(log n)                                                 |
+| Null keys          | One allowed         | No null keys (comparison)                                |
+| Navigation         | No                  | `floorKey`, `ceilingKey`, `subMap`, `headMap`, `tailMap` |
+| Implements         | Map                 | SortedMap, NavigableMap                                  |
 
 Use TreeMap when:
+
 - Need keys in sorted order
 - Need range queries: "all entries with key between 100 and 200"
 - Need floor/ceiling key operations
@@ -3237,6 +3406,7 @@ Map<String, Integer> lru = new LinkedHashMap<>(16, 0.75f, true) {
 ```
 
 Use cases:
+
 1. **Preserve insertion order** in map iteration
 2. **LRU Cache** (access-order mode + removeEldestEntry)
 3. **Ordered JSON/config properties**
@@ -3247,10 +3417,12 @@ Use cases:
 ### Q119. Why Map doesn't extend Collection?
 
 Conceptual mismatch:
+
 - `Collection<E>` stores **elements**
 - `Map<K,V>` stores **key-value pairs**
 
 If `Map` extended `Collection`, what would `E` be? `Map.Entry<K,V>`? But then:
+
 - `add(Map.Entry<K,V>)` doesn't make sense vs `put(K, V)`
 - `contains(Object)` – contains key? value? entry?
 - `remove(Object)` – remove by key? value?
@@ -3265,23 +3437,26 @@ Josh Bloch (Java Collections designer): "Maps are not proper Collections because
 ### Q120. Set internal uniqueness?
 
 **HashSet** is backed by a **HashMap** (values are a dummy `PRESENT` object):
+
 ```java
 public class HashSet<E> {
     private transient HashMap<E, Object> map;
     private static final Object PRESENT = new Object();
-    
+
     public boolean add(E e) { return map.put(e, PRESENT) == null; }
     public boolean contains(Object o) { return map.containsKey(o); }
 }
 ```
 
 Uniqueness enforced via `hashCode()` and `equals()`:
+
 1. Compute `hashCode()` → find bucket
 2. Compare with `equals()` against each element in bucket
 3. If match found: not added (duplicate)
 4. If no match: added
 
 This is why **overriding `equals()` without `hashCode()`** in Set elements causes duplicates:
+
 ```java
 class Point { int x, y; }
 // Without hashCode override:
@@ -3294,14 +3469,14 @@ set.add(new Point(1,1)); // Different hashCode! Different bucket! Both added!
 
 ### Q121. HashSet vs TreeSet?
 
-| | HashSet | TreeSet |
-|-|---------|---------|
-| Order | No order | Sorted (natural/comparator) |
-| Performance | O(1) add/remove/contains | O(log n) |
-| Null | Allows one null | No null (can't compare) |
-| Backed by | HashMap | TreeMap |
-| Interface | Set | SortedSet, NavigableSet |
-| Use case | Fast lookup, no order needed | Sorted unique elements, range queries |
+|             | HashSet                      | TreeSet                               |
+| ----------- | ---------------------------- | ------------------------------------- |
+| Order       | No order                     | Sorted (natural/comparator)           |
+| Performance | O(1) add/remove/contains     | O(log n)                              |
+| Null        | Allows one null              | No null (can't compare)               |
+| Backed by   | HashMap                      | TreeMap                               |
+| Interface   | Set                          | SortedSet, NavigableSet               |
+| Use case    | Fast lookup, no order needed | Sorted unique elements, range queries |
 
 ```java
 // TreeSet range operations
@@ -3318,6 +3493,7 @@ set.ceiling(6);        // 7 - smallest element >= 6
 ### Q122. Why TreeSet is slower?
 
 TreeSet maintains a **red-black tree** (self-balancing BST). Every add/remove/contains requires:
+
 1. Traversal from root to correct position: O(log n)
 2. Potentially rebalancing the tree: O(log n) rotations
 
@@ -3345,7 +3521,7 @@ public interface Comparable<T> {
 public class Employee implements Comparable<Employee> {
     private String name;
     private double salary;
-    
+
     @Override
     public int compareTo(Employee other) {
         return Double.compare(this.salary, other.salary); // sort by salary
@@ -3361,14 +3537,14 @@ Used by `TreeSet`, `TreeMap`, `Collections.sort()`, `Arrays.sort()` when no expl
 
 ### Q124. Comparable vs Comparator?
 
-| | Comparable | Comparator |
-|-|------------|------------|
-| Package | `java.lang` | `java.util` |
-| Method | `compareTo(T)` | `compare(T, T)` |
-| Defined by | The class itself | External class or lambda |
-| Orders | Natural/default | Multiple/custom |
-| Modifies | Source class | No modification |
-| Use | Sort by natural order | Sort by custom order |
+|            | Comparable            | Comparator               |
+| ---------- | --------------------- | ------------------------ |
+| Package    | `java.lang`           | `java.util`              |
+| Method     | `compareTo(T)`        | `compare(T, T)`          |
+| Defined by | The class itself      | External class or lambda |
+| Orders     | Natural/default       | Multiple/custom          |
+| Modifies   | Source class          | No modification          |
+| Use        | Sort by natural order | Sort by custom order     |
 
 ```java
 // Comparable - in the class
@@ -3400,7 +3576,7 @@ employees.sort(Comparator.comparing(Employee::getDepartment)
     .thenComparingDouble(Employee::getSalary));
 
 // Null-safe
-employees.sort(Comparator.comparing(Employee::getManager, 
+employees.sort(Comparator.comparing(Employee::getManager,
     Comparator.nullsLast(Comparator.naturalOrder())));
 
 // Stream
@@ -3439,12 +3615,12 @@ for (String s : cowList) {
 
 ### Q127. Iterator vs ListIterator?
 
-| | Iterator | ListIterator |
-|-|----------|-------------|
-| Direction | Forward only | Both forward and backward |
-| Interfaces | `Iterator<E>` | `ListIterator<E>` extends Iterator |
-| Available for | All Collections | Lists only |
-| Methods | `hasNext()`, `next()`, `remove()` | + `hasPrevious()`, `previous()`, `add()`, `set()`, `nextIndex()`, `previousIndex()` |
+|               | Iterator                          | ListIterator                                                                        |
+| ------------- | --------------------------------- | ----------------------------------------------------------------------------------- |
+| Direction     | Forward only                      | Both forward and backward                                                           |
+| Interfaces    | `Iterator<E>`                     | `ListIterator<E>` extends Iterator                                                  |
+| Available for | All Collections                   | Lists only                                                                          |
+| Methods       | `hasNext()`, `next()`, `remove()` | + `hasPrevious()`, `previous()`, `add()`, `set()`, `nextIndex()`, `previousIndex()` |
 
 ```java
 List<String> list = new ArrayList<>(List.of("a", "b", "c"));
@@ -3475,6 +3651,7 @@ while (it.hasNext()) {
 `it.remove()` removes the last element returned by `next()`. Must call `next()` first. Can only call once per `next()`.
 
 Modern alternative (Java 8+):
+
 ```java
 list.removeIf(s -> condition(s)); // cleaner
 ```
@@ -3483,16 +3660,16 @@ list.removeIf(s -> condition(s)); // cleaner
 
 ### Q129. Stream vs Iterator?
 
-| | Iterator | Stream |
-|-|----------|--------|
-| Paradigm | Imperative | Functional/declarative |
-| Operation type | Sequential | Sequential or parallel |
-| Reusability | Can reset | Single-use |
-| Lazy | No | Yes (intermediate ops) |
-| Modification | Supports remove | Immutable source |
-| Short-circuit | Manual | Built-in (`findFirst`, `limit`) |
-| Parallel | No | Yes (`parallelStream()`) |
-| Chaining | No | Yes (fluent API) |
+|                | Iterator        | Stream                          |
+| -------------- | --------------- | ------------------------------- |
+| Paradigm       | Imperative      | Functional/declarative          |
+| Operation type | Sequential      | Sequential or parallel          |
+| Reusability    | Can reset       | Single-use                      |
+| Lazy           | No              | Yes (intermediate ops)          |
+| Modification   | Supports remove | Immutable source                |
+| Short-circuit  | Manual          | Built-in (`findFirst`, `limit`) |
+| Parallel       | No              | Yes (`parallelStream()`)        |
+| Chaining       | No              | Yes (fluent API)                |
 
 Use `Iterator` when: simple sequential traversal with possible removal. Use `Stream` when: transformations, filtering, aggregations, parallel processing.
 
@@ -3512,6 +3689,7 @@ public interface Spliterator<T> {
 ```
 
 Stream API uses Spliterators internally for parallel streams:
+
 1. `trySplit()` recursively splits the Spliterator
 2. Each split processed by different threads in ForkJoinPool
 3. Results combined
@@ -3559,6 +3737,7 @@ pq.poll(); // returns 1 (minimum)
 **Internal structure**: Array where element at index `i` has children at `2i+1` and `2i+2`, parent at `(i-1)/2`.
 
 Operations:
+
 - `offer(e)`: Add at end, sift up – O(log n)
 - `poll()`: Remove root (min), replace with last, sift down – O(log n)
 - `peek()`: Return root – O(1)
@@ -3567,6 +3746,7 @@ Operations:
 Not sorted (heap order, not sorted order). Iteration is NOT in priority order; only poll() guarantees order.
 
 **Max-heap**:
+
 ```java
 PriorityQueue<Integer> maxHeap = new PriorityQueue<>(Comparator.reverseOrder());
 ```
@@ -3590,6 +3770,7 @@ Task task = queue.poll(5, TimeUnit.SECONDS); // blocks up to 5s
 ```
 
 Implementations:
+
 - `LinkedBlockingQueue`: Unbounded (or capacity-limited), linked nodes
 - `ArrayBlockingQueue`: Fixed capacity, array-backed, fair/unfair option
 - `PriorityBlockingQueue`: Priority ordered, unbounded
@@ -3603,13 +3784,13 @@ Used in: Thread pool's work queue (`Executors.newFixedThreadPool` uses `LinkedBl
 
 ### Q134. Concurrent collections?
 
-| Regular | Concurrent |
-|---------|-----------|
-| ArrayList | CopyOnWriteArrayList |
-| HashSet | ConcurrentSkipListSet |
-| HashMap | ConcurrentHashMap |
-| TreeMap | ConcurrentSkipListMap |
-| LinkedList | ConcurrentLinkedDeque |
+| Regular       | Concurrent            |
+| ------------- | --------------------- |
+| ArrayList     | CopyOnWriteArrayList  |
+| HashSet       | ConcurrentSkipListSet |
+| HashMap       | ConcurrentHashMap     |
+| TreeMap       | ConcurrentSkipListMap |
+| LinkedList    | ConcurrentLinkedDeque |
 | PriorityQueue | PriorityBlockingQueue |
 
 `ConcurrentSkipList*`: Lock-free, sorted, O(log n) operations. Alternative to synchronized TreeMap/TreeSet.
@@ -3633,6 +3814,7 @@ CopyOnWriteArrayList<String> list = new CopyOnWriteArrayList<>();
 **Terrible for**: High write frequency (copies entire array on each write – expensive for large lists).
 
 Trade-offs:
+
 - Reads: Very fast, no locking
 - Writes: Slow (O(n) copy), expensive
 - Memory: May hold multiple array versions during GC
@@ -3655,6 +3837,7 @@ cache.size(); // may be 0
 ```
 
 Use cases:
+
 1. **Caches** where values should be collected when key is no longer used
 2. **Metadata/attributes** attached to objects (without preventing GC)
 3. **Canonical mapping**: canonicalize instances (no duplicate instances of same logical object)
@@ -3677,6 +3860,7 @@ map.size(); // 2 - different objects, same content but different identity
 ```
 
 Use cases:
+
 1. **Object graph traversal**: Detect cycles using object identity (not equality)
 2. **Serialization**: Track already-serialized objects
 3. **Deep clone**: Track already-copied objects
@@ -3697,6 +3881,7 @@ schedule.put(Day.FRI, "Code review");
 ```
 
 Advantages over HashMap with enum keys:
+
 - **Faster**: Array indexed by enum ordinal – O(1) with no hash computation or collision
 - **Memory-efficient**: Compact array representation
 - **Ordered**: Iterates in enum declaration order
@@ -3722,12 +3907,12 @@ Key principles:
 
 ### Q140. Time complexity of common operations?
 
-| Operation | ArrayList | LinkedList | HashMap | TreeMap | HashSet | TreeSet |
-|-----------|-----------|-----------|---------|---------|---------|---------|
-| Add | O(1) amort | O(1) | O(1) avg | O(log n) | O(1) avg | O(log n) |
-| Remove | O(n) | O(1)* | O(1) avg | O(log n) | O(1) avg | O(log n) |
-| Get/Contains | O(1) idx / O(n) value | O(n) | O(1) avg | O(log n) | O(1) avg | O(log n) |
-| Iteration | O(n) | O(n) | O(capacity) | O(n) | O(capacity) | O(n) |
+| Operation    | ArrayList             | LinkedList | HashMap     | TreeMap  | HashSet     | TreeSet  |
+| ------------ | --------------------- | ---------- | ----------- | -------- | ----------- | -------- |
+| Add          | O(1) amort            | O(1)       | O(1) avg    | O(log n) | O(1) avg    | O(log n) |
+| Remove       | O(n)                  | O(1)*      | O(1) avg    | O(log n) | O(1) avg    | O(log n) |
+| Get/Contains | O(1) idx / O(n) value | O(n)       | O(1) avg    | O(log n) | O(1) avg    | O(log n) |
+| Iteration    | O(n)                  | O(n)       | O(capacity) | O(n)     | O(capacity) | O(n)     |
 
 *LinkedList remove is O(n) if you need to find the element first; O(1) with iterator.
 
@@ -3738,12 +3923,14 @@ HashMap worst case (all collisions): O(n). After Java 8 treeification: O(log n) 
 ### Q141. Collection synchronization techniques?
 
 1. **Use concurrent collections** (best):
+
 ```java
 Map<K,V> map = new ConcurrentHashMap<>();
 List<E> list = new CopyOnWriteArrayList<>();
 ```
 
 2. **Collections.synchronizedXxx()** (synchronized wrapper):
+
 ```java
 List<String> syncList = Collections.synchronizedList(new ArrayList<>());
 Map<K,V> syncMap = Collections.synchronizedMap(new HashMap<>());
@@ -3760,6 +3947,7 @@ synchronized (syncList) { for (String s : syncList) {} }
 ### Q142. How to make collections thread-safe?
 
 Choose based on use pattern:
+
 - **Read-heavy**: `CopyOnWriteArrayList` / `Collections.unmodifiableList()`
 - **Write-heavy, all operations**: `Collections.synchronizedList()` + external lock on iteration
 - **Concurrent read+write**: `ConcurrentHashMap`, `ConcurrentSkipListMap`
@@ -3771,6 +3959,7 @@ Choose based on use pattern:
 ### Q143. Collections vs Arrays utility classes?
 
 **`java.util.Collections`**: Static methods for Collection operations:
+
 - `sort()`, `reverse()`, `shuffle()`, `rotate()`
 - `min()`, `max()`, `frequency()`, `disjoint()`
 - `unmodifiableList()`, `synchronizedList()`
@@ -3779,6 +3968,7 @@ Choose based on use pattern:
 - `fill()`, `copy()`, `swap()`
 
 **`java.util.Arrays`**: Static methods for array operations:
+
 - `sort()`, `parallelSort()`
 - `binarySearch()`
 - `copyOf()`, `copyOfRange()`
@@ -3793,10 +3983,12 @@ Choose based on use pattern:
 ### Q144. Why equals/hashCode critical in collections?
 
 Any hash-based collection (HashMap, HashSet, HashTable) uses both:
+
 1. `hashCode()` to find the bucket
 2. `equals()` to confirm the key match
 
 Breaking the contract causes:
+
 - **Missed lookups**: equal objects land in different buckets (not found)
 - **Duplicate insertions**: Two "equal" objects in same Set
 - **Memory leaks**: Keys added but never removable
@@ -3819,6 +4011,7 @@ set.contains(new BadKey(5)); // FALSE! Different hashCode → different bucket
 ### Q145. What causes memory leak in HashMap?
 
 1. **Mutable key whose hashCode changes after insertion**:
+
 ```java
 List<String> key = new ArrayList<>(List.of("a"));
 map.put(key, "value");
@@ -3838,17 +4031,19 @@ key.add("b"); // hashCode changes! Entry now in wrong bucket!
 ### Q146. How iteration works internally?
 
 **ArrayList**: Index-based, `cursor` variable incremented:
+
 ```java
 // Simplified Iterator for ArrayList
 int cursor = 0;
 public boolean hasNext() { return cursor < size; }
-public E next() { 
+public E next() {
     checkForModification(); // modCount check
-    return elementData[cursor++]; 
+    return elementData[cursor++];
 }
 ```
 
 **HashMap**: Iterates through buckets array, then through linked list/tree nodes within each bucket:
+
 ```java
 // Visits all capacity buckets even if empty (why iteration is O(capacity))
 for (int i = 0; i < table.length; i++) {
@@ -3881,6 +4076,7 @@ list.add("item");         // structural, throws if done during fail-fast iterati
 **Immutable**: Cannot be modified (contents AND structure). Throw `UnsupportedOperationException`.
 
 Java 9+ factory methods:
+
 ```java
 List<String> list = List.of("a", "b", "c"); // immutable
 Set<String> set = Set.of("x", "y");         // immutable
@@ -3888,6 +4084,7 @@ Map<String, Integer> map = Map.of("a", 1, "b", 2); // immutable
 ```
 
 Properties:
+
 - No null elements/keys
 - `set()`, `add()`, `remove()` throw `UnsupportedOperationException`
 - Compact memory representation (no backing array overhead)
@@ -3918,7 +4115,7 @@ List<String> immutable = List.of("a", "b");
 
 Use `List.of()` when you have control over creation. Use `Collections.unmodifiableList()` to expose a view of a mutable collection.
 
-**Deep vs shallow immutability**: Both are *shallowly* immutable – can't add/remove elements, but the elements themselves can be mutated if they're mutable objects.
+**Deep vs shallow immutability**: Both are _shallowly_ immutable – can't add/remove elements, but the elements themselves can be mutated if they're mutable objects.
 
 ---
 
@@ -3945,6 +4142,7 @@ Map<String, Integer> copy = Map.copyOf(existingMap);
 ```
 
 Key characteristics vs old approaches:
+
 - Throw `NullPointerException` for null elements/keys/values
 - Throw `IllegalArgumentException` for duplicate elements/keys (in Set/Map)
 - Unspecified iteration order (Set, Map)
@@ -3960,6 +4158,7 @@ Key characteristics vs old approaches:
 ### Q151. Checked vs unchecked exceptions?
 
 **Checked exceptions** (must be caught or declared with `throws`):
+
 - Extends `Exception` but NOT `RuntimeException`
 - Represent recoverable, expected conditions
 - Examples: `IOException`, `SQLException`, `ClassNotFoundException`
@@ -3971,6 +4170,7 @@ public void readFile(String path) throws IOException { // must declare
 ```
 
 **Unchecked exceptions** (RuntimeException subclasses):
+
 - No requirement to catch or declare
 - Represent programming errors or unrecoverable situations
 - Examples: `NullPointerException`, `IllegalArgumentException`, `ArrayIndexOutOfBoundsException`
@@ -4006,11 +4206,13 @@ Throwable
 ### Q153. Why RuntimeException exists?
 
 RuntimeException provides a category for **programming errors** that:
+
 1. Can occur at any point in code
 2. Would be impractical to declare on every method
 3. Typically indicate bugs rather than external conditions
 
 If all runtime errors were checked:
+
 - `NullPointerException` would have to be declared on every method that uses an object reference
 - `ClassCastException` on every cast
 - This would make Java code completely unmanageable
@@ -4025,18 +4227,18 @@ RuntimeException says: "This is the caller's fault for misusing the API. Handle 
 // Custom checked exception
 public class UserNotFoundException extends Exception {
     private final Long userId;
-    
+
     public UserNotFoundException(Long userId) {
         super("User not found with ID: " + userId);
         this.userId = userId;
     }
-    
+
     // Exception chaining
     public UserNotFoundException(Long userId, Throwable cause) {
         super("User not found with ID: " + userId, cause);
         this.userId = userId;
     }
-    
+
     public Long getUserId() { return userId; }
 }
 
@@ -4044,7 +4246,7 @@ public class UserNotFoundException extends Exception {
 public class InsufficientFundsException extends RuntimeException {
     private final BigDecimal required;
     private final BigDecimal available;
-    
+
     public InsufficientFundsException(BigDecimal required, BigDecimal available) {
         super(String.format("Required: %s, Available: %s", required, available));
         this.required = required;
@@ -4054,6 +4256,7 @@ public class InsufficientFundsException extends RuntimeException {
 ```
 
 **Best practices**:
+
 - Provide constructors with message and cause (for chaining)
 - Add relevant context fields
 - Make unchecked unless caller can meaningfully recover
@@ -4115,6 +4318,7 @@ java.lang.NullPointerException: Cannot invoke "String.length()" because "str" is
 ```
 
 Reading a stack trace:
+
 - **First line**: Exception type and message
 - **Second line**: Immediate location where exception was thrown
 - **Subsequent lines**: Call chain (most recent first)
@@ -4128,6 +4332,7 @@ Java 14+ **Helpful NullPointerExceptions**: JVM can tell you exactly which part 
 ### Q158. finally block behavior?
 
 `finally` block **always executes** after try/catch, regardless of:
+
 - Normal completion
 - Exception thrown (caught or not)
 - `return` or `break` in try block
@@ -4184,6 +4389,7 @@ try (Resource r = new Resource()) {
 ```
 
 Manual suppression:
+
 ```java
 Throwable primary = null;
 try {
@@ -4218,6 +4424,7 @@ try {
 ```
 
 Access the chain:
+
 ```java
 catch (DataAccessException e) {
     Throwable cause = e.getCause(); // original SQLException
@@ -4257,6 +4464,7 @@ try {
 ```
 
 The key difference from manual try-finally:
+
 1. Close exceptions are suppressed (not swallowed, not masking primary)
 2. Resource is guaranteed closed
 3. Works with multiple resources (closed in reverse order)
@@ -4265,14 +4473,14 @@ The key difference from manual try-finally:
 
 ### Q163. AutoCloseable vs Closeable?
 
-| | `Closeable` | `AutoCloseable` |
-|-|-------------|----------------|
-| Introduced | Java 5 | Java 7 |
-| Extends | - | - |
-| `Closeable` extends | `AutoCloseable` | - |
-| `close()` throws | `IOException` | `Exception` |
-| Multiple closes | Should be idempotent | Not required |
-| Use in TWR | Yes | Yes |
+|                     | `Closeable`          | `AutoCloseable` |
+| ------------------- | -------------------- | --------------- |
+| Introduced          | Java 5               | Java 7          |
+| Extends             | -                    | -               |
+| `Closeable` extends | `AutoCloseable`      | -               |
+| `close()` throws    | `IOException`        | `Exception`     |
+| Multiple closes     | Should be idempotent | Not required    |
+| Use in TWR          | Yes                  | Yes             |
 
 `Closeable` is for I/O resources (specifically throws `IOException`).
 `AutoCloseable` is more general (throws `Exception`).
@@ -4292,6 +4500,7 @@ For custom resources: implement `AutoCloseable` (or `Closeable` for I/O). Make `
 5. **Checked exceptions in streams/lambdas**: Wrapping is cumbersome; often let it propagate
 
 **Anti-pattern**:
+
 ```java
 try {
     return service.process(request);
@@ -4321,9 +4530,10 @@ throw new ServiceException("Error", e); // caller will log too
 ```
 
 **Structured logging**:
+
 ```java
-log.error("Failed to process order", 
-    kv("orderId", orderId), 
+log.error("Failed to process order",
+    kv("orderId", orderId),
     kv("userId", userId),
     exception);
 ```
@@ -4337,7 +4547,7 @@ log.error("Failed to process order",
 ```java
 // Rethrow same exception (no wrapping)
 try { ... }
-catch (IOException e) { 
+catch (IOException e) {
     cleanup();
     throw e; // same exception, original stack trace preserved
 }
@@ -4389,22 +4599,23 @@ Libraries like Lombok (`@SneakyThrows`), Vavr, and others provide utilities for 
 ### Q168. Global exception handling?
 
 **In Spring Boot REST**:
+
 ```java
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-    
+
     @ExceptionHandler(UserNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErrorResponse handleNotFound(UserNotFoundException e) {
         return new ErrorResponse("USER_NOT_FOUND", e.getMessage());
     }
-    
+
     @ExceptionHandler(ConstraintViolationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse handleValidation(ConstraintViolationException e) {
         return new ErrorResponse("VALIDATION_ERROR", buildViolationMessage(e));
     }
-    
+
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorResponse handleGeneral(Exception e, HttpServletRequest request) {
@@ -4415,6 +4626,7 @@ public class GlobalExceptionHandler {
 ```
 
 **Thread.UncaughtExceptionHandler**:
+
 ```java
 Thread.setDefaultUncaughtExceptionHandler((thread, throwable) -> {
     log.error("Uncaught exception in thread {}", thread.getName(), throwable);
@@ -4427,6 +4639,7 @@ Thread.setDefaultUncaughtExceptionHandler((thread, throwable) -> {
 ### Q169. Performance impact of exceptions?
 
 Exceptions are expensive:
+
 1. **Stack trace capture** (`fillInStackTrace()`): Walks the JVM stack, creates StackTraceElement objects. O(depth) cost.
 2. **Object creation**: `new Exception()` involves heap allocation + GC pressure
 3. **JIT deoptimization**: Paths with exception handling may be compiled less aggressively
@@ -4434,10 +4647,12 @@ Exceptions are expensive:
 **Benchmarks**: A thrown/caught exception is ~100-1000x slower than a normal return, depending on stack depth.
 
 **Best practices**:
+
 1. **Don't use exceptions for control flow** (e.g., use `Optional` instead of catching NPE)
 2. **Pre-validate**: Check `isPresent()` before `get()` rather than catching `NoSuchElementException`
 3. **Expensive in tight loops**: `Integer.parseInt()` + catch is slow; use `NumberUtils.isNumeric()` first
 4. **Disable stack trace**: For exceptions used as signals (not bugs), override `fillInStackTrace()`:
+
 ```java
 class FastException extends RuntimeException {
     @Override public synchronized Throwable fillInStackTrace() { return this; }
@@ -4451,12 +4666,14 @@ class FastException extends RuntimeException {
 `assert condition : "message";` – throws `AssertionError` if condition is false (when assertions enabled with `-ea`).
 
 **Appropriate uses**:
+
 - **Internal invariants**: Pre-conditions for private methods (you control callers)
 - **Post-conditions**: Verify result after complex computation
 - **Unreachable code**: `default: assert false : "Unknown state: " + state;`
 - **Class/loop invariants**
 
 **NOT appropriate**:
+
 - Public method parameter validation (use `IllegalArgumentException`)
 - Business logic checks (use exceptions)
 - Production code where assertions are disabled (default)
@@ -4467,13 +4684,13 @@ Assertions are disabled by default in production JVMs. Use `IllegalArgumentExcep
 
 ### Q171. Assertion vs exception?
 
-| | Assertion | Exception |
-|-|-----------|-----------|
-| Use | Programmer errors, invariants | Expected/unexpected runtime conditions |
-| Default | Disabled in production | Always active |
-| Type | AssertionError (Error) | Exception subclass |
-| Public API | No (use IAE) | Yes |
-| Recovery | No (programming bug) | Yes (if checked) |
+|            | Assertion                     | Exception                              |
+| ---------- | ----------------------------- | -------------------------------------- |
+| Use        | Programmer errors, invariants | Expected/unexpected runtime conditions |
+| Default    | Disabled in production        | Always active                          |
+| Type       | AssertionError (Error)        | Exception subclass                     |
+| Public API | No (use IAE)                  | Yes                                    |
+| Recovery   | No (programming bug)          | Yes (if checked)                       |
 
 Rule of thumb: **Assertions document invariants for developers. Exceptions handle conditions for callers.**
 
@@ -4482,12 +4699,14 @@ Rule of thumb: **Assertions document invariants for developers. Exceptions handl
 ### Q172. Custom checked exceptions – pros/cons?
 
 **Pros**:
+
 - Compiler forces callers to handle/declare
 - Self-documenting API: method signature shows failure modes
 - Forces recovery strategy consideration
 - Type-safe error handling
 
 **Cons**:
+
 - Clutters method signatures (`throws A, B, C, D`)
 - Callers often swallow them: `catch (Exception e) { }`
 - Breaks with lambdas/streams
@@ -4514,6 +4733,7 @@ try {
 ```
 
 Why:
+
 1. **Abstraction**: Callers shouldn't need to know you use JDBC/JPA
 2. **Encapsulation**: Implementation details (SQL errors) don't leak
 3. **Layer responsibility**: DAL translates DB errors; service layer translates to business errors
@@ -4556,7 +4776,7 @@ UserService service = ctx.getBean(UserService.class);
 @Component
 class MyComponent implements ApplicationContextAware {
     private ApplicationContext context;
-    
+
     @Override
     public void setApplicationContext(ApplicationContext ctx) {
         this.context = ctx;
@@ -4599,12 +4819,14 @@ Complete bean lifecycle:
 ### Q269. @Bean vs @Component?
 
 **`@Component`** (and specializations `@Service`, `@Repository`, `@Controller`):
+
 - Class-level annotation
 - Detected by component scanning
 - Spring instantiates the class directly
 - For your own classes
 
 **`@Bean`**:
+
 - Method-level annotation inside `@Configuration` class
 - You write the instantiation code
 - For third-party classes you can't annotate
@@ -4624,7 +4846,7 @@ public class AppConfig {
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         return mapper;
     }
-    
+
     @Bean
     public RestTemplate restTemplate(RestTemplateBuilder builder) {
         return builder.setConnectTimeout(Duration.ofSeconds(5)).build();
@@ -4639,12 +4861,13 @@ public class AppConfig {
 ### Q270. Dependency injection types?
 
 **Constructor injection** (recommended):
+
 ```java
 @Service
 public class OrderService {
     private final OrderRepository repo;
     private final PaymentService payment;
-    
+
     // @Autowired optional if single constructor (Spring 4.3+)
     public OrderService(OrderRepository repo, PaymentService payment) {
         this.repo = repo;
@@ -4654,17 +4877,19 @@ public class OrderService {
 ```
 
 **Setter injection**:
+
 ```java
 @Service
 public class OrderService {
     private OrderRepository repo;
-    
+
     @Autowired
     public void setRepo(OrderRepository repo) { this.repo = repo; }
 }
 ```
 
 **Field injection** (least recommended):
+
 ```java
 @Service
 public class OrderService {
@@ -4677,6 +4902,7 @@ public class OrderService {
 ### Q271. @Autowired vs constructor injection?
 
 **Problems with `@Autowired` field injection**:
+
 1. **Not testable**: Can't inject mocks without Spring context or reflection; with constructor you can `new OrderService(mockRepo)`
 2. **Hides dependencies**: Looking at constructor tells you exactly what's needed
 3. **Allows circular dependencies** (masks bad design); constructor injection fails fast
@@ -4684,6 +4910,7 @@ public class OrderService {
 5. **Reflection-based**: Slower, bypasses normal Java visibility
 
 **Constructor injection advantages**:
+
 - Fields can be `final` (immutable, fail-fast if null)
 - Obvious dependencies (API contract)
 - Works without Spring (testable in isolation)
@@ -4717,6 +4944,7 @@ public DataSource prodDataSource() { ... }
 ```
 
 Activate profiles:
+
 ```bash
 # application.properties
 spring.profiles.active=prod
@@ -4797,6 +5025,7 @@ server:
 ```
 
 **YAML advantages**:
+
 - Less repetition of common prefixes
 - Supports lists and maps more naturally
 - Multiple profiles in one file using `---` document separator
@@ -4839,6 +5068,7 @@ Spring Boot Actuator provides **production-ready endpoints** for monitoring and 
 ```
 
 Key endpoints (`/actuator/{id}`):
+
 - `/health`: Application health (UP/DOWN + component details)
 - `/info`: Application info (build, git commit, etc.)
 - `/metrics`: Micrometer metrics (JVM, HTTP, custom)
@@ -4876,7 +5106,7 @@ Built-in indicators: DB, Redis, Kafka, Rabbit, Disk space, Elasticsearch, Mail, 
 // Custom health indicator
 @Component
 public class ExternalApiHealthIndicator implements HealthIndicator {
-    
+
     @Override
     public Health health() {
         try {
@@ -4896,12 +5126,13 @@ public class ExternalApiHealthIndicator implements HealthIndicator {
 ```
 
 Kubernetes integration:
+
 ```yaml
 management:
   endpoint:
     health:
       probes:
-        enabled: true  # enables /actuator/health/liveness and /actuator/health/readiness
+        enabled: true # enables /actuator/health/liveness and /actuator/health/readiness
 ```
 
 ---
@@ -4924,13 +5155,14 @@ log.error("Failed to process user {}", userId, exception);
 ```
 
 Configuration in `application.yml`:
+
 ```yaml
 logging:
   level:
     root: INFO
     com.example: DEBUG
-    org.hibernate.SQL: DEBUG       # log SQL
-    org.hibernate.type: TRACE      # log SQL parameters
+    org.hibernate.SQL: DEBUG # log SQL
+    org.hibernate.type: TRACE # log SQL parameters
   file:
     name: /var/log/myapp.log
   pattern:
@@ -4943,17 +5175,18 @@ Custom `logback-spring.xml` for advanced configuration (rolling files, async app
 
 ### Q278. Logback vs Log4j2?
 
-| | Logback | Log4j2 |
-|-|---------|--------|
-| Default in Spring Boot | Yes | No (exclude and add) |
-| Performance | Good | Better (async appenders) |
-| Async appenders | `AsyncAppender` | `AsyncLogger` (LMAX Disruptor) |
-| JSON logging | Via logstash-logback-encoder | Built-in |
-| Configuration | `logback-spring.xml` | `log4j2-spring.xml` |
-| Hot reload | Yes | Yes |
-| Security | Log4Shell vulnerability (2021) in Log4j2 2.x | CVE-2021-44228 (fixed in 2.17+) |
+|                        | Logback                                      | Log4j2                          |
+| ---------------------- | -------------------------------------------- | ------------------------------- |
+| Default in Spring Boot | Yes                                          | No (exclude and add)            |
+| Performance            | Good                                         | Better (async appenders)        |
+| Async appenders        | `AsyncAppender`                              | `AsyncLogger` (LMAX Disruptor)  |
+| JSON logging           | Via logstash-logback-encoder                 | Built-in                        |
+| Configuration          | `logback-spring.xml`                         | `log4j2-spring.xml`             |
+| Hot reload             | Yes                                          | Yes                             |
+| Security               | Log4Shell vulnerability (2021) in Log4j2 2.x | CVE-2021-44228 (fixed in 2.17+) |
 
 Switch to Log4j2:
+
 ```xml
 <dependency>
     <groupId>org.springframework.boot</groupId>
@@ -4978,10 +5211,11 @@ For high-throughput services: Log4j2 async loggers are significantly faster.
 ### Q279. Exception handling in REST?
 
 **Option 1: `@RestControllerAdvice` (recommended)**:
+
 ```java
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-    
+
     @ExceptionHandler(ResourceNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ProblemDetail handleNotFound(ResourceNotFoundException ex, HttpServletRequest req) {
@@ -4991,14 +5225,14 @@ public class GlobalExceptionHandler {
         pd.setInstance(URI.create(req.getRequestURI()));
         return pd;
     }
-    
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ProblemDetail handleValidation(MethodArgumentNotValidException ex) {
         ProblemDetail pd = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
         pd.setTitle("Validation Failed");
         Map<String, String> errors = new HashMap<>();
-        ex.getBindingResult().getFieldErrors().forEach(e -> 
+        ex.getBindingResult().getFieldErrors().forEach(e ->
             errors.put(e.getField(), e.getDefaultMessage()));
         pd.setProperty("errors", errors);
         return pd;
@@ -5023,6 +5257,7 @@ public class GlobalExceptionHandler {
 `@RestControllerAdvice = @ControllerAdvice + @ResponseBody`
 
 Scoping:
+
 ```java
 @ControllerAdvice(assignableTypes = {UserController.class, OrderController.class})
 @ControllerAdvice(basePackages = "com.example.api")
@@ -5043,14 +5278,14 @@ public record CreateUserRequest(
     @NotBlank(message = "Name is required")
     @Size(min = 2, max = 100)
     String name,
-    
+
     @Email
     @NotNull
     String email,
-    
+
     @Min(18) @Max(120)
     int age,
-    
+
     @Pattern(regexp = "^\\+?[1-9]\\d{1,14}$")
     String phone
 ) {}
@@ -5072,6 +5307,7 @@ public class UserService {
 Groups: Validate different constraints in different scenarios (`@Validated(CreateGroup.class)`).
 
 Custom validator:
+
 ```java
 @Target(FIELD) @Retention(RUNTIME)
 @Constraint(validatedBy = UniqueEmailValidator.class)
@@ -5091,24 +5327,24 @@ Spring Data JPA eliminates boilerplate DAO code:
 ```java
 // Repository - just declare the interface
 public interface UserRepository extends JpaRepository<User, Long> {
-    
+
     // Derived query from method name
     List<User> findByEmailAndActive(String email, boolean active);
-    
+
     // Custom JPQL
     @Query("SELECT u FROM User u WHERE u.age > :minAge ORDER BY u.name")
     List<User> findUsersOlderThan(@Param("minAge") int minAge);
-    
+
     // Native SQL
     @Query(value = "SELECT * FROM users WHERE region = ?1", nativeQuery = true)
     List<User> findByRegionNative(String region);
-    
+
     // Pagination
     Page<User> findByDepartment(String dept, Pageable pageable);
-    
+
     // Projection
     List<UserNameEmail> findAllProjectedBy();
-    
+
     // Modifying
     @Modifying
     @Transactional
@@ -5124,11 +5360,13 @@ public interface UserRepository extends JpaRepository<User, Long> {
 ### Q283. Repository patterns?
 
 Spring Data offers multiple repository interfaces:
+
 - `CrudRepository<T, ID>`: Basic CRUD
 - `PagingAndSortingRepository<T, ID>`: + pagination/sorting
 - `JpaRepository<T, ID>`: + JPA-specific (flush, batch)
 
 **Custom base repository**:
+
 ```java
 @NoRepositoryBean
 public interface BaseRepository<T, ID> extends JpaRepository<T, ID> {
@@ -5137,12 +5375,13 @@ public interface BaseRepository<T, ID> extends JpaRepository<T, ID> {
 ```
 
 **Specification pattern** (for dynamic queries):
+
 ```java
 public class UserSpecifications {
     public static Specification<User> hasEmail(String email) {
         return (root, query, cb) -> cb.equal(root.get("email"), email);
     }
-    
+
     public static Specification<User> isActive() {
         return (root, query, cb) -> cb.isTrue(root.get("active"));
     }
@@ -5164,7 +5403,7 @@ Spring's `@Transactional` declarative transaction management:
 @Service
 @Transactional(readOnly = true) // default for all methods
 public class OrderService {
-    
+
     @Transactional // overrides class default - read-write
     public Order createOrder(CreateOrderRequest request) {
         Order order = new Order(request);
@@ -5172,7 +5411,7 @@ public class OrderService {
         inventoryService.reserve(order); // participates in same transaction
         return order;
     }
-    
+
     @Transactional(
         propagation = Propagation.REQUIRES_NEW, // new transaction always
         isolation = Isolation.SERIALIZABLE,
@@ -5185,6 +5424,7 @@ public class OrderService {
 ```
 
 **Propagation types**:
+
 - `REQUIRED` (default): Join existing or create new
 - `REQUIRES_NEW`: Always create new, suspend existing
 - `NESTED`: Save point within existing transaction
@@ -5198,13 +5438,14 @@ public class OrderService {
 ### Q285. @Transactional pitfalls?
 
 1. **Self-invocation**: Calling a `@Transactional` method from within the same class bypasses the proxy:
+
 ```java
 @Service
 public class OrderService {
     public void process() {
         createOrder(); // NO transaction! Self-call bypasses proxy
     }
-    
+
     @Transactional
     public void createOrder() { ... }
 }
@@ -5216,6 +5457,7 @@ public class OrderService {
 3. **Checked exceptions don't rollback by default**: Only `RuntimeException` and `Error`. Use `rollbackFor = Exception.class`.
 
 4. **Catching exception inside transaction**: If you catch and swallow the exception, no rollback:
+
 ```java
 @Transactional
 void method() {
@@ -5240,7 +5482,7 @@ void method() {
 public class Order {
     @ManyToOne(fetch = FetchType.EAGER) // always loaded
     private Customer customer;
-    
+
     @OneToMany(fetch = FetchType.LAZY) // loaded on access
     private List<OrderItem> items;
 }
@@ -5249,6 +5491,7 @@ public class Order {
 JPA defaults: `@OneToMany` and `@ManyToMany` default to LAZY. `@ManyToOne` and `@OneToOne` default to EAGER.
 
 **LazyInitializationException**: Accessing a lazy collection outside a transaction (session is closed):
+
 ```java
 Order order = orderRepository.findById(id).get();
 // Transaction closed here if method wasn't @Transactional
@@ -5256,6 +5499,7 @@ order.getItems().size(); // LazyInitializationException!
 ```
 
 Fixes:
+
 - `@Transactional` on the service method
 - `JOIN FETCH` in JPQL: `SELECT o FROM Order o JOIN FETCH o.items WHERE o.id = :id`
 - `@EntityGraph`
@@ -5279,12 +5523,14 @@ for (Order o : orders) {
 **Solutions**:
 
 1. **JOIN FETCH**:
+
 ```java
 @Query("SELECT o FROM Order o JOIN FETCH o.customer WHERE o.status = :status")
 List<Order> findByStatusWithCustomer(@Param("status") String status);
 ```
 
 2. **@EntityGraph**:
+
 ```java
 @EntityGraph(attributePaths = {"customer", "items"})
 List<Order> findByStatus(String status);
@@ -5329,7 +5575,7 @@ public Page<UserDTO> getUsers(
     @RequestParam(defaultValue = "0") int page,
     @RequestParam(defaultValue = "20") int size,
     @RequestParam(defaultValue = "name") String sort) {
-    
+
     Pageable pageable = PageRequest.of(page, size, Sort.by(sort));
     return userRepository.findAll(pageable).map(userMapper::toDto);
 }
@@ -5376,6 +5622,7 @@ public Page<UserDTO> getUsers(
 ```
 
 Spring HATEOAS:
+
 ```java
 @GetMapping("/users/{id}")
 public EntityModel<UserDTO> getUser(@PathVariable Long id) {
@@ -5394,17 +5641,19 @@ In practice: Full HATEOAS is rarely implemented in enterprise APIs. Self links a
 ### Q291. Security basics?
 
 Spring Security added via `spring-boot-starter-security`. Auto-configures:
+
 - HTTP Basic auth
 - Default in-memory user
 - CSRF protection
 - Secure all endpoints
 
 Custom configuration (Spring Boot 3 / Spring Security 6):
+
 ```java
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-    
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -5419,7 +5668,7 @@ public class SecurityConfig {
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
-    
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(12); // strength 12
@@ -5435,26 +5684,26 @@ public class SecurityConfig {
 // JWT Filter
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
-    
+
     @Override
-    protected void doFilterInternal(HttpServletRequest request, 
-                                    HttpServletResponse response, 
+    protected void doFilterInternal(HttpServletRequest request,
+                                    HttpServletResponse response,
                                     FilterChain chain) throws IOException, ServletException {
         String authHeader = request.getHeader("Authorization");
-        
+
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             chain.doFilter(request, response);
             return;
         }
-        
+
         String token = authHeader.substring(7);
         String username = jwtService.extractUsername(token);
-        
+
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-            
+
             if (jwtService.isTokenValid(token, userDetails)) {
-                UsernamePasswordAuthenticationToken authToken = 
+                UsernamePasswordAuthenticationToken authToken =
                     new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authToken);
@@ -5469,7 +5718,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 public class JwtService {
     @Value("${jwt.secret}") private String secret;
     @Value("${jwt.expiration:3600}") private long expiration;
-    
+
     public String generateToken(UserDetails userDetails) {
         return Jwts.builder()
             .subject(userDetails.getUsername())
@@ -5483,6 +5732,7 @@ public class JwtService {
 ```
 
 Key security considerations:
+
 - Store JWT secret securely (Vault, Secrets Manager)
 - Short expiration + refresh token pattern
 - Token invalidation/blacklist for logout
@@ -5511,11 +5761,12 @@ spring:
 ```
 
 **Resource Server** (validate JWT from auth server):
+
 ```java
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-    
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -5524,7 +5775,7 @@ public class SecurityConfig {
             );
         return http.build();
     }
-    
+
     @Bean
     JwtAuthenticationConverter jwtAuthenticationConverter() {
         JwtGrantedAuthoritiesConverter converter = new JwtGrantedAuthoritiesConverter();
@@ -5552,26 +5803,26 @@ public class App { }
 // Use caching
 @Service
 public class ProductService {
-    
+
     @Cacheable(value = "products", key = "#id", unless = "#result == null")
     public Product getProduct(Long id) {
         return repository.findById(id).orElse(null); // DB call only on cache miss
     }
-    
+
     @CachePut(value = "products", key = "#product.id") // always execute + update cache
     public Product updateProduct(Product product) {
         return repository.save(product);
     }
-    
+
     @CacheEvict(value = "products", key = "#id") // remove from cache
     public void deleteProduct(Long id) {
         repository.deleteById(id);
     }
-    
+
     @CacheEvict(value = "products", allEntries = true) // clear entire cache
     @Scheduled(fixedRate = 3600000) // hourly
     public void evictAllProducts() { }
-    
+
     @Caching(evict = {
         @CacheEvict("products"),
         @CacheEvict(value = "productsByCategory", key = "#product.category")
@@ -5606,6 +5857,7 @@ spring:
 ```
 
 **Using as cache**:
+
 ```java
 @Bean
 public CacheManager cacheManager(RedisConnectionFactory connectionFactory) {
@@ -5613,16 +5865,17 @@ public CacheManager cacheManager(RedisConnectionFactory connectionFactory) {
         .entryTtl(Duration.ofMinutes(30))
         .serializeValuesWith(RedisSerializationContext.SerializationPair
             .fromSerializer(new GenericJackson2JsonRedisSerializer()));
-    
+
     return RedisCacheManager.builder(connectionFactory)
         .cacheDefaults(config)
-        .withCacheConfiguration("products", 
+        .withCacheConfiguration("products",
             RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofHours(1)))
         .build();
 }
 ```
 
 **Using `RedisTemplate` directly**:
+
 ```java
 @Autowired RedisTemplate<String, Object> redisTemplate;
 
@@ -5633,9 +5886,11 @@ redisTemplate.opsForList().leftPush("list", "element");
 ```
 
 **Session storage**:
+
 ```xml
 <dependency>spring-session-data-redis</dependency>
 ```
+
 ```java
 @EnableRedisHttpSession(maxInactiveIntervalInSeconds = 1800)
 ```
@@ -5647,12 +5902,14 @@ redisTemplate.opsForList().leftPush("list", "element");
 Spring Boot is a natural fit for microservices:
 
 **Principles**:
+
 - Single responsibility: one service per bounded context
 - Independent deployability
 - Own data store per service
 - Communicate via HTTP/REST or messaging (Kafka, RabbitMQ)
 
 **Common patterns**:
+
 ```java
 // Service discovery (Eureka)
 @EnableEurekaClient
@@ -5683,17 +5940,17 @@ management.tracing.sampling.probability=1.0
 
 Spring Cloud provides tools for distributed systems:
 
-| Component | Purpose |
-|-----------|---------|
-| Spring Cloud Config | Centralized config server |
-| Netflix Eureka | Service registry/discovery |
-| Spring Cloud Gateway | API gateway, routing, rate limiting |
-| OpenFeign | Declarative REST client |
-| Resilience4j | Circuit breaker, retry, rate limiter |
-| Spring Cloud Sleuth | Distributed tracing (replaced by Micrometer Tracing) |
-| Zipkin | Trace visualization |
-| Spring Cloud Bus | Propagate config changes via message broker |
-| Spring Cloud Stream | Message-driven microservices (Kafka/RabbitMQ) |
+| Component            | Purpose                                              |
+| -------------------- | ---------------------------------------------------- |
+| Spring Cloud Config  | Centralized config server                            |
+| Netflix Eureka       | Service registry/discovery                           |
+| Spring Cloud Gateway | API gateway, routing, rate limiting                  |
+| OpenFeign            | Declarative REST client                              |
+| Resilience4j         | Circuit breaker, retry, rate limiter                 |
+| Spring Cloud Sleuth  | Distributed tracing (replaced by Micrometer Tracing) |
+| Zipkin               | Trace visualization                                  |
+| Spring Cloud Bus     | Propagate config changes via message broker          |
+| Spring Cloud Stream  | Message-driven microservices (Kafka/RabbitMQ)        |
 
 ---
 
@@ -5702,6 +5959,7 @@ Spring Cloud provides tools for distributed systems:
 Circuit breaker prevents cascading failures when a dependency is down:
 
 **States**:
+
 - **CLOSED**: Normal operation; requests pass through
 - **OPEN**: Too many failures; requests fail fast (no call to dependency)
 - **HALF-OPEN**: After wait period, allow limited requests to test recovery
@@ -5740,10 +5998,12 @@ Resilience4j provides multiple resilience patterns:
 
 1. **Circuit Breaker**: See Q298
 2. **Retry**:
+
 ```java
 @Retry(name = "externalApi", fallbackMethod = "fallback")
 public String callApi() { ... }
 ```
+
 ```yaml
 resilience4j.retry.instances.externalApi:
   maxAttempts: 3
@@ -5753,12 +6013,14 @@ resilience4j.retry.instances.externalApi:
 ```
 
 3. **Rate Limiter**:
+
 ```java
 @RateLimiter(name = "apiGateway")
 public String callGateway() { ... }
 ```
 
 4. **Bulkhead**: Limit concurrent calls (Thread pool or Semaphore)
+
 ```java
 @Bulkhead(name = "service", type = Bulkhead.Type.SEMAPHORE)
 ```
@@ -5768,6 +6030,7 @@ public String callGateway() { ... }
 6. **Cache**: Simple result caching
 
 Combining:
+
 ```java
 @CircuitBreaker(name = "svc", fallbackMethod = "fb")
 @Retry(name = "svc")
@@ -5783,6 +6046,7 @@ public Result callService() { ... }
 A Spring Boot service is production-ready when it has:
 
 **Observability**:
+
 - [ ] Structured logging with correlation IDs (MDC)
 - [ ] Metrics exposed (`/actuator/prometheus` or micrometer)
 - [ ] Distributed tracing (Micrometer Tracing + Zipkin/Jaeger)
@@ -5790,6 +6054,7 @@ A Spring Boot service is production-ready when it has:
 - [ ] Alerting on error rate, latency, saturation
 
 **Resilience**:
+
 - [ ] Circuit breakers for external dependencies
 - [ ] Retry with backoff
 - [ ] Timeouts on all external calls (HTTP client, DB, etc.)
@@ -5797,6 +6062,7 @@ A Spring Boot service is production-ready when it has:
 - [ ] Graceful shutdown (`spring.lifecycle.timeout-per-shutdown-phase=30s`)
 
 **Security**:
+
 - [ ] Authentication + authorization
 - [ ] Secrets in vault/environment, not in code
 - [ ] HTTPS enforced
@@ -5805,6 +6071,7 @@ A Spring Boot service is production-ready when it has:
 - [ ] Actuator endpoints secured or restricted
 
 **Performance**:
+
 - [ ] Connection pool tuned (HikariCP: `maximum-pool-size`)
 - [ ] Database indexes for common queries
 - [ ] Caching for expensive/repeated operations
@@ -5813,6 +6080,7 @@ A Spring Boot service is production-ready when it has:
 - [ ] Load test results acceptable
 
 **Deployment**:
+
 - [ ] Dockerfile with non-root user, minimal base image
 - [ ] Kubernetes liveness/readiness probes configured
 - [ ] Resource requests/limits set
@@ -5821,17 +6089,20 @@ A Spring Boot service is production-ready when it has:
 - [ ] Environment-specific configuration externalized
 
 **Testing**:
+
 - [ ] Unit tests (target >80% coverage on business logic)
 - [ ] Integration tests (Testcontainers for real DB)
 - [ ] Contract tests (Pact or Spring Cloud Contract)
 - [ ] Load test results meet SLA
 
 **Documentation**:
+
 - [ ] OpenAPI/Swagger (`springdoc-openapi`)
 - [ ] README with runbook
 - [ ] Architecture decision records (ADRs)
 
 **Ops**:
+
 - [ ] Log rotation configured
 - [ ] Heap dump path set (`-XX:HeapDumpPath`)
 - [ ] OOM action: `-XX:+ExitOnOutOfMemoryError`

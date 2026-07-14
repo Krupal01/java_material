@@ -5,7 +5,6 @@
    ========================================================= */
 window.BACKEND_ARCH_DATA = {
   parts: [
-
     /* =====================================================
        PART 1 · SYSTEM DESIGN FUNDAMENTALS
     ===================================================== */
@@ -13,10 +12,16 @@ window.BACKEND_ARCH_DATA = {
       label: "PART 1 · SYSTEM DESIGN FUNDAMENTALS",
       sections: [
         {
-          id: "design-approach", n: 1, title: "How to Approach Any System Design Interview",
+          id: "design-approach",
+          n: 1,
+          title: "How to Approach Any System Design Interview",
           desc: "A structured framework to answer any MAANG system design question in 45 minutes — used at Google, Meta, Amazon, and Netflix.",
           questions: [
-            {n:1, t:"What is the step-by-step framework for a system design interview?", d:["beginner","intermediate"], a:`
+            {
+              n: 1,
+              t: "What is the step-by-step framework for a system design interview?",
+              d: ["beginner", "intermediate"],
+              a: `
 <p>MAANG interviewers score you on breadth, depth, and trade-off reasoning — not on getting a "right answer". Use this 6-step framework:</p>
 <ol>
   <li><strong>Clarify requirements (5 min)</strong><br>
@@ -48,9 +53,14 @@ Storage: 280 * 500M = 140 GB/day</pre>
   <li><strong>Discuss trade-offs (5 min)</strong><br>
     What would you do differently at 10x scale? What fails first? How do you monitor it?
   </li>
-</ol>`},
+</ol>`,
+            },
 
-            {n:2, t:"What are the most important non-functional requirements to clarify?", d:["beginner","intermediate"], a:`
+            {
+              n: 2,
+              t: "What are the most important non-functional requirements to clarify?",
+              d: ["beginner", "intermediate"],
+              a: `
 <table>
   <tr><th>Category</th><th>Questions to ask</th></tr>
   <tr><td>Scale</td><td>DAU/MAU? Peak QPS? Data volume per day? Growth rate?</td></tr>
@@ -65,9 +75,14 @@ Storage: 280 * 500M = 140 GB/day</pre>
 <pre>1 million requests/day = 12 req/sec
 1 billion requests/day = 11,500 req/sec (≈ 10K QPS)
 1 KB * 1M users = 1 GB storage
-1 byte stored = 3x for replication (assume 3 replicas)</pre>`},
+1 byte stored = 3x for replication (assume 3 replicas)</pre>`,
+            },
 
-            {n:3, t:"How do you estimate QPS, storage, and bandwidth?", d:["intermediate"], a:`
+            {
+              n: 3,
+              t: "How do you estimate QPS, storage, and bandwidth?",
+              d: ["intermediate"],
+              a: `
 <pre>-- Example: Design a URL shortener
 -- Given: 100M new URLs/day, 10:1 read-to-write ratio
 
@@ -88,9 +103,14 @@ Over 5 years: 220 * 365 * 5 = ~400 TB
 -- Cache sizing
 Assume 20% of URLs get 80% of traffic (Pareto)
 Cache 20% of daily URLs: 100M * 20% * 2.2KB = 44 GB/day
-→ A 50 GB Redis cluster handles read cache comfortably</pre>`},
+→ A 50 GB Redis cluster handles read cache comfortably</pre>`,
+            },
 
-            {n:4, t:"What is the CAP theorem and what does it mean for real systems?", d:["intermediate","advanced"], a:`
+            {
+              n: 4,
+              t: "What is the CAP theorem and what does it mean for real systems?",
+              d: ["intermediate", "advanced"],
+              a: `
 <p>In a distributed system that can partition (network split), you can only guarantee <strong>two of three</strong>: Consistency, Availability, Partition Tolerance. Since partitions always happen, the real choice is CP vs AP.</p>
 <table>
   <tr><th>Choice</th><th>Behaviour on Partition</th><th>Examples</th></tr>
@@ -102,9 +122,14 @@ Cache 20% of daily URLs: 100M * 20% * 2.2KB = 44 GB/day
 Financial transactions  → CP (strong consistency, tolerate brief unavailability)
 Social feed / likes     → AP (eventual consistency, always available)
 Shopping cart           → AP (accept writes, merge conflicts later)
-Inventory (last item)   → CP (avoid overselling)</pre>`},
+Inventory (last item)   → CP (avoid overselling)</pre>`,
+            },
 
-            {n:5, t:"Monolith vs Microservices — when to choose which?", d:["beginner","intermediate"], a:`
+            {
+              n: 5,
+              t: "Monolith vs Microservices — when to choose which?",
+              d: ["beginner", "intermediate"],
+              a: `
 <table>
   <tr><th>Dimension</th><th>Monolith</th><th>Microservices</th></tr>
   <tr><td>Dev speed (early)</td><td>Fast — one codebase, one deploy</td><td>Slower — service contracts, infra</td></tr>
@@ -115,10 +140,11 @@ Inventory (last item)   → CP (avoid overselling)</pre>`},
   <tr><td>Data isolation</td><td>Shared DB</td><td>Service owns its DB</td></tr>
 </table>
 <p><strong>MAANG interview answer:</strong> "I'd start with a modular monolith — well-separated modules with clean interfaces. When a specific module needs independent scaling or separate deployment cadence, extract it as a service. Don't microservice prematurely."</p>
-<p><strong>Signals to split a service:</strong> different scaling profile, different team ownership, different deployment frequency, different reliability requirements.</p>`}
-          ]
-        }
-      ]
+<p><strong>Signals to split a service:</strong> different scaling profile, different team ownership, different deployment frequency, different reliability requirements.</p>`,
+            },
+          ],
+        },
+      ],
     },
 
     /* =====================================================
@@ -128,10 +154,16 @@ Inventory (last item)   → CP (avoid overselling)</pre>`},
       label: "PART 2 · NETWORKING & PROTOCOLS",
       sections: [
         {
-          id: "networking", n: 2, title: "HTTP, REST, gRPC, WebSockets — Protocols Explained",
+          id: "networking",
+          n: 2,
+          title: "HTTP, REST, gRPC, WebSockets — Protocols Explained",
           desc: "Every backend system communicates over a protocol. Knowing when to pick each is a system design must-know.",
           questions: [
-            {n:1, t:"HTTP/1.1 vs HTTP/2 vs HTTP/3 — key differences", d:["beginner","intermediate"], a:`
+            {
+              n: 1,
+              t: "HTTP/1.1 vs HTTP/2 vs HTTP/3 — key differences",
+              d: ["beginner", "intermediate"],
+              a: `
 <table>
   <tr><th>Feature</th><th>HTTP/1.1</th><th>HTTP/2</th><th>HTTP/3</th></tr>
   <tr><td>Connections</td><td>1 req/connection (keep-alive = reuse)</td><td>Multiplexing — many streams over 1 TCP connection</td><td>Multiplexing over QUIC (UDP-based)</td></tr>
@@ -142,9 +174,14 @@ Inventory (last item)   → CP (avoid overselling)</pre>`},
 </table>
 <pre>-- HTTP/2 allows 100s of concurrent requests on one connection
 -- Critical for mobile clients (limited parallel TCP connections)
--- HTTP/3 eliminates TCP handshake — connection setup in 0-1 RTT (QUIC)</pre>`},
+-- HTTP/3 eliminates TCP handshake — connection setup in 0-1 RTT (QUIC)</pre>`,
+            },
 
-            {n:2, t:"REST vs gRPC — when to use each?", d:["intermediate","advanced"], a:`
+            {
+              n: 2,
+              t: "REST vs gRPC — when to use each?",
+              d: ["intermediate", "advanced"],
+              a: `
 <table>
   <tr><th>Dimension</th><th>REST (HTTP/JSON)</th><th>gRPC (HTTP/2 + Protobuf)</th></tr>
   <tr><td>Protocol</td><td>HTTP/1.1 or HTTP/2</td><td>HTTP/2 only</td></tr>
@@ -164,9 +201,14 @@ message CreateOrderRequest {
   int64 customer_id = 1;
   repeated OrderItem items = 2;
 }</pre>
-<p><strong>MAANG pattern:</strong> REST for external/public APIs. gRPC for internal microservice communication (lower latency, type safety, streaming).</p>`},
+<p><strong>MAANG pattern:</strong> REST for external/public APIs. gRPC for internal microservice communication (lower latency, type safety, streaming).</p>`,
+            },
 
-            {n:3, t:"WebSockets vs Server-Sent Events vs Long Polling — real-time options", d:["intermediate","advanced"], a:`
+            {
+              n: 3,
+              t: "WebSockets vs Server-Sent Events vs Long Polling — real-time options",
+              d: ["intermediate", "advanced"],
+              a: `
 <table>
   <tr><th>Technique</th><th>Direction</th><th>Protocol</th><th>Best for</th></tr>
   <tr><td>Long Polling</td><td>Server → Client (emulated)</td><td>HTTP</td><td>Simple notifications, legacy systems</td></tr>
@@ -181,9 +223,14 @@ ws.send(JSON.stringify({ type: 'message', text: 'Hello' }));
 // SSE — server pushes only (simpler, auto-reconnect)
 const es = new EventSource('/api/feed');
 es.onmessage = (event) => updateFeed(event.data);</pre>
-<p><strong>MAANG tip:</strong> WebSocket is stateful — requires sticky sessions or a shared message broker (Redis Pub/Sub or Kafka) when scaling horizontally across multiple server instances.</p>`},
+<p><strong>MAANG tip:</strong> WebSocket is stateful — requires sticky sessions or a shared message broker (Redis Pub/Sub or Kafka) when scaling horizontally across multiple server instances.</p>`,
+            },
 
-            {n:4, t:"What is DNS and how does it affect system design?", d:["beginner","intermediate"], a:`
+            {
+              n: 4,
+              t: "What is DNS and how does it affect system design?",
+              d: ["beginner", "intermediate"],
+              a: `
 <p>DNS (Domain Name System) maps domain names to IP addresses. It's the first hop in every request and affects latency, failover, and traffic routing.</p>
 <pre>user types api.example.com
   → OS checks local cache / /etc/hosts
@@ -202,10 +249,11 @@ High TTL (300s): fewer queries but slow failover</pre>
   <tr><td>MX</td><td>Mail server</td></tr>
   <tr><td>TXT</td><td>Verification (SPF, DKIM)</td></tr>
 </table>
-<p><strong>GeoDNS:</strong> Returns different IPs based on the requester's location — routes US users to US servers, EU users to EU servers. Used by every major CDN and global service.</p>`}
-          ]
-        }
-      ]
+<p><strong>GeoDNS:</strong> Returns different IPs based on the requester's location — routes US users to US servers, EU users to EU servers. Used by every major CDN and global service.</p>`,
+            },
+          ],
+        },
+      ],
     },
 
     /* =====================================================
@@ -215,10 +263,17 @@ High TTL (300s): fewer queries but slow failover</pre>
       label: "PART 3 · LOAD BALANCING",
       sections: [
         {
-          id: "load-balancing", n: 3, title: "Load Balancing — Algorithms, Layers, Health Checks, Sticky Sessions",
+          id: "load-balancing",
+          n: 3,
+          title:
+            "Load Balancing — Algorithms, Layers, Health Checks, Sticky Sessions",
           desc: "Load balancing is the entry point to every scalable system. Understanding the layers and algorithms is essential for system design rounds.",
           questions: [
-            {n:1, t:"What is a load balancer and why is it needed?", d:["beginner"], a:`
+            {
+              n: 1,
+              t: "What is a load balancer and why is it needed?",
+              d: ["beginner"],
+              a: `
 <p>A load balancer sits in front of multiple server instances and distributes incoming requests so no single server is overwhelmed.</p>
 <pre>Internet → Load Balancer → [Server 1]
                          → [Server 2]
@@ -230,9 +285,14 @@ High TTL (300s): fewer queries but slow failover</pre>
   <li>Zero-downtime deployments — take servers out of rotation one at a time</li>
   <li>SSL termination — LB handles TLS, backend uses plain HTTP</li>
   <li>Observability — single point to measure traffic and latency</li>
-</ul>`},
+</ul>`,
+            },
 
-            {n:2, t:"Load balancing algorithms — Round Robin, Least Connections, IP Hash, Weighted", d:["intermediate"], a:`
+            {
+              n: 2,
+              t: "Load balancing algorithms — Round Robin, Least Connections, IP Hash, Weighted",
+              d: ["intermediate"],
+              a: `
 <table>
   <tr><th>Algorithm</th><th>How it works</th><th>Best for</th></tr>
   <tr><td>Round Robin</td><td>Cycle through servers in order (1,2,3,1,2,3...)</td><td>Stateless, homogeneous servers, uniform request cost</td></tr>
@@ -243,9 +303,14 @@ High TTL (300s): fewer queries but slow failover</pre>
   <tr><td>Random with 2 choices</td><td>Pick 2 random servers, choose the one with fewer connections</td><td>Better than pure random at scale</td></tr>
   <tr><td>Resource-based</td><td>Route based on server CPU/memory metrics</td><td>Variable-cost requests</td></tr>
 </table>
-<p><strong>MAANG tip:</strong> For most stateless microservices, Least Connections or Round Robin is fine. IP Hash or consistent hashing when the server holds session/cache state.</p>`},
+<p><strong>MAANG tip:</strong> For most stateless microservices, Least Connections or Round Robin is fine. IP Hash or consistent hashing when the server holds session/cache state.</p>`,
+            },
 
-            {n:3, t:"Layer 4 vs Layer 7 load balancing — what is the difference?", d:["intermediate","advanced"], a:`
+            {
+              n: 3,
+              t: "Layer 4 vs Layer 7 load balancing — what is the difference?",
+              d: ["intermediate", "advanced"],
+              a: `
 <table>
   <tr><th>Feature</th><th>Layer 4 (Transport)</th><th>Layer 7 (Application)</th></tr>
   <tr><td>OSI Layer</td><td>TCP/UDP</td><td>HTTP/HTTPS/gRPC</td></tr>
@@ -262,9 +327,14 @@ server {
   location /api/  { proxy_pass http://api_service; }
   location /auth/ { proxy_pass http://auth_service; }
 }</pre>
-<p><strong>When to use L4:</strong> Raw performance, non-HTTP protocols (DB, SMTP). When to use L7: content-based routing, A/B testing, header injection, auth offload.</p>`},
+<p><strong>When to use L4:</strong> Raw performance, non-HTTP protocols (DB, SMTP). When to use L7: content-based routing, A/B testing, header injection, auth offload.</p>`,
+            },
 
-            {n:4, t:"Health checks — how load balancers detect unhealthy servers", d:["intermediate"], a:`
+            {
+              n: 4,
+              t: "Health checks — how load balancers detect unhealthy servers",
+              d: ["intermediate"],
+              a: `
 <p>Load balancers continually probe backends. Failing servers are removed from the pool; recovered ones are added back.</p>
 <pre>-- NGINX health check config
 upstream backend {
@@ -284,9 +354,14 @@ GET /actuator/health
 -- TCP check: can the LB open a TCP connection to the port?
 -- HTTP check: does /health return HTTP 200?
 -- Deep check: does /health verify DB + cache connectivity?</pre>
-<p><strong>Best practice:</strong> Expose a /health endpoint that checks ALL critical dependencies (DB, cache, external APIs). Return 200 only if the instance can actually serve traffic. Include readiness vs liveness separation for Kubernetes.</p>`},
+<p><strong>Best practice:</strong> Expose a /health endpoint that checks ALL critical dependencies (DB, cache, external APIs). Return 200 only if the instance can actually serve traffic. Include readiness vs liveness separation for Kubernetes.</p>`,
+            },
 
-            {n:5, t:"Sticky sessions — what they are and why they create problems", d:["intermediate","advanced"], a:`
+            {
+              n: 5,
+              t: "Sticky sessions — what they are and why they create problems",
+              d: ["intermediate", "advanced"],
+              a: `
 <p>Sticky sessions (session affinity) ensure a user always hits the same server — required when session state is stored in memory on the server.</p>
 <pre>-- How it works
 Client A's request → IP hash → Server 1 (session data stored here)
@@ -305,9 +380,14 @@ User → LB → Any Server → Redis (fetch session) → process request
 -- Spring Session + Redis
 @EnableRedisHttpSession
 // All HttpSession calls now route to Redis transparently</pre>
-<p><strong>MAANG design principle:</strong> Design servers to be stateless. Session/auth state goes in Redis or JWTs. This enables truly elastic horizontal scaling.</p>`},
+<p><strong>MAANG design principle:</strong> Design servers to be stateless. Session/auth state goes in Redis or JWTs. This enables truly elastic horizontal scaling.</p>`,
+            },
 
-            {n:6, t:"Global load balancing — Anycast, GeoDNS, multi-region routing", d:["advanced","expert"], a:`
+            {
+              n: 6,
+              t: "Global load balancing — Anycast, GeoDNS, multi-region routing",
+              d: ["advanced", "expert"],
+              a: `
 <p>Global LB routes users to the nearest (or best) data centre across regions.</p>
 <table>
   <tr><th>Technique</th><th>How</th><th>Pros / Cons</th></tr>
@@ -319,10 +399,11 @@ User → LB → Any Server → Redis (fetch session) → process request
 -- Routes to nearest healthy AWS region automatically
 
 -- Cloudflare Load Balancing: GeoDNS + health checks + failover
--- Route 53 Latency Routing: sends to lowest-latency region per user</pre>`}
-          ]
-        }
-      ]
+-- Route 53 Latency Routing: sends to lowest-latency region per user</pre>`,
+            },
+          ],
+        },
+      ],
     },
 
     /* =====================================================
@@ -332,10 +413,16 @@ User → LB → Any Server → Redis (fetch session) → process request
       label: "PART 4 · CACHING",
       sections: [
         {
-          id: "caching", n: 4, title: "Caching — Strategies, Redis, Eviction, Cache Stampede",
+          id: "caching",
+          n: 4,
+          title: "Caching — Strategies, Redis, Eviction, Cache Stampede",
           desc: "Caching is the #1 scalability tool. Every MAANG system design interview expects you to know where to cache, what to cache, and what can go wrong.",
           questions: [
-            {n:1, t:"Where can you cache? All caching layers explained", d:["beginner","intermediate"], a:`
+            {
+              n: 1,
+              t: "Where can you cache? All caching layers explained",
+              d: ["beginner", "intermediate"],
+              a: `
 <pre>Browser Cache         → CSS/JS/images stored locally (Cache-Control headers)
 CDN Cache             → HTML/assets cached at edge nodes globally
 API Gateway Cache     → Cache repeated identical API responses
@@ -343,9 +430,14 @@ Application Cache     → In-memory cache in the app (Caffeine, Guava)
 Distributed Cache     → Redis / Memcached shared across all app instances
 Database Query Cache  → Database caches query result sets (MySQL query cache — deprecated)
 OS Page Cache         → OS caches disk reads in RAM</pre>
-<p>Each layer reduces load on the layer below it. A CDN cache hit never reaches your servers. An in-process cache hit never reaches Redis. Maximise hit rate at each layer.</p>`},
+<p>Each layer reduces load on the layer below it. A CDN cache hit never reaches your servers. An in-process cache hit never reaches Redis. Maximise hit rate at each layer.</p>`,
+            },
 
-            {n:2, t:"Cache-aside, Write-through, Write-behind, Read-through — strategies explained", d:["intermediate","advanced"], a:`
+            {
+              n: 2,
+              t: "Cache-aside, Write-through, Write-behind, Read-through — strategies explained",
+              d: ["intermediate", "advanced"],
+              a: `
 <table>
   <tr><th>Strategy</th><th>How it works</th><th>Pros</th><th>Cons</th></tr>
   <tr><td>Cache-aside (lazy loading)</td><td>App checks cache → miss → read DB → populate cache</td><td>Cache only what's actually needed</td><td>Cache miss = 2 trips (slow first read)</td></tr>
@@ -368,9 +460,14 @@ public Product getProduct(String id) {
 public void updateProduct(Product p) {
   db.save(p);
   redis.setex("product:" + p.getId(), 300, p); // update cache too
-}</pre>`},
+}</pre>`,
+            },
 
-            {n:3, t:"Cache eviction policies — LRU, LFU, TTL, FIFO", d:["intermediate"], a:`
+            {
+              n: 3,
+              t: "Cache eviction policies — LRU, LFU, TTL, FIFO",
+              d: ["intermediate"],
+              a: `
 <table>
   <tr><th>Policy</th><th>Evicts</th><th>Best for</th></tr>
   <tr><td>LRU (Least Recently Used)</td><td>Key not accessed for longest time</td><td>General use — temporal locality</td></tr>
@@ -386,9 +483,14 @@ maxmemory-policy allkeys-lfu     -- LFU across all keys
 maxmemory-policy noeviction      -- return error when full (don't evict)
 
 -- Set TTL when writing
-SET product:123 "{...}" EX 300    -- expires in 300 seconds</pre>`},
+SET product:123 "{...}" EX 300    -- expires in 300 seconds</pre>`,
+            },
 
-            {n:4, t:"Cache stampede (thundering herd) — what it is and how to prevent it", d:["advanced"], a:`
+            {
+              n: 4,
+              t: "Cache stampede (thundering herd) — what it is and how to prevent it",
+              d: ["advanced"],
+              a: `
 <p>A cache stampede happens when a popular cache key expires and thousands of requests simultaneously miss the cache, all hitting the database at once.</p>
 <pre>-- Scenario
 10,000 concurrent requests for product:bestseller
@@ -416,9 +518,14 @@ if (value == null) {
 -- 3. Soft + hard TTL:
 -- Soft TTL: return stale data + trigger async refresh
 -- Hard TTL: actually delete the key
-redis.setex(key, 600, serialize(data, softTTL=300));</pre>`},
+redis.setex(key, 600, serialize(data, softTTL=300));</pre>`,
+            },
 
-            {n:5, t:"Redis data structures and when to use each", d:["intermediate","advanced"], a:`
+            {
+              n: 5,
+              t: "Redis data structures and when to use each",
+              d: ["intermediate", "advanced"],
+              a: `
 <table>
   <tr><th>Structure</th><th>Commands</th><th>Use case</th></tr>
   <tr><td>String</td><td>GET/SET/INCR/DECR</td><td>Simple key-value, counters, flags, cached JSON</td></tr>
@@ -439,9 +546,14 @@ ZRANK leaderboard "player:alice"       -- alice's rank
 -- Rate limiting (Sorted Set sliding window)
 ZADD ratelimit:user123 (timestamp) (requestId)
 ZREMRANGEBYSCORE ratelimit:user123 0 (now - windowMs)
-count = ZCARD ratelimit:user123</pre>`},
+count = ZCARD ratelimit:user123</pre>`,
+            },
 
-            {n:6, t:"Cache invalidation — the hardest problem in distributed systems", d:["advanced","expert"], a:`
+            {
+              n: 6,
+              t: "Cache invalidation — the hardest problem in distributed systems",
+              d: ["advanced", "expert"],
+              a: `
 <p>"There are only two hard things in computer science: cache invalidation and naming things." — Phil Karlton</p>
 <p><strong>Invalidation strategies:</strong></p>
 <table>
@@ -456,10 +568,11 @@ count = ZCARD ratelimit:user123</pre>`},
 // Delete AFTER successful DB write
 db.update(product);
 redis.del("product:" + product.getId());
-// Next read will be a miss → re-populate from DB (fresh data)</pre>`}
-          ]
-        }
-      ]
+// Next read will be a miss → re-populate from DB (fresh data)</pre>`,
+            },
+          ],
+        },
+      ],
     },
 
     /* =====================================================
@@ -469,10 +582,16 @@ redis.del("product:" + product.getId());
       label: "PART 5 · CDN & EDGE",
       sections: [
         {
-          id: "cdn-edge", n: 5, title: "CDN, Edge Caching, Static vs Dynamic Content",
+          id: "cdn-edge",
+          n: 5,
+          title: "CDN, Edge Caching, Static vs Dynamic Content",
           desc: "CDNs are the first line of defence against traffic spikes and global latency. Essential for any high-traffic system design.",
           questions: [
-            {n:1, t:"What is a CDN and how does it work?", d:["beginner","intermediate"], a:`
+            {
+              n: 1,
+              t: "What is a CDN and how does it work?",
+              d: ["beginner", "intermediate"],
+              a: `
 <p>A Content Delivery Network (CDN) is a globally distributed network of servers (Points of Presence / PoPs) that cache content closer to users.</p>
 <pre>Without CDN:
 User in Tokyo → HTTP request to London server → 200ms round trip
@@ -488,9 +607,14 @@ User in Tokyo → Tokyo PoP (cache miss) → London origin → 200ms + cache for
   <li>API responses (with correct Cache-Control headers)</li>
   <li>Dynamic content (edge compute — Cloudflare Workers, Lambda@Edge)</li>
 </ul>
-<p><strong>Major CDNs:</strong> Cloudflare, Akamai, AWS CloudFront, Fastly, Google Cloud CDN</p>`},
+<p><strong>Major CDNs:</strong> Cloudflare, Akamai, AWS CloudFront, Fastly, Google Cloud CDN</p>`,
+            },
 
-            {n:2, t:"Cache-Control headers — how to control what CDNs and browsers cache", d:["intermediate","advanced"], a:`
+            {
+              n: 2,
+              t: "Cache-Control headers — how to control what CDNs and browsers cache",
+              d: ["intermediate", "advanced"],
+              a: `
 <pre>-- Static asset with long cache (fingerprinted filename prevents stale cache)
 Cache-Control: public, max-age=31536000, immutable
 -- "immutable" = browser won't revalidate even on reload
@@ -508,9 +632,14 @@ Vary: Authorization  -- cache separately per auth token
 
 -- ETag / Last-Modified for conditional requests
 ETag: "abc123"
-If-None-Match: "abc123"  -- browser sends; if unchanged, server returns 304 Not Modified</pre>`},
+If-None-Match: "abc123"  -- browser sends; if unchanged, server returns 304 Not Modified</pre>`,
+            },
 
-            {n:3, t:"CDN cache invalidation — how to purge cached content", d:["intermediate","advanced"], a:`
+            {
+              n: 3,
+              t: "CDN cache invalidation — how to purge cached content",
+              d: ["intermediate", "advanced"],
+              a: `
 <pre>-- Problem: deployed new version of app.js but CDN still serves old version
 
 -- Solution 1: Content fingerprinting (best practice)
@@ -525,9 +654,14 @@ curl -X POST https://api.cloudflare.com/client/v4/zones/:zone_id/purge_cache \
 -- Solution 3: Cache version query param (less clean)
 app.js?v=20250508   →  app.js?v=20250509  (forces cache miss)
 
--- Best practice: versioned filenames + long TTL for assets, short TTL for HTML</pre>`},
+-- Best practice: versioned filenames + long TTL for assets, short TTL for HTML</pre>`,
+            },
 
-            {n:4, t:"Edge computing — running logic at CDN PoPs (Cloudflare Workers, Lambda@Edge)", d:["advanced"], a:`
+            {
+              n: 4,
+              t: "Edge computing — running logic at CDN PoPs (Cloudflare Workers, Lambda@Edge)",
+              d: ["advanced"],
+              a: `
 <p>Edge compute runs your code at the CDN PoP closest to the user — reducing latency from 200ms to 5-20ms for logic that previously required a round-trip to origin.</p>
 <pre>// Cloudflare Worker example — A/B testing at the edge
 addEventListener('fetch', event => {
@@ -546,10 +680,11 @@ async function handleRequest(request) {
 // - A/B testing and feature flags
 // - Geo-based redirects and content personalisation
 // - Request deduplication and coalescing
-// - Bot detection and WAF rules</pre>`}
-          ]
-        }
-      ]
+// - Bot detection and WAF rules</pre>`,
+            },
+          ],
+        },
+      ],
     },
 
     /* =====================================================
@@ -559,10 +694,17 @@ async function handleRequest(request) {
       label: "PART 6 · API DESIGN",
       sections: [
         {
-          id: "api-design", n: 6, title: "API Design — REST Best Practices, Versioning, Rate Limiting, Auth",
+          id: "api-design",
+          n: 6,
+          title:
+            "API Design — REST Best Practices, Versioning, Rate Limiting, Auth",
           desc: "Good API design makes systems easy to consume, evolve, and secure. MAANG interviews test your ability to design APIs that are stable and developer-friendly.",
           questions: [
-            {n:1, t:"REST API design best practices — resources, methods, status codes", d:["beginner","intermediate"], a:`
+            {
+              n: 1,
+              t: "REST API design best practices — resources, methods, status codes",
+              d: ["beginner", "intermediate"],
+              a: `
 <p>REST resources are nouns. HTTP verbs express the action. Status codes communicate the outcome.</p>
 <pre>-- Resources are nouns, not verbs
 GET    /users           -- list users
@@ -586,9 +728,14 @@ GET    /users/123/orders -- user 123's orders (nested resource)</pre>
   <tr><td>429 Too Many Requests</td><td>Rate limit exceeded</td></tr>
   <tr><td>500 Internal Server Error</td><td>Server-side bug</td></tr>
   <tr><td>503 Service Unavailable</td><td>Server down / overloaded</td></tr>
-</table>`},
+</table>`,
+            },
 
-            {n:2, t:"API versioning strategies — URI, header, content negotiation", d:["intermediate","advanced"], a:`
+            {
+              n: 2,
+              t: "API versioning strategies — URI, header, content negotiation",
+              d: ["intermediate", "advanced"],
+              a: `
 <table>
   <tr><th>Strategy</th><th>Example</th><th>Pros / Cons</th></tr>
   <tr><td>URI versioning</td><td>/api/v1/users</td><td>Simple, visible, cacheable. URI changes on version bump.</td></tr>
@@ -605,9 +752,14 @@ GET /v2/orders   -- new clients use v2
 -- Include Deprecation header in responses
 Deprecation: true
 Sunset: Sat, 01 Jan 2026 00:00:00 GMT
-Link: &lt;https://docs.example.com/v2&gt;; rel="successor-version"</pre>`},
+Link: &lt;https://docs.example.com/v2&gt;; rel="successor-version"</pre>`,
+            },
 
-            {n:3, t:"Rate limiting — algorithms and implementation", d:["intermediate","advanced"], a:`
+            {
+              n: 3,
+              t: "Rate limiting — algorithms and implementation",
+              d: ["intermediate", "advanced"],
+              a: `
 <p>Rate limiting protects your API from abuse, DDoS, and runaway clients.</p>
 <table>
   <tr><th>Algorithm</th><th>How</th><th>Behaviour</th></tr>
@@ -637,9 +789,14 @@ end
 X-RateLimit-Limit: 1000
 X-RateLimit-Remaining: 732
 X-RateLimit-Reset: 1715000000
-Retry-After: 47</pre>`},
+Retry-After: 47</pre>`,
+            },
 
-            {n:4, t:"Authentication — API Keys, JWT, OAuth 2.0 — when to use each", d:["intermediate","advanced"], a:`
+            {
+              n: 4,
+              t: "Authentication — API Keys, JWT, OAuth 2.0 — when to use each",
+              d: ["intermediate", "advanced"],
+              a: `
 <table>
   <tr><th>Mechanism</th><th>How</th><th>Best for</th></tr>
   <tr><td>API Key</td><td>Static secret in Authorization header or query param</td><td>Server-to-server, simple M2M, public API access</td></tr>
@@ -658,9 +815,14 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 
 // JWT problem: cannot revoke before expiry
 // Solution: short-lived access token (15 min) + refresh token (7 days in DB)
-// On logout: delete refresh token from DB</pre>`},
+// On logout: delete refresh token from DB</pre>`,
+            },
 
-            {n:5, t:"Idempotency — why it matters and how to implement it", d:["intermediate","advanced"], a:`
+            {
+              n: 5,
+              t: "Idempotency — why it matters and how to implement it",
+              d: ["intermediate", "advanced"],
+              a: `
 <p>An operation is <strong>idempotent</strong> if calling it multiple times has the same effect as calling it once. Critical for safe retries in distributed systems.</p>
 <pre>-- HTTP idempotency by method
 GET    → Idempotent (read only)
@@ -676,9 +838,14 @@ Idempotency-Key: 550e8400-e29b-41d4-a716-446655440000
 // Server: store (idempotency_key → response) in Redis for 24h
 // On retry: if key exists, return stored response (don't charge again)
 // If key doesn't exist: process payment, store response</pre>
-<p><strong>MAANG use case:</strong> Payment APIs (Stripe uses this pattern), order creation, email sends. If the network drops after you charge but before you respond — the client retries safely.</p>`},
+<p><strong>MAANG use case:</strong> Payment APIs (Stripe uses this pattern), order creation, email sends. If the network drops after you charge but before you respond — the client retries safely.</p>`,
+            },
 
-            {n:6, t:"API Gateway — what it does and why every microservice system needs one", d:["intermediate","advanced"], a:`
+            {
+              n: 6,
+              t: "API Gateway — what it does and why every microservice system needs one",
+              d: ["intermediate", "advanced"],
+              a: `
 <pre>Client
   │
   ▼
@@ -701,10 +868,11 @@ Kong          — open source, plugin-based, high performance
 AWS API GW    — fully managed, integrates with Lambda, Cognito
 NGINX         — high-performance reverse proxy / gateway
 Envoy         — L7 proxy, used in service meshes (Istio)
-Spring GW     — Java/Spring ecosystem gateway</pre>`}
-          ]
-        }
-      ]
+Spring GW     — Java/Spring ecosystem gateway</pre>`,
+            },
+          ],
+        },
+      ],
     },
 
     /* =====================================================
@@ -714,10 +882,16 @@ Spring GW     — Java/Spring ecosystem gateway</pre>`}
       label: "PART 7 · MESSAGING & ASYNC PATTERNS",
       sections: [
         {
-          id: "messaging", n: 7, title: "Message Queues, Kafka, Event-Driven Architecture",
+          id: "messaging",
+          n: 7,
+          title: "Message Queues, Kafka, Event-Driven Architecture",
           desc: "Async messaging decouples producers from consumers, enables resilience, and handles traffic spikes. Core to every MAANG backend.",
           questions: [
-            {n:1, t:"Why use a message queue? Synchronous vs asynchronous patterns", d:["beginner","intermediate"], a:`
+            {
+              n: 1,
+              t: "Why use a message queue? Synchronous vs asynchronous patterns",
+              d: ["beginner", "intermediate"],
+              a: `
 <p>Synchronous calls block the caller until the callee responds. For operations that don't need an immediate result, async queues decouple and buffer work.</p>
 <pre>-- Synchronous (direct call) — simple but tightly coupled
 Order Service → HTTP → Email Service → HTTP → SMS Service
@@ -735,9 +909,14 @@ Order Service → Kafka "order-created" topic
   <li>Fan-out to multiple consumers</li>
   <li>Reliable delivery with retries</li>
   <li>Traffic spike buffering (queue absorbs burst; workers drain at their own pace)</li>
-</ul>`},
+</ul>`,
+            },
 
-            {n:2, t:"Kafka vs RabbitMQ vs SQS — key differences and when to choose", d:["intermediate","advanced"], a:`
+            {
+              n: 2,
+              t: "Kafka vs RabbitMQ vs SQS — key differences and when to choose",
+              d: ["intermediate", "advanced"],
+              a: `
 <table>
   <tr><th>Dimension</th><th>Kafka</th><th>RabbitMQ</th><th>AWS SQS</th></tr>
   <tr><td>Model</td><td>Log-based (topic/partition/offset)</td><td>Queue (push to consumer)</td><td>Queue (pull from queue)</td></tr>
@@ -748,9 +927,14 @@ Order Service → Kafka "order-created" topic
   <tr><td>Consumer model</td><td>Pull, consumer groups</td><td>Push (competing consumers)</td><td>Pull (competing consumers)</td></tr>
   <tr><td>Ops overhead</td><td>High</td><td>Medium</td><td>Zero (managed)</td></tr>
   <tr><td>Best for</td><td>Event streaming, audit log, CDC, high throughput</td><td>Task queues, RPC, complex routing</td><td>Simple decoupling in AWS ecosystem</td></tr>
-</table>`},
+</table>`,
+            },
 
-            {n:3, t:"Kafka internals — topics, partitions, consumer groups, offsets", d:["intermediate","advanced"], a:`
+            {
+              n: 3,
+              t: "Kafka internals — topics, partitions, consumer groups, offsets",
+              d: ["intermediate", "advanced"],
+              a: `
 <pre>-- Kafka topology
 Topic "order-events"
   Partition 0: [msg1, msg2, msg5, ...]
@@ -771,9 +955,14 @@ Consumer Group "email-service":
 Consumer Group "email-service"   → reads at offset 1000
 Consumer Group "analytics"       → reads at offset 850 (slower, that's fine)
 Consumer Group "audit-log"       → reads at offset 1000</pre>
-<p><strong>Key design decisions:</strong> Partition count = max parallelism. Choose partition key for ordering guarantees (same entity events on same partition). Consumer group count = number of independent processing pipelines.</p>`},
+<p><strong>Key design decisions:</strong> Partition count = max parallelism. Choose partition key for ordering guarantees (same entity events on same partition). Consumer group count = number of independent processing pipelines.</p>`,
+            },
 
-            {n:4, t:"Exactly-once delivery — at-most-once, at-least-once, exactly-once", d:["advanced","expert"], a:`
+            {
+              n: 4,
+              t: "Exactly-once delivery — at-most-once, at-least-once, exactly-once",
+              d: ["advanced", "expert"],
+              a: `
 <table>
   <tr><th>Guarantee</th><th>Risk</th><th>How</th></tr>
   <tr><td>At-most-once</td><td>Message lost (fire-and-forget)</td><td>Send without waiting for ACK; no retry</td></tr>
@@ -792,9 +981,14 @@ producer.commitTransaction();
 if (!processedIds.contains(msg.id())) {
   process(msg);
   processedIds.add(msg.id());
-}</pre>`},
+}</pre>`,
+            },
 
-            {n:5, t:"Dead letter queues — handling poison messages", d:["intermediate","advanced"], a:`
+            {
+              n: 5,
+              t: "Dead letter queues — handling poison messages",
+              d: ["intermediate", "advanced"],
+              a: `
 <p>A dead letter queue (DLQ) receives messages that failed processing after all retries — preventing one bad message from blocking the entire queue.</p>
 <pre>-- Flow
 Message arrives → Consumer tries to process → fails
@@ -812,9 +1006,14 @@ Message arrives → Consumer tries to process → fails
 -- DLQ monitoring
 -- Alert if DLQ message count > 0
 -- Periodically replay DLQ after fixing the bug:
-awslocal sqs receive-message --queue-url http://localhost:4566/queue/my-dlq</pre>`},
+awslocal sqs receive-message --queue-url http://localhost:4566/queue/my-dlq</pre>`,
+            },
 
-            {n:6, t:"Saga pattern — distributed transactions across microservices", d:["advanced","expert"], a:`
+            {
+              n: 6,
+              t: "Saga pattern — distributed transactions across microservices",
+              d: ["advanced", "expert"],
+              a: `
 <p>When a business transaction spans multiple services, you can't use a DB transaction. The Saga pattern sequences local transactions with compensating actions on failure.</p>
 <pre>-- Example: Book flight + hotel + car (each is a separate service)
 
@@ -835,10 +1034,11 @@ OrderSaga (orchestrator):
   3. Call PaymentService.refund()     → compensate step 1
 
 -- Choreography: simpler, more decoupled. Harder to trace/debug.
--- Orchestration: easier to understand flow. Single point of failure risk.</pre>`}
-          ]
-        }
-      ]
+-- Orchestration: easier to understand flow. Single point of failure risk.</pre>`,
+            },
+          ],
+        },
+      ],
     },
 
     /* =====================================================
@@ -848,10 +1048,17 @@ OrderSaga (orchestrator):
       label: "PART 8 · STORAGE CHOICES",
       sections: [
         {
-          id: "storage", n: 8, title: "Choosing the Right Storage — SQL, NoSQL, Object, Search, Time-Series",
+          id: "storage",
+          n: 8,
+          title:
+            "Choosing the Right Storage — SQL, NoSQL, Object, Search, Time-Series",
           desc: "Picking the right storage engine is a core system design skill. There is no one-size-fits-all — match workload to engine.",
           questions: [
-            {n:1, t:"Storage engine decision guide — which database for what use case?", d:["beginner","intermediate"], a:`
+            {
+              n: 1,
+              t: "Storage engine decision guide — which database for what use case?",
+              d: ["beginner", "intermediate"],
+              a: `
 <table>
   <tr><th>Engine</th><th>Best for</th><th>Examples</th></tr>
   <tr><td>Relational (SQL)</td><td>Structured data, ACID transactions, complex queries, reporting</td><td>PostgreSQL, MySQL, Oracle</td></tr>
@@ -863,9 +1070,14 @@ OrderSaga (orchestrator):
   <tr><td>Time-Series</td><td>Metrics, IoT sensor data, financial ticks</td><td>InfluxDB, TimescaleDB, Prometheus</td></tr>
   <tr><td>Object Storage</td><td>Blobs — images, videos, backups, ML datasets</td><td>S3, GCS, Azure Blob</td></tr>
   <tr><td>In-memory</td><td>Sub-millisecond latency reads, leaderboards, pub-sub</td><td>Redis, Memcached</td></tr>
-</table>`},
+</table>`,
+            },
 
-            {n:2, t:"How does Cassandra handle write-heavy workloads at massive scale?", d:["advanced","expert"], a:`
+            {
+              n: 2,
+              t: "How does Cassandra handle write-heavy workloads at massive scale?",
+              d: ["advanced", "expert"],
+              a: `
 <p>Cassandra is optimised for write throughput and linear horizontal scale — no master bottleneck.</p>
 <pre>-- Architecture
 Ring topology: multiple nodes, each responsible for a range of token space
@@ -886,9 +1098,14 @@ CREATE TABLE user_events (
   event_type TEXT,
   PRIMARY KEY (user_id, event_time)
 ) WITH CLUSTERING ORDER BY (event_time DESC);</pre>
-<p><strong>Cassandra is bad at:</strong> Joins, aggregations, ad-hoc queries. Design your table schema around your access patterns — not around normalisation.</p>`},
+<p><strong>Cassandra is bad at:</strong> Joins, aggregations, ad-hoc queries. Design your table schema around your access patterns — not around normalisation.</p>`,
+            },
 
-            {n:3, t:"Object storage (S3) — how it works and design patterns", d:["intermediate"], a:`
+            {
+              n: 3,
+              t: "Object storage (S3) — how it works and design patterns",
+              d: ["intermediate"],
+              a: `
 <pre>-- S3 structure
 Bucket → Objects (key-value, any size, any format)
 Key: "uploads/users/123/profile.jpg"
@@ -904,9 +1121,14 @@ String url = s3.generatePresignedUrl("my-bucket", "uploads/photo.jpg",
 -- CDN (CloudFront) in front of S3 for fast delivery
 -- S3 event notifications → Lambda/SQS → thumbnail generation, virus scan
 -- Multi-part upload for large files (&gt; 100 MB)
--- S3 Intelligent-Tiering for automatic cost optimisation (moves cold objects to Glacier)</pre>`},
+-- S3 Intelligent-Tiering for automatic cost optimisation (moves cold objects to Glacier)</pre>`,
+            },
 
-            {n:4, t:"Elasticsearch — how full-text search works internally", d:["advanced"], a:`
+            {
+              n: 4,
+              t: "Elasticsearch — how full-text search works internally",
+              d: ["advanced"],
+              a: `
 <pre>-- Elasticsearch uses inverted index (same concept as book index)
 -- "performance" → [doc3, doc7, doc15]
 -- "database"    → [doc1, doc3, doc9]
@@ -938,10 +1160,11 @@ GET /products/_search
   "sort": [{ "_score": "desc" }],
   "from": 0, "size": 10
 }</pre>
-<p><strong>MAANG tip:</strong> Use Elasticsearch alongside a primary DB (PostgreSQL). Write to PostgreSQL; replicate to Elasticsearch for search. Don't use Elasticsearch as your system of record — it's optimised for search, not ACID writes.</p>`}
-          ]
-        }
-      ]
+<p><strong>MAANG tip:</strong> Use Elasticsearch alongside a primary DB (PostgreSQL). Write to PostgreSQL; replicate to Elasticsearch for search. Don't use Elasticsearch as your system of record — it's optimised for search, not ACID writes.</p>`,
+            },
+          ],
+        },
+      ],
     },
 
     /* =====================================================
@@ -951,10 +1174,16 @@ GET /products/_search
       label: "PART 9 · SCALABILITY PATTERNS",
       sections: [
         {
-          id: "scalability", n: 9, title: "Horizontal Scaling, Sharding, Consistent Hashing, CQRS",
+          id: "scalability",
+          n: 9,
+          title: "Horizontal Scaling, Sharding, Consistent Hashing, CQRS",
           desc: "How to scale from hundreds to millions of users — the core scalability toolkit.",
           questions: [
-            {n:1, t:"Vertical vs horizontal scaling — when and how to do each", d:["beginner","intermediate"], a:`
+            {
+              n: 1,
+              t: "Vertical vs horizontal scaling — when and how to do each",
+              d: ["beginner", "intermediate"],
+              a: `
 <table>
   <tr><th>Scaling</th><th>How</th><th>Limit</th><th>Best for</th></tr>
   <tr><td>Vertical (scale up)</td><td>Bigger machine (more CPU, RAM, IOPS)</td><td>Hardware ceiling; single point of failure</td><td>Databases, stateful services — do this first</td></tr>
@@ -966,9 +1195,14 @@ Phase 2 (10k–100k):    Separate app server + DB server; add read replica for D
 Phase 3 (100k–1M):     Multiple app servers behind LB; Redis cache; CDN for assets
 Phase 4 (1M–10M):      DB sharding OR move to DynamoDB; queue workers; Kafka
 Phase 5 (10M+):        Multiple regions; service decomposition; edge compute</pre>
-<p><strong>Interview tip:</strong> Always scale the database last — it's the hardest. Add caching, read replicas, and query optimisation before sharding.</p>`},
+<p><strong>Interview tip:</strong> Always scale the database last — it's the hardest. Add caching, read replicas, and query optimisation before sharding.</p>`,
+            },
 
-            {n:2, t:"Consistent hashing — how it solves the resharding problem", d:["advanced","expert"], a:`
+            {
+              n: 2,
+              t: "Consistent hashing — how it solves the resharding problem",
+              d: ["advanced", "expert"],
+              a: `
 <p>Simple hash (key % N servers) means adding/removing a server remaps almost all keys — causing cache misses or data migration at scale.</p>
 <pre>-- Problem with simple hash
 5 servers: key % 5 → server 0-4
@@ -984,9 +1218,14 @@ Key hashed to a position on the ring → assigned to next server clockwise
 
 -- Virtual nodes: each physical server gets N virtual nodes on the ring
 -- Provides more even load distribution and smoother node removal
--- Used by: Cassandra, Dynamo, Redis Cluster, CDN origin selection</pre>`},
+-- Used by: Cassandra, Dynamo, Redis Cluster, CDN origin selection</pre>`,
+            },
 
-            {n:3, t:"CQRS — Command Query Responsibility Segregation", d:["advanced","expert"], a:`
+            {
+              n: 3,
+              t: "CQRS — Command Query Responsibility Segregation",
+              d: ["advanced", "expert"],
+              a: `
 <p>CQRS separates the write model (Commands) from the read model (Queries). Each is optimised independently.</p>
 <pre>-- Traditional: one model serves reads and writes (often suboptimal for both)
 -- CQRS: separate models
@@ -1010,9 +1249,14 @@ Multiple read models for different consumers
 
 -- Complexity
 Eventual consistency between write and read sides
-More moving parts to build and operate</pre>`},
+More moving parts to build and operate</pre>`,
+            },
 
-            {n:4, t:"Database read replicas — how to use them and their limitations", d:["intermediate","advanced"], a:`
+            {
+              n: 4,
+              t: "Database read replicas — how to use them and their limitations",
+              d: ["intermediate", "advanced"],
+              a: `
 <pre>-- Setup: one primary (writes), N replicas (reads)
 App → Write → Primary PostgreSQL
 App → Read  → Replica 1 (sync lag: ~10-100ms typically)
@@ -1033,9 +1277,14 @@ if (userRecentlyWrote(userId)) {
   return primaryDB.query(sql);
 } else {
   return replicaDB.query(sql);
-}</pre>`},
+}</pre>`,
+            },
 
-            {n:5, t:"Hotspot / hot key problem and how to solve it", d:["advanced","expert"], a:`
+            {
+              n: 5,
+              t: "Hotspot / hot key problem and how to solve it",
+              d: ["advanced", "expert"],
+              a: `
 <p>A hot key is a single cache key or DB row that gets disproportionate traffic — one shard or server handles all load for it.</p>
 <pre>-- Example: trending tweet by a celebrity — 10M reads/sec for one tweet
 
@@ -1054,9 +1303,14 @@ if (userRecentlyWrote(userId)) {
 -- Solution 4: Fan-out on write (pre-distribute to followers)
 // When tweet is posted, push to each follower's timeline cache
 // Read becomes local, not hotspot
-// Used by Twitter for non-mega-celebrities (100M followers → use pull)</pre>`},
+// Used by Twitter for non-mega-celebrities (100M followers → use pull)</pre>`,
+            },
 
-            {n:6, t:"Circuit breaker pattern — preventing cascade failures", d:["advanced"], a:`
+            {
+              n: 6,
+              t: "Circuit breaker pattern — preventing cascade failures",
+              d: ["advanced"],
+              a: `
 <p>Without circuit breakers, a slow/failing downstream service can cause threads to pile up and take down your entire service.</p>
 <pre>-- States
 CLOSED → requests pass through (normal)
@@ -1081,10 +1335,11 @@ String result = cb.executeSupplier(() -> paymentService.charge(request));
 
 // Fallback
 return Failsafe.with(cb, fallback)
-  .get(() -> paymentService.charge(request));</pre>`}
-          ]
-        }
-      ]
+  .get(() -> paymentService.charge(request));</pre>`,
+            },
+          ],
+        },
+      ],
     },
 
     /* =====================================================
@@ -1094,10 +1349,16 @@ return Failsafe.with(cb, fallback)
       label: "PART 10 · RELIABILITY & FAULT TOLERANCE",
       sections: [
         {
-          id: "reliability", n: 10, title: "High Availability, Replication, Failover, Disaster Recovery",
+          id: "reliability",
+          n: 10,
+          title: "High Availability, Replication, Failover, Disaster Recovery",
           desc: "Reliability engineering separates good systems from great ones. These concepts are tested in every MAANG senior engineering interview.",
           questions: [
-            {n:1, t:"What is high availability and how do you design for it?", d:["beginner","intermediate"], a:`
+            {
+              n: 1,
+              t: "What is high availability and how do you design for it?",
+              d: ["beginner", "intermediate"],
+              a: `
 <p>High availability (HA) means the system remains operational despite failures. Availability is measured as uptime percentage.</p>
 <table>
   <tr><th>SLA</th><th>Downtime/year</th><th>Downtime/month</th></tr>
@@ -1113,9 +1374,14 @@ return Failsafe.with(cb, fallback)
   <li>Automatic failover (health checks + LB removes unhealthy instances in seconds)</li>
   <li>Geographic redundancy for regional outages</li>
   <li>Bulkhead isolation (one failing component doesn't cascade to all)</li>
-</ul>`},
+</ul>`,
+            },
 
-            {n:2, t:"RTO and RPO — what they mean and how to design for them", d:["intermediate","advanced"], a:`
+            {
+              n: 2,
+              t: "RTO and RPO — what they mean and how to design for them",
+              d: ["intermediate", "advanced"],
+              a: `
 <table>
   <tr><th>Metric</th><th>Definition</th><th>Design lever</th></tr>
   <tr><td>RTO (Recovery Time Objective)</td><td>Max acceptable downtime after failure — "how fast must we recover?"</td><td>Automated failover, warm standby, hot standby</td></tr>
@@ -1125,9 +1391,14 @@ return Failsafe.with(cb, fallback)
 Cold standby   → RTO: hours   / RPO: hours   (restore from backup)
 Warm standby   → RTO: minutes / RPO: minutes (replica is running, switch is manual)
 Hot standby    → RTO: seconds / RPO: seconds (active-active or sync replication + auto failover)
-Active-active  → RTO: &lt;1s    / RPO: 0       (all nodes serve traffic; highest cost)</pre>`},
+Active-active  → RTO: &lt;1s    / RPO: 0       (all nodes serve traffic; highest cost)</pre>`,
+            },
 
-            {n:3, t:"Bulkhead pattern — fault isolation in distributed systems", d:["advanced"], a:`
+            {
+              n: 3,
+              t: "Bulkhead pattern — fault isolation in distributed systems",
+              d: ["advanced"],
+              a: `
 <p>A bulkhead isolates failures to prevent cascade. Named after ship compartments that contain flooding to one section.</p>
 <pre>-- Thread pool bulkhead: separate thread pools per downstream service
 // If Payment Service is slow, its thread pool fills up — doesn't affect User Service thread pool
@@ -1142,9 +1413,14 @@ DataSource orderServicePool = new HikariPool(maxPoolSize = 20);
 -- Kubernetes bulkhead: separate namespaces with resource quotas
 // Orders namespace: max 4 CPU / 8 GB RAM
 // Payments namespace: max 8 CPU / 16 GB RAM
-// One namespace runaway can't starve the other</pre>`},
+// One namespace runaway can't starve the other</pre>`,
+            },
 
-            {n:4, t:"Retry patterns — exponential backoff, jitter, retry budget", d:["intermediate","advanced"], a:`
+            {
+              n: 4,
+              t: "Retry patterns — exponential backoff, jitter, retry budget",
+              d: ["intermediate", "advanced"],
+              a: `
 <pre>-- Naive retry is dangerous: all clients retry at the same time → thundering herd
 // BAD: fixed retry
 for (int i = 0; i &lt; 3; i++) {
@@ -1166,9 +1442,14 @@ delay = random(0, min(cap, base * 2^attempt))
 
 -- Retry budget: don't retry more than X% of total requests
 // If 50% of requests are retries, you're doubling load on an already stressed service
-// Set maxRetries per request AND max retry rate system-wide</pre>`},
+// Set maxRetries per request AND max retry rate system-wide</pre>`,
+            },
 
-            {n:5, t:"Timeout strategy — how to set timeouts correctly", d:["intermediate","advanced"], a:`
+            {
+              n: 5,
+              t: "Timeout strategy — how to set timeouts correctly",
+              d: ["intermediate", "advanced"],
+              a: `
 <p>Timeouts prevent thread starvation from slow dependencies. Setting them correctly is an art.</p>
 <pre>-- Types
 Connection timeout: time to establish TCP connection (set low: 100-500ms)
@@ -1186,10 +1467,11 @@ factory.setReadTimeout(500);       // 500ms to read response
 
 // Propagate deadlines in microservices (Google Stubby / gRPC deadline)
 // When a user request has 1000ms budget and calls 3 services:
-// Service A gets 300ms, B gets 300ms, C gets 300ms (budget propagation)</pre>`}
-          ]
-        }
-      ]
+// Service A gets 300ms, B gets 300ms, C gets 300ms (budget propagation)</pre>`,
+            },
+          ],
+        },
+      ],
     },
 
     /* =====================================================
@@ -1199,10 +1481,16 @@ factory.setReadTimeout(500);       // 500ms to read response
       label: "PART 11 · CONSISTENCY MODELS",
       sections: [
         {
-          id: "consistency", n: 11, title: "Consistency Models — Strong, Eventual, Causal, Session",
+          id: "consistency",
+          n: 11,
+          title: "Consistency Models — Strong, Eventual, Causal, Session",
           desc: "Consistency is the most nuanced topic in distributed systems. These questions separate L5 from L6 at MAANG.",
           questions: [
-            {n:1, t:"What are the different consistency models and when do you need each?", d:["advanced","expert"], a:`
+            {
+              n: 1,
+              t: "What are the different consistency models and when do you need each?",
+              d: ["advanced", "expert"],
+              a: `
 <table>
   <tr><th>Model</th><th>Guarantee</th><th>Latency</th><th>Use case</th></tr>
   <tr><td>Linearisability (Strong)</td><td>Every operation appears instantaneous; all clients see same order</td><td>High (sync replication)</td><td>Distributed locks, leader election, financial ledgers</td></tr>
@@ -1211,9 +1499,14 @@ factory.setReadTimeout(500);       // 500ms to read response
   <tr><td>Read-your-writes</td><td>You always see your own writes</td><td>Low</td><td>Profile updates, settings</td></tr>
   <tr><td>Monotonic reads</td><td>Once you see a value, you never see older value</td><td>Low</td><td>Timeline feeds</td></tr>
   <tr><td>Eventual</td><td>All replicas converge eventually with no further updates</td><td>Very low</td><td>DNS, shopping carts, notifications</td></tr>
-</table>`},
+</table>`,
+            },
 
-            {n:2, t:"Distributed locks — how to implement them safely", d:["advanced","expert"], a:`
+            {
+              n: 2,
+              t: "Distributed locks — how to implement them safely",
+              d: ["advanced", "expert"],
+              a: `
 <pre>-- Distributed lock with Redis (Redlock algorithm)
 -- Problem: two instances must not process the same job concurrently
 
@@ -1235,9 +1528,14 @@ if (locked) {
 -- More resilient to single Redis node failure
 
 -- ZooKeeper: use ephemeral znodes for distributed locks
--- ZK is strongly consistent (ZAB consensus) — safer than Redis for critical locks</pre>`},
+-- ZK is strongly consistent (ZAB consensus) — safer than Redis for critical locks</pre>`,
+            },
 
-            {n:3, t:"Two-phase commit (2PC) vs Saga — distributed transaction choices", d:["expert"], a:`
+            {
+              n: 3,
+              t: "Two-phase commit (2PC) vs Saga — distributed transaction choices",
+              d: ["expert"],
+              a: `
 <table>
   <tr><th>Approach</th><th>Atomicity</th><th>Availability</th><th>Latency</th><th>Use when</th></tr>
   <tr><td>2PC (Two-Phase Commit)</td><td>Strong (all-or-nothing)</td><td>Low (blocks on coordinator failure)</td><td>High (2 round trips)</td><td>Same org, controllable services, short transactions</td></tr>
@@ -1254,9 +1552,14 @@ Phase 2 (Commit/Abort): If all YES → commit; if any NO → abort
 -- Saga is preferred in microservices because:
 -- No distributed lock held across services
 -- Services are independently available
--- Compensating transactions handle rollback (may be eventual)</pre>`},
+-- Compensating transactions handle rollback (may be eventual)</pre>`,
+            },
 
-            {n:4, t:"Vector clocks and conflict resolution in eventual consistency", d:["expert"], a:`
+            {
+              n: 4,
+              t: "Vector clocks and conflict resolution in eventual consistency",
+              d: ["expert"],
+              a: `
 <pre>-- Problem: two clients update the same key on different replicas concurrently
 -- Replica A: user sets name="Alice" at time T1
 -- Replica B: user sets name="Alicia" at time T1 (concurrent, no causal link)
@@ -1273,10 +1576,11 @@ Last Write Wins (LWW): use wall clock timestamp → Alice vs Alicia → pick lat
 Multi-value register: keep both values, let application merge (DynamoDB, Riak)
 CRDTs: data structures that merge automatically without conflicts
   G-Counter: grow-only counter (just take the max per node)
-  OR-Set: add-wins set (track unique tags per add operation)</pre>`}
-          ]
-        }
-      ]
+  OR-Set: add-wins set (track unique tags per add operation)</pre>`,
+            },
+          ],
+        },
+      ],
     },
 
     /* =====================================================
@@ -1286,10 +1590,17 @@ CRDTs: data structures that merge automatically without conflicts
       label: "PART 12 · CLASSIC MAANG DESIGN PROBLEMS",
       sections: [
         {
-          id: "classic-designs", n: 12, title: "Design Twitter, URL Shortener, Rate Limiter, Notification System",
+          id: "classic-designs",
+          n: 12,
+          title:
+            "Design Twitter, URL Shortener, Rate Limiter, Notification System",
           desc: "These are the most-asked system design problems at MAANG companies. Practice the structure, not just the answer.",
           questions: [
-            {n:1, t:"Design a URL shortener (like bit.ly)", d:["intermediate","advanced"], a:`
+            {
+              n: 1,
+              t: "Design a URL shortener (like bit.ly)",
+              d: ["intermediate", "advanced"],
+              a: `
 <pre>-- Requirements
 Write: 100M short URLs/day = 1200 writes/sec
 Read: 10:1 ratio = 12,000 redirects/sec
@@ -1314,9 +1625,14 @@ Cache top 20% of URLs (Pareto — get 80% hit rate)
 TTL: 1 hour for popular URLs
 LRU eviction
 
--- Scale: read replicas for DB, Redis cluster for cache, CDN for redirect latency</pre>`},
+-- Scale: read replicas for DB, Redis cluster for cache, CDN for redirect latency</pre>`,
+            },
 
-            {n:2, t:"Design a Twitter-like timeline (fan-out on write vs read)", d:["advanced","expert"], a:`
+            {
+              n: 2,
+              t: "Design a Twitter-like timeline (fan-out on write vs read)",
+              d: ["advanced", "expert"],
+              a: `
 <pre>-- The core problem: 300M users, some with 100M followers
 -- Fan-out on write: when tweet is posted, push to every follower's timeline cache
 -- Fan-out on read: when user opens app, pull tweets from all followees
@@ -1339,9 +1655,14 @@ When you open your timeline:
 <pre>-- Timeline data model (Redis list per user)
 LPUSH timeline:userId tweetId (insert at head = newest first)
 LTRIM timeline:userId 0 799   (keep only 800 most recent)
-LRANGE timeline:userId 0 49   (fetch page 1 — 50 tweets)</pre>`},
+LRANGE timeline:userId 0 49   (fetch page 1 — 50 tweets)</pre>`,
+            },
 
-            {n:3, t:"Design a rate limiter service", d:["intermediate","advanced"], a:`
+            {
+              n: 3,
+              t: "Design a rate limiter service",
+              d: ["intermediate", "advanced"],
+              a: `
 <pre>-- Requirements
 Limit: 1000 req/min per user API key
 Distributed: works across 100 app servers
@@ -1365,9 +1686,14 @@ HTTP 429 Too Many Requests
 X-RateLimit-Limit: 1000
 X-RateLimit-Remaining: 0
 X-RateLimit-Reset: 1715000060
-Retry-After: 47</pre>`},
+Retry-After: 47</pre>`,
+            },
 
-            {n:4, t:"Design a notification system (push, email, SMS)", d:["intermediate","advanced"], a:`
+            {
+              n: 4,
+              t: "Design a notification system (push, email, SMS)",
+              d: ["intermediate", "advanced"],
+              a: `
 <pre>-- Requirements
 100M notifications/day across push, email, SMS
 Priorities: critical (payment, security) vs non-critical (marketing)
@@ -1392,9 +1718,14 @@ worker substitutes variables into template
 
 -- Tracking
 notification_log: id, user_id, channel, template_id, status, sent_at, delivered_at
-Mark delivered via delivery webhooks (FCM, SES, Twilio all provide them)</pre>`},
+Mark delivered via delivery webhooks (FCM, SES, Twilio all provide them)</pre>`,
+            },
 
-            {n:5, t:"Design a search autocomplete system (type-ahead)", d:["advanced","expert"], a:`
+            {
+              n: 5,
+              t: "Design a search autocomplete system (type-ahead)",
+              d: ["advanced", "expert"],
+              a: `
 <pre>-- Requirements
 Latency: &lt;100ms
 Scale: 10M searches/day
@@ -1417,9 +1748,14 @@ Store in Redis or a purpose-built trie service
 -- "search" → "s", "se", "sea", "sear", "searc", "search"
 -- Query: match "sea" → finds "search" via edge ngram
 
--- Real-time updates: event stream of searches → Kafka → aggregation job → Redis update</pre>`},
+-- Real-time updates: event stream of searches → Kafka → aggregation job → Redis update</pre>`,
+            },
 
-            {n:6, t:"Design a distributed job scheduler", d:["advanced","expert"], a:`
+            {
+              n: 6,
+              t: "Design a distributed job scheduler",
+              d: ["advanced", "expert"],
+              a: `
 <pre>-- Requirements
 Schedule millions of jobs at specific times or intervals
 At-least-once execution, idempotent jobs preferred
@@ -1443,10 +1779,11 @@ WHERE id=:id AND status='PENDING'
 
 -- Handling stuck jobs
 If job status='RUNNING' for &gt; 5 min → mark as FAILED → re-enqueue
-Worker sends heartbeat every 30s while running</pre>`}
-          ]
-        }
-      ]
+Worker sends heartbeat every 30s while running</pre>`,
+            },
+          ],
+        },
+      ],
     },
 
     /* =====================================================
@@ -1456,10 +1793,16 @@ Worker sends heartbeat every 30s while running</pre>`}
       label: "PART 13 · PRODUCTION PATTERNS",
       sections: [
         {
-          id: "production-patterns", n: 13, title: "Service Mesh, Observability, Event Sourcing, Strangler Fig",
+          id: "production-patterns",
+          n: 13,
+          title: "Service Mesh, Observability, Event Sourcing, Strangler Fig",
           desc: "Patterns used daily at MAANG scale — service communication, observability, legacy migration, and data architecture.",
           questions: [
-            {n:1, t:"Service mesh — what it is and why you need it at scale", d:["advanced","expert"], a:`
+            {
+              n: 1,
+              t: "Service mesh — what it is and why you need it at scale",
+              d: ["advanced", "expert"],
+              a: `
 <p>A service mesh is an infrastructure layer that handles service-to-service communication — mTLS, retries, circuit breaking, distributed tracing — without changing application code.</p>
 <pre>-- Without service mesh
 Each service implements: retries, timeouts, circuit breakers, mTLS, tracing — in code
@@ -1474,9 +1817,14 @@ mTLS between all services (zero-trust network)
 Distributed tracing (inject trace IDs, report to Jaeger/Zipkin)
 Circuit breaking and retry policies (configured in YAML, no code)
 Traffic shaping: canary (10% to v2), A/B routing, fault injection for testing
-Observability: per-service latency, error rate, throughput dashboards</pre>`},
+Observability: per-service latency, error rate, throughput dashboards</pre>`,
+            },
 
-            {n:2, t:"Event sourcing — storing state as a sequence of events", d:["advanced","expert"], a:`
+            {
+              n: 2,
+              t: "Event sourcing — storing state as a sequence of events",
+              d: ["advanced", "expert"],
+              a: `
 <pre>-- Traditional: store current state only
 orders table: order_id=1, status=SHIPPED, total=100  (history lost)
 
@@ -1500,9 +1848,14 @@ Storage grows indefinitely (snapshots periodically to avoid replaying 10M events
 Schema evolution for old events (version your event schemas)
 
 -- Snapshot pattern: every N events, save a snapshot
--- Replay: load latest snapshot + events after snapshot timestamp</pre>`},
+-- Replay: load latest snapshot + events after snapshot timestamp</pre>`,
+            },
 
-            {n:3, t:"Strangler fig pattern — migrating from monolith to microservices", d:["advanced"], a:`
+            {
+              n: 3,
+              t: "Strangler fig pattern — migrating from monolith to microservices",
+              d: ["advanced"],
+              a: `
 <pre>-- Named after a vine that gradually surrounds and replaces a host tree
 
 -- Phase 1: Intercept with a facade (reverse proxy / API gateway)
@@ -1524,9 +1877,14 @@ All traffic → API Gateway
 -- Key rules:
 -- Don't share DB between old and new at steady state (temporary bridge OK)
 -- Feature flag: route 1% → new service → validate → increase to 100%
--- Keep monolith running until new service is proven in production</pre>`},
+-- Keep monolith running until new service is proven in production</pre>`,
+            },
 
-            {n:4, t:"Observability — logs, metrics, traces — the three pillars", d:["intermediate","advanced"], a:`
+            {
+              n: 4,
+              t: "Observability — logs, metrics, traces — the three pillars",
+              d: ["intermediate", "advanced"],
+              a: `
 <table>
   <tr><th>Pillar</th><th>What</th><th>Tools</th><th>Use for</th></tr>
   <tr><td>Logs</td><td>Timestamped events with context</td><td>ELK, Loki, CloudWatch</td><td>Debugging specific errors, audit</td></tr>
@@ -1550,9 +1908,14 @@ Span span = tracer.spanBuilder("processOrder").startSpan();
 try (Scope s = span.makeCurrent()) {
   // ... business logic
   span.setAttribute("order.id", orderId);
-} finally { span.end(); }</pre>`},
+} finally { span.end(); }</pre>`,
+            },
 
-            {n:5, t:"Feature flags — safe deployments and A/B testing", d:["intermediate","advanced"], a:`
+            {
+              n: 5,
+              t: "Feature flags — safe deployments and A/B testing",
+              d: ["intermediate", "advanced"],
+              a: `
 <pre>-- Feature flags decouple deployment from release
 -- Deploy code with feature behind a flag → turn on for 1% → 10% → 100%
 
@@ -1576,11 +1939,11 @@ Spring Cloud Config + custom flag evaluation
 -- Rules
 Clean up flags after rollout is complete — flag debt is real
 Always test the OFF path — flags are often only tested ON
-Log flag evaluation decisions for reproducibility</pre>`}
-          ]
-        }
-      ]
-    }
-
-  ]
+Log flag evaluation decisions for reproducibility</pre>`,
+            },
+          ],
+        },
+      ],
+    },
+  ],
 };

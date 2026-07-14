@@ -8,10 +8,16 @@ window.SPRING_ADV_DATA = {
       label: "PART 1 · SPRING SECURITY — DEEP DIVE",
       sections: [
         {
-          id: "security-deep", n: 1, title: "Spring Security — Filter Chain & Authentication",
+          id: "security-deep",
+          n: 1,
+          title: "Spring Security — Filter Chain & Authentication",
           desc: "How Spring Security actually works: the <strong>filter chain, authentication pipeline, and JWT implementation</strong> from first principles.",
           questions: [
-            {n:1, t:"How does the Spring Security filter chain work? Walk through every step.", d:["intermediate","advanced"], a:`
+            {
+              n: 1,
+              t: "How does the Spring Security filter chain work? Walk through every step.",
+              d: ["intermediate", "advanced"],
+              a: `
 <p>Spring Security is fundamentally a chain of Servlet Filters that process every HTTP request. Understanding this architecture is essential for debugging security issues.</p>
 
 <h4>The Architecture — Security as a Filter Chain</h4>
@@ -141,9 +147,14 @@ public UserDto getProfile(@AuthenticationPrincipal Jwt jwt) {
 // SecurityContextHolder is ThreadLocal by default:
 // - Works fine for traditional servlet stack (one thread per request)
 // - Problem with @Async: async threads don't inherit the SecurityContext
-// Fix: use DelegatingSecurityContextExecutor or @EnableAsync + proper config</pre>`},
+// Fix: use DelegatingSecurityContextExecutor or @EnableAsync + proper config</pre>`,
+            },
 
-            {n:2, t:"Implement JWT authentication from scratch — the complete flow.", d:["advanced"], a:`
+            {
+              n: 2,
+              t: "Implement JWT authentication from scratch — the complete flow.",
+              d: ["advanced"],
+              a: `
 <p>JWT authentication is the standard for stateless REST APIs. Here's the complete, production-ready implementation.</p>
 
 <h4>JWT Structure</h4>
@@ -378,9 +389,14 @@ public AuthResponse refresh(@RequestBody RefreshRequest request) {
     String newRefreshToken = refreshTokenService.rotate(storedToken);
 
     return new AuthResponse(newAccessToken, newRefreshToken);
-}</pre>`},
+}</pre>`,
+            },
 
-            {n:3, t:"Method-level security — @PreAuthorize, @PostAuthorize, and SpEL expressions.", d:["advanced"], a:`
+            {
+              n: 3,
+              t: "Method-level security — @PreAuthorize, @PostAuthorize, and SpEL expressions.",
+              d: ["advanced"],
+              a: `
 <p>Method security lets you enforce access control at the business logic level, not just at the URL level. This is essential for fine-grained authorization.</p>
 
 <h4>Enabling Method Security</h4>
@@ -488,19 +504,26 @@ denyAll()
 
 // Return value (in @PostAuthorize):
 returnObject                                // the object returned by the method
-returnObject.fieldName                      // a field of the returned object</pre>`}
-          ]
-        }
-      ]
+returnObject.fieldName                      // a field of the returned object</pre>`,
+            },
+          ],
+        },
+      ],
     },
     {
       label: "PART 2 · AOP — ASPECT-ORIENTED PROGRAMMING",
       sections: [
         {
-          id: "aop-deep", n: 2, title: "AOP — From Concepts to Production Patterns",
+          id: "aop-deep",
+          n: 2,
+          title: "AOP — From Concepts to Production Patterns",
           desc: "How AOP works <strong>under the hood</strong>, and how to write production-quality aspects for logging, metrics, security, and more.",
           questions: [
-            {n:4, t:"AOP explained from first principles — what problem does it solve?", d:["intermediate"], a:`
+            {
+              n: 4,
+              t: "AOP explained from first principles — what problem does it solve?",
+              d: ["intermediate"],
+              a: `
 <p>AOP solves the problem of <strong>cross-cutting concerns</strong> — functionality that cuts across multiple unrelated modules and can't be cleanly separated using OOP alone.</p>
 
 <h4>The Problem Without AOP</h4>
@@ -707,19 +730,26 @@ class OrderService {
     }
     @Async
     public void sendNotification(Order order) { ... }
-}</pre>`}
-          ]
-        }
-      ]
+}</pre>`,
+            },
+          ],
+        },
+      ],
     },
     {
       label: "PART 3 · CACHING, ASYNC & EVENTS",
       sections: [
         {
-          id: "caching-deep", n: 3, title: "Caching — Strategy, Implementation & Pitfalls",
+          id: "caching-deep",
+          n: 3,
+          title: "Caching — Strategy, Implementation & Pitfalls",
           desc: "Spring Cache abstraction, <strong>when to cache, what to cache, and the subtle bugs</strong> that kill performance.",
           questions: [
-            {n:5, t:"Spring Cache — @Cacheable, @CacheEvict, @CachePut — explained deeply.", d:["beginner","intermediate"], a:`
+            {
+              n: 5,
+              t: "Spring Cache — @Cacheable, @CacheEvict, @CachePut — explained deeply.",
+              d: ["beginner", "intermediate"],
+              a: `
 <p>Caching is one of the most impactful performance improvements you can make. Spring's cache abstraction lets you add caching with annotations while keeping your code cache-technology agnostic.</p>
 
 <h4>The Three Core Annotations</h4>
@@ -885,9 +915,14 @@ public Product findByCode(String code) { ... }
 @Cacheable(value = "popular-products", sync = true)
 public List&lt;Product&gt; getTopProducts() { ... }  // Only one thread calls DB, rest wait
 
-// Fix for Redis: probabilistic early expiry or Redis locking pattern</pre>`},
+// Fix for Redis: probabilistic early expiry or Redis locking pattern</pre>`,
+            },
 
-            {n:6, t:"@Async internals — how it works, thread pool configuration, and gotchas.", d:["intermediate","advanced"], a:`
+            {
+              n: 6,
+              t: "@Async internals — how it works, thread pool configuration, and gotchas.",
+              d: ["intermediate", "advanced"],
+              a: `
 <p>@Async makes methods run on a different thread. Understanding the internals prevents the subtle bugs that commonly appear with async code.</p>
 
 <h4>How @Async Works Internally</h4>
@@ -1054,19 +1089,26 @@ public Executor asyncExecutor() {
         Executors.newFixedThreadPool(8)
     );
     // Now async threads inherit SecurityContext from caller
-}</pre>`}
-          ]
-        }
-      ]
+}</pre>`,
+            },
+          ],
+        },
+      ],
     },
     {
       label: "PART 4 · TESTING SPRING APPLICATIONS",
       sections: [
         {
-          id: "testing-deep", n: 4, title: "Testing — Slices, Mocks, Integration & Best Practices",
+          id: "testing-deep",
+          n: 4,
+          title: "Testing — Slices, Mocks, Integration & Best Practices",
           desc: "How to test every layer of your Spring application <strong>efficiently and reliably</strong> — without slow full-context startups for every test.",
           questions: [
-            {n:7, t:"@SpringBootTest vs @WebMvcTest vs @DataJpaTest — choose the right one.", d:["intermediate"], a:`
+            {
+              n: 7,
+              t: "@SpringBootTest vs @WebMvcTest vs @DataJpaTest — choose the right one.",
+              d: ["intermediate"],
+              a: `
 <p>Choosing the wrong test annotation is the most common Spring testing mistake. The wrong choice leads to either slow tests (full context when slice is enough) or false confidence (slice when integration is needed).</p>
 
 <h4>The Testing Pyramid — Why Test Slices Exist</h4>
@@ -1261,9 +1303,14 @@ doReturn(mockOrder).when(orderService).findById(999L);  // stub findById
 
 // When to use each:
 // @MockBean: for services you want to isolate (most tests)
-// @SpyBean: for services where most behavior is correct, just override one method</pre>`},
+// @SpyBean: for services where most behavior is correct, just override one method</pre>`,
+            },
 
-            {n:8, t:"Testcontainers — integration testing with real databases and message brokers.", d:["advanced"], a:`
+            {
+              n: 8,
+              t: "Testcontainers — integration testing with real databases and message brokers.",
+              d: ["advanced"],
+              a: `
 <p>Testcontainers spins up real Docker containers during tests. This eliminates the "works on my machine" problem and the gap between H2 and real database behavior.</p>
 
 <h4>Basic Setup</h4>
@@ -1388,19 +1435,26 @@ class OrderIntegrationTest { ... }
 @Import(TestcontainersConfiguration.class)
 class PaymentIntegrationTest { ... }
 
-// Both tests share the SAME containers — started once, reused!</pre>`}
-          ]
-        }
-      ]
+// Both tests share the SAME containers — started once, reused!</pre>`,
+            },
+          ],
         },
+      ],
+    },
+    {
+      label: "PART 5 · ENTERPRISE CONCEPTS & PRODUCTION READINESS",
+      sections: [
         {
-            label: "PART 5 · ENTERPRISE CONCEPTS & PRODUCTION READINESS",
-            sections: [
-                {
-                    id: "enterprise-advanced", n: 5, title: "Enterprise Spring Concepts You Must Know",
-                    desc: "Coverage of the concepts that separate <strong>project-level Spring usage</strong> from <strong>production-grade architecture</strong>.",
-                    questions: [
-                        {n:1, t:"How do observability and monitoring work in Spring Boot production systems?", d:["intermediate","advanced"], a:`
+          id: "enterprise-advanced",
+          n: 5,
+          title: "Enterprise Spring Concepts You Must Know",
+          desc: "Coverage of the concepts that separate <strong>project-level Spring usage</strong> from <strong>production-grade architecture</strong>.",
+          questions: [
+            {
+              n: 1,
+              t: "How do observability and monitoring work in Spring Boot production systems?",
+              d: ["intermediate", "advanced"],
+              a: `
 <p>Observability means you can answer: what failed, where, why, and how often.</p>
 
 <h4>Three pillars</h4>
@@ -1427,9 +1481,14 @@ class PaymentIntegrationTest { ... }
     <li>Kafka consumer lag (if event-driven)</li>
 </ul>
 
-<p><strong>Interview depth:</strong> mention SLI/SLO and alerting based on error budget, not just raw CPU usage.</p>`},
+<p><strong>Interview depth:</strong> mention SLI/SLO and alerting based on error budget, not just raw CPU usage.</p>`,
+            },
 
-                        {n:2, t:"What reliability patterns should advanced Spring developers apply in microservices?", d:["advanced","expert"], a:`
+            {
+              n: 2,
+              t: "What reliability patterns should advanced Spring developers apply in microservices?",
+              d: ["advanced", "expert"],
+              a: `
 <h4>Core patterns</h4>
 <ul>
     <li><strong>Timeout:</strong> every outbound call must have bounded wait time</li>
@@ -1448,9 +1507,14 @@ class PaymentIntegrationTest { ... }
 </ul>
 
 <h4>Important trade-off</h4>
-<p>Retries can amplify load during outages. Tune retry counts and add jitter to avoid synchronized retry storms.</p>`},
+<p>Retries can amplify load during outages. Tune retry counts and add jitter to avoid synchronized retry storms.</p>`,
+            },
 
-                        {n:3, t:"How should event-driven architecture be implemented safely with Spring and Kafka?", d:["advanced"], a:`
+            {
+              n: 3,
+              t: "How should event-driven architecture be implemented safely with Spring and Kafka?",
+              d: ["advanced"],
+              a: `
 <h4>Production-safe event flow</h4>
 <ol>
     <li>Write domain change and outbox event in same DB transaction</li>
@@ -1468,9 +1532,14 @@ class PaymentIntegrationTest { ... }
     <li>No long transactions in listener thread</li>
     <li>Explicit retry policy and DLQ strategy</li>
     <li>Use schema evolution strategy for backward compatibility</li>
-</ul>`},
+</ul>`,
+            },
 
-                        {n:4, t:"What are the key performance tuning concepts in advanced Spring applications?", d:["advanced","expert"], a:`
+            {
+              n: 4,
+              t: "What are the key performance tuning concepts in advanced Spring applications?",
+              d: ["advanced", "expert"],
+              a: `
 <h4>Application-level tuning</h4>
 <ul>
     <li>Right-size thread pools for web, async, scheduler, and messaging separately</li>
@@ -1494,9 +1563,14 @@ class PaymentIntegrationTest { ... }
     <li>Use load testing to validate p95/p99 under realistic traffic</li>
 </ul>
 
-<p><strong>Interview-ready framing:</strong> tune by evidence from metrics and profiles, never by intuition alone.</p>`},
+<p><strong>Interview-ready framing:</strong> tune by evidence from metrics and profiles, never by intuition alone.</p>`,
+            },
 
-                        {n:5, t:"What is a complete concept matrix from beginner to advanced for Spring interview prep?", d:["beginner","intermediate","advanced"], a:`
+            {
+              n: 5,
+              t: "What is a complete concept matrix from beginner to advanced for Spring interview prep?",
+              d: ["beginner", "intermediate", "advanced"],
+              a: `
 <h4>Level 1 (Beginner)</h4>
 <ul>
     <li>IoC, DI, bean scopes, configuration</li>
@@ -1528,10 +1602,11 @@ class PaymentIntegrationTest { ... }
     <li>Operational excellence: alerting, runbooks, incident response</li>
 </ul>
 
-<p>Use this matrix as your revision map. If you can explain each point with one real project example, you are interview-ready.</p>`}
-                    ]
-                }
-            ]
-        }
-    ]
+<p>Use this matrix as your revision map. If you can explain each point with one real project example, you are interview-ready.</p>`,
+            },
+          ],
+        },
+      ],
+    },
+  ],
 };

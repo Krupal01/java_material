@@ -8,10 +8,16 @@ window.SPRING_DB_DATA = {
       label: "PART 1 · JPA & HIBERNATE INTERNALS",
       sections: [
         {
-          id: "jpa-internals", n: 1, title: "JPA Persistence Context — The Core You Must Understand",
+          id: "jpa-internals",
+          n: 1,
+          title: "JPA Persistence Context — The Core You Must Understand",
           desc: "The <strong>Persistence Context is the heart of JPA</strong>. Every surprising JPA behavior — dirty checking, lazy loading, entity states, the N+1 problem — traces back to how the Persistence Context works.",
           questions: [
-            {n:1, t:"What is the JPA Persistence Context and how does it work internally?", d:["intermediate","advanced"], a:`
+            {
+              n: 1,
+              t: "What is the JPA Persistence Context and how does it work internally?",
+              d: ["intermediate", "advanced"],
+              a: `
 <p>The Persistence Context is the most important concept in JPA. If you fully understand it, you'll understand all the weird behaviors JPA exhibits.</p>
 
 <h4>What Is a Persistence Context?</h4>
@@ -137,9 +143,14 @@ public Order loadOrder() { return orderRepo.findById(42L).get(); }
 
 Order first = loadOrder();   // transaction 1: SELECT
 Order second = loadOrder();  // transaction 2: SELECT again!
-// first != second (different objects), but same data from DB</pre>`},
+// first != second (different objects), but same data from DB</pre>`,
+            },
 
-            {n:2, t:"The N+1 problem — what causes it, how to detect it, and every way to fix it.", d:["intermediate","advanced"], a:`
+            {
+              n: 2,
+              t: "The N+1 problem — what causes it, how to detect it, and every way to fix it.",
+              d: ["intermediate", "advanced"],
+              a: `
 <p>N+1 is one of the most common performance killers in JPA applications. Every Java interview asks about it.</p>
 
 <h4>What Is N+1?</h4>
@@ -279,9 +290,14 @@ List&lt;OrderSummaryProjection&gt; findByStatus(OrderStatus status);
   <tr><td>Need to modify loaded entities</td><td>JOIN FETCH or @EntityGraph</td><td>Loads managed entities in one query</td></tr>
   <tr><td>Can't change query, gradual improvement</td><td>@BatchSize</td><td>Low-risk partial improvement</td></tr>
   <tr><td>Global fix for known association</td><td>Change to EAGER on entity</td><td>Always fetched — use cautiously!</td></tr>
-</table>`},
+</table>`,
+            },
 
-            {n:3, t:"@Transactional — propagation, isolation, self-invocation, and common mistakes.", d:["intermediate","advanced"], a:`
+            {
+              n: 3,
+              t: "@Transactional — propagation, isolation, self-invocation, and common mistakes.",
+              d: ["intermediate", "advanced"],
+              a: `
 <p>@Transactional is Spring's most used annotation and the source of many production bugs. Deep understanding prevents these bugs before they happen.</p>
 
 <h4>Propagation Levels — What Happens When a Transactional Method Calls Another</h4>
@@ -458,19 +474,26 @@ class OrderService {
         ...
         self.updateInventory(order);  // calls through proxy → @Transactional works!
     }
-}</pre>`}
-          ]
-        }
-      ]
+}</pre>`,
+            },
+          ],
+        },
+      ],
     },
     {
       label: "PART 2 · SPRING DATA — REPOSITORIES & QUERIES",
       sections: [
         {
-          id: "spring-data", n: 2, title: "Spring Data — Repositories, Custom Queries & Pagination",
+          id: "spring-data",
+          n: 2,
+          title: "Spring Data — Repositories, Custom Queries & Pagination",
           desc: "Spring Data eliminates boilerplate data access code. Here's how it works <strong>under the hood</strong> and how to use it effectively.",
           questions: [
-            {n:4, t:"How does Spring Data generate repository implementations? What is the repository hierarchy?", d:["intermediate"], a:`
+            {
+              n: 4,
+              t: "How does Spring Data generate repository implementations? What is the repository hierarchy?",
+              d: ["intermediate"],
+              a: `
 <p>Spring Data's magic of "I define an interface, Spring creates the implementation" is one of the biggest productivity wins in the Java ecosystem.</p>
 
 <h4>Repository Hierarchy</h4>
@@ -625,19 +648,26 @@ class SimpleJpaRepository&lt;T, ID&gt; implements JpaRepository&lt;T, ID&gt; {
     // JPQL with JOIN FETCH (prevents N+1):
     @Query("SELECT DISTINCT o FROM Order o LEFT JOIN FETCH o.items WHERE o.customerId = :customerId")
     List&lt;Order&gt; findByCustomerIdWithItems(@Param("customerId") String customerId);
-}</pre>`}
-          ]
-        }
-      ]
+}</pre>`,
+            },
+          ],
+        },
+      ],
     },
     {
       label: "PART 3 · KAFKA & MESSAGING",
       sections: [
         {
-          id: "kafka-deep", n: 3, title: "Kafka — Producers, Consumers & Reliability Patterns",
+          id: "kafka-deep",
+          n: 3,
+          title: "Kafka — Producers, Consumers & Reliability Patterns",
           desc: "Kafka's <strong>core concepts, delivery guarantees, consumer groups, and fault-tolerance patterns</strong> — explained from first principles for Spring developers.",
           questions: [
-            {n:5, t:"Kafka fundamentals — topics, partitions, offsets, and consumer groups explained.", d:["intermediate"], a:`
+            {
+              n: 5,
+              t: "Kafka fundamentals — topics, partitions, offsets, and consumer groups explained.",
+              d: ["intermediate"],
+              a: `
 <p>Understanding Kafka's data model is prerequisite to understanding everything else about Kafka.</p>
 
 <h4>The Core Data Model</h4>
@@ -804,9 +834,14 @@ public class OrderEventConsumer {
 @KafkaListener(topics = "orders", groupId = "billing-service")    // billing group
 @KafkaListener(topics = "orders", groupId = "inventory-service")  // inventory group
 // Both receive the same messages, independently
-</pre>`},
+</pre>`,
+            },
 
-            {n:6, t:"Kafka delivery guarantees — at-most-once, at-least-once, exactly-once, and idempotency.", d:["advanced"], a:`
+            {
+              n: 6,
+              t: "Kafka delivery guarantees — at-most-once, at-least-once, exactly-once, and idempotency.",
+              d: ["advanced"],
+              a: `
 <p>Delivery guarantees are the hardest part of distributed messaging. Getting this wrong causes data loss or duplicate processing — both are production nightmares.</p>
 
 <h4>The Three Delivery Guarantees</h4>
@@ -929,19 +964,26 @@ public void handleDeadLetter(byte[] rawMessage,
     log.error("Dead letter received. Cause: {}", exMessage);
     alertService.notifyTeam("Message in DLT", exMessage);
     // Optionally: save to DB for manual review and reprocessing
-}</pre>`}
-          ]
-        }
-      ]
+}</pre>`,
+            },
+          ],
+        },
+      ],
     },
     {
       label: "PART 4 · RESILIENCE & DEPLOYMENT",
       sections: [
         {
-          id: "resilience-deep", n: 4, title: "Resilience4j — Circuit Breaker, Retry, Bulkhead in Depth",
+          id: "resilience-deep",
+          n: 4,
+          title: "Resilience4j — Circuit Breaker, Retry, Bulkhead in Depth",
           desc: "Building <strong>fault-tolerant microservices</strong> with Resilience4j — patterns, configurations, and how to combine them correctly.",
           questions: [
-            {n:7, t:"Circuit Breaker pattern — states, transitions, and Resilience4j configuration.", d:["intermediate","advanced"], a:`
+            {
+              n: 7,
+              t: "Circuit Breaker pattern — states, transitions, and Resilience4j configuration.",
+              d: ["intermediate", "advanced"],
+              a: `
 <p>The circuit breaker pattern protects your application from cascading failures when downstream services are struggling. Understanding the state machine is key to configuring it correctly.</p>
 
 <h4>The Three States — The Circuit Breaker State Machine</h4>
@@ -1097,9 +1139,14 @@ resilience4j:
 
 @Bulkhead(name = "payment-service", type = Bulkhead.Type.THREADPOOL)
 public CompletableFuture&lt;PaymentResult&gt; processPayment(PaymentRequest request) { ... }
-// Runs in a DEDICATED thread pool — completely isolated from main request threads</pre>`},
+// Runs in a DEDICATED thread pool — completely isolated from main request threads</pre>`,
+            },
 
-            {n:8, t:"Deployment strategies — zero-downtime deploys, graceful shutdown, and Kubernetes integration.", d:["advanced"], a:`
+            {
+              n: 8,
+              t: "Deployment strategies — zero-downtime deploys, graceful shutdown, and Kubernetes integration.",
+              d: ["advanced"],
+              a: `
 <p>Modern production deployments must be zero-downtime. Spring Boot has built-in support, but you need to configure Kubernetes correctly too.</p>
 
 <h4>Graceful Shutdown — Complete Flow</h4>
@@ -1264,27 +1311,39 @@ ALTER TABLE customers DROP COLUMN customer_name;
 # Result: ZERO downtime rolling update
 # Old pods: serve traffic → graceful shutdown → terminate
 # New pods: start → readinessProbe passes → receive traffic
-# At no point are 0 pods serving traffic</pre>`}
-          ]
-        }
-      ]
+# At no point are 0 pods serving traffic</pre>`,
+            },
+          ],
+        },
+      ],
     },
     {
       label: "PART 5 · DB ENGINES — SQL, POSTGRESQL, MONGODB, ORACLE",
       sections: [
         {
-          id: "db-engines-comparison", n: 5, title: "How Different Databases Work and When to Use Them",
+          id: "db-engines-comparison",
+          n: 5,
+          title: "How Different Databases Work and When to Use Them",
           desc: "Interview-ready comparison of <strong>SQL engines and document databases</strong> with practical backend decision-making.",
           questions: [
-            {n:9, t:"SQL vs NoSQL — when should backend engineers choose each?", d:["beginner","intermediate"], a:`
+            {
+              n: 9,
+              t: "SQL vs NoSQL — when should backend engineers choose each?",
+              d: ["beginner", "intermediate"],
+              a: `
 <p>Pick by consistency, query patterns, and data model evolution.</p>
 <ul>
   <li><strong>SQL (PostgreSQL/Oracle):</strong> complex joins, strict constraints, strong ACID behavior, transactional correctness.</li>
   <li><strong>NoSQL (MongoDB):</strong> flexible schema, document-centric workloads, horizontal scale with denormalized reads.</li>
 </ul>
-<p>Interview maturity: explain tradeoff, not preference.</p>`},
+<p>Interview maturity: explain tradeoff, not preference.</p>`,
+            },
 
-            {n:10, t:"How does PostgreSQL work internally in high-scale systems?", d:["intermediate","advanced"], a:`
+            {
+              n: 10,
+              t: "How does PostgreSQL work internally in high-scale systems?",
+              d: ["intermediate", "advanced"],
+              a: `
 <ul>
   <li><strong>MVCC:</strong> row versions allow high read/write concurrency.</li>
   <li><strong>WAL:</strong> durability via log-first write path.</li>
@@ -1295,27 +1354,42 @@ ALTER TABLE customers DROP COLUMN customer_name;
 UPDATE accounts SET balance = balance - 50 WHERE id = 1;
 UPDATE accounts SET balance = balance + 50 WHERE id = 2;
 COMMIT;
-// WAL ensures committed data survives crashes.</pre>`},
+// WAL ensures committed data survives crashes.</pre>`,
+            },
 
-            {n:11, t:"How does MongoDB work, and where is it a better fit than relational DBs?", d:["intermediate","advanced"], a:`
+            {
+              n: 11,
+              t: "How does MongoDB work, and where is it a better fit than relational DBs?",
+              d: ["intermediate", "advanced"],
+              a: `
 <ul>
   <li><strong>Document model:</strong> BSON objects with nested structures.</li>
   <li><strong>Replica set:</strong> primary-secondary replication with failover.</li>
   <li><strong>Sharding:</strong> scale-out by shard key.</li>
   <li><strong>Indexes:</strong> single, compound, TTL, text indexes.</li>
 </ul>
-<p>MongoDB is useful when entity shape changes frequently and read patterns map naturally to document aggregation.</p>`},
+<p>MongoDB is useful when entity shape changes frequently and read patterns map naturally to document aggregation.</p>`,
+            },
 
-            {n:12, t:"Why do some enterprises still choose Oracle for critical systems?", d:["advanced"], a:`
+            {
+              n: 12,
+              t: "Why do some enterprises still choose Oracle for critical systems?",
+              d: ["advanced"],
+              a: `
 <ul>
   <li>Strong enterprise-grade HA/recovery capabilities and operational tooling.</li>
   <li>Mature optimizer behavior for complex mixed workloads.</li>
   <li>Partitioning and large-scale governance features common in regulated sectors.</li>
   <li>Deep legacy ecosystem and operational expertise in large organizations.</li>
 </ul>
-<p>Interview answer: Oracle is often an ecosystem and risk-management decision, not only performance choice.</p>`},
+<p>Interview answer: Oracle is often an ecosystem and risk-management decision, not only performance choice.</p>`,
+            },
 
-            {n:13, t:"How do you decide DB technology in MAANG-level backend interviews?", d:["advanced","expert"], a:`
+            {
+              n: 13,
+              t: "How do you decide DB technology in MAANG-level backend interviews?",
+              d: ["advanced", "expert"],
+              a: `
 <ol>
   <li>List invariants: money, inventory, ordering guarantees, compliance.</li>
   <li>List access patterns: point lookup, joins, aggregates, full-text, analytics.</li>
@@ -1323,10 +1397,11 @@ COMMIT;
   <li>Choose default durable OLTP store (often PostgreSQL) and add specialized stores only when justified.</li>
   <li>Describe migration plan and operability before introducing extra databases.</li>
 </ol>
-<p>Strong answer includes reliability and ops cost, not just throughput claims.</p>`}
-          ]
-        }
-      ]
-    }
-  ]
+<p>Strong answer includes reliability and ops cost, not just throughput claims.</p>`,
+            },
+          ],
+        },
+      ],
+    },
+  ],
 };

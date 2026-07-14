@@ -1,36 +1,216 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Backend MAANG Track — Complete Interview Map</title>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/theme.css">
-<script>(function(){try{var t=localStorage.getItem("java-theme")||"light";document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
-<style>
-.backend-map{max-width:1100px;margin:0 auto;padding:1.5rem 1.25rem 3rem}
-.backend-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem;margin-top:1rem}
-.backend-card{display:block;text-decoration:none;color:var(--text);background:var(--surface);border:1.5px solid var(--border);border-radius:14px;padding:1.2rem;transition:transform .2s,border-color .2s,box-shadow .2s}
-.backend-card:hover{transform:translateY(-2px);border-color:var(--accent);box-shadow:0 8px 24px rgba(0,184,212,.14)}
-.backend-icon{font-size:2rem;margin-bottom:.45rem}
-.backend-title{font-size:1.05rem;font-weight:700;color:var(--text-strong);margin-bottom:.35rem}
-.backend-desc{font-size:.88rem;line-height:1.5;color:var(--muted)}
-.backend-count{margin-top:.75rem;font-size:.78rem;font-weight:700;color:var(--accent)}
-.backend-note{margin-top:1.2rem;font-size:.9rem;color:var(--muted)}
-</style>
-</head>
-<body>
-<nav class="topnav"><span class="nav-logo">// Java Interview</span><div class="nav-links"><a href="index.html" class="nav-link">🏠 Home</a><a href="oop.html" class="nav-link">🧩 OOPS</a><a href="basics.html" class="nav-link">☕ Basic</a><a href="versions.html" class="nav-link">🚀 Version</a><a href="collections.html" class="nav-link">📦 Collection</a><a href="exceptions.html" class="nav-link">⚠️ Exception</a><a href="concurrency.html" class="nav-link">⚡ Concurrency + Advance</a><a href="methods.html" class="nav-link">🛠️ Methods</a><a href="mastery.html" class="nav-link">🧠 Mastry</a><a href="quiz.html" class="nav-link">🎯 Quiz</a><a href="springboot.html" class="nav-link">🍃 Spring</a><a href="backend-track.html" class="nav-link active">🧱 Backend</a></div><button class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme" onclick="toggleTheme()" type="button"><svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg><svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button></nav>
-<div class="index-hero"><div class="hero-badge">// End-to-end Backend Interview Preparation</div><h1 class="hero-title">Backend MAANG Track</h1><p class="hero-sub">Separate deep pages for each large concept: databases, system design, cloud/deployment, CI/CD and tooling, observability and analytics.</p><div class="hero-stats"><div class="hero-stat"><div class="hero-stat-num">5</div><div class="hero-stat-label">Specialized Pages</div></div><div class="hero-stat"><div class="hero-stat-num">75+</div><div class="hero-stat-label">Focused Questions</div></div><div class="hero-stat"><div class="hero-stat-num">Beginner→Expert</div><div class="hero-stat-label">Progression</div></div><div class="hero-stat"><div class="hero-stat-num">MAANG</div><div class="hero-stat-label">Interview Scope</div></div></div></div>
-<div class="backend-map">
-  <div class="backend-grid">
-    <a class="backend-card" href="backend-db-engines.html"><div class="backend-icon">🗃️</div><div class="backend-title">Databases Deep Guide</div><div class="backend-desc">SQL vs NoSQL, PostgreSQL internals, MongoDB internals, Oracle enterprise usage, indexing, transactions, replication, sharding, and migration safety.</div><div class="backend-count">Open DB Track →</div></a>
-    <a class="backend-card" href="backend-architecture.html"><div class="backend-icon">🏗️</div><div class="backend-title">Architecture & System Design</div><div class="backend-desc">Monolith vs microservices, consistency models, messaging, cache/search strategy, and production architecture decision patterns.</div><div class="backend-count">Open Architecture Track →</div></a>
-    <a class="backend-card" href="backend-cloud-deployment.html"><div class="backend-icon">☁️</div><div class="backend-title">Cloud & Deployment</div><div class="backend-desc">Kubernetes, release strategies, rollback, graceful shutdown, multi-region thinking, and cloud security and cost discipline.</div><div class="backend-count">Open Cloud Track →</div></a>
-    <a class="backend-card" href="backend-cicd-tools.html"><div class="backend-icon">🔁</div><div class="backend-title">CI/CD & Tooling</div><div class="backend-desc">Reliable pipelines, quality gates, GitOps, artifact promotion, secrets management, and incident-response readiness.</div><div class="backend-count">Open CI/CD Track →</div></a>
-    <a class="backend-card" href="backend-observability-analytics.html"><div class="backend-icon">📊</div><div class="backend-title">Observability & Analytics</div><div class="backend-desc">SLI/SLO, logs/metrics/traces, alert design, tracing, event contracts, data quality checks, and backend analytics architecture.</div><div class="backend-count">Open Analytics Track →</div></a>
-  </div>
-  <p class="backend-note">Use these pages with Spring Core/Advanced/DB pages together to cover end-to-end backend interview expectations.</p>
-</div>
-<script src="assets/main.js" defer></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Backend MAANG Track — Complete Interview Map</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Syne:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/theme.css" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem("java-theme") || "light";
+          document.documentElement.setAttribute("data-theme", t);
+        } catch (e) {}
+      })();
+    </script>
+    <style>
+      .backend-map {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 1.5rem 1.25rem 3rem;
+      }
+      .backend-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 1rem;
+        margin-top: 1rem;
+      }
+      .backend-card {
+        display: block;
+        text-decoration: none;
+        color: var(--text);
+        background: var(--surface);
+        border: 1.5px solid var(--border);
+        border-radius: 14px;
+        padding: 1.2rem;
+        transition:
+          transform 0.2s,
+          border-color 0.2s,
+          box-shadow 0.2s;
+      }
+      .backend-card:hover {
+        transform: translateY(-2px);
+        border-color: var(--accent);
+        box-shadow: 0 8px 24px rgba(0, 184, 212, 0.14);
+      }
+      .backend-icon {
+        font-size: 2rem;
+        margin-bottom: 0.45rem;
+      }
+      .backend-title {
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--text-strong);
+        margin-bottom: 0.35rem;
+      }
+      .backend-desc {
+        font-size: 0.88rem;
+        line-height: 1.5;
+        color: var(--muted);
+      }
+      .backend-count {
+        margin-top: 0.75rem;
+        font-size: 0.78rem;
+        font-weight: 700;
+        color: var(--accent);
+      }
+      .backend-note {
+        margin-top: 1.2rem;
+        font-size: 0.9rem;
+        color: var(--muted);
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="topnav">
+      <span class="nav-logo">// Java Interview</span>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link">🏠 Home</a
+        ><a href="oop.html" class="nav-link">🧩 OOPS</a
+        ><a href="dsa.html" class="nav-link">🧮 DSA</a
+        ><a href="basics.html" class="nav-link">☕ Basic</a
+        ><a href="versions.html" class="nav-link">🚀 Version</a
+        ><a href="collections.html" class="nav-link">📦 Collection</a
+        ><a href="exceptions.html" class="nav-link">⚠️ Exception</a
+        ><a href="concurrency.html" class="nav-link">⚡ Concurrency + Advance</a
+        ><a href="methods.html" class="nav-link">🛠️ Methods</a
+        ><a href="mastery.html" class="nav-link">🧠 Mastry</a
+        ><a href="quiz.html" class="nav-link">🎯 Quiz</a
+        ><a href="springboot.html" class="nav-link">🍃 Spring</a
+        ><a href="backend-track.html" class="nav-link active">🧱 Backend</a>
+      </div>
+      <button
+        class="theme-toggle"
+        id="themeToggle"
+        aria-label="Toggle light/dark theme"
+        onclick="toggleTheme()"
+        type="button"
+      >
+        <svg
+          class="icon-sun"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <circle cx="12" cy="12" r="4" />
+          <path
+            d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"
+          /></svg
+        ><svg
+          class="icon-moon"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+        </svg>
+      </button>
+    </nav>
+    <div class="index-hero">
+      <div class="hero-badge">// End-to-end Backend Interview Preparation</div>
+      <h1 class="hero-title">Backend MAANG Track</h1>
+      <p class="hero-sub">
+        Separate deep pages for each large concept: databases, system design,
+        cloud/deployment, CI/CD and tooling, observability and analytics.
+      </p>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-num">5</div>
+          <div class="hero-stat-label">Specialized Pages</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">75+</div>
+          <div class="hero-stat-label">Focused Questions</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">Beginner→Expert</div>
+          <div class="hero-stat-label">Progression</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">MAANG</div>
+          <div class="hero-stat-label">Interview Scope</div>
+        </div>
+      </div>
+    </div>
+    <div class="backend-map">
+      <div class="backend-grid">
+        <a class="backend-card" href="backend-db-engines.html"
+          ><div class="backend-icon">🗃️</div>
+          <div class="backend-title">Databases Deep Guide</div>
+          <div class="backend-desc">
+            SQL vs NoSQL, PostgreSQL internals, MongoDB internals, Oracle
+            enterprise usage, indexing, transactions, replication, sharding, and
+            migration safety.
+          </div>
+          <div class="backend-count">Open DB Track →</div></a
+        >
+        <a class="backend-card" href="backend-architecture.html"
+          ><div class="backend-icon">🏗️</div>
+          <div class="backend-title">Architecture & System Design</div>
+          <div class="backend-desc">
+            Monolith vs microservices, consistency models, messaging,
+            cache/search strategy, and production architecture decision
+            patterns.
+          </div>
+          <div class="backend-count">Open Architecture Track →</div></a
+        >
+        <a class="backend-card" href="backend-cloud-deployment.html"
+          ><div class="backend-icon">☁️</div>
+          <div class="backend-title">Cloud & Deployment</div>
+          <div class="backend-desc">
+            Kubernetes, release strategies, rollback, graceful shutdown,
+            multi-region thinking, and cloud security and cost discipline.
+          </div>
+          <div class="backend-count">Open Cloud Track →</div></a
+        >
+        <a class="backend-card" href="backend-cicd-tools.html"
+          ><div class="backend-icon">🔁</div>
+          <div class="backend-title">CI/CD & Tooling</div>
+          <div class="backend-desc">
+            Reliable pipelines, quality gates, GitOps, artifact promotion,
+            secrets management, and incident-response readiness.
+          </div>
+          <div class="backend-count">Open CI/CD Track →</div></a
+        >
+        <a class="backend-card" href="backend-observability-analytics.html"
+          ><div class="backend-icon">📊</div>
+          <div class="backend-title">Observability & Analytics</div>
+          <div class="backend-desc">
+            SLI/SLO, logs/metrics/traces, alert design, tracing, event
+            contracts, data quality checks, and backend analytics architecture.
+          </div>
+          <div class="backend-count">Open Analytics Track →</div></a
+        >
+      </div>
+      <p class="backend-note">
+        Use these pages with Spring Core/Advanced/DB pages together to cover
+        end-to-end backend interview expectations.
+      </p>
+    </div>
+    <script src="assets/main.js" defer></script>
+  </body>
 </html>

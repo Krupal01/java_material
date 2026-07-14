@@ -9,10 +9,16 @@ window.SPRING_CORE_DATA = {
       label: "PART 1 · IoC, DI & THE SPRING CONTAINER",
       sections: [
         {
-          id: "ioc-di", n: 1, title: "Inversion of Control & Dependency Injection",
+          id: "ioc-di",
+          n: 1,
+          title: "Inversion of Control & Dependency Injection",
           desc: "The <strong>foundation of Spring</strong>. Every feature — security, transactions, caching — is built on top of IoC and DI. Master these and the rest falls into place.",
           questions: [
-            {n:1, t:"What is Inversion of Control (IoC)? Explain with a real-world analogy.", d:["beginner"], a:`
+            {
+              n: 1,
+              t: "What is Inversion of Control (IoC)? Explain with a real-world analogy.",
+              d: ["beginner"],
+              a: `
 <p><strong>Short answer:</strong> Instead of your code creating and controlling its own dependencies, you hand that control over to a framework (the Spring container). The container creates objects, wires them together, and manages their lifecycle.</p>
 
 <h4>Analogy — The Restaurant vs Home Cooking</h4>
@@ -67,9 +73,14 @@ class OrderService {
 
 <h4>Key Insight for Interviews</h4>
 <p><strong>IoC</strong> is the <em>principle</em>: "don't call us, we'll call you." <strong>Dependency Injection</strong> is the <em>mechanism</em> Spring uses to implement IoC. Many people use the terms interchangeably — but knowing the distinction signals real depth.</p>
-<p>The Spring container (specifically <code>ApplicationContext</code>) is the "box" that holds all your beans and performs IoC. When you call <code>SpringApplication.run()</code>, it boots the container, scans for beans, and wires everything together before serving any requests.</p>`},
+<p>The Spring container (specifically <code>ApplicationContext</code>) is the "box" that holds all your beans and performs IoC. When you call <code>SpringApplication.run()</code>, it boots the container, scans for beans, and wires everything together before serving any requests.</p>`,
+            },
 
-            {n:2, t:"What are the 3 types of Dependency Injection? Which one should you use and why?", d:["beginner","intermediate"], a:`
+            {
+              n: 2,
+              t: "What are the 3 types of Dependency Injection? Which one should you use and why?",
+              d: ["beginner", "intermediate"],
+              a: `
 <p>Spring supports three ways to inject dependencies. Each has trade-offs. Knowing <em>why</em> one is preferred over others is what interviewers want to hear.</p>
 
 <h4>1. Constructor Injection (✅ Preferred)</h4>
@@ -147,9 +158,14 @@ public class OrderService {
 }
 // Spring 6.1 throws: The dependencies of some of the beans form a cycle:
 //   a -> b -> a
-// FIX: Redesign (usually right answer), or use @Lazy on one side</pre>`},
+// FIX: Redesign (usually right answer), or use @Lazy on one side</pre>`,
+            },
 
-            {n:3, t:"BeanFactory vs ApplicationContext — what's the difference and which to use?", d:["intermediate"], a:`
+            {
+              n: 3,
+              t: "BeanFactory vs ApplicationContext — what's the difference and which to use?",
+              d: ["intermediate"],
+              a: `
 <p>Both are Spring IoC containers, but <code>ApplicationContext</code> is a significant superset of <code>BeanFactory</code>. In modern Spring, you never use BeanFactory directly.</p>
 
 <h4>BeanFactory — The Minimal Container</h4>
@@ -201,9 +217,14 @@ private ApplicationContext context;</pre>
   <li><strong>✅ Startup validation:</strong> missing beans, misconfigured dependencies fail immediately — not when a user hits an endpoint</li>
   <li><strong>✅ First request is fast:</strong> no bean creation delay on the first call</li>
   <li><strong>⚠️ Slower startup:</strong> large apps with many beans take longer to start (mitigated with <code>@Lazy</code> or Spring AOT)</li>
-</ul>`},
+</ul>`,
+            },
 
-            {n:4, t:"Explain the complete Spring Bean Lifecycle, step by step.", d:["intermediate","advanced"], a:`
+            {
+              n: 4,
+              t: "Explain the complete Spring Bean Lifecycle, step by step.",
+              d: ["intermediate", "advanced"],
+              a: `
 <p>This is one of the most common senior interview questions. Understanding the lifecycle means understanding exactly when your code runs and why AOP/transactions/caching work the way they do.</p>
 
 <h4>Full Bean Lifecycle</h4>
@@ -312,9 +333,14 @@ public class DatabaseConnectionPool implements InitializingBean, DisposableBean,
   <tr><td>Spring coupling</td><td>None (JSR-250)</td><td>Yes (Spring interface)</td><td>None</td></tr>
   <tr><td>Best for</td><td>Your own classes</td><td>Legacy code</td><td>Third-party classes you can't modify</td></tr>
   <tr><td>Recommendation</td><td>✅ Prefer</td><td>Avoid in new code</td><td>Use for third-party</td></tr>
-</table>`},
+</table>`,
+            },
 
-            {n:5, t:"What are Bean Scopes? Which ones are web-specific and why?", d:["intermediate"], a:`
+            {
+              n: 5,
+              t: "What are Bean Scopes? Which ones are web-specific and why?",
+              d: ["intermediate"],
+              a: `
 <p>Bean scope defines how many instances of a bean Spring creates and how they are shared. Choosing the wrong scope is a common source of concurrency bugs.</p>
 
 <h4>Singleton (Default) — One Per Container</h4>
@@ -412,14 +438,21 @@ private ObjectProvider&lt;ReportBuilder&gt; builderProvider;
 // ✅ Fix 2: @Lookup method injection
 @Lookup
 protected ReportBuilder createBuilder() { return null; } // Spring overrides
-// In method: ReportBuilder fresh = createBuilder();</pre>`}
-          ]
+// In method: ReportBuilder fresh = createBuilder();</pre>`,
+            },
+          ],
         },
         {
-          id: "annotations", n: 2, title: "Core Spring Annotations — Deeply Explained",
+          id: "annotations",
+          n: 2,
+          title: "Core Spring Annotations — Deeply Explained",
           desc: "Every annotation Spring provides, explained with <strong>what it does, why it exists, and how Spring processes it</strong> under the hood.",
           questions: [
-            {n:6, t:"@Component, @Service, @Repository, @Controller — what's the real difference?", d:["beginner","intermediate"], a:`
+            {
+              n: 6,
+              t: "@Component, @Service, @Repository, @Controller — what's the real difference?",
+              d: ["beginner", "intermediate"],
+              a: `
 <p>All four are <strong>stereotype annotations</strong> — they all make a class a Spring bean (picked up by component scanning). The difference is semantic (clarity) and one real functional difference with <code>@Repository</code>.</p>
 
 <h4>The Hierarchy</h4>
@@ -515,9 +548,14 @@ public class MixedController {
 }</pre>
 
 <h4>Interview Summary</h4>
-<p>When asked the difference, most candidates say "just semantic". Level up your answer: <strong>@Repository also activates persistence exception translation</strong>, which abstracts your service layer from the underlying data technology.</p>`},
+<p>When asked the difference, most candidates say "just semantic". Level up your answer: <strong>@Repository also activates persistence exception translation</strong>, which abstracts your service layer from the underlying data technology.</p>`,
+            },
 
-            {n:7, t:"How does @Autowired resolve beans? What happens when there are multiple candidates?", d:["intermediate"], a:`
+            {
+              n: 7,
+              t: "How does @Autowired resolve beans? What happens when there are multiple candidates?",
+              d: ["intermediate"],
+              a: `
 <p>Understanding the resolution order is essential for debugging <code>NoUniqueBeanDefinitionException</code> and designing flexible configurations.</p>
 
 <h4>@Autowired Resolution Order</h4>
@@ -619,9 +657,14 @@ emailService.ifPresent(s -&gt; s.send("hello"));
 // Or with ObjectProvider (most flexible):
 @Autowired
 private ObjectProvider&lt;EmailService&gt; emailProvider;
-emailProvider.ifAvailable(s -&gt; s.send("hello"));</pre>`},
+emailProvider.ifAvailable(s -&gt; s.send("hello"));</pre>`,
+            },
 
-            {n:8, t:"@Configuration vs @Component on a config class — what's the subtle but critical difference?", d:["intermediate","advanced"], a:`
+            {
+              n: 8,
+              t: "@Configuration vs @Component on a config class — what's the subtle but critical difference?",
+              d: ["intermediate", "advanced"],
+              a: `
 <p>This is a common gotcha that causes subtle bugs. The difference comes down to whether Spring uses CGLIB to proxy the class.</p>
 
 <h4>@Configuration — CGLIB Proxied (Singleton Guarantee)</h4>
@@ -699,9 +742,14 @@ class CacheAutoConfiguration {
 }</pre>
 
 <h4>Key Interview Point</h4>
-<p>The question "why use @Configuration over @Component for config?" is specifically looking for the CGLIB proxy / singleton guarantee answer. Saying "it's just for readability" misses the most important technical difference.</p>`},
+<p>The question "why use @Configuration over @Component for config?" is specifically looking for the CGLIB proxy / singleton guarantee answer. Saying "it's just for readability" misses the most important technical difference.</p>`,
+            },
 
-            {n:9, t:"Circular dependencies — what causes them, how to detect, and what's the RIGHT fix?", d:["advanced"], a:`
+            {
+              n: 9,
+              t: "Circular dependencies — what causes them, how to detect, and what's the RIGHT fix?",
+              d: ["advanced"],
+              a: `
 <p>Circular dependencies are a symptom of a design problem. Understanding how to diagnose and properly fix them is a senior-level skill.</p>
 
 <h4>What Is a Circular Dependency?</h4>
@@ -792,19 +840,26 @@ class PaymentService {
   <li><strong>Can the dependency be event-based?</strong> Instead of A calling B directly, A publishes an event that B listens to. No circular reference needed.</li>
   <li><strong>Is there hidden shared state?</strong> Extract it into a third class (common pattern: both need a "repository" or "context" class).</li>
   <li><strong>Are A and B too large?</strong> Circular deps often appear in God classes. Split them by single responsibility.</li>
-</ul>`}
-          ]
-        }
-      ]
+</ul>`,
+            },
+          ],
+        },
+      ],
     },
     {
       label: "PART 2 · SPRING BOOT INTERNALS",
       sections: [
         {
-          id: "boot-internals", n: 3, title: "Spring Boot Auto-Configuration Deep Dive",
+          id: "boot-internals",
+          n: 3,
+          title: "Spring Boot Auto-Configuration Deep Dive",
           desc: "How Spring Boot goes from an empty <code>main()</code> to a fully configured running application — the magic explained.",
           questions: [
-            {n:10, t:"How does Spring Boot auto-configuration actually work? Walk through it step by step.", d:["intermediate","advanced"], a:`
+            {
+              n: 10,
+              t: "How does Spring Boot auto-configuration actually work? Walk through it step by step.",
+              d: ["intermediate", "advanced"],
+              a: `
 <p>Auto-configuration is what makes Spring Boot "just work". Understanding the mechanism is essential for debugging when it doesn't work as expected.</p>
 
 <h4>Step 1 — @SpringBootApplication Unpacked</h4>
@@ -926,9 +981,14 @@ logging.level.org.springframework.boot.autoconfigure=DEBUG
 // Problem: "My auto-configured bean is overriding mine"
 // Solution: Ensure your @Bean is loaded BEFORE the auto-config
 //   Use @AutoConfigureBefore in your auto-config class
-//   Or ensure @Configuration is properly scanned</pre>`},
+//   Or ensure @Configuration is properly scanned</pre>`,
+            },
 
-            {n:11, t:"What is a Spring Boot Starter and how does it work internally?", d:["beginner","intermediate"], a:`
+            {
+              n: 11,
+              t: "What is a Spring Boot Starter and how does it work internally?",
+              d: ["beginner", "intermediate"],
+              a: `
 <p>Starters are one of Spring Boot's most developer-friendly features. Understanding how they work helps you create your own and debug dependency issues.</p>
 
 <h4>The Problem Starters Solve</h4>
@@ -1017,14 +1077,21 @@ public class MyCompanyAutoConfiguration {
     MyCompanyClient myCompanyClient(MyCompanyProperties props) {
         return new MyCompanyClient(props.getApiKey(), props.getBaseUrl());
     }
-}</pre>`}
-          ]
+}</pre>`,
+            },
+          ],
         },
         {
-          id: "config-profiles-deep", n: 4, title: "Profiles & Externalized Configuration",
+          id: "config-profiles-deep",
+          n: 4,
+          title: "Profiles & Externalized Configuration",
           desc: "How to manage environment-specific behavior <strong>without rebuilding</strong> your application — the right way.",
           questions: [
-            {n:12, t:"@Value vs @ConfigurationProperties — when to use each, and how does type binding work?", d:["intermediate","advanced"], a:`
+            {
+              n: 12,
+              t: "@Value vs @ConfigurationProperties — when to use each, and how does type binding work?",
+              d: ["intermediate", "advanced"],
+              a: `
 <p>Both inject external configuration, but they serve different purposes and have very different capabilities.</p>
 
 <h4>@Value — Simple, One-Off Property Injection</h4>
@@ -1159,9 +1226,14 @@ public record PaymentGatewayConfig(
 //   Binding to target PaymentGatewayConfig failed:
 //     Property: payment.gateway.api-key
 //     Value: ""
-//     Reason: API key required — set PAYMENT_GATEWAY_API_KEY env var</pre>`},
+//     Reason: API key required — set PAYMENT_GATEWAY_API_KEY env var</pre>`,
+            },
 
-            {n:13, t:"Spring Profiles — how to use them properly for multi-environment setups?", d:["beginner","intermediate"], a:`
+            {
+              n: 13,
+              t: "Spring Profiles — how to use them properly for multi-environment setups?",
+              d: ["beginner", "intermediate"],
+              a: `
 <p>Profiles are how you make one codebase work differently in dev, test, staging, and production without code changes — only configuration changes.</p>
 
 <h4>The Profile Concept</h4>
@@ -1297,19 +1369,26 @@ class DevDataLoader implements ApplicationRunner { ... }
 
 // Better: explicit profile names
 @Component
-@Profile("dev")  // Only in dev — clear intent</pre>`}
-          ]
-        }
-      ]
+@Profile("dev")  // Only in dev — clear intent</pre>`,
+            },
+          ],
+        },
+      ],
     },
     {
       label: "PART 3 · REST API & WEB LAYER",
       sections: [
         {
-          id: "rest-deep", n: 5, title: "REST API — Controllers, Validation & Exception Handling",
+          id: "rest-deep",
+          n: 5,
+          title: "REST API — Controllers, Validation & Exception Handling",
           desc: "Building production-quality REST APIs: request/response mapping, input validation, and structured error handling.",
           questions: [
-            {n:14, t:"How does Spring MVC process an HTTP request? (Dispatcher Servlet flow)", d:["intermediate","advanced"], a:`
+            {
+              n: 14,
+              t: "How does Spring MVC process an HTTP request? (Dispatcher Servlet flow)",
+              d: ["intermediate", "advanced"],
+              a: `
 <p>Every HTTP request in a Spring Boot web app goes through the same pipeline. Understanding this makes debugging much easier.</p>
 
 <h4>The DispatcherServlet — Central Coordinator</h4>
@@ -1441,9 +1520,14 @@ public record ApiError(
     String error,
     List&lt;String&gt; messages,
     String path
-) {}</pre>`},
+) {}</pre>`,
+            },
 
-            {n:15, t:"Bean Validation — how to validate requests properly at every layer?", d:["beginner","intermediate"], a:`
+            {
+              n: 15,
+              t: "Bean Validation — how to validate requests properly at every layer?",
+              d: ["beginner", "intermediate"],
+              a: `
 <p>Validation is a critical part of every API. Spring integrates Jakarta Bean Validation (formerly javax) seamlessly. Here's how to do it right at every layer.</p>
 
 <h4>Step 1 — Add the Dependency</h4>
@@ -1605,9 +1689,14 @@ class GlobalExceptionHandler {
         //   }
         // }
     }
-}</pre>`},
+}</pre>`,
+            },
 
-            {n:16, t:"BeanPostProcessor and BeanFactoryPostProcessor — what are they and when to implement them?", d:["advanced"], a:`
+            {
+              n: 16,
+              t: "BeanPostProcessor and BeanFactoryPostProcessor — what are they and when to implement them?",
+              d: ["advanced"],
+              a: `
 <p>These are Spring's most powerful extension points. Understanding them reveals how Spring's own features (AOP, caching, transactions) are actually built.</p>
 
 <h4>BeanFactoryPostProcessor — Modify Definitions BEFORE Creation</h4>
@@ -1714,19 +1803,26 @@ public class RetryBeanPostProcessor implements BeanPostProcessor {
     }
 }
 
-// This is exactly how Resilience4j, Spring Retry, and @Transactional work!</pre>`}
-          ]
-        }
-      ]
+// This is exactly how Resilience4j, Spring Retry, and @Transactional work!</pre>`,
+            },
+          ],
         },
+      ],
+    },
+    {
+      label: "PART 4 · COMPLETE PREPARATION ROADMAP",
+      sections: [
         {
-            label: "PART 4 · COMPLETE PREPARATION ROADMAP",
-            sections: [
-                {
-                    id: "core-roadmap", n: 6, title: "Beginner to Advanced Spring Learning Path",
-                    desc: "A practical <strong>end-to-end roadmap</strong> so a beginner can build strong fundamentals and progress to advanced system design level.",
-                    questions: [
-                        {n:1, t:"What concepts should a beginner learn first in Spring, in the correct order?", d:["beginner"], a:`
+          id: "core-roadmap",
+          n: 6,
+          title: "Beginner to Advanced Spring Learning Path",
+          desc: "A practical <strong>end-to-end roadmap</strong> so a beginner can build strong fundamentals and progress to advanced system design level.",
+          questions: [
+            {
+              n: 1,
+              t: "What concepts should a beginner learn first in Spring, in the correct order?",
+              d: ["beginner"],
+              a: `
 <p>Use this order. Each layer depends on the previous one.</p>
 
 <h4>Phase 1: Java and HTTP foundations</h4>
@@ -1765,9 +1861,14 @@ public class RetryBeanPostProcessor implements BeanPostProcessor {
     <li>Resilience patterns, observability, deployment and scaling</li>
 </ul>
 
-<p><strong>Interview tip:</strong> explain not only "what" but also "why" and "when not to use it".</p>`},
+<p><strong>Interview tip:</strong> explain not only "what" but also "why" and "when not to use it".</p>`,
+            },
 
-                        {n:2, t:"Give a project-based roadmap to move from beginner to advanced in 12 weeks.", d:["beginner","intermediate"], a:`
+            {
+              n: 2,
+              t: "Give a project-based roadmap to move from beginner to advanced in 12 weeks.",
+              d: ["beginner", "intermediate"],
+              a: `
 <p>Build one project in stages, not many disconnected mini-projects.</p>
 
 <h4>Weeks 1-3: Core API</h4>
@@ -1800,9 +1901,14 @@ public class RetryBeanPostProcessor implements BeanPostProcessor {
     <li>Prepare API docs and architecture notes</li>
 </ul>
 
-<p><strong>Result:</strong> by week 12, you have a portfolio-ready project and interview-ready explanations.</p>`},
+<p><strong>Result:</strong> by week 12, you have a portfolio-ready project and interview-ready explanations.</p>`,
+            },
 
-                        {n:3, t:"What are the most common beginner mistakes in Spring, and how to avoid them?", d:["beginner","intermediate"], a:`
+            {
+              n: 3,
+              t: "What are the most common beginner mistakes in Spring, and how to avoid them?",
+              d: ["beginner", "intermediate"],
+              a: `
 <h4>Top mistakes</h4>
 <ul>
     <li><strong>Field injection everywhere:</strong> makes testing hard. Use constructor injection.</li>
@@ -1815,9 +1921,14 @@ public class RetryBeanPostProcessor implements BeanPostProcessor {
 </ul>
 
 <h4>Simple rule</h4>
-<p>If a feature touches correctness, money, or security, cover it with tests and explicit configuration.</p>`},
+<p>If a feature touches correctness, money, or security, cover it with tests and explicit configuration.</p>`,
+            },
 
-                        {n:4, t:"What should I revise before Spring interviews to prove advanced understanding?", d:["advanced"], a:`
+            {
+              n: 4,
+              t: "What should I revise before Spring interviews to prove advanced understanding?",
+              d: ["advanced"],
+              a: `
 <h4>Revision checklist</h4>
 <ul>
     <li>Explain IoC, DI, bean lifecycle, and why proxies are needed for @Transactional/@Cacheable/@Async.</li>
@@ -1835,10 +1946,11 @@ public class RetryBeanPostProcessor implements BeanPostProcessor {
     <li>Give a concrete project example.</li>
     <li>Mention one pitfall and one mitigation.</li>
     <li>Conclude with trade-off.</li>
-</ol>`}
-                    ]
-                }
-            ]
-        }
-    ]
+</ol>`,
+            },
+          ],
+        },
+      ],
+    },
+  ],
 };

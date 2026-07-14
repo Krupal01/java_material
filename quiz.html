@@ -1,697 +1,935 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Java Tricky Quiz — 500 Interactive Q&amp;A</title>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/theme.css">
-<script>(function(){try{var t=localStorage.getItem("java-theme")||"light";document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
-<style>
-  /* ---- Quiz-specific styles (use theme variables) ---- */
-  .quiz-shell {
-    max-width: 980px;
-    margin: 0 auto;
-    padding: 28px 20px 60px;
-  }
-  .quiz-intro {
-    text-align: center;
-    margin-bottom: 28px;
-  }
-  .quiz-intro .blurb {
-    color: var(--muted);
-    font-size: 14px;
-    max-width: 640px;
-    margin: 8px auto 0;
-  }
-
-  /* Section picker */
-  .section-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 14px;
-    margin: 24px 0 8px;
-  }
-  .section-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-left: 4px solid var(--accent);
-    border-radius: 10px;
-    padding: 16px 18px;
-    cursor: pointer;
-    transition: all 0.2s;
-    box-shadow: var(--shadow-sm);
-  }
-  .section-card:hover {
-    border-color: var(--card-hover-border);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
-  }
-  .section-card .sc-icon { font-size: 22px; margin-bottom: 6px; }
-  .section-card .sc-title { font-weight: 700; font-size: 15px; color: var(--text-strong); margin-bottom: 4px; }
-  .section-card .sc-blurb { font-size: 12px; color: var(--muted); line-height: 1.5; margin-bottom: 10px; }
-  .section-card .sc-count {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    color: var(--accent);
-    font-weight: 700;
-  }
-  .section-card.mix {
-    border-left-color: var(--accent3);
-    background: linear-gradient(135deg, var(--surface) 0%, var(--surface2) 100%);
-  }
-  .section-card.mix .sc-count { color: var(--accent3); }
-
-  /* Quiz play view */
-  .quiz-topbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    flex-wrap: wrap;
-    margin-bottom: 16px;
-    padding-bottom: 12px;
-    border-bottom: 1px solid var(--border);
-  }
-  .quiz-back {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 6px 12px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    color: var(--muted);
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  .quiz-back:hover { border-color: var(--accent); color: var(--accent); }
-  .quiz-sectitle {
-    flex: 1;
-    font-weight: 700;
-    font-size: 16px;
-    color: var(--text-strong);
-  }
-  .progress-pill {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    color: var(--muted);
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 4px 12px;
-  }
-  .progress-pill strong { color: var(--accent); }
-
-  .dot-row { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; }
-  .pdot {
-    width: 10px; height: 10px;
-    border-radius: 50%;
-    background: var(--border);
-    transition: background 0.2s, transform 0.2s;
-  }
-  .pdot.current { background: var(--accent); transform: scale(1.25); }
-  .pdot.correct { background: var(--green); }
-  .pdot.wrong { background: var(--accent2); }
-
-  .qcard {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 24px;
-    box-shadow: var(--shadow-md);
-    margin-bottom: 16px;
-  }
-  .qmeta { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
-  .qbadge {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    padding: 4px 10px;
-    border-radius: 4px;
-    background: var(--surface2);
-    color: var(--accent);
-    border: 1px solid var(--border);
-  }
-  .qnum { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--muted); }
-  .qtitle {
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--text-strong);
-    margin-bottom: 14px;
-    line-height: 1.4;
-  }
-  .qcode {
-    font-family: 'JetBrains Mono', monospace;
-    background: var(--code-bg);
-    border: 1px solid var(--border);
-    border-left: 3px solid var(--accent);
-    border-radius: 8px;
-    padding: 14px 16px;
-    font-size: 12.5px;
-    line-height: 1.65;
-    color: var(--code-text);
-    overflow-x: auto;
-    margin-bottom: 16px;
-    white-space: pre;
-  }
-  .qprompt {
-    color: var(--muted);
-    font-size: 13px;
-    margin-bottom: 12px;
-    font-style: italic;
-  }
-  .options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
-  .option {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    background: var(--surface);
-    border: 1.5px solid var(--border);
-    border-radius: 8px;
-    padding: 12px 14px;
-    cursor: pointer;
-    transition: all 0.15s;
-    user-select: none;
-    color: var(--text);
-  }
-  .option:hover { border-color: var(--accent); }
-  .option.selected {
-    border-color: var(--accent);
-    background: var(--sidebar-active-bg);
-  }
-  .option.correct {
-    border-color: var(--green);
-    background: var(--tip-bg);
-    color: var(--green);
-  }
-  .option.wrong {
-    border-color: var(--accent2);
-    background: rgba(255,107,53,0.08);
-    color: var(--accent2);
-  }
-  .option.locked { cursor: default; }
-  .optletter {
-    width: 26px; height: 26px;
-    border-radius: 50%;
-    border: 1.5px solid currentColor;
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    font-weight: 700;
-    flex-shrink: 0;
-  }
-  .opttext {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 13px;
-    line-height: 1.5;
-  }
-
-  .explanation {
-    background: var(--code-bg);
-    border-left: 3px solid var(--green);
-    border-radius: 8px;
-    padding: 14px 16px;
-    margin-bottom: 16px;
-    animation: slideIn 0.2s ease;
-  }
-  .explanation.wrong { border-left-color: var(--accent2); }
-  .expl-head { font-weight: 700; margin-bottom: 6px; font-size: 14px; }
-  .expl-head.ok { color: var(--green); }
-  .expl-head.no { color: var(--accent2); }
-  .expl-body { font-size: 13.5px; line-height: 1.65; color: var(--text); }
-  @keyframes slideIn {
-    from { opacity: 0; transform: translateY(-4px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .actions { display: flex; justify-content: space-between; gap: 12px; }
-  .btn {
-    border: none;
-    border-radius: 8px;
-    padding: 10px 22px;
-    font-family: 'Syne', sans-serif;
-    font-size: 13px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  .btn-primary {
-    background: linear-gradient(135deg, var(--accent), var(--accent3));
-    color: #ffffff;
-  }
-  .btn-primary:disabled {
-    opacity: 0.35;
-    cursor: not-allowed;
-    filter: grayscale(0.3);
-  }
-  .btn-ghost {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    color: var(--text);
-  }
-  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
-
-  /* Results screen */
-  .result-card {
-    text-align: center;
-    padding: 36px 24px;
-  }
-  .result-emoji { font-size: 52px; margin-bottom: 8px; }
-  .result-title {
-    font-size: 26px;
-    font-weight: 800;
-    color: var(--text-strong);
-    margin-bottom: 16px;
-  }
-  .score-circle {
-    display: flex;
-    align-items: baseline;
-    justify-content: center;
-    gap: 4px;
-    margin-bottom: 12px;
-  }
-  .score-num {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 56px;
-    font-weight: 800;
-    color: var(--accent);
-  }
-  .score-of { font-size: 22px; color: var(--muted); }
-  .result-msg { color: var(--muted); margin-bottom: 24px; font-size: 15px; }
-  .review-list {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    text-align: left;
-    margin-bottom: 24px;
-    max-height: 320px;
-    overflow-y: auto;
-    padding: 0 4px;
-  }
-  .review-item {
-    background: var(--code-bg);
-    border-left: 3px solid var(--green);
-    border-radius: 6px;
-    padding: 10px 12px;
-    font-size: 13px;
-    display: flex;
-    gap: 8px;
-    align-items: center;
-  }
-  .review-item.wrong { border-left-color: var(--accent2); }
-  .review-marker { font-weight: 700; flex-shrink: 0; width: 18px; }
-  .review-marker.ok { color: var(--green); }
-  .review-marker.no { color: var(--accent2); }
-
-  .footer-controls {
-    display: flex;
-    gap: 12px;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-</style>
-</head>
-<body>
-
-<nav class="topnav">
-  <span class="nav-logo">// Java Interview</span>
-  <div class="nav-links">
-    <a href="index.html" class="nav-link">🏠 Home</a>
-    <a href="oop.html" class="nav-link">🧩 OOPS</a>
-    <a href="basics.html" class="nav-link">☕ Basic</a>
-    <a href="versions.html" class="nav-link">🚀 Version</a>
-    <a href="collections.html" class="nav-link">📦 Collection</a>
-    <a href="exceptions.html" class="nav-link">⚠️ Exception</a>
-    <a href="concurrency.html" class="nav-link">⚡ Concurrency + Advance</a>
-    <a href="methods.html" class="nav-link">🛠️ Methods</a>
-    <a href="mastery.html" class="nav-link">🧠 Mastry</a>
-    <a href="quiz.html" class="nav-link active">🎯 Quiz</a>
-    <a href="springboot.html" class="nav-link">🍃 Spring</a>
-    <a href="backend-track.html" class="nav-link">🧱 Backend</a>
-  </div>
-  <button class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme" onclick="toggleTheme()" type="button">
-    <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
-    <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-  </button>
-</nav>
-
-<div class="breadcrumb">
-  <a href="index.html">Home</a> › 🎯 Tricky Quiz
-</div>
-
-<header>
-  <div class="header-tag">// Interactive · 500 Tricky Questions · 16 Sections</div>
-  <h1>🎯 Java Tricky Quiz</h1>
-  <p class="subtitle">From Arrays & Strings to Spring Boot & JPA — output puzzles, concept traps, and senior-level questions. Pick a section or run the 500-question mix.</p>
-  <div class="stats-row">
-    <div class="stat"><span class="stat-num" id="statTotalQ">0</span> Total Questions</div>
-    <div class="stat"><span class="stat-num" id="statSections">0</span> Sections</div>
-    <div class="stat"><span class="stat-num">100%</span> Local — no backend</div>
-  </div>
-</header>
-
-<div class="quiz-shell">
-  <!-- View 1: Section Picker -->
-  <div id="pickerView">
-    <div class="quiz-intro">
-      <p class="blurb">Each question shows real Java code and 4 options. Pick one, reveal the answer, read the explanation. Built to catch the kind of traps senior interviewers actually use.</p>
-    </div>
-    <div class="section-grid" id="sectionGrid"></div>
-  </div>
-
-  <!-- View 2: Quiz Player -->
-  <div id="playView" style="display:none;">
-    <div class="quiz-topbar">
-      <button class="quiz-back" onclick="goHome()">← Back</button>
-      <div class="quiz-sectitle" id="playSecTitle"></div>
-      <div class="progress-pill"><strong id="playScore">0</strong> / <span id="playSeen">0</span> correct</div>
-    </div>
-    <div class="dot-row" id="dotRow"></div>
-    <div id="cardSlot"></div>
-  </div>
-
-  <!-- View 3: Results -->
-  <div id="resultView" style="display:none;">
-    <div class="qcard result-card">
-      <div class="result-emoji" id="resEmoji">🏆</div>
-      <div class="result-title">Quiz Complete</div>
-      <div class="score-circle">
-        <span class="score-num" id="resScoreNum">0</span>
-        <span class="score-of">/ <span id="resTotal">0</span></span>
-      </div>
-      <div class="result-msg" id="resMsg"></div>
-      <div class="review-list" id="reviewList"></div>
-      <div class="footer-controls">
-        <button class="btn btn-primary" onclick="restartCurrent()">Try Again</button>
-        <button class="btn btn-ghost" onclick="goHome()">Pick Another Section</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<script src="assets/quiz-data.js"></script>
-<script src="assets/main.js" defer></script>
-<script>
-(function () {
-  const DATA = window.QUIZ_DATA;
-  if (!DATA) {
-    document.getElementById('pickerView').innerHTML =
-      '<div class="qcard">⚠️ Quiz data failed to load. Make sure <code>assets/quiz-data.js</code> exists.</div>';
-    return;
-  }
-
-  /* ----- state ----- */
-  const state = {
-    activePool: [],   // current list of questions being played
-    activeTitle: '',  // section title (or 'Mix All')
-    activeKey: '',    // 'mix' or section id (used for restart)
-    idx: 0,
-    selected: null,
-    revealed: false,
-    score: 0,
-    seen: 0,
-    log: []           // [{q, picked, correct}]
-  };
-
-  const $ = (id) => document.getElementById(id);
-
-  /* ----- stats ----- */
-  let totalQ = 0;
-  DATA.sections.forEach(s => totalQ += s.questions.length);
-  $('statTotalQ').textContent = totalQ;
-  $('statSections').textContent = DATA.sections.length;
-
-  /* ----- section picker ----- */
-  function renderPicker() {
-    const grid = $('sectionGrid');
-    grid.innerHTML = '';
-
-    /* Mix-all card first */
-    const mix = document.createElement('div');
-    mix.className = 'section-card mix';
-    mix.style.borderLeftColor = '#a855f7';
-    mix.innerHTML =
-      '<div class="sc-icon">🎲</div>' +
-      '<div class="sc-title">Mix All — Full Challenge</div>' +
-      '<div class="sc-blurb">Random shuffle across every section. The real interview gauntlet.</div>' +
-      '<div class="sc-count">' + totalQ + ' questions →</div>';
-    mix.addEventListener('click', () => startQuiz('mix'));
-    grid.appendChild(mix);
-
-    DATA.sections.forEach(sec => {
-      const card = document.createElement('div');
-      card.className = 'section-card';
-      card.style.borderLeftColor = sec.color || 'var(--accent)';
-      card.innerHTML =
-        '<div class="sc-icon">' + (sec.icon || '📘') + '</div>' +
-        '<div class="sc-title">' + sec.title + '</div>' +
-        '<div class="sc-blurb">' + (sec.blurb || '') + '</div>' +
-        '<div class="sc-count" style="color:' + (sec.color || 'var(--accent)') + ';">' + sec.questions.length + ' questions →</div>';
-      card.addEventListener('click', () => startQuiz(sec.id));
-      grid.appendChild(card);
-    });
-  }
-
-  function shuffle(arr) {
-    const a = arr.slice();
-    for (let i = a.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [a[i], a[j]] = [a[j], a[i]];
-    }
-    return a;
-  }
-
-  function startQuiz(key) {
-    state.activeKey = key;
-    if (key === 'mix') {
-      const all = [];
-      DATA.sections.forEach(s => s.questions.forEach(q => all.push({ q, secTitle: s.title, secColor: s.color })));
-      state.activePool = shuffle(all);
-      state.activeTitle = '🎲 Mix All — ' + totalQ + ' Questions';
-    } else {
-      const sec = DATA.sections.find(s => s.id === key);
-      state.activePool = sec.questions.map(q => ({ q, secTitle: sec.title, secColor: sec.color }));
-      state.activeTitle = (sec.icon || '') + ' ' + sec.title;
-    }
-    state.idx = 0;
-    state.selected = null;
-    state.revealed = false;
-    state.score = 0;
-    state.seen = 0;
-    state.log = [];
-
-    showView('play');
-    renderCurrent();
-  }
-
-  function restartCurrent() {
-    if (state.activeKey) startQuiz(state.activeKey);
-  }
-
-  /* ----- play view ----- */
-  function showView(name) {
-    $('pickerView').style.display = name === 'picker' ? '' : 'none';
-    $('playView').style.display = name === 'play' ? '' : 'none';
-    $('resultView').style.display = name === 'result' ? '' : 'none';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
-  function renderCurrent() {
-    $('playSecTitle').textContent = state.activeTitle;
-    $('playScore').textContent = state.score;
-    $('playSeen').textContent = state.seen;
-
-    /* dots */
-    const dotRow = $('dotRow');
-    dotRow.innerHTML = '';
-    state.activePool.forEach((_, i) => {
-      const d = document.createElement('div');
-      d.className = 'pdot';
-      if (i < state.log.length) {
-        d.classList.add(state.log[i].correct ? 'correct' : 'wrong');
-      } else if (i === state.idx) {
-        d.classList.add('current');
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Java Tricky Quiz — 500 Interactive Q&amp;A</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Syne:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/theme.css" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem("java-theme") || "light";
+          document.documentElement.setAttribute("data-theme", t);
+        } catch (e) {}
+      })();
+    </script>
+    <style>
+      /* ---- Quiz-specific styles (use theme variables) ---- */
+      .quiz-shell {
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 28px 20px 60px;
       }
-      dotRow.appendChild(d);
-    });
-
-    const item = state.activePool[state.idx];
-    const q = item.q;
-    const slot = $('cardSlot');
-    slot.innerHTML = '';
-
-    const card = document.createElement('div');
-    card.className = 'qcard';
-    card.innerHTML =
-      '<div class="qmeta">' +
-        '<span class="qbadge" style="color:' + (item.secColor || 'var(--accent)') + ';">' + item.secTitle + '</span>' +
-        '<span class="qnum">' + (state.idx + 1) + ' / ' + state.activePool.length + '</span>' +
-      '</div>' +
-      '<div class="qtitle"></div>' +
-      (q.code ? '<pre class="qcode" style="border-left-color:' + (item.secColor || 'var(--accent)') + ';"></pre>' : '') +
-      '<div class="qprompt">What is the output / correct answer?</div>' +
-      '<div class="options"></div>' +
-      '<div class="expl-slot"></div>' +
-      '<div class="actions">' +
-        '<button class="btn btn-ghost" id="skipBtn">Skip</button>' +
-        '<button class="btn btn-primary" id="primaryBtn">Reveal Answer</button>' +
-      '</div>';
-
-    card.querySelector('.qtitle').textContent = q.title;
-    if (q.code) card.querySelector('.qcode').textContent = q.code;
-
-    const opts = card.querySelector('.options');
-    q.options.forEach((text, i) => {
-      const op = document.createElement('div');
-      op.className = 'option';
-      op.dataset.idx = String(i);
-      op.innerHTML =
-        '<span class="optletter">' + String.fromCharCode(65 + i) + '</span>' +
-        '<span class="opttext"></span>';
-      op.querySelector('.opttext').textContent = text;
-      op.addEventListener('click', () => selectOption(i));
-      opts.appendChild(op);
-    });
-
-    slot.appendChild(card);
-    refreshOptionsUI();
-    refreshActionsUI();
-  }
-
-  function selectOption(i) {
-    if (state.revealed) return;
-    state.selected = i;
-    refreshOptionsUI();
-    refreshActionsUI();
-  }
-
-  function refreshOptionsUI() {
-    const opts = document.querySelectorAll('.option');
-    const item = state.activePool[state.idx];
-    const correctIdx = item.q.answer;
-    opts.forEach((op, i) => {
-      op.classList.remove('selected', 'correct', 'wrong', 'locked');
-      if (state.revealed) {
-        op.classList.add('locked');
-        if (i === correctIdx) op.classList.add('correct');
-        else if (i === state.selected) op.classList.add('wrong');
-      } else if (state.selected === i) {
-        op.classList.add('selected');
+      .quiz-intro {
+        text-align: center;
+        margin-bottom: 28px;
       }
-    });
-  }
+      .quiz-intro .blurb {
+        color: var(--muted);
+        font-size: 14px;
+        max-width: 640px;
+        margin: 8px auto 0;
+      }
 
-  function refreshActionsUI() {
-    const primary = $('primaryBtn');
-    const skip = $('skipBtn');
-    if (!primary || !skip) return;
-    if (state.revealed) {
-      skip.style.display = 'none';
-      primary.textContent = (state.idx + 1 >= state.activePool.length) ? 'See Results →' : 'Next Question →';
-      primary.disabled = false;
-      primary.onclick = nextQuestion;
-    } else {
-      skip.style.display = '';
-      skip.onclick = nextQuestion;
-      primary.textContent = 'Reveal Answer';
-      primary.disabled = state.selected === null;
-      primary.onclick = reveal;
-    }
-  }
+      /* Section picker */
+      .section-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 14px;
+        margin: 24px 0 8px;
+      }
+      .section-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-left: 4px solid var(--accent);
+        border-radius: 10px;
+        padding: 16px 18px;
+        cursor: pointer;
+        transition: all 0.2s;
+        box-shadow: var(--shadow-sm);
+      }
+      .section-card:hover {
+        border-color: var(--card-hover-border);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+      .section-card .sc-icon {
+        font-size: 22px;
+        margin-bottom: 6px;
+      }
+      .section-card .sc-title {
+        font-weight: 700;
+        font-size: 15px;
+        color: var(--text-strong);
+        margin-bottom: 4px;
+      }
+      .section-card .sc-blurb {
+        font-size: 12px;
+        color: var(--muted);
+        line-height: 1.5;
+        margin-bottom: 10px;
+      }
+      .section-card .sc-count {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 11px;
+        color: var(--accent);
+        font-weight: 700;
+      }
+      .section-card.mix {
+        border-left-color: var(--accent3);
+        background: linear-gradient(
+          135deg,
+          var(--surface) 0%,
+          var(--surface2) 100%
+        );
+      }
+      .section-card.mix .sc-count {
+        color: var(--accent3);
+      }
 
-  function reveal() {
-    if (state.selected === null || state.revealed) return;
-    state.revealed = true;
-    const item = state.activePool[state.idx];
-    const q = item.q;
-    const correct = state.selected === q.answer;
-    if (correct) state.score++;
-    state.seen++;
-    state.log.push({ q, picked: state.selected, correct, secTitle: item.secTitle });
+      /* Quiz play view */
+      .quiz-topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-bottom: 16px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid var(--border);
+      }
+      .quiz-back {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 6px 12px;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 12px;
+        color: var(--muted);
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .quiz-back:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+      .quiz-sectitle {
+        flex: 1;
+        font-weight: 700;
+        font-size: 16px;
+        color: var(--text-strong);
+      }
+      .progress-pill {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 12px;
+        color: var(--muted);
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 4px 12px;
+      }
+      .progress-pill strong {
+        color: var(--accent);
+      }
 
-    /* render explanation */
-    const slot = document.querySelector('.expl-slot');
-    if (slot) {
-      slot.innerHTML =
-        '<div class="explanation ' + (correct ? '' : 'wrong') + '">' +
-          '<div class="expl-head ' + (correct ? 'ok' : 'no') + '">' + (correct ? '✓ Correct!' : '✗ Not quite.') + '</div>' +
-          '<div class="expl-body"></div>' +
-        '</div>';
-      slot.querySelector('.expl-body').textContent = q.explanation;
-    }
+      .dot-row {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+        margin-bottom: 16px;
+      }
+      .pdot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: var(--border);
+        transition:
+          background 0.2s,
+          transform 0.2s;
+      }
+      .pdot.current {
+        background: var(--accent);
+        transform: scale(1.25);
+      }
+      .pdot.correct {
+        background: var(--green);
+      }
+      .pdot.wrong {
+        background: var(--accent2);
+      }
 
-    refreshOptionsUI();
-    refreshActionsUI();
-    $('playScore').textContent = state.score;
-    $('playSeen').textContent = state.seen;
-    /* update current dot */
-    const dots = document.querySelectorAll('.pdot');
-    if (dots[state.idx]) {
-      dots[state.idx].classList.remove('current');
-      dots[state.idx].classList.add(correct ? 'correct' : 'wrong');
-    }
-  }
+      .qcard {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 24px;
+        box-shadow: var(--shadow-md);
+        margin-bottom: 16px;
+      }
+      .qmeta {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 12px;
+      }
+      .qbadge {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        padding: 4px 10px;
+        border-radius: 4px;
+        background: var(--surface2);
+        color: var(--accent);
+        border: 1px solid var(--border);
+      }
+      .qnum {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .qtitle {
+        font-size: 18px;
+        font-weight: 700;
+        color: var(--text-strong);
+        margin-bottom: 14px;
+        line-height: 1.4;
+      }
+      .qcode {
+        font-family: "JetBrains Mono", monospace;
+        background: var(--code-bg);
+        border: 1px solid var(--border);
+        border-left: 3px solid var(--accent);
+        border-radius: 8px;
+        padding: 14px 16px;
+        font-size: 12.5px;
+        line-height: 1.65;
+        color: var(--code-text);
+        overflow-x: auto;
+        margin-bottom: 16px;
+        white-space: pre;
+      }
+      .qprompt {
+        color: var(--muted);
+        font-size: 13px;
+        margin-bottom: 12px;
+        font-style: italic;
+      }
+      .options {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 16px;
+      }
+      .option {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        background: var(--surface);
+        border: 1.5px solid var(--border);
+        border-radius: 8px;
+        padding: 12px 14px;
+        cursor: pointer;
+        transition: all 0.15s;
+        user-select: none;
+        color: var(--text);
+      }
+      .option:hover {
+        border-color: var(--accent);
+      }
+      .option.selected {
+        border-color: var(--accent);
+        background: var(--sidebar-active-bg);
+      }
+      .option.correct {
+        border-color: var(--green);
+        background: var(--tip-bg);
+        color: var(--green);
+      }
+      .option.wrong {
+        border-color: var(--accent2);
+        background: rgba(255, 107, 53, 0.08);
+        color: var(--accent2);
+      }
+      .option.locked {
+        cursor: default;
+      }
+      .optletter {
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        border: 1.5px solid currentColor;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 11px;
+        font-weight: 700;
+        flex-shrink: 0;
+      }
+      .opttext {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 13px;
+        line-height: 1.5;
+      }
 
-  function nextQuestion() {
-    /* Skipped (not revealed) — still advance, record as wrong */
-    if (!state.revealed) {
-      const item = state.activePool[state.idx];
-      state.seen++;
-      state.log.push({ q: item.q, picked: null, correct: false, secTitle: item.secTitle, skipped: true });
-    }
-    if (state.idx + 1 >= state.activePool.length) {
-      showResult();
-      return;
-    }
-    state.idx++;
-    state.selected = null;
-    state.revealed = false;
-    renderCurrent();
-  }
+      .explanation {
+        background: var(--code-bg);
+        border-left: 3px solid var(--green);
+        border-radius: 8px;
+        padding: 14px 16px;
+        margin-bottom: 16px;
+        animation: slideIn 0.2s ease;
+      }
+      .explanation.wrong {
+        border-left-color: var(--accent2);
+      }
+      .expl-head {
+        font-weight: 700;
+        margin-bottom: 6px;
+        font-size: 14px;
+      }
+      .expl-head.ok {
+        color: var(--green);
+      }
+      .expl-head.no {
+        color: var(--accent2);
+      }
+      .expl-body {
+        font-size: 13.5px;
+        line-height: 1.65;
+        color: var(--text);
+      }
+      @keyframes slideIn {
+        from {
+          opacity: 0;
+          transform: translateY(-4px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
 
-  /* ----- results ----- */
-  function showResult() {
-    const total = state.activePool.length;
-    const pct = Math.round((state.score / total) * 100);
-    $('resScoreNum').textContent = state.score;
-    $('resTotal').textContent = total;
-    let emoji = '💡', msg = 'Keep practicing — these are genuinely tricky.';
-    if (pct >= 85) { emoji = '🏆'; msg = 'Outstanding! You know the dark corners of Java.'; }
-    else if (pct >= 70) { emoji = '🎉'; msg = 'Excellent — strong senior-level performance.'; }
-    else if (pct >= 50) { emoji = '👍'; msg = 'Solid effort — review the misses below.'; }
-    $('resEmoji').textContent = emoji;
-    $('resMsg').textContent = msg + ' (' + pct + '%)';
+      .actions {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+      }
+      .btn {
+        border: none;
+        border-radius: 8px;
+        padding: 10px 22px;
+        font-family: "Syne", sans-serif;
+        font-size: 13px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .btn-primary {
+        background: linear-gradient(135deg, var(--accent), var(--accent3));
+        color: #ffffff;
+      }
+      .btn-primary:disabled {
+        opacity: 0.35;
+        cursor: not-allowed;
+        filter: grayscale(0.3);
+      }
+      .btn-ghost {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        color: var(--text);
+      }
+      .btn-ghost:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
 
-    const list = $('reviewList');
-    list.innerHTML = '';
-    state.log.forEach((entry, i) => {
-      const row = document.createElement('div');
-      row.className = 'review-item' + (entry.correct ? '' : ' wrong');
-      const marker = entry.correct ? '✓' : (entry.skipped ? '–' : '✗');
-      const markerCls = entry.correct ? 'ok' : 'no';
-      row.innerHTML =
-        '<span class="review-marker ' + markerCls + '">' + marker + '</span>' +
-        '<span><strong>Q' + (i + 1) + '.</strong> </span>' +
-        '<span class="review-text"></span>';
-      row.querySelector('.review-text').textContent = entry.q.title;
-      list.appendChild(row);
-    });
-    showView('result');
-  }
+      /* Results screen */
+      .result-card {
+        text-align: center;
+        padding: 36px 24px;
+      }
+      .result-emoji {
+        font-size: 52px;
+        margin-bottom: 8px;
+      }
+      .result-title {
+        font-size: 26px;
+        font-weight: 800;
+        color: var(--text-strong);
+        margin-bottom: 16px;
+      }
+      .score-circle {
+        display: flex;
+        align-items: baseline;
+        justify-content: center;
+        gap: 4px;
+        margin-bottom: 12px;
+      }
+      .score-num {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 56px;
+        font-weight: 800;
+        color: var(--accent);
+      }
+      .score-of {
+        font-size: 22px;
+        color: var(--muted);
+      }
+      .result-msg {
+        color: var(--muted);
+        margin-bottom: 24px;
+        font-size: 15px;
+      }
+      .review-list {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        text-align: left;
+        margin-bottom: 24px;
+        max-height: 320px;
+        overflow-y: auto;
+        padding: 0 4px;
+      }
+      .review-item {
+        background: var(--code-bg);
+        border-left: 3px solid var(--green);
+        border-radius: 6px;
+        padding: 10px 12px;
+        font-size: 13px;
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+      .review-item.wrong {
+        border-left-color: var(--accent2);
+      }
+      .review-marker {
+        font-weight: 700;
+        flex-shrink: 0;
+        width: 18px;
+      }
+      .review-marker.ok {
+        color: var(--green);
+      }
+      .review-marker.no {
+        color: var(--accent2);
+      }
 
-  function goHome() {
-    showView('picker');
-  }
+      .footer-controls {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="topnav">
+      <span class="nav-logo">// Java Interview</span>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link">🏠 Home</a>
+        <a href="oop.html" class="nav-link">🧩 OOPS</a
+        ><a href="dsa.html" class="nav-link">🧮 DSA</a>
+        <a href="basics.html" class="nav-link">☕ Basic</a>
+        <a href="versions.html" class="nav-link">🚀 Version</a>
+        <a href="collections.html" class="nav-link">📦 Collection</a>
+        <a href="exceptions.html" class="nav-link">⚠️ Exception</a>
+        <a href="concurrency.html" class="nav-link">⚡ Concurrency + Advance</a>
+        <a href="methods.html" class="nav-link">🛠️ Methods</a>
+        <a href="mastery.html" class="nav-link">🧠 Mastry</a>
+        <a href="quiz.html" class="nav-link active">🎯 Quiz</a>
+        <a href="springboot.html" class="nav-link">🍃 Spring</a>
+        <a href="backend-track.html" class="nav-link">🧱 Backend</a>
+      </div>
+      <button
+        class="theme-toggle"
+        id="themeToggle"
+        aria-label="Toggle light/dark theme"
+        onclick="toggleTheme()"
+        type="button"
+      >
+        <svg
+          class="icon-sun"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <circle cx="12" cy="12" r="4" />
+          <path
+            d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"
+          />
+        </svg>
+        <svg
+          class="icon-moon"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+        </svg>
+      </button>
+    </nav>
 
-  /* ----- bootstrap ----- */
-  window.goHome = goHome;
-  window.restartCurrent = restartCurrent;
-  renderPicker();
-  showView('picker');
-})();
-</script>
+    <div class="breadcrumb"><a href="index.html">Home</a> › 🎯 Tricky Quiz</div>
 
-</body>
+    <header>
+      <div class="header-tag">
+        // Interactive · 500 Tricky Questions · 16 Sections
+      </div>
+      <h1>🎯 Java Tricky Quiz</h1>
+      <p class="subtitle">
+        From Arrays & Strings to Spring Boot & JPA — output puzzles, concept
+        traps, and senior-level questions. Pick a section or run the
+        500-question mix.
+      </p>
+      <div class="stats-row">
+        <div class="stat">
+          <span class="stat-num" id="statTotalQ">0</span> Total Questions
+        </div>
+        <div class="stat">
+          <span class="stat-num" id="statSections">0</span> Sections
+        </div>
+        <div class="stat">
+          <span class="stat-num">100%</span> Local — no backend
+        </div>
+      </div>
+    </header>
+
+    <div class="quiz-shell">
+      <!-- View 1: Section Picker -->
+      <div id="pickerView">
+        <div class="quiz-intro">
+          <p class="blurb">
+            Each question shows real Java code and 4 options. Pick one, reveal
+            the answer, read the explanation. Built to catch the kind of traps
+            senior interviewers actually use.
+          </p>
+        </div>
+        <div class="section-grid" id="sectionGrid"></div>
+      </div>
+
+      <!-- View 2: Quiz Player -->
+      <div id="playView" style="display: none">
+        <div class="quiz-topbar">
+          <button class="quiz-back" onclick="goHome()">← Back</button>
+          <div class="quiz-sectitle" id="playSecTitle"></div>
+          <div class="progress-pill">
+            <strong id="playScore">0</strong> /
+            <span id="playSeen">0</span> correct
+          </div>
+        </div>
+        <div class="dot-row" id="dotRow"></div>
+        <div id="cardSlot"></div>
+      </div>
+
+      <!-- View 3: Results -->
+      <div id="resultView" style="display: none">
+        <div class="qcard result-card">
+          <div class="result-emoji" id="resEmoji">🏆</div>
+          <div class="result-title">Quiz Complete</div>
+          <div class="score-circle">
+            <span class="score-num" id="resScoreNum">0</span>
+            <span class="score-of">/ <span id="resTotal">0</span></span>
+          </div>
+          <div class="result-msg" id="resMsg"></div>
+          <div class="review-list" id="reviewList"></div>
+          <div class="footer-controls">
+            <button class="btn btn-primary" onclick="restartCurrent()">
+              Try Again
+            </button>
+            <button class="btn btn-ghost" onclick="goHome()">
+              Pick Another Section
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="assets/quiz-data.js"></script>
+    <script src="assets/main.js" defer></script>
+    <script>
+      (function () {
+        const DATA = window.QUIZ_DATA;
+        if (!DATA) {
+          document.getElementById("pickerView").innerHTML =
+            '<div class="qcard">⚠️ Quiz data failed to load. Make sure <code>assets/quiz-data.js</code> exists.</div>';
+          return;
+        }
+
+        /* ----- state ----- */
+        const state = {
+          activePool: [], // current list of questions being played
+          activeTitle: "", // section title (or 'Mix All')
+          activeKey: "", // 'mix' or section id (used for restart)
+          idx: 0,
+          selected: null,
+          revealed: false,
+          score: 0,
+          seen: 0,
+          log: [], // [{q, picked, correct}]
+        };
+
+        const $ = (id) => document.getElementById(id);
+
+        /* ----- stats ----- */
+        let totalQ = 0;
+        DATA.sections.forEach((s) => (totalQ += s.questions.length));
+        $("statTotalQ").textContent = totalQ;
+        $("statSections").textContent = DATA.sections.length;
+
+        /* ----- section picker ----- */
+        function renderPicker() {
+          const grid = $("sectionGrid");
+          grid.innerHTML = "";
+
+          /* Mix-all card first */
+          const mix = document.createElement("div");
+          mix.className = "section-card mix";
+          mix.style.borderLeftColor = "#a855f7";
+          mix.innerHTML =
+            '<div class="sc-icon">🎲</div>' +
+            '<div class="sc-title">Mix All — Full Challenge</div>' +
+            '<div class="sc-blurb">Random shuffle across every section. The real interview gauntlet.</div>' +
+            '<div class="sc-count">' +
+            totalQ +
+            " questions →</div>";
+          mix.addEventListener("click", () => startQuiz("mix"));
+          grid.appendChild(mix);
+
+          DATA.sections.forEach((sec) => {
+            const card = document.createElement("div");
+            card.className = "section-card";
+            card.style.borderLeftColor = sec.color || "var(--accent)";
+            card.innerHTML =
+              '<div class="sc-icon">' +
+              (sec.icon || "📘") +
+              "</div>" +
+              '<div class="sc-title">' +
+              sec.title +
+              "</div>" +
+              '<div class="sc-blurb">' +
+              (sec.blurb || "") +
+              "</div>" +
+              '<div class="sc-count" style="color:' +
+              (sec.color || "var(--accent)") +
+              ';">' +
+              sec.questions.length +
+              " questions →</div>";
+            card.addEventListener("click", () => startQuiz(sec.id));
+            grid.appendChild(card);
+          });
+        }
+
+        function shuffle(arr) {
+          const a = arr.slice();
+          for (let i = a.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [a[i], a[j]] = [a[j], a[i]];
+          }
+          return a;
+        }
+
+        function startQuiz(key) {
+          state.activeKey = key;
+          if (key === "mix") {
+            const all = [];
+            DATA.sections.forEach((s) =>
+              s.questions.forEach((q) =>
+                all.push({ q, secTitle: s.title, secColor: s.color }),
+              ),
+            );
+            state.activePool = shuffle(all);
+            state.activeTitle = "🎲 Mix All — " + totalQ + " Questions";
+          } else {
+            const sec = DATA.sections.find((s) => s.id === key);
+            state.activePool = sec.questions.map((q) => ({
+              q,
+              secTitle: sec.title,
+              secColor: sec.color,
+            }));
+            state.activeTitle = (sec.icon || "") + " " + sec.title;
+          }
+          state.idx = 0;
+          state.selected = null;
+          state.revealed = false;
+          state.score = 0;
+          state.seen = 0;
+          state.log = [];
+
+          showView("play");
+          renderCurrent();
+        }
+
+        function restartCurrent() {
+          if (state.activeKey) startQuiz(state.activeKey);
+        }
+
+        /* ----- play view ----- */
+        function showView(name) {
+          $("pickerView").style.display = name === "picker" ? "" : "none";
+          $("playView").style.display = name === "play" ? "" : "none";
+          $("resultView").style.display = name === "result" ? "" : "none";
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
+        function renderCurrent() {
+          $("playSecTitle").textContent = state.activeTitle;
+          $("playScore").textContent = state.score;
+          $("playSeen").textContent = state.seen;
+
+          /* dots */
+          const dotRow = $("dotRow");
+          dotRow.innerHTML = "";
+          state.activePool.forEach((_, i) => {
+            const d = document.createElement("div");
+            d.className = "pdot";
+            if (i < state.log.length) {
+              d.classList.add(state.log[i].correct ? "correct" : "wrong");
+            } else if (i === state.idx) {
+              d.classList.add("current");
+            }
+            dotRow.appendChild(d);
+          });
+
+          const item = state.activePool[state.idx];
+          const q = item.q;
+          const slot = $("cardSlot");
+          slot.innerHTML = "";
+
+          const card = document.createElement("div");
+          card.className = "qcard";
+          card.innerHTML =
+            '<div class="qmeta">' +
+            '<span class="qbadge" style="color:' +
+            (item.secColor || "var(--accent)") +
+            ';">' +
+            item.secTitle +
+            "</span>" +
+            '<span class="qnum">' +
+            (state.idx + 1) +
+            " / " +
+            state.activePool.length +
+            "</span>" +
+            "</div>" +
+            '<div class="qtitle"></div>' +
+            (q.code
+              ? '<pre class="qcode" style="border-left-color:' +
+                (item.secColor || "var(--accent)") +
+                ';"></pre>'
+              : "") +
+            '<div class="qprompt">What is the output / correct answer?</div>' +
+            '<div class="options"></div>' +
+            '<div class="expl-slot"></div>' +
+            '<div class="actions">' +
+            '<button class="btn btn-ghost" id="skipBtn">Skip</button>' +
+            '<button class="btn btn-primary" id="primaryBtn">Reveal Answer</button>' +
+            "</div>";
+
+          card.querySelector(".qtitle").textContent = q.title;
+          if (q.code) card.querySelector(".qcode").textContent = q.code;
+
+          const opts = card.querySelector(".options");
+          q.options.forEach((text, i) => {
+            const op = document.createElement("div");
+            op.className = "option";
+            op.dataset.idx = String(i);
+            op.innerHTML =
+              '<span class="optletter">' +
+              String.fromCharCode(65 + i) +
+              "</span>" +
+              '<span class="opttext"></span>';
+            op.querySelector(".opttext").textContent = text;
+            op.addEventListener("click", () => selectOption(i));
+            opts.appendChild(op);
+          });
+
+          slot.appendChild(card);
+          refreshOptionsUI();
+          refreshActionsUI();
+        }
+
+        function selectOption(i) {
+          if (state.revealed) return;
+          state.selected = i;
+          refreshOptionsUI();
+          refreshActionsUI();
+        }
+
+        function refreshOptionsUI() {
+          const opts = document.querySelectorAll(".option");
+          const item = state.activePool[state.idx];
+          const correctIdx = item.q.answer;
+          opts.forEach((op, i) => {
+            op.classList.remove("selected", "correct", "wrong", "locked");
+            if (state.revealed) {
+              op.classList.add("locked");
+              if (i === correctIdx) op.classList.add("correct");
+              else if (i === state.selected) op.classList.add("wrong");
+            } else if (state.selected === i) {
+              op.classList.add("selected");
+            }
+          });
+        }
+
+        function refreshActionsUI() {
+          const primary = $("primaryBtn");
+          const skip = $("skipBtn");
+          if (!primary || !skip) return;
+          if (state.revealed) {
+            skip.style.display = "none";
+            primary.textContent =
+              state.idx + 1 >= state.activePool.length
+                ? "See Results →"
+                : "Next Question →";
+            primary.disabled = false;
+            primary.onclick = nextQuestion;
+          } else {
+            skip.style.display = "";
+            skip.onclick = nextQuestion;
+            primary.textContent = "Reveal Answer";
+            primary.disabled = state.selected === null;
+            primary.onclick = reveal;
+          }
+        }
+
+        function reveal() {
+          if (state.selected === null || state.revealed) return;
+          state.revealed = true;
+          const item = state.activePool[state.idx];
+          const q = item.q;
+          const correct = state.selected === q.answer;
+          if (correct) state.score++;
+          state.seen++;
+          state.log.push({
+            q,
+            picked: state.selected,
+            correct,
+            secTitle: item.secTitle,
+          });
+
+          /* render explanation */
+          const slot = document.querySelector(".expl-slot");
+          if (slot) {
+            slot.innerHTML =
+              '<div class="explanation ' +
+              (correct ? "" : "wrong") +
+              '">' +
+              '<div class="expl-head ' +
+              (correct ? "ok" : "no") +
+              '">' +
+              (correct ? "✓ Correct!" : "✗ Not quite.") +
+              "</div>" +
+              '<div class="expl-body"></div>' +
+              "</div>";
+            slot.querySelector(".expl-body").textContent = q.explanation;
+          }
+
+          refreshOptionsUI();
+          refreshActionsUI();
+          $("playScore").textContent = state.score;
+          $("playSeen").textContent = state.seen;
+          /* update current dot */
+          const dots = document.querySelectorAll(".pdot");
+          if (dots[state.idx]) {
+            dots[state.idx].classList.remove("current");
+            dots[state.idx].classList.add(correct ? "correct" : "wrong");
+          }
+        }
+
+        function nextQuestion() {
+          /* Skipped (not revealed) — still advance, record as wrong */
+          if (!state.revealed) {
+            const item = state.activePool[state.idx];
+            state.seen++;
+            state.log.push({
+              q: item.q,
+              picked: null,
+              correct: false,
+              secTitle: item.secTitle,
+              skipped: true,
+            });
+          }
+          if (state.idx + 1 >= state.activePool.length) {
+            showResult();
+            return;
+          }
+          state.idx++;
+          state.selected = null;
+          state.revealed = false;
+          renderCurrent();
+        }
+
+        /* ----- results ----- */
+        function showResult() {
+          const total = state.activePool.length;
+          const pct = Math.round((state.score / total) * 100);
+          $("resScoreNum").textContent = state.score;
+          $("resTotal").textContent = total;
+          let emoji = "💡",
+            msg = "Keep practicing — these are genuinely tricky.";
+          if (pct >= 85) {
+            emoji = "🏆";
+            msg = "Outstanding! You know the dark corners of Java.";
+          } else if (pct >= 70) {
+            emoji = "🎉";
+            msg = "Excellent — strong senior-level performance.";
+          } else if (pct >= 50) {
+            emoji = "👍";
+            msg = "Solid effort — review the misses below.";
+          }
+          $("resEmoji").textContent = emoji;
+          $("resMsg").textContent = msg + " (" + pct + "%)";
+
+          const list = $("reviewList");
+          list.innerHTML = "";
+          state.log.forEach((entry, i) => {
+            const row = document.createElement("div");
+            row.className = "review-item" + (entry.correct ? "" : " wrong");
+            const marker = entry.correct ? "✓" : entry.skipped ? "–" : "✗";
+            const markerCls = entry.correct ? "ok" : "no";
+            row.innerHTML =
+              '<span class="review-marker ' +
+              markerCls +
+              '">' +
+              marker +
+              "</span>" +
+              "<span><strong>Q" +
+              (i + 1) +
+              ".</strong> </span>" +
+              '<span class="review-text"></span>';
+            row.querySelector(".review-text").textContent = entry.q.title;
+            list.appendChild(row);
+          });
+          showView("result");
+        }
+
+        function goHome() {
+          showView("picker");
+        }
+
+        /* ----- bootstrap ----- */
+        window.goHome = goHome;
+        window.restartCurrent = restartCurrent;
+        renderPicker();
+        showView("picker");
+      })();
+    </script>
+  </body>
 </html>

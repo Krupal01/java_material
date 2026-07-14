@@ -4,7 +4,6 @@
    ========================================================= */
 window.BACKEND_DB_ENGINES_DATA = {
   parts: [
-
     /* =====================================================
        PART 1 · SQL FUNDAMENTALS
     ===================================================== */
@@ -12,10 +11,16 @@ window.BACKEND_DB_ENGINES_DATA = {
       label: "PART 1 · SQL FUNDAMENTALS",
       sections: [
         {
-          id: "sql-basics", n: 1, title: "SELECT, WHERE, DISTINCT, LIMIT — Core Queries",
+          id: "sql-basics",
+          n: 1,
+          title: "SELECT, WHERE, DISTINCT, LIMIT — Core Queries",
           desc: "Every MAANG SQL round starts with these building blocks. Master them before moving to joins or window functions.",
           questions: [
-            {n:1, t:"What is a basic SELECT query and how do you filter rows?", d:["beginner"], a:`
+            {
+              n: 1,
+              t: "What is a basic SELECT query and how do you filter rows?",
+              d: ["beginner"],
+              a: `
 <p>SELECT retrieves columns from a table. WHERE filters rows <em>before</em> they reach you.</p>
 <pre>-- All employees
 SELECT * FROM employees;
@@ -33,9 +38,14 @@ WHERE department = 'Engineering' AND salary &gt; 100000;
 -- OR condition
 SELECT name FROM employees
 WHERE department = 'Engineering' OR department = 'Product';</pre>
-<p><strong>Interview tip:</strong> Always prefer naming columns explicitly over <code>SELECT *</code> — it avoids over-fetching and breaks fewer things when tables change.</p>`},
+<p><strong>Interview tip:</strong> Always prefer naming columns explicitly over <code>SELECT *</code> — it avoids over-fetching and breaks fewer things when tables change.</p>`,
+            },
 
-            {n:2, t:"How does DISTINCT work and when should you use it?", d:["beginner"], a:`
+            {
+              n: 2,
+              t: "How does DISTINCT work and when should you use it?",
+              d: ["beginner"],
+              a: `
 <p>DISTINCT removes duplicate rows in the result set — it operates on the <em>combined output row</em>, not per column.</p>
 <pre>-- Unique departments
 SELECT DISTINCT department FROM employees;
@@ -45,9 +55,14 @@ SELECT DISTINCT department, role FROM employees;
 
 -- COUNT of unique departments
 SELECT COUNT(DISTINCT department) AS dept_count FROM employees;</pre>
-<p><strong>Performance note:</strong> DISTINCT forces a sort or hash-deduplicate operation. On large tables consider whether a GROUP BY with no aggregation, or a covering index, gives the same result cheaper.</p>`},
+<p><strong>Performance note:</strong> DISTINCT forces a sort or hash-deduplicate operation. On large tables consider whether a GROUP BY with no aggregation, or a covering index, gives the same result cheaper.</p>`,
+            },
 
-            {n:3, t:"How do LIMIT, OFFSET, and pagination work in SQL?", d:["beginner","intermediate"], a:`
+            {
+              n: 3,
+              t: "How do LIMIT, OFFSET, and pagination work in SQL?",
+              d: ["beginner", "intermediate"],
+              a: `
 <p>LIMIT caps how many rows are returned. OFFSET skips rows — together they implement pagination.</p>
 <pre>-- First 10 rows
 SELECT * FROM employees ORDER BY emp_id LIMIT 10;
@@ -62,9 +77,14 @@ SELECT * FROM (
 <p><strong>MAANG gotcha — deep pagination problem:</strong> LIMIT 10 OFFSET 10000000 still reads 10,000,010 rows and throws away the first 10M. Use keyset pagination instead:</p>
 <pre>-- Keyset pagination — fast on large tables
 SELECT * FROM employees WHERE emp_id &gt; :last_seen_id ORDER BY emp_id LIMIT 10;</pre>
-<p>Keyset pagination uses the index directly and does not scan discarded rows.</p>`},
+<p>Keyset pagination uses the index directly and does not scan discarded rows.</p>`,
+            },
 
-            {n:4, t:"How do you handle NULL in SQL — IS NULL, COALESCE, NULLIF?", d:["beginner","intermediate"], a:`
+            {
+              n: 4,
+              t: "How do you handle NULL in SQL — IS NULL, COALESCE, NULLIF?",
+              d: ["beginner", "intermediate"],
+              a: `
 <p>NULL means <em>unknown</em>, not zero or empty string. Comparisons with NULL using = always return NULL (falsy).</p>
 <pre>-- Wrong — this never matches NULLs
 SELECT * FROM employees WHERE manager_id = NULL;   -- BAD
@@ -83,9 +103,14 @@ FROM traffic_stats;
 
 -- NVL is Oracle-specific equivalent to COALESCE for 2 args
 SELECT NVL(phone, 'N/A') FROM employees; -- Oracle</pre>
-<p><strong>Interview tip:</strong> Aggregates (SUM, COUNT, AVG) ignore NULLs automatically. COUNT(*) counts all rows; COUNT(column) counts only non-NULL values in that column.</p>`},
+<p><strong>Interview tip:</strong> Aggregates (SUM, COUNT, AVG) ignore NULLs automatically. COUNT(*) counts all rows; COUNT(column) counts only non-NULL values in that column.</p>`,
+            },
 
-            {n:5, t:"What are SQL data types and how does casting work?", d:["beginner","intermediate"], a:`
+            {
+              n: 5,
+              t: "What are SQL data types and how does casting work?",
+              d: ["beginner", "intermediate"],
+              a: `
 <p>Choosing the right data type saves storage, enables better indexes, and avoids implicit-cast bugs.</p>
 <table>
   <tr><th>Category</th><th>Types</th><th>Notes</th></tr>
@@ -102,9 +127,14 @@ SELECT '42'::INTEGER;  -- PostgreSQL shorthand
 
 -- Avoid implicit cast mismatches on WHERE clauses
 -- Bad: index not used if column is VARCHAR but you pass INT
-WHERE account_id = '12345'   -- string literal matches VARCHAR type correctly</pre>`},
+WHERE account_id = '12345'   -- string literal matches VARCHAR type correctly</pre>`,
+            },
 
-            {n:6, t:"How do INSERT, UPDATE, DELETE work and what safety patterns matter?", d:["beginner","intermediate"], a:`
+            {
+              n: 6,
+              t: "How do INSERT, UPDATE, DELETE work and what safety patterns matter?",
+              d: ["beginner", "intermediate"],
+              a: `
 <pre>-- INSERT single row
 INSERT INTO employees (name, department, salary)
 VALUES ('Alice', 'Engineering', 120000);
@@ -135,16 +165,23 @@ ON CONFLICT (emp_id) DO UPDATE SET login_count = employee_stats.login_count + 1;
 SELECT COUNT(*) FROM employees WHERE department = 'OldDept';  -- verify
 UPDATE employees SET department = 'NewDept' WHERE department = 'OldDept';
 -- ROLLBACK;  -- if count looks wrong
-COMMIT;</pre>`}
-          ]
+COMMIT;</pre>`,
+            },
+          ],
         },
 
         /* ---- Section 2: Joins ---- */
         {
-          id: "sql-joins", n: 2, title: "SQL JOINs — INNER, LEFT, RIGHT, FULL, SELF, CROSS",
+          id: "sql-joins",
+          n: 2,
+          title: "SQL JOINs — INNER, LEFT, RIGHT, FULL, SELF, CROSS",
           desc: "Joins are the most-tested SQL topic in MAANG interviews. Know exactly which rows each join type includes or excludes.",
           questions: [
-            {n:1, t:"Explain all JOIN types with examples", d:["beginner","intermediate"], a:`
+            {
+              n: 1,
+              t: "Explain all JOIN types with examples",
+              d: ["beginner", "intermediate"],
+              a: `
 <p>Think of a Venn diagram with two circles: <strong>Left table (A)</strong> and <strong>Right table (B)</strong>.</p>
 <table>
   <tr><th>Join Type</th><th>Rows Returned</th></tr>
@@ -175,9 +212,14 @@ FULL OUTER JOIN departments d ON e.dept_id = d.dept_id;
 
 -- CROSS JOIN — pair every product with every colour
 SELECT p.product_name, c.colour
-FROM products p CROSS JOIN colours c;</pre>`},
+FROM products p CROSS JOIN colours c;</pre>`,
+            },
 
-            {n:2, t:"What is a SELF JOIN and when do you use it?", d:["intermediate"], a:`
+            {
+              n: 2,
+              t: "What is a SELF JOIN and when do you use it?",
+              d: ["intermediate"],
+              a: `
 <p>A SELF JOIN joins a table to itself. Classic use case: employee-manager hierarchy where both are in the same table.</p>
 <pre>-- employees: emp_id, name, manager_id (points to emp_id)
 SELECT e.name AS employee, m.name AS manager
@@ -190,9 +232,14 @@ SELECT e.name AS employee, e.salary AS emp_salary,
 FROM employees e
 JOIN employees m ON e.manager_id = m.emp_id
 WHERE e.salary &gt; m.salary;</pre>
-<p><strong>Interview tip:</strong> Always alias both instances of the table (e and m). Self joins are tested often in hierarchy queries alongside recursive CTEs.</p>`},
+<p><strong>Interview tip:</strong> Always alias both instances of the table (e and m). Self joins are tested often in hierarchy queries alongside recursive CTEs.</p>`,
+            },
 
-            {n:3, t:"How do you join more than two tables?", d:["intermediate"], a:`
+            {
+              n: 3,
+              t: "How do you join more than two tables?",
+              d: ["intermediate"],
+              a: `
 <pre>-- orders to order_items to products to categories
 SELECT
   o.order_id,
@@ -208,9 +255,14 @@ JOIN products p     ON oi.product_id = p.product_id
 JOIN categories cat ON p.category_id = cat.category_id
 WHERE o.status = 'COMPLETED'
 ORDER BY o.order_id;</pre>
-<p><strong>Optimizer note:</strong> The query planner decides the join <em>order</em> internally. You control the logical join; the engine picks the physical strategy (hash join, nested loop, merge join) based on statistics and indexes.</p>`},
+<p><strong>Optimizer note:</strong> The query planner decides the join <em>order</em> internally. You control the logical join; the engine picks the physical strategy (hash join, nested loop, merge join) based on statistics and indexes.</p>`,
+            },
 
-            {n:4, t:"JOIN vs Subquery — when is each better for performance?", d:["intermediate","advanced"], a:`
+            {
+              n: 4,
+              t: "JOIN vs Subquery — when is each better for performance?",
+              d: ["intermediate", "advanced"],
+              a: `
 <pre>-- Correlated subquery (runs per row — often slow)
 SELECT name FROM employees e
 WHERE salary &gt; (
@@ -236,9 +288,14 @@ SELECT e.name
 FROM employees e
 JOIN dept_avg da ON e.dept_id = da.dept_id
 WHERE e.salary &gt; da.avg_sal;</pre>
-<p><strong>Rule:</strong> Correlated subqueries run N times. Derived table / CTE runs once. Use EXPLAIN to verify the optimizer treats them the same in your DB.</p>`},
+<p><strong>Rule:</strong> Correlated subqueries run N times. Derived table / CTE runs once. Use EXPLAIN to verify the optimizer treats them the same in your DB.</p>`,
+            },
 
-            {n:5, t:"Anti-join pattern — find rows with no match in another table", d:["intermediate","advanced"], a:`
+            {
+              n: 5,
+              t: "Anti-join pattern — find rows with no match in another table",
+              d: ["intermediate", "advanced"],
+              a: `
 <pre>-- Find employees with no matching department (3 equivalent ways)
 
 -- Way 1: LEFT JOIN + IS NULL (most common)
@@ -258,16 +315,23 @@ SELECT name FROM employees
 WHERE dept_id NOT IN (
   SELECT dept_id FROM departments WHERE dept_id IS NOT NULL
 );</pre>
-<p><strong>MAANG tip:</strong> NOT IN fails silently when subquery returns any NULL — the whole WHERE evaluates to NULL (false). Prefer NOT EXISTS or LEFT JOIN + IS NULL.</p>`}
-          ]
+<p><strong>MAANG tip:</strong> NOT IN fails silently when subquery returns any NULL — the whole WHERE evaluates to NULL (false). Prefer NOT EXISTS or LEFT JOIN + IS NULL.</p>`,
+            },
+          ],
         },
 
         /* ---- Section 3: Sorting & Aggregation ---- */
         {
-          id: "sql-aggregation", n: 3, title: "Sorting, Aggregation, GROUP BY, HAVING",
+          id: "sql-aggregation",
+          n: 3,
+          title: "Sorting, Aggregation, GROUP BY, HAVING",
           desc: "Aggregation collapses many rows into summary rows. GROUP BY and HAVING are among the most interview-tested clauses.",
           questions: [
-            {n:1, t:"How does ORDER BY work — multi-column, expressions, NULLS FIRST/LAST?", d:["beginner"], a:`
+            {
+              n: 1,
+              t: "How does ORDER BY work — multi-column, expressions, NULLS FIRST/LAST?",
+              d: ["beginner"],
+              a: `
 <pre>-- Single column
 SELECT name, salary FROM employees ORDER BY salary DESC;
 
@@ -286,9 +350,14 @@ SELECT name, commission
 FROM employees
 ORDER BY commission DESC NULLS LAST;  -- NULLs at bottom
 -- or NULLS FIRST</pre>
-<p><strong>Performance tip:</strong> ORDER BY is cheapest when the sort column has a supporting index — the DB reads rows in order without a sort step (shown as "Index Scan Backward" in EXPLAIN).</p>`},
+<p><strong>Performance tip:</strong> ORDER BY is cheapest when the sort column has a supporting index — the DB reads rows in order without a sort step (shown as "Index Scan Backward" in EXPLAIN).</p>`,
+            },
 
-            {n:2, t:"Explain all aggregate functions — COUNT, SUM, AVG, MIN, MAX", d:["beginner","intermediate"], a:`
+            {
+              n: 2,
+              t: "Explain all aggregate functions — COUNT, SUM, AVG, MIN, MAX",
+              d: ["beginner", "intermediate"],
+              a: `
 <pre>SELECT
   COUNT(*)                            AS total_rows,
   COUNT(commission)                   AS employees_with_commission,  -- NULLs excluded
@@ -305,9 +374,14 @@ FROM employees;
 SELECT department, COUNT(*) AS headcount, AVG(salary) AS avg_sal
 FROM employees
 GROUP BY department
-ORDER BY avg_sal DESC;</pre>`},
+ORDER BY avg_sal DESC;</pre>`,
+            },
 
-            {n:3, t:"How does GROUP BY work and what is the HAVING clause?", d:["beginner","intermediate"], a:`
+            {
+              n: 3,
+              t: "How does GROUP BY work and what is the HAVING clause?",
+              d: ["beginner", "intermediate"],
+              a: `
 <p><strong>WHERE</strong> filters individual rows <em>before</em> grouping. <strong>HAVING</strong> filters <em>group-level</em> results after aggregation.</p>
 <pre>-- Departments with more than 5 employees
 SELECT department, COUNT(*) AS headcount
@@ -329,9 +403,14 @@ WHERE hire_date &gt;= '2020-01-01'    -- filter rows first
 GROUP BY department
 HAVING AVG(salary) &gt; 90000         -- then filter groups
 ORDER BY avg_sal DESC;</pre>
-<p><strong>SQL execution order:</strong> FROM → JOIN → WHERE → GROUP BY → HAVING → SELECT → ORDER BY → LIMIT</p>`},
+<p><strong>SQL execution order:</strong> FROM → JOIN → WHERE → GROUP BY → HAVING → SELECT → ORDER BY → LIMIT</p>`,
+            },
 
-            {n:4, t:"What is ROLLUP and CUBE for multi-level aggregation?", d:["advanced"], a:`
+            {
+              n: 4,
+              t: "What is ROLLUP and CUBE for multi-level aggregation?",
+              d: ["advanced"],
+              a: `
 <pre>-- ROLLUP — subtotals at each level plus grand total
 SELECT department, role, SUM(salary) AS total_salary
 FROM employees
@@ -355,9 +434,14 @@ GROUP BY GROUPING SETS (
   (department, role),
   (department),
   ()
-);</pre>`},
+);</pre>`,
+            },
 
-            {n:5, t:"String and date functions used in SELECT and GROUP BY", d:["beginner","intermediate"], a:`
+            {
+              n: 5,
+              t: "String and date functions used in SELECT and GROUP BY",
+              d: ["beginner", "intermediate"],
+              a: `
 <pre>-- Date functions
 SELECT
   CURRENT_DATE,
@@ -379,10 +463,11 @@ SELECT
   UPPER(name), LOWER(name), LENGTH(name),
   TRIM(name), SUBSTRING(name FROM 1 FOR 3),
   CONCAT(first_name, ' ', last_name) AS full_name
-FROM employees;</pre>`}
-          ]
-        }
-      ]
+FROM employees;</pre>`,
+            },
+          ],
+        },
+      ],
     },
 
     /* =====================================================
@@ -392,10 +477,17 @@ FROM employees;</pre>`}
       label: "PART 2 · WINDOW FUNCTIONS",
       sections: [
         {
-          id: "window-functions", n: 4, title: "Window Functions — ROW_NUMBER, RANK, LAG, LEAD, Running Totals",
+          id: "window-functions",
+          n: 4,
+          title:
+            "Window Functions — ROW_NUMBER, RANK, LAG, LEAD, Running Totals",
           desc: "Window functions are the #1 differentiator in MAANG SQL rounds. They compute values across a set of rows <em>without</em> collapsing them like GROUP BY does.",
           questions: [
-            {n:1, t:"What is a window function and how does OVER() work?", d:["intermediate"], a:`
+            {
+              n: 1,
+              t: "What is a window function and how does OVER() work?",
+              d: ["intermediate"],
+              a: `
 <p>A window function runs <em>after</em> WHERE/GROUP BY/HAVING but <em>before</em> ORDER BY. It sees a <strong>window</strong> (subset) of rows for each row it computes.</p>
 <pre>-- Anatomy of OVER()
 function_name() OVER (
@@ -412,9 +504,14 @@ SELECT
   ROUND(AVG(salary) OVER (PARTITION BY department), 0) AS dept_avg,
   salary - AVG(salary) OVER (PARTITION BY department) AS diff_from_avg
 FROM employees;</pre>
-<p>The result has all original rows — nothing is collapsed. That is the key difference from GROUP BY.</p>`},
+<p>The result has all original rows — nothing is collapsed. That is the key difference from GROUP BY.</p>`,
+            },
 
-            {n:2, t:"ROW_NUMBER vs RANK vs DENSE_RANK — differences with examples", d:["intermediate","advanced"], a:`
+            {
+              n: 2,
+              t: "ROW_NUMBER vs RANK vs DENSE_RANK — differences with examples",
+              d: ["intermediate", "advanced"],
+              a: `
 <pre>SELECT
   name, department, salary,
   ROW_NUMBER()   OVER (PARTITION BY department ORDER BY salary DESC) AS row_num,
@@ -435,9 +532,14 @@ Dave   Engineering   95000  4        4     3  (rank skips 3, dense_rank does not
   <tr><td>RANK</td><td>Same rank</td><td>Yes (skips numbers)</td></tr>
   <tr><td>DENSE_RANK</td><td>Same rank</td><td>No (consecutive)</td></tr>
 </table>
-<p><strong>MAANG tip:</strong> For "find Nth highest salary" always use DENSE_RANK — it handles ties correctly. RANK would skip ranks, DENSE_RANK won't.</p>`},
+<p><strong>MAANG tip:</strong> For "find Nth highest salary" always use DENSE_RANK — it handles ties correctly. RANK would skip ranks, DENSE_RANK won't.</p>`,
+            },
 
-            {n:3, t:"LAG and LEAD — access previous and next row values", d:["intermediate","advanced"], a:`
+            {
+              n: 3,
+              t: "LAG and LEAD — access previous and next row values",
+              d: ["intermediate", "advanced"],
+              a: `
 <pre>-- LAG: value from N rows BEFORE current row
 -- LEAD: value from N rows AFTER current row
 
@@ -456,9 +558,14 @@ SELECT
   ROUND(100.0 * (revenue - LAG(revenue) OVER (ORDER BY month))
     / NULLIF(LAG(revenue) OVER (ORDER BY month), 0), 2) AS pct_growth
 FROM monthly_revenue;</pre>
-<p>Third argument to LAG/LEAD is the default value when there is no previous/next row (avoids NULL in the first/last row).</p>`},
+<p>Third argument to LAG/LEAD is the default value when there is no previous/next row (avoids NULL in the first/last row).</p>`,
+            },
 
-            {n:4, t:"Running totals and moving averages with frame clauses", d:["advanced"], a:`
+            {
+              n: 4,
+              t: "Running totals and moving averages with frame clauses",
+              d: ["advanced"],
+              a: `
 <pre>-- Running total (cumulative sum)
 SELECT
   order_date, revenue,
@@ -485,9 +592,14 @@ SELECT
   ROUND(100.0 * SUM(salary) / SUM(SUM(salary)) OVER (), 2) AS pct_of_total
 FROM employees
 GROUP BY department;</pre>
-<p><strong>Frame types:</strong> ROWS counts physical rows; RANGE includes all rows with the same ORDER BY value as the current row (default when ORDER BY is specified without a frame clause).</p>`},
+<p><strong>Frame types:</strong> ROWS counts physical rows; RANGE includes all rows with the same ORDER BY value as the current row (default when ORDER BY is specified without a frame clause).</p>`,
+            },
 
-            {n:5, t:"NTILE — divide result set into N equal buckets", d:["intermediate"], a:`
+            {
+              n: 5,
+              t: "NTILE — divide result set into N equal buckets",
+              d: ["intermediate"],
+              a: `
 <pre>-- Quartile distribution of salaries
 SELECT
   name, salary,
@@ -503,9 +615,14 @@ SELECT
     WHEN 9  THEN 'Top 20%'
     ELSE 'Rest'
   END AS performance_band
-FROM employees;</pre>`},
+FROM employees;</pre>`,
+            },
 
-            {n:6, t:"FIRST_VALUE and LAST_VALUE within a window", d:["advanced"], a:`
+            {
+              n: 6,
+              t: "FIRST_VALUE and LAST_VALUE within a window",
+              d: ["advanced"],
+              a: `
 <pre>-- First salary in each department (ordered by hire date)
 SELECT
   name, department, salary, hire_date,
@@ -520,10 +637,11 @@ SELECT
 FROM employees;
 
 -- Note: LAST_VALUE requires explicit ROWS UNBOUNDED FOLLOWING frame
--- otherwise default frame stops at current row</pre>`}
-          ]
-        }
-      ]
+-- otherwise default frame stops at current row</pre>`,
+            },
+          ],
+        },
+      ],
     },
 
     /* =====================================================
@@ -533,10 +651,16 @@ FROM employees;
       label: "PART 3 · SUBQUERIES & CTEs",
       sections: [
         {
-          id: "subqueries-ctes", n: 5, title: "Subqueries, CTEs, EXISTS vs IN, Recursive Queries",
+          id: "subqueries-ctes",
+          n: 5,
+          title: "Subqueries, CTEs, EXISTS vs IN, Recursive Queries",
           desc: "Subqueries and CTEs let you compose complex logic step by step. Recursive CTEs unlock hierarchical queries — a MAANG favourite.",
           questions: [
-            {n:1, t:"Types of subqueries — scalar, inline view, correlated", d:["intermediate"], a:`
+            {
+              n: 1,
+              t: "Types of subqueries — scalar, inline view, correlated",
+              d: ["intermediate"],
+              a: `
 <pre>-- SCALAR subquery — returns single value
 SELECT name, salary,
   (SELECT AVG(salary) FROM employees) AS company_avg
@@ -557,9 +681,14 @@ WHERE salary &gt; (
   SELECT AVG(salary) FROM employees
   WHERE department = e.department  -- references outer row
 );
--- Prefer joining to a derived table or CTE for performance</pre>`},
+-- Prefer joining to a derived table or CTE for performance</pre>`,
+            },
 
-            {n:2, t:"EXISTS vs IN — when to use each and performance difference", d:["intermediate","advanced"], a:`
+            {
+              n: 2,
+              t: "EXISTS vs IN — when to use each and performance difference",
+              d: ["intermediate", "advanced"],
+              a: `
 <pre>-- IN — matches if value in a set
 SELECT name FROM employees
 WHERE dept_id IN (SELECT dept_id FROM departments WHERE budget &gt; 1000000);
@@ -586,9 +715,14 @@ WHERE NOT EXISTS (
   <tr><td>NULL handling</td><td>Dangerous with NOT IN</td><td>Safe</td></tr>
   <tr><td>Short-circuit</td><td>No</td><td>Yes</td></tr>
   <tr><td>Best for</td><td>Small static set</td><td>Large correlated subqueries</td></tr>
-</table>`},
+</table>`,
+            },
 
-            {n:3, t:"CTEs — WITH clause syntax, multiple CTEs, readability vs performance", d:["intermediate"], a:`
+            {
+              n: 3,
+              t: "CTEs — WITH clause syntax, multiple CTEs, readability vs performance",
+              d: ["intermediate"],
+              a: `
 <pre>-- Single CTE
 WITH high_earners AS (
   SELECT emp_id, name, salary, department
@@ -615,9 +749,14 @@ WHERE e.department IN (SELECT department FROM large_departments)
     SELECT avg_sal FROM dept_stats
     WHERE dept_stats.department = e.department
   );</pre>
-<p>CTEs are <strong>not always materialized</strong> — PostgreSQL may inline them. To force materialization use <code>WITH cte AS MATERIALIZED (...)</code> in PostgreSQL 12+.</p>`},
+<p>CTEs are <strong>not always materialized</strong> — PostgreSQL may inline them. To force materialization use <code>WITH cte AS MATERIALIZED (...)</code> in PostgreSQL 12+.</p>`,
+            },
 
-            {n:4, t:"Recursive CTEs — how to traverse a tree or hierarchy", d:["advanced","expert"], a:`
+            {
+              n: 4,
+              t: "Recursive CTEs — how to traverse a tree or hierarchy",
+              d: ["advanced", "expert"],
+              a: `
 <p>Recursive CTEs solve hierarchical data: org charts, bill-of-materials, folder trees.</p>
 <pre>-- employees: emp_id, name, manager_id (NULL for CEO)
 WITH RECURSIVE org_tree AS (
@@ -642,9 +781,14 @@ depth  path                  name
 1      Alice > Bob           Bob
 2      Alice > Bob > Carol   Carol
 */</pre>
-<p><strong>MAANG tip:</strong> Add a depth limit or use CYCLE detection (PostgreSQL 14+) to prevent infinite loops in graphs with cycles.</p>`},
+<p><strong>MAANG tip:</strong> Add a depth limit or use CYCLE detection (PostgreSQL 14+) to prevent infinite loops in graphs with cycles.</p>`,
+            },
 
-            {n:5, t:"INTERSECT and EXCEPT — set operations", d:["intermediate"], a:`
+            {
+              n: 5,
+              t: "INTERSECT and EXCEPT — set operations",
+              d: ["intermediate"],
+              a: `
 <pre>-- INTERSECT — rows in both queries
 SELECT customer_id FROM orders WHERE status = 'COMPLETED'
 INTERSECT
@@ -661,10 +805,11 @@ SELECT customer_id FROM orders;
 -- UNION ALL — combine without removing duplicates (faster)
 SELECT name FROM employees WHERE department = 'Engineering'
 UNION ALL
-SELECT name FROM contractors WHERE department = 'Engineering';</pre>`}
-          ]
-        }
-      ]
+SELECT name FROM contractors WHERE department = 'Engineering';</pre>`,
+            },
+          ],
+        },
+      ],
     },
 
     /* =====================================================
@@ -674,10 +819,17 @@ SELECT name FROM contractors WHERE department = 'Engineering';</pre>`}
       label: "PART 4 · INDEXING DEEP DIVE",
       sections: [
         {
-          id: "sql-indexing", n: 6, title: "Indexing Internals — B-tree, Composite, Covering, Partial, EXPLAIN",
+          id: "sql-indexing",
+          n: 6,
+          title:
+            "Indexing Internals — B-tree, Composite, Covering, Partial, EXPLAIN",
           desc: "Indexing is the single biggest lever for query performance. Every MAANG system design and SQL round touches indexing.",
           questions: [
-            {n:1, t:"How does a B-tree index work internally?", d:["intermediate","advanced"], a:`
+            {
+              n: 1,
+              t: "How does a B-tree index work internally?",
+              d: ["intermediate", "advanced"],
+              a: `
 <p>A B-tree (Balanced Tree) index stores column values in sorted order in a tree structure. Lookups, range scans, and ORDER BY can all use it.</p>
 <pre>-- B-tree structure (simplified)
 Root:     [50 | 100]
@@ -703,9 +855,14 @@ WHERE UPPER(name) = 'ALICE'  -- index on name NOT used
 
 -- Fix: functional index
 CREATE INDEX idx_name_upper ON employees(UPPER(name));
-WHERE UPPER(name) = 'ALICE'  -- now uses index</pre>`},
+WHERE UPPER(name) = 'ALICE'  -- now uses index</pre>`,
+            },
 
-            {n:2, t:"Composite indexes — left-prefix rule, column order matters", d:["intermediate","advanced"], a:`
+            {
+              n: 2,
+              t: "Composite indexes — left-prefix rule, column order matters",
+              d: ["intermediate", "advanced"],
+              a: `
 <p>A composite index on (A, B, C) is like a phone book sorted first by A, then B, then C. You can use A alone, A+B, or A+B+C — but NOT B alone or C alone.</p>
 <pre>CREATE INDEX idx_emp_dept_sal ON employees(department, salary);
 
@@ -720,9 +877,14 @@ WHERE salary &gt; 80000  -- no dept filter = full scan
 SELECT * FROM employees
 WHERE department = 'Engineering'
 ORDER BY salary DESC;  -- index handles both filter and sort</pre>
-<p><strong>Column order rule:</strong> Put equality-filtered columns first, then range-filtered columns, then ORDER BY columns. Higher cardinality columns earlier prune more rows.</p>`},
+<p><strong>Column order rule:</strong> Put equality-filtered columns first, then range-filtered columns, then ORDER BY columns. Higher cardinality columns earlier prune more rows.</p>`,
+            },
 
-            {n:3, t:"What is a covering index and why is it fastest?", d:["advanced"], a:`
+            {
+              n: 3,
+              t: "What is a covering index and why is it fastest?",
+              d: ["advanced"],
+              a: `
 <p>A covering index contains <em>all</em> columns the query needs. The DB reads only the index — no heap lookup (PostgreSQL calls this "Index Only Scan").</p>
 <pre>-- Query needs: name and salary for Engineering employees
 SELECT name, salary FROM employees WHERE department = 'Engineering';
@@ -734,9 +896,14 @@ CREATE INDEX idx_covering ON employees(department, name, salary);
 -- EXPLAIN confirms
 EXPLAIN SELECT name, salary FROM employees WHERE department = 'Engineering';
 -- "Index Only Scan using idx_covering on employees"  (ideal)</pre>
-<p><strong>Trade-off:</strong> Wider indexes use more storage and slow down writes (every INSERT/UPDATE/DELETE updates the index). Use for hot read paths on large tables.</p>`},
+<p><strong>Trade-off:</strong> Wider indexes use more storage and slow down writes (every INSERT/UPDATE/DELETE updates the index). Use for hot read paths on large tables.</p>`,
+            },
 
-            {n:4, t:"Partial indexes — index only a subset of rows", d:["advanced"], a:`
+            {
+              n: 4,
+              t: "Partial indexes — index only a subset of rows",
+              d: ["advanced"],
+              a: `
 <pre>-- Only index active users (10M rows, 200K active)
 CREATE INDEX idx_active_users ON users(email)
 WHERE is_active = TRUE;
@@ -751,9 +918,14 @@ SELECT * FROM users WHERE email = 'alice@example.com' AND is_active = TRUE;
 
 SELECT * FROM users WHERE email = 'alice@example.com';
 -- does not use partial index (condition doesn't match)</pre>
-<p>Partial indexes are smaller, faster to scan, and faster to update than full indexes.</p>`},
+<p>Partial indexes are smaller, faster to scan, and faster to update than full indexes.</p>`,
+            },
 
-            {n:5, t:"How to read EXPLAIN ANALYZE output and identify bottlenecks", d:["advanced","expert"], a:`
+            {
+              n: 5,
+              t: "How to read EXPLAIN ANALYZE output and identify bottlenecks",
+              d: ["advanced", "expert"],
+              a: `
 <pre>EXPLAIN ANALYZE
 SELECT e.name, d.dept_name
 FROM employees e
@@ -779,9 +951,14 @@ Hash Join  (cost=15.00..45.23 rows=50 width=32)
   <tr><td>actual time=X..Y</td><td>Real time in ms</td></tr>
   <tr><td>loops=N</td><td>How many times this node ran (multiply time by loops)</td></tr>
 </table>
-<p><strong>Red flags:</strong> estimated rows ≠ actual rows (stale stats — run ANALYZE); Seq Scan on millions of rows; high loops count in nested loop joins.</p>`},
+<p><strong>Red flags:</strong> estimated rows ≠ actual rows (stale stats — run ANALYZE); Seq Scan on millions of rows; high loops count in nested loop joins.</p>`,
+            },
 
-            {n:6, t:"When do indexes HURT performance? High-write tables.", d:["advanced"], a:`
+            {
+              n: 6,
+              t: "When do indexes HURT performance? High-write tables.",
+              d: ["advanced"],
+              a: `
 <p>Every index added must be updated on every INSERT, UPDATE, DELETE. On high-write tables this can be the bottleneck.</p>
 <ul>
   <li>A table with 10 indexes does 10 extra B-tree writes per INSERT.</li>
@@ -796,9 +973,14 @@ SELECT
   pg_size_pretty(pg_relation_size(indexrelid)) AS index_size
 FROM pg_stat_user_indexes
 ORDER BY idx_scan ASC;
--- Low idx_scan + big size = candidate for removal</pre>`},
+-- Low idx_scan + big size = candidate for removal</pre>`,
+            },
 
-            {n:7, t:"Hash indexes, GIN, GiST, BRIN — other index types", d:["advanced"], a:`
+            {
+              n: 7,
+              t: "Hash indexes, GIN, GiST, BRIN — other index types",
+              d: ["advanced"],
+              a: `
 <table>
   <tr><th>Index Type</th><th>Best For</th><th>Notes</th></tr>
   <tr><td>B-tree</td><td>Equality, range, ORDER BY</td><td>Default, most versatile</td></tr>
@@ -813,10 +995,11 @@ SELECT * FROM orders WHERE metadata @&gt; '{"status": "urgent"}';
 
 -- BRIN index for large time-series tables
 CREATE INDEX idx_events_time ON events USING BRIN(created_at);
--- tiny index, only useful when physical order matches query order</pre>`}
-          ]
-        }
-      ]
+-- tiny index, only useful when physical order matches query order</pre>`,
+            },
+          ],
+        },
+      ],
     },
 
     /* =====================================================
@@ -826,10 +1009,16 @@ CREATE INDEX idx_events_time ON events USING BRIN(created_at);
       label: "PART 5 · TRANSACTIONS & CONCURRENCY",
       sections: [
         {
-          id: "sql-transactions", n: 7, title: "Transactions, Isolation Levels, Locking, Deadlocks",
+          id: "sql-transactions",
+          n: 7,
+          title: "Transactions, Isolation Levels, Locking, Deadlocks",
           desc: "Understanding transactions at depth is mandatory for MAANG backend engineering rounds — especially isolation levels and locking.",
           questions: [
-            {n:1, t:"What are ACID properties and how does each protect data?", d:["beginner","intermediate"], a:`
+            {
+              n: 1,
+              t: "What are ACID properties and how does each protect data?",
+              d: ["beginner", "intermediate"],
+              a: `
 <table>
   <tr><th>Property</th><th>Meaning</th><th>Mechanism</th></tr>
   <tr><td>Atomicity</td><td>All or nothing — no partial commits</td><td>ROLLBACK undoes partial work</td></tr>
@@ -841,9 +1030,14 @@ CREATE INDEX idx_events_time ON events USING BRIN(created_at);
   UPDATE accounts SET balance = balance - 500 WHERE id = 1;
   UPDATE accounts SET balance = balance + 500 WHERE id = 2;
   -- If anything fails, ROLLBACK reverts both UPDATEs atomically
-COMMIT;</pre>`},
+COMMIT;</pre>`,
+            },
 
-            {n:2, t:"Explain all four isolation levels and the problems they prevent", d:["intermediate","advanced"], a:`
+            {
+              n: 2,
+              t: "Explain all four isolation levels and the problems they prevent",
+              d: ["intermediate", "advanced"],
+              a: `
 <table>
   <tr><th>Level</th><th>Dirty Read</th><th>Non-repeatable Read</th><th>Phantom Read</th></tr>
   <tr><td>READ UNCOMMITTED</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
@@ -860,9 +1054,14 @@ COMMIT;
 
 -- PostgreSQL default: READ COMMITTED
 -- MySQL InnoDB default: REPEATABLE READ</pre>
-<p><strong>MAANG context:</strong> Most web apps use READ COMMITTED. Financial systems often use REPEATABLE READ or SERIALIZABLE. PostgreSQL REPEATABLE READ uses MVCC snapshots so it also prevents phantom reads (stronger than standard SQL defines).</p>`},
+<p><strong>MAANG context:</strong> Most web apps use READ COMMITTED. Financial systems often use REPEATABLE READ or SERIALIZABLE. PostgreSQL REPEATABLE READ uses MVCC snapshots so it also prevents phantom reads (stronger than standard SQL defines).</p>`,
+            },
 
-            {n:3, t:"SELECT FOR UPDATE — locking rows for concurrent operations", d:["advanced"], a:`
+            {
+              n: 3,
+              t: "SELECT FOR UPDATE — locking rows for concurrent operations",
+              d: ["advanced"],
+              a: `
 <pre>-- Two requests try to book the last seat on flight 123
 BEGIN;
   -- Lock the row — other txns that try SELECT FOR UPDATE will wait
@@ -879,9 +1078,14 @@ WHERE status = 'PENDING'
 ORDER BY created_at
 LIMIT 1
 FOR UPDATE SKIP LOCKED;</pre>
-<p>SKIP LOCKED is essential for high-throughput job queues — multiple workers pull from the same table without blocking each other.</p>`},
+<p>SKIP LOCKED is essential for high-throughput job queues — multiple workers pull from the same table without blocking each other.</p>`,
+            },
 
-            {n:4, t:"What causes deadlocks and how do you prevent them?", d:["advanced","expert"], a:`
+            {
+              n: 4,
+              t: "What causes deadlocks and how do you prevent them?",
+              d: ["advanced", "expert"],
+              a: `
 <p>A deadlock occurs when Transaction A holds a lock that B needs, and B holds a lock that A needs — circular wait.</p>
 <pre>-- T1: UPDATE accounts SET ... WHERE id = 1;  (locks row 1)
 -- T2: UPDATE accounts SET ... WHERE id = 2;  (locks row 2)
@@ -893,9 +1097,14 @@ FOR UPDATE SKIP LOCKED;</pre>
   <li><strong>Short transactions</strong> — hold locks as briefly as possible</li>
   <li><strong>Single-query updates</strong> — UPDATE accounts WHERE id IN (1,2) is atomic and orders locks internally</li>
   <li><strong>Retry logic</strong> — catch deadlock exceptions (PostgreSQL error 40P01) and retry</li>
-</ol>`},
+</ol>`,
+            },
 
-            {n:5, t:"What are SAVEPOINTS and how do partial rollbacks work?", d:["intermediate"], a:`
+            {
+              n: 5,
+              t: "What are SAVEPOINTS and how do partial rollbacks work?",
+              d: ["intermediate"],
+              a: `
 <pre>BEGIN;
   INSERT INTO orders (customer_id, total) VALUES (1, 500);
   SAVEPOINT after_order;
@@ -908,9 +1117,14 @@ FOR UPDATE SKIP LOCKED;</pre>
   -- Retry with different product
   INSERT INTO order_items (order_id, product_id, qty) VALUES (1001, 3, 2);
 COMMIT;  -- order + corrected item committed</pre>
-<p>SAVEPOINTs allow nested error recovery within a single transaction without losing all previous work.</p>`},
+<p>SAVEPOINTs allow nested error recovery within a single transaction without losing all previous work.</p>`,
+            },
 
-            {n:6, t:"Optimistic vs pessimistic locking — when to use each", d:["advanced"], a:`
+            {
+              n: 6,
+              t: "Optimistic vs pessimistic locking — when to use each",
+              d: ["advanced"],
+              a: `
 <table>
   <tr><th>Strategy</th><th>How it works</th><th>Best for</th></tr>
   <tr><td>Pessimistic</td><td>SELECT FOR UPDATE — locks row before reading</td><td>High contention, financial transactions</td></tr>
@@ -925,10 +1139,11 @@ SELECT id, balance, version FROM accounts WHERE id = 1;
 UPDATE accounts
 SET balance = 900, version = version + 1
 WHERE id = 1 AND version = 5;
--- If rows affected = 0, someone else updated — retry the operation</pre>`}
-          ]
-        }
-      ]
+-- If rows affected = 0, someone else updated — retry the operation</pre>`,
+            },
+          ],
+        },
+      ],
     },
 
     /* =====================================================
@@ -938,10 +1153,16 @@ WHERE id = 1 AND version = 5;
       label: "PART 6 · MAANG SQL INTERVIEW QUESTIONS",
       sections: [
         {
-          id: "maang-salary", n: 8, title: "Salary & Ranking Problems",
+          id: "maang-salary",
+          n: 8,
+          title: "Salary & Ranking Problems",
           desc: "The most-asked category in MAANG SQL rounds. Know all three approaches for each problem — subquery, window function, CTE.",
           questions: [
-            {n:1, t:"Find the employee with the SECOND highest salary", d:["intermediate","advanced"], a:`
+            {
+              n: 1,
+              t: "Find the employee with the SECOND highest salary",
+              d: ["intermediate", "advanced"],
+              a: `
 <p>Three valid approaches — know all three for interviews:</p>
 <pre>-- Approach 1: Subquery (classic, simple)
 SELECT MAX(salary) AS second_highest
@@ -965,9 +1186,14 @@ SELECT name, salary FROM employees
 WHERE salary = (
   SELECT DISTINCT salary FROM employees ORDER BY salary DESC LIMIT 1 OFFSET 1
 );</pre>
-<p><strong>Why DENSE_RANK is best:</strong> If two employees share the highest salary, DENSE_RANK correctly keeps them both at rank 1 and makes the next distinct salary rank 2. The subquery also handles this correctly. Both are valid — clarify with the interviewer whether ties collapse the rank.</p>`},
+<p><strong>Why DENSE_RANK is best:</strong> If two employees share the highest salary, DENSE_RANK correctly keeps them both at rank 1 and makes the next distinct salary rank 2. The subquery also handles this correctly. Both are valid — clarify with the interviewer whether ties collapse the rank.</p>`,
+            },
 
-            {n:2, t:"Find the Nth highest salary (generalised for any N)", d:["intermediate","advanced"], a:`
+            {
+              n: 2,
+              t: "Find the Nth highest salary (generalised for any N)",
+              d: ["intermediate", "advanced"],
+              a: `
 <pre>-- Replace 3 with any N
 
 -- DENSE_RANK approach (handles ties, works on all DBs)
@@ -988,9 +1214,14 @@ WHERE 2 = (      -- N-1 values are greater
 -- LIMIT OFFSET (MySQL/PostgreSQL, fast on small tables)
 SELECT DISTINCT salary FROM employees
 ORDER BY salary DESC
-LIMIT 1 OFFSET 2;  -- OFFSET = N - 1</pre>`},
+LIMIT 1 OFFSET 2;  -- OFFSET = N - 1</pre>`,
+            },
 
-            {n:3, t:"Find the highest salary in EACH department", d:["intermediate"], a:`
+            {
+              n: 3,
+              t: "Find the highest salary in EACH department",
+              d: ["intermediate"],
+              a: `
 <pre>-- Approach 1: GROUP BY + MAX (simplest)
 SELECT department, MAX(salary) AS max_salary
 FROM employees
@@ -1010,9 +1241,14 @@ FROM employees e
 WHERE salary = (
   SELECT MAX(salary) FROM employees
   WHERE department = e.department
-);</pre>`},
+);</pre>`,
+            },
 
-            {n:4, t:"Find the top 3 earners in EACH department", d:["advanced"], a:`
+            {
+              n: 4,
+              t: "Find the top 3 earners in EACH department",
+              d: ["advanced"],
+              a: `
 <pre>WITH dept_ranked AS (
   SELECT
     name, department, salary,
@@ -1031,9 +1267,14 @@ Bob    Engineering  110000   2
 Carol  Engineering  110000   2  (tie at rank 2)
 Dave   Engineering   95000   3
 ...
-*/</pre>`},
+*/</pre>`,
+            },
 
-            {n:5, t:"Find employees earning more than their department average", d:["intermediate","advanced"], a:`
+            {
+              n: 5,
+              t: "Find employees earning more than their department average",
+              d: ["intermediate", "advanced"],
+              a: `
 <pre>-- Approach 1: Window function (one pass)
 WITH stats AS (
   SELECT name, department, salary,
@@ -1050,9 +1291,14 @@ JOIN (
   SELECT department, AVG(salary) AS avg_sal
   FROM employees GROUP BY department
 ) da ON e.department = da.department
-WHERE e.salary &gt; da.avg_sal;</pre>`},
+WHERE e.salary &gt; da.avg_sal;</pre>`,
+            },
 
-            {n:6, t:"Find duplicate rows in a table", d:["intermediate"], a:`
+            {
+              n: 6,
+              t: "Find duplicate rows in a table",
+              d: ["intermediate"],
+              a: `
 <pre>-- Count duplicates by (name, department)
 SELECT name, department, COUNT(*) AS cnt
 FROM employees
@@ -1070,9 +1316,14 @@ SELECT * FROM dupes WHERE cnt &gt; 1;
 DELETE FROM employees
 WHERE emp_id NOT IN (
   SELECT MIN(emp_id) FROM employees GROUP BY name, department
-);</pre>`},
+);</pre>`,
+            },
 
-            {n:7, t:"Find gaps in a sequence (missing IDs or dates)", d:["advanced"], a:`
+            {
+              n: 7,
+              t: "Find gaps in a sequence (missing IDs or dates)",
+              d: ["advanced"],
+              a: `
 <pre>-- Missing employee IDs (gap detection with LAG)
 SELECT curr_id, prev_id, curr_id - prev_id - 1 AS gap_size
 FROM (
@@ -1085,9 +1336,14 @@ WHERE curr_id - prev_id &gt; 1;
 -- Missing dates in a sales table (PostgreSQL generate_series)
 SELECT d::DATE AS missing_date
 FROM generate_series('2025-01-01'::DATE, '2025-01-31'::DATE, '1 day') d
-WHERE d::DATE NOT IN (SELECT DISTINCT sale_date FROM daily_sales);</pre>`},
+WHERE d::DATE NOT IN (SELECT DISTINCT sale_date FROM daily_sales);</pre>`,
+            },
 
-            {n:8, t:"Running total of sales — per day and cumulative", d:["intermediate","advanced"], a:`
+            {
+              n: 8,
+              t: "Running total of sales — per day and cumulative",
+              d: ["intermediate", "advanced"],
+              a: `
 <pre>SELECT
   sale_date, amount,
   SUM(amount) OVER (
@@ -1103,9 +1359,14 @@ FROM daily_sales ORDER BY sale_date;
 -- Per region cumulative
 SELECT region, sale_date, amount,
   SUM(amount) OVER (PARTITION BY region ORDER BY sale_date) AS region_running_total
-FROM daily_sales ORDER BY region, sale_date;</pre>`},
+FROM daily_sales ORDER BY region, sale_date;</pre>`,
+            },
 
-            {n:9, t:"Find the median salary without using percentile functions", d:["advanced","expert"], a:`
+            {
+              n: 9,
+              t: "Find the median salary without using percentile functions",
+              d: ["advanced", "expert"],
+              a: `
 <pre>-- Using ROW_NUMBER to find middle rows
 WITH ordered AS (
   SELECT salary,
@@ -1122,9 +1383,14 @@ WHERE rn IN (
 
 -- PostgreSQL built-in (simpler)
 SELECT PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY salary) AS median
-FROM employees;</pre>`},
+FROM employees;</pre>`,
+            },
 
-            {n:10, t:"Pivot table — rows to columns (conditional aggregation)", d:["advanced"], a:`
+            {
+              n: 10,
+              t: "Pivot table — rows to columns (conditional aggregation)",
+              d: ["advanced"],
+              a: `
 <pre>-- sales: region, month, amount — pivot months into columns
 SELECT
   region,
@@ -1134,15 +1400,22 @@ SELECT
   SUM(amount) AS total
 FROM sales
 GROUP BY region;
--- This is called "conditional aggregation pivot" — works on all SQL databases</pre>`}
-          ]
+-- This is called "conditional aggregation pivot" — works on all SQL databases</pre>`,
+            },
+          ],
         },
 
         {
-          id: "maang-hierarchy", n: 9, title: "Employee & Manager Hierarchy Problems",
+          id: "maang-hierarchy",
+          n: 9,
+          title: "Employee & Manager Hierarchy Problems",
           desc: "Hierarchy and manager-chain queries appear frequently in MAANG rounds. These require self-joins or recursive CTEs.",
           questions: [
-            {n:1, t:"Find employees who are also managers", d:["intermediate"], a:`
+            {
+              n: 1,
+              t: "Find employees who are also managers",
+              d: ["intermediate"],
+              a: `
 <pre>-- Using subquery
 SELECT emp_id, name FROM employees
 WHERE emp_id IN (
@@ -1153,9 +1426,14 @@ WHERE emp_id IN (
 SELECT emp_id, name FROM employees m
 WHERE EXISTS (
   SELECT 1 FROM employees e WHERE e.manager_id = m.emp_id
-);</pre>`},
+);</pre>`,
+            },
 
-            {n:2, t:"Find the full manager chain for a given employee", d:["advanced","expert"], a:`
+            {
+              n: 2,
+              t: "Find the full manager chain for a given employee",
+              d: ["advanced", "expert"],
+              a: `
 <pre>WITH RECURSIVE chain AS (
   -- Start from target employee
   SELECT emp_id, name, manager_id, 0 AS level
@@ -1174,9 +1452,14 @@ level  name
 2      Alice  (CEO)
 1      Bob    (VP)
 0      Carol  (target employee)
-*/</pre>`},
+*/</pre>`,
+            },
 
-            {n:3, t:"Find all employees reporting (directly or indirectly) to a manager", d:["advanced","expert"], a:`
+            {
+              n: 3,
+              t: "Find all employees reporting (directly or indirectly) to a manager",
+              d: ["advanced", "expert"],
+              a: `
 <pre>WITH RECURSIVE reports AS (
   -- Anchor: the given manager
   SELECT emp_id, name, manager_id, 0 AS depth
@@ -1190,9 +1473,14 @@ level  name
   JOIN reports r ON e.manager_id = r.emp_id
   WHERE r.depth &lt; 10  -- guard against cycles
 )
-SELECT depth, name FROM reports WHERE depth &gt; 0 ORDER BY depth, name;</pre>`},
+SELECT depth, name FROM reports WHERE depth &gt; 0 ORDER BY depth, name;</pre>`,
+            },
 
-            {n:4, t:"Find leaf employees (no subordinates)", d:["intermediate"], a:`
+            {
+              n: 4,
+              t: "Find leaf employees (no subordinates)",
+              d: ["intermediate"],
+              a: `
 <pre>-- Employees whose emp_id never appears as a manager_id
 SELECT name FROM employees
 WHERE emp_id NOT IN (
@@ -1203,15 +1491,22 @@ WHERE emp_id NOT IN (
 SELECT e.name
 FROM employees e
 LEFT JOIN employees sub ON sub.manager_id = e.emp_id
-WHERE sub.emp_id IS NULL;</pre>`}
-          ]
+WHERE sub.emp_id IS NULL;</pre>`,
+            },
+          ],
         },
 
         {
-          id: "maang-advanced-agg", n: 10, title: "Advanced Aggregation & Date Problems",
+          id: "maang-advanced-agg",
+          n: 10,
+          title: "Advanced Aggregation & Date Problems",
           desc: "Date-based queries and complex aggregations test your ability to combine SQL building blocks under time pressure.",
           questions: [
-            {n:1, t:"Find users who logged in on consecutive days (streak detection)", d:["advanced","expert"], a:`
+            {
+              n: 1,
+              t: "Find users who logged in on consecutive days (streak detection)",
+              d: ["advanced", "expert"],
+              a: `
 <pre>-- user_logins: user_id, login_date (one row per user per day, deduped)
 WITH numbered AS (
   SELECT user_id, login_date,
@@ -1231,9 +1526,14 @@ SELECT user_id,
 FROM grouped
 GROUP BY user_id, grp
 HAVING COUNT(*) &gt;= 3  -- only streaks of 3+ days
-ORDER BY streak_length DESC;</pre>`},
+ORDER BY streak_length DESC;</pre>`,
+            },
 
-            {n:2, t:"Month-over-month revenue growth rate", d:["intermediate","advanced"], a:`
+            {
+              n: 2,
+              t: "Month-over-month revenue growth rate",
+              d: ["intermediate", "advanced"],
+              a: `
 <pre>WITH monthly AS (
   SELECT
     DATE_TRUNC('month', sale_date) AS month,
@@ -1245,9 +1545,14 @@ SELECT
   LAG(revenue) OVER (ORDER BY month) AS prev_month_revenue,
   ROUND(100.0 * (revenue - LAG(revenue) OVER (ORDER BY month))
     / NULLIF(LAG(revenue) OVER (ORDER BY month), 0), 2) AS mom_growth_pct
-FROM monthly ORDER BY month;</pre>`},
+FROM monthly ORDER BY month;</pre>`,
+            },
 
-            {n:3, t:"Find first and last purchase date + lifetime value per customer", d:["intermediate"], a:`
+            {
+              n: 3,
+              t: "Find first and last purchase date + lifetime value per customer",
+              d: ["intermediate"],
+              a: `
 <pre>SELECT
   customer_id,
   MIN(purchase_date)  AS first_purchase,
@@ -1258,9 +1563,14 @@ FROM monthly ORDER BY month;</pre>`},
   AVG(amount)         AS avg_order_value
 FROM orders
 GROUP BY customer_id
-ORDER BY lifetime_value DESC;</pre>`},
+ORDER BY lifetime_value DESC;</pre>`,
+            },
 
-            {n:4, t:"Find customers who bought product A but NOT product B (funnel)", d:["advanced"], a:`
+            {
+              n: 4,
+              t: "Find customers who bought product A but NOT product B (funnel)",
+              d: ["advanced"],
+              a: `
 <pre>WITH bought_a AS (
   SELECT DISTINCT o.customer_id FROM orders o
   JOIN order_items oi ON o.order_id = oi.order_id
@@ -1277,9 +1587,14 @@ SELECT customer_id FROM bought_b;
 
 -- Equivalently with NOT EXISTS:
 SELECT a.customer_id FROM bought_a a
-WHERE NOT EXISTS (SELECT 1 FROM bought_b b WHERE b.customer_id = a.customer_id);</pre>`},
+WHERE NOT EXISTS (SELECT 1 FROM bought_b b WHERE b.customer_id = a.customer_id);</pre>`,
+            },
 
-            {n:5, t:"Cohort retention — Day 1, Day 7, Day 30 retention rate", d:["expert"], a:`
+            {
+              n: 5,
+              t: "Cohort retention — Day 1, Day 7, Day 30 retention rate",
+              d: ["expert"],
+              a: `
 <pre>-- user_activity: user_id, activity_date
 WITH cohort AS (
   SELECT user_id, MIN(activity_date) AS cohort_date
@@ -1301,9 +1616,14 @@ SELECT
   ROUND(100.0 * COUNT(DISTINCT CASE WHEN days_since_start = 30 THEN user_id END)
     / COUNT(DISTINCT user_id), 1) AS day30_retention
 FROM activity_days
-GROUP BY cohort_date ORDER BY cohort_date;</pre>`},
+GROUP BY cohort_date ORDER BY cohort_date;</pre>`,
+            },
 
-            {n:6, t:"Find users who visited pages in a specific sequence", d:["expert"], a:`
+            {
+              n: 6,
+              t: "Find users who visited pages in a specific sequence",
+              d: ["expert"],
+              a: `
 <pre>-- user_events: user_id, page, event_time
 -- Find users: /home then /product then /checkout (in order)
 WITH ranked AS (
@@ -1317,15 +1637,22 @@ FROM ranked h
 JOIN ranked p ON h.user_id = p.user_id AND h.page = '/home'
               AND p.page = '/product' AND p.step &gt; h.step
 JOIN ranked c ON h.user_id = c.user_id AND c.page = '/checkout'
-              AND c.step &gt; p.step;</pre>`}
-          ]
+              AND c.step &gt; p.step;</pre>`,
+            },
+          ],
         },
 
         {
-          id: "maang-strings-search", n: 11, title: "String, Search & CASE Expression Queries",
+          id: "maang-strings-search",
+          n: 11,
+          title: "String, Search & CASE Expression Queries",
           desc: "String operations and conditional expressions appear in data engineering and analytics rounds.",
           questions: [
-            {n:1, t:"SQL string functions — LIKE, SUBSTRING, REPLACE, CONCAT, TRIM", d:["beginner","intermediate"], a:`
+            {
+              n: 1,
+              t: "SQL string functions — LIKE, SUBSTRING, REPLACE, CONCAT, TRIM",
+              d: ["beginner", "intermediate"],
+              a: `
 <pre>-- Pattern matching
 SELECT * FROM employees WHERE name LIKE 'A%';        -- starts with A
 SELECT * FROM employees WHERE name LIKE '%son';      -- ends with son
@@ -1345,9 +1672,14 @@ SELECT
 FROM employees;
 
 -- Regex (PostgreSQL)
-SELECT * FROM employees WHERE name ~ '^[A-Z][a-z]+$';  -- starts with capital letter</pre>`},
+SELECT * FROM employees WHERE name ~ '^[A-Z][a-z]+$';  -- starts with capital letter</pre>`,
+            },
 
-            {n:2, t:"CASE expression — conditional logic inside SQL queries", d:["beginner","intermediate"], a:`
+            {
+              n: 2,
+              t: "CASE expression — conditional logic inside SQL queries",
+              d: ["beginner", "intermediate"],
+              a: `
 <pre>-- Simple CASE
 SELECT name, salary,
   CASE
@@ -1374,9 +1706,14 @@ SELECT department,
   COUNT(CASE WHEN salary &lt;= 100000 THEN 1 END) AS junior_count,
   SUM(CASE WHEN department = 'Engineering' THEN salary ELSE 0 END) AS eng_payroll
 FROM employees
-GROUP BY department;</pre>`},
+GROUP BY department;</pre>`,
+            },
 
-            {n:3, t:"Full-text search in PostgreSQL — GIN index and tsvector", d:["advanced"], a:`
+            {
+              n: 3,
+              t: "Full-text search in PostgreSQL — GIN index and tsvector",
+              d: ["advanced"],
+              a: `
 <pre>-- LIKE with leading wildcard is slow — forces full scan
 WHERE content LIKE '%performance%'  -- slow
 
@@ -1395,10 +1732,11 @@ SELECT title,
 FROM articles
 WHERE to_tsvector('english', content) @@ to_tsquery('english', 'database')
 ORDER BY rank DESC LIMIT 20;</pre>
-<p><strong>MAANG context:</strong> PostgreSQL FTS works well up to ~10M documents. For product search at billion scale, teams use Elasticsearch/OpenSearch alongside the primary database.</p>`}
-          ]
-        }
-      ]
+<p><strong>MAANG context:</strong> PostgreSQL FTS works well up to ~10M documents. For product search at billion scale, teams use Elasticsearch/OpenSearch alongside the primary database.</p>`,
+            },
+          ],
+        },
+      ],
     },
 
     /* =====================================================
@@ -1408,10 +1746,16 @@ ORDER BY rank DESC LIMIT 20;</pre>
       label: "PART 7 · ADVANCED PATTERNS & OPTIMISATION",
       sections: [
         {
-          id: "sql-optimisation", n: 12, title: "Query Optimisation, Slow Queries, Materialized Views",
+          id: "sql-optimisation",
+          n: 12,
+          title: "Query Optimisation, Slow Queries, Materialized Views",
           desc: "Knowing <em>why</em> a query is slow and how to fix it separates senior engineers from the rest.",
           questions: [
-            {n:1, t:"What are the most common reasons a query is slow?", d:["intermediate","advanced"], a:`
+            {
+              n: 1,
+              t: "What are the most common reasons a query is slow?",
+              d: ["intermediate", "advanced"],
+              a: `
 <ol>
   <li><strong>Missing index</strong> — Seq Scan on millions of rows</li>
   <li><strong>Wrong index</strong> — function wrapping, type mismatch, low selectivity</li>
@@ -1423,9 +1767,14 @@ ORDER BY rank DESC LIMIT 20;</pre>
   <li><strong>SELECT *</strong> on wide table — fetches columns the app never uses</li>
   <li><strong>Missing join index</strong> — join column not indexed in the joined table</li>
   <li><strong>Unbounded query</strong> — no LIMIT on a table with millions of rows</li>
-</ol>`},
+</ol>`,
+            },
 
-            {n:2, t:"How to rewrite a slow correlated subquery as a JOIN or CTE", d:["intermediate","advanced"], a:`
+            {
+              n: 2,
+              t: "How to rewrite a slow correlated subquery as a JOIN or CTE",
+              d: ["intermediate", "advanced"],
+              a: `
 <pre>-- SLOW: correlated subquery — runs once per row in employees
 SELECT e.name, e.salary FROM employees e
 WHERE e.salary = (
@@ -1441,9 +1790,14 @@ WITH dept_max AS (
 SELECT e.name, e.salary
 FROM employees e
 JOIN dept_max dm ON e.department = dm.department
-              AND e.salary = dm.max_sal;</pre>`},
+              AND e.salary = dm.max_sal;</pre>`,
+            },
 
-            {n:3, t:"Materialized views — precomputed results for expensive queries", d:["advanced"], a:`
+            {
+              n: 3,
+              t: "Materialized views — precomputed results for expensive queries",
+              d: ["advanced"],
+              a: `
 <pre>-- Create a materialized view for an expensive aggregation
 CREATE MATERIALIZED VIEW dept_salary_stats AS
 SELECT department,
@@ -1460,9 +1814,14 @@ SELECT * FROM dept_salary_stats WHERE avg_salary &gt; 90000;
 -- Refresh when underlying data changes
 REFRESH MATERIALIZED VIEW CONCURRENTLY dept_salary_stats;
 -- CONCURRENTLY: refresh without locking reads (needs unique index on the view)</pre>
-<p><strong>MAANG use case:</strong> Dashboards, reporting, analytics. Schedule refresh via cron or trigger. Not suitable for real-time data — use a live query or caching layer (Redis) for that.</p>`},
+<p><strong>MAANG use case:</strong> Dashboards, reporting, analytics. Schedule refresh via cron or trigger. Not suitable for real-time data — use a live query or caching layer (Redis) for that.</p>`,
+            },
 
-            {n:4, t:"Table partitioning — what it is and how it helps large tables", d:["advanced","expert"], a:`
+            {
+              n: 4,
+              t: "Table partitioning — what it is and how it helps large tables",
+              d: ["advanced", "expert"],
+              a: `
 <pre>-- RANGE partitioning by date (PostgreSQL 10+)
 CREATE TABLE orders (
   order_id BIGINT,
@@ -1483,15 +1842,22 @@ SELECT * FROM orders WHERE created_at &gt;= '2025-06-01';
 CREATE TABLE sales PARTITION BY LIST (region);
 CREATE TABLE sales_us PARTITION OF sales FOR VALUES IN ('US', 'CA');
 CREATE TABLE sales_eu PARTITION OF sales FOR VALUES IN ('UK', 'DE', 'FR');</pre>
-<p><strong>Benefits:</strong> Smaller scans (partition pruning). Archive old data by dropping old partition. Parallel query across partitions. Best for tables &gt; 100M rows with a natural range key (date, region).</p>`}
-          ]
+<p><strong>Benefits:</strong> Smaller scans (partition pruning). Archive old data by dropping old partition. Parallel query across partitions. Best for tables &gt; 100M rows with a natural range key (date, region).</p>`,
+            },
+          ],
         },
 
         {
-          id: "sql-schema-design", n: 13, title: "Schema Design, Normalisation, Anti-patterns",
+          id: "sql-schema-design",
+          n: 13,
+          title: "Schema Design, Normalisation, Anti-patterns",
           desc: "Schema design questions come up in system design interviews. Knowing when to normalise and when to denormalise is key.",
           questions: [
-            {n:1, t:"What are 1NF, 2NF, 3NF — normalisation explained simply", d:["intermediate"], a:`
+            {
+              n: 1,
+              t: "What are 1NF, 2NF, 3NF — normalisation explained simply",
+              d: ["intermediate"],
+              a: `
 <table>
   <tr><th>Normal Form</th><th>Rule</th><th>Violation Example</th></tr>
   <tr><td>1NF</td><td>Atomic values, no repeating groups</td><td>Storing "Alice,Bob" in one phone column</td></tr>
@@ -1506,9 +1872,14 @@ CREATE TABLE sales_eu PARTITION OF sales FOR VALUES IN ('UK', 'DE', 'FR');</pre>
 
 -- 3NF violation:
 -- employees: emp_id | name | zip | city  (city depends on zip, not emp_id)
--- Fix: extract zip_codes: zip | city | state</pre>`},
+-- Fix: extract zip_codes: zip | city | state</pre>`,
+            },
 
-            {n:2, t:"When should you DENORMALIZE and how to do it safely?", d:["advanced"], a:`
+            {
+              n: 2,
+              t: "When should you DENORMALIZE and how to do it safely?",
+              d: ["advanced"],
+              a: `
 <p>Denormalisation trades write complexity for read performance. Common in read-heavy systems and analytics.</p>
 <pre>-- Snapshot customer data into orders at order time
 -- (customer may change email later; order record preserves who they were at that time)
@@ -1519,9 +1890,14 @@ orders: order_id | customer_id | customer_name_snapshot | total</pre>
   <li>Materialised computed totals: order.total stored, not recalculated from order_items each time</li>
   <li>Redundant columns for partition-local queries (avoid cross-shard joins)</li>
   <li>Audit/history snapshot tables</li>
-</ul>`},
+</ul>`,
+            },
 
-            {n:3, t:"Common schema anti-patterns and how to fix them", d:["intermediate","advanced"], a:`
+            {
+              n: 3,
+              t: "Common schema anti-patterns and how to fix them",
+              d: ["intermediate", "advanced"],
+              a: `
 <table>
   <tr><th>Anti-pattern</th><th>Problem</th><th>Fix</th></tr>
   <tr><td>EAV (Entity-Attribute-Value)</td><td>No type safety, can't index individual attributes, painful joins</td><td>Use JSONB or properly typed columns</td></tr>
@@ -1530,10 +1906,11 @@ orders: order_id | customer_id | customer_name_snapshot | total</pre>
   <tr><td>Missing created_at/updated_at</td><td>Can't audit, can't do incremental ETL</td><td>Add timestamp columns to every table</td></tr>
   <tr><td>INT primary key on large table</td><td>2 billion row limit hit on huge tables</td><td>Always use BIGINT for IDs</td></tr>
   <tr><td>Missing foreign keys</td><td>Orphaned records, no referential integrity</td><td>Add FK constraints — defer if needed for performance</td></tr>
-</table>`}
-          ]
-        }
-      ]
+</table>`,
+            },
+          ],
+        },
+      ],
     },
 
     /* =====================================================
@@ -1543,10 +1920,16 @@ orders: order_id | customer_id | customer_name_snapshot | total</pre>
       label: "PART 8 · DATABASE ENGINES & PRODUCTION",
       sections: [
         {
-          id: "db-internals", n: 14, title: "PostgreSQL, MongoDB, Oracle — Internals & Choice",
+          id: "db-internals",
+          n: 14,
+          title: "PostgreSQL, MongoDB, Oracle — Internals & Choice",
           desc: "Use this section to explain <strong>when and why</strong> to choose SQL, PostgreSQL, MongoDB, or Oracle in real systems.",
           questions: [
-            {n:1, t:"SQL vs NoSQL — what is the real difference beyond buzzwords?", d:["beginner"], a:`
+            {
+              n: 1,
+              t: "SQL vs NoSQL — what is the real difference beyond buzzwords?",
+              d: ["beginner"],
+              a: `
 <p>SQL and NoSQL are workload trade-off choices, not old-vs-new choices.</p>
 <table>
   <tr><th>Dimension</th><th>SQL (PostgreSQL/Oracle)</th><th>NoSQL (MongoDB)</th></tr>
@@ -1555,9 +1938,14 @@ orders: order_id | customer_id | customer_name_snapshot | total</pre>
   <tr><td>Transactions</td><td>Mature ACID across multiple tables</td><td>Single-document atomic by default; multi-doc since 4.0</td></tr>
   <tr><td>Scaling</td><td>Vertical + read replicas + partitioning</td><td>Horizontal sharding built-in</td></tr>
   <tr><td>Best fit</td><td>Financial, relational, complex queries</td><td>Product catalogs, user profiles, evolving schema</td></tr>
-</table>`},
+</table>`,
+            },
 
-            {n:2, t:"How does PostgreSQL work internally — MVCC, WAL, Autovacuum?", d:["intermediate","advanced"], a:`
+            {
+              n: 2,
+              t: "How does PostgreSQL work internally — MVCC, WAL, Autovacuum?",
+              d: ["intermediate", "advanced"],
+              a: `
 <ul>
   <li><strong>MVCC (Multi-Version Concurrency Control):</strong> Each row update creates a new version. Readers see their snapshot; writers don't block readers.</li>
   <li><strong>WAL (Write-Ahead Log):</strong> Every change is written to WAL on disk before the data page. Basis of durability and streaming replication.</li>
@@ -1569,9 +1957,14 @@ orders: order_id | customer_id | customer_name_snapshot | total</pre>
   UPDATE accounts SET balance = balance + 100 WHERE id = 2;
 COMMIT;
 -- PostgreSQL writes WAL, commits atomically. Old row versions left behind.
--- Autovacuum later reclaims dead old versions and updates statistics.</pre>`},
+-- Autovacuum later reclaims dead old versions and updates statistics.</pre>`,
+            },
 
-            {n:3, t:"Replication — primary/replica, synchronous vs asynchronous", d:["advanced"], a:`
+            {
+              n: 3,
+              t: "Replication — primary/replica, synchronous vs asynchronous",
+              d: ["advanced"],
+              a: `
 <pre>-- PostgreSQL streaming replication
 -- Primary streams WAL to replica continuously
 
@@ -1587,9 +1980,14 @@ COMMIT;
 CREATE PUBLICATION my_pub FOR TABLE orders, products;
 -- On subscriber:
 CREATE SUBSCRIPTION my_sub CONNECTION '...' PUBLICATION my_pub;</pre>
-<p><strong>MAANG uses:</strong> Read replicas for analytics queries. Regional replicas for disaster recovery. Logical replication for zero-downtime major version upgrades.</p>`},
+<p><strong>MAANG uses:</strong> Read replicas for analytics queries. Regional replicas for disaster recovery. Logical replication for zero-downtime major version upgrades.</p>`,
+            },
 
-            {n:4, t:"Sharding — horizontal partitioning across multiple databases", d:["advanced","expert"], a:`
+            {
+              n: 4,
+              t: "Sharding — horizontal partitioning across multiple databases",
+              d: ["advanced", "expert"],
+              a: `
 <p>Sharding splits rows across multiple database servers. Each server (shard) holds a subset of data.</p>
 <pre>-- Shard by customer_id: hash(customer_id) % 4 = shard number
 -- Shard 0: customers whose ID % 4 = 0
@@ -1600,18 +1998,28 @@ CREATE SUBSCRIPTION my_sub CONNECTION '...' PUBLICATION my_pub;</pre>
   <tr><td>Geographic region</td><td>Regional data isolation</td><td>Cross-region queries scatter</td></tr>
   <tr><td>Hash of ID</td><td>Even distribution</td><td>Range queries scatter across all shards</td></tr>
 </table>
-<p><strong>MAANG tip:</strong> Avoid sharding as long as possible. Vertical scaling + read replicas + table partitioning can handle massive scale. Sharding adds enormous operational complexity (cross-shard joins, distributed transactions).</p>`},
+<p><strong>MAANG tip:</strong> Avoid sharding as long as possible. Vertical scaling + read replicas + table partitioning can handle massive scale. Sharding adds enormous operational complexity (cross-shard joins, distributed transactions).</p>`,
+            },
 
-            {n:5, t:"CAP theorem and how it applies to database choices", d:["advanced","expert"], a:`
+            {
+              n: 5,
+              t: "CAP theorem and how it applies to database choices",
+              d: ["advanced", "expert"],
+              a: `
 <p>In a distributed system, during a network Partition, you must choose between Consistency and Availability.</p>
 <table>
   <tr><th>Choice</th><th>Systems</th><th>Behaviour on Partition</th></tr>
   <tr><td>CP (Consistent + Partition-tolerant)</td><td>PostgreSQL, ZooKeeper, HBase</td><td>Reject writes to stay consistent — no stale reads</td></tr>
   <tr><td>AP (Available + Partition-tolerant)</td><td>Cassandra, DynamoDB, CouchDB</td><td>Accept writes on all nodes, resolve conflicts later</td></tr>
 </table>
-<p><strong>MAANG answer:</strong> "PostgreSQL is CP — in a partition the primary rejects writes rather than accepting inconsistent data. Cassandra is AP — it accepts writes everywhere and uses last-write-wins to reconcile. For financial transactions I'd choose CP. For social feed timelines I'd consider AP."</p>`},
+<p><strong>MAANG answer:</strong> "PostgreSQL is CP — in a partition the primary rejects writes rather than accepting inconsistent data. Cassandra is AP — it accepts writes everywhere and uses last-write-wins to reconcile. For financial transactions I'd choose CP. For social feed timelines I'd consider AP."</p>`,
+            },
 
-            {n:6, t:"Zero-downtime schema migrations — how to safely alter large tables", d:["advanced","expert"], a:`
+            {
+              n: 6,
+              t: "Zero-downtime schema migrations — how to safely alter large tables",
+              d: ["advanced", "expert"],
+              a: `
 <p>ALTER TABLE with NOT NULL on a 500M row table can lock it for hours. Use the expand-contract pattern:</p>
 <pre>-- Phase 1: Add column as nullable (no table lock, fast)
 ALTER TABLE orders ADD COLUMN new_status VARCHAR(50);
@@ -1627,9 +2035,14 @@ ALTER TABLE orders ALTER COLUMN new_status SET DEFAULT 'PENDING';
 
 -- Add index WITHOUT locking (PostgreSQL)
 CREATE INDEX CONCURRENTLY idx_new_status ON orders(new_status);
--- CONCURRENTLY builds index without locking writes (takes longer but safe)</pre>`},
+-- CONCURRENTLY builds index without locking writes (takes longer but safe)</pre>`,
+            },
 
-            {n:7, t:"Change Data Capture (CDC) and the Outbox pattern", d:["expert"], a:`
+            {
+              n: 7,
+              t: "Change Data Capture (CDC) and the Outbox pattern",
+              d: ["expert"],
+              a: `
 <p>CDC streams every DB change (INSERT/UPDATE/DELETE) as events. Debezium reads PostgreSQL WAL and publishes to Kafka.</p>
 <pre>-- Outbox pattern: atomic write to DB + reliable event publishing
 -- Problem: writing to DB and publishing to Kafka is not atomic
@@ -1646,11 +2059,11 @@ COMMIT;
 -- Kafka consumer processes OrderCreated event
 
 -- Even if Kafka is down, the order is safely persisted.
--- When Kafka recovers, Debezium reads from WAL and publishes.</pre>`}
-          ]
-        }
-      ]
-    }
-
-  ]
+-- When Kafka recovers, Debezium reads from WAL and publishes.</pre>`,
+            },
+          ],
+        },
+      ],
+    },
+  ],
 };

@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Backend Cloud & Deployment — MAANG Prep</title>
+    <title>DSA — Data Structures & Algorithms Complete Guide</title>
     <link
       href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Syne:wght@400;600;700;800&display=swap"
       rel="stylesheet"
@@ -24,7 +24,7 @@
       <div class="nav-links">
         <a href="index.html" class="nav-link">🏠 Home</a
         ><a href="oop.html" class="nav-link">🧩 OOPS</a
-        ><a href="dsa.html" class="nav-link">🧮 DSA</a
+        ><a href="dsa.html" class="nav-link active">🧮 DSA</a
         ><a href="basics.html" class="nav-link">☕ Basic</a
         ><a href="versions.html" class="nav-link">🚀 Version</a
         ><a href="collections.html" class="nav-link">📦 Collection</a
@@ -34,7 +34,7 @@
         ><a href="mastery.html" class="nav-link">🧠 Mastry</a
         ><a href="quiz.html" class="nav-link">🎯 Quiz</a
         ><a href="springboot.html" class="nav-link">🍃 Spring</a
-        ><a href="backend-track.html" class="nav-link active">🧱 Backend</a>
+        ><a href="backend-track.html" class="nav-link">🧱 Backend</a>
       </div>
       <button
         class="theme-toggle"
@@ -74,27 +74,25 @@
       </button>
     </nav>
     <div class="breadcrumb">
-      <a href="index.html">Home</a> ›
-      <a href="backend-track.html">Backend MAANG Track</a> › Cloud &amp;
-      Deployment
+      <a href="index.html">Home</a> › DSA — Data Structures &amp; Algorithms
     </div>
     <header>
-      <div class="header-tag">// Cloud, Kubernetes, and Runtime Operations</div>
-      <h1>☁️ Cloud &amp; Deployment Deep Guide</h1>
+      <div class="header-tag">// Coding Interview Ready</div>
+      <h1>🧮 DSA — Data Structures &amp; Algorithms</h1>
       <p class="subtitle">
-        Cloud service layers, Kubernetes, release strategy, graceful shutdown,
-        rollback, multi-region architecture, and cloud security for backend
-        interviews.
+        Arrays, Linked Lists, Trees, Graphs, Sorting, Searching, Two Pointers,
+        Sliding Window, DP, Backtracking and more — with visual diagrams and
+        problem patterns for every concept.
       </p>
       <div class="stats-row">
         <div class="stat">
-          <span class="stat-num" id="statTotal">0</span> Questions
+          <span class="stat-num" id="statTotal">0</span> Concepts
         </div>
         <div class="stat">
           <span class="stat-num" id="statSections">0</span> Sections
         </div>
-        <div class="stat"><span class="stat-num">Cloud</span> Focus</div>
-        <div class="stat"><span class="stat-num">SRE</span> Context</div>
+        <div class="stat"><span class="stat-num">Visual</span> Diagrams</div>
+        <div class="stat"><span class="stat-num">Fresher</span> Friendly</div>
       </div>
     </header>
     <div class="controls">
@@ -112,7 +110,7 @@
         ><input
           type="text"
           id="searchInput"
-          placeholder="Search kubernetes, canary, rollback, probes, IAM..."
+          placeholder="Search arrays, trees, BFS, DP, sorting, two pointers..."
           oninput="filterCards()"
         />
       </div>
@@ -134,62 +132,72 @@
       <aside class="sidebar" id="msidebar"></aside>
       <div class="content" id="mcontent">
         <div class="no-results" id="noResults">
-          No questions match your search.
+          No concepts match your search.
         </div>
       </div>
     </div>
-    <script src="assets/backend-cloud-deployment-data.js"></script>
+    <script src="assets/dsa-data.js"></script>
     <script>
       (function () {
-        var data = window.BACKEND_CLOUD_DEPLOY_DATA;
+        var data = window.DSA_DATA;
         if (!data) return;
-        var sidebar = document.getElementById("msidebar"),
-          content = document.getElementById("mcontent"),
-          totalQ = 0,
+        var sidebar = document.getElementById("msidebar");
+        var content = document.getElementById("mcontent");
+        var totalQ = 0,
           sectionCount = 0;
         var CHEVRON =
           '<svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>';
+
         function el(t, c, h) {
           var e = document.createElement(t);
           if (c) e.className = c;
           if (h != null) e.innerHTML = h;
           return e;
         }
+
         data.parts.forEach(function (part) {
           var ph = el("div", "cat-header");
           ph.textContent = part.label;
           sidebar.appendChild(ph);
+
           part.sections.forEach(function (sec) {
             sectionCount++;
             var sid = "sec-" + sec.id;
-            var l = el("div", "sidebar-link");
-            l.dataset.target = sid;
-            l.textContent = "§" + sec.n + " " + sec.title;
-            l.addEventListener("click", function () {
+
+            var link = el("div", "sidebar-link");
+            link.dataset.target = sid;
+            link.textContent = "§" + sec.n + " " + sec.title;
+            link.addEventListener("click", function () {
               scrollToSection(sid);
             });
-            sidebar.appendChild(l);
+            sidebar.appendChild(link);
+
             var section = el("section", "section-card card");
             section.id = sid;
-            var h = el("div", "card-header");
-            h.setAttribute("onclick", "toggle(this)");
-            h.innerHTML =
+
+            var header = el("div", "card-header");
+            header.setAttribute("onclick", "toggle(this)");
+            header.innerHTML =
               '<h2><span class="sec-num">§' +
               sec.n +
               "</span> " +
               sec.title +
-              '</h2><span class="q-count">' +
+              "</h2>" +
+              '<span class="q-count">' +
               sec.questions.length +
-              " Q</span>" +
+              " Topics</span>" +
               CHEVRON;
-            section.appendChild(h);
-            var b = el("div", "card-body"),
-              i = el("div", "card-inner");
+            section.appendChild(header);
+
+            var body = el("div", "card-body");
+            var inner = el("div", "card-inner");
+
             if (sec.desc) {
               var d = el("div", "section-desc");
               d.innerHTML = sec.desc;
-              i.appendChild(d);
+              inner.appendChild(d);
             }
+
             sec.questions.forEach(function (q) {
               totalQ++;
               var dif = q.d
@@ -203,55 +211,103 @@
                   );
                 })
                 .join("");
-              var c = el("div", "card");
-              c.id = "q-" + sec.id + "-" + q.n;
-              c.innerHTML =
-                '<div class="card-header" onclick="toggle(this)"><span class="q-num">Q' +
+              var card = el("div", "card");
+              card.id = "q-" + sec.id + "-" + q.n;
+              card.setAttribute("data-difficulty", q.d.join(" "));
+              card.innerHTML =
+                '<div class="card-header" onclick="toggle(this)">' +
+                '<span class="q-num">Q' +
                 q.n +
-                '</span><span class="q-title">' +
+                "</span>" +
+                '<span class="q-title">' +
                 q.t +
-                '</span><span class="diff-stack">' +
+                "</span>" +
+                '<span class="diff-stack">' +
                 dif +
                 "</span>" +
                 CHEVRON +
-                '</div><div class="card-body"><div class="card-inner"><div class="answer">' +
+                "</div>" +
+                '<div class="card-body"><div class="card-inner">' +
+                '<div class="answer">' +
                 q.a +
-                "</div></div></div>";
-              i.appendChild(c);
+                "</div>" +
+                "</div></div>";
+              inner.appendChild(card);
             });
-            b.appendChild(i);
-            section.appendChild(b);
+
+            body.appendChild(inner);
+            section.appendChild(body);
             content.appendChild(section);
           });
         });
+
         document.getElementById("statTotal").textContent = totalQ;
         document.getElementById("statSections").textContent = sectionCount;
+
         window.scrollToSection = function (id) {
-          var x = document.getElementById(id);
-          if (!x) return;
-          x.classList.add("open");
-          x.scrollIntoView({ behavior: "smooth", block: "start" });
-          document.querySelectorAll(".sidebar-link").forEach(function (n) {
-            n.classList.remove("active");
+          var e = document.getElementById(id);
+          if (!e) return;
+          e.classList.add("open");
+          e.scrollIntoView({ behavior: "smooth", block: "start" });
+          document.querySelectorAll(".sidebar-link").forEach(function (l) {
+            l.classList.remove("active");
           });
-          var y = document.querySelector(
+          var lnk = document.querySelector(
             '.sidebar-link[data-target="' + id + '"]',
           );
-          if (y) y.classList.add("active");
+          if (lnk) lnk.classList.add("active");
         };
-        var all = false;
+
+        var allOpen = false;
         window.toggleAllSections = function () {
-          all = !all;
+          allOpen = !allOpen;
           document.querySelectorAll(".section-card").forEach(function (s) {
-            if (all) s.classList.add("open");
+            if (allOpen) s.classList.add("open");
             else s.classList.remove("open");
           });
-          var btn = document.querySelector(".expand-all");
-          if (btn)
-            btn.textContent = all
+          var b = document.querySelector(".expand-all");
+          if (b)
+            b.textContent = allOpen
               ? "Collapse All Sections"
               : "Expand All Sections";
         };
+
+        /* Difficulty filter override for this page */
+        var activeFilter = "all";
+        window.filterBy = function (level, btn) {
+          activeFilter = level;
+          document.querySelectorAll(".filter-btn").forEach(function (b) {
+            b.classList.remove("active");
+          });
+          if (btn) btn.classList.add("active");
+          applyDsaFilters();
+        };
+        window.filterCards = function () {
+          applyDsaFilters();
+        };
+
+        function applyDsaFilters() {
+          var input = document.getElementById("searchInput");
+          var query = input ? input.value.toLowerCase() : "";
+          document
+            .querySelectorAll(".section-card .card")
+            .forEach(function (card) {
+              var titleEl = card.querySelector(".q-title");
+              var bodyEl = card.querySelector(".answer");
+              var title = titleEl ? titleEl.textContent.toLowerCase() : "";
+              var body = bodyEl ? bodyEl.textContent.toLowerCase() : "";
+              var matchesText =
+                !query ||
+                title.indexOf(query) !== -1 ||
+                body.indexOf(query) !== -1;
+              var diffData = card.getAttribute("data-difficulty") || "";
+              var matchesDiff =
+                activeFilter === "all" || diffData.indexOf(activeFilter) !== -1;
+              card.style.display = matchesText && matchesDiff ? "" : "none";
+              if (matchesText && matchesDiff && query)
+                card.classList.add("open");
+            });
+        }
       })();
     </script>
     <script src="assets/main.js" defer></script>

@@ -1,79 +1,277 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PART 4: Collections Framework (Q106–150) — Java Interview Guide</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      PART 4: Collections Framework (Q106–150) — Java Interview Guide
+    </title>
 
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/theme.css">
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Syne:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/theme.css" />
 
-  <script>(function(){try{var t=localStorage.getItem("java-theme")||"light";document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
-</head>
-<body>
-<nav class="topnav"><span class="nav-logo">// Java Interview</span><div class="nav-links"><a href="index.html" class="nav-link">🏠 Home</a><a href="oop.html" class="nav-link">🧩 OOPS</a><a href="basics.html" class="nav-link">☕ Basic</a><a href="versions.html" class="nav-link">🚀 Version</a><a href="collections.html" class="nav-link active">📦 Collection</a><a href="exceptions.html" class="nav-link">⚠️ Exception</a><a href="concurrency.html" class="nav-link">⚡ Concurrency + Advance</a><a href="methods.html" class="nav-link">🛠️ Methods</a><a href="mastery.html" class="nav-link">🧠 Mastry</a><a href="quiz.html" class="nav-link">🎯 Quiz</a><a href="springboot.html" class="nav-link">🍃 Spring</a><a href="backend-track.html" class="nav-link">🧱 Backend</a></div><button class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme" onclick="toggleTheme()" type="button"><svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg><svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button></nav>
-<div class="breadcrumb">
-  <a href="index.html">Home</a> › PART 4: Collections Framework (Q106–150)
-</div>
-<header>
-  <div class="header-tag">// Java Interview — Senior Level</div>
-  <h1>📦 PART 4: Collections Framework (Q106–153)</h1>
-  <p class="subtitle">List, Map, Set internals — ArrayList vs LinkedList, HashMap internals, TreeMap, generics, iterators.</p>
-  <div class="stats-row">
-    <div class="stat"><span class="stat-num">49</span> Questions</div>
-
-    <div class='stat'><span class='stat-num'>21</span> Mid</div>
-    <div class='stat'><span class='stat-num'>24</span> Advanced</div>
-    <div class='stat'><span class='stat-num'>3</span> Expert</div>
-  </div>
-</header>
-<div class="controls">
-  <div class="search-wrap">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-    <input type="text" id="searchInput" placeholder="Search questions..." oninput="filterCards()">
-  </div>
-  <button class="filter-btn active" onclick="filterBy('all',this)">All</button>
-  
-  <button class='filter-btn' onclick='filterBy("mid",this)'>Mid</button>
-  <button class='filter-btn' onclick='filterBy("adv",this)'>Advanced</button>
-  <button class='filter-btn' onclick='filterBy("exp",this)'>Expert</button>
-  <button class="expand-all" onclick="toggleAll()">Expand All</button>
-</div>
-<div class="main">
-  <aside class="sidebar">
-    <div class="cat-header">Questions</div>
-    <div class="sidebar-link" data-target="q106" onclick="scrollToCard('q106')">Q106. . Hierarchy of Collections?</div>
-<div class="sidebar-link" data-target="q109" onclick="scrollToCard('q109')">Q109. . When to use LinkedList?</div>
-<div class="sidebar-link" data-target="q112" onclick="scrollToCard('q112')">Q112. . HashMap internal working?</div>
-<div class="sidebar-link" data-target="q115" onclick="scrollToCard('q115')">Q115. . HashMap vs Hashtable?</div>
-<div class="sidebar-link" data-target="q118" onclick="scrollToCard('q118')">Q118. . LinkedHashMap use cases?</div>
-<div class="sidebar-link" data-target="q121" onclick="scrollToCard('q121')">Q121. . HashSet vs TreeSet?</div>
-<div class="sidebar-link" data-target="q124" onclick="scrollToCard('q124')">Q124. . Comparable vs Comparator?</div>
-<div class="sidebar-link" data-target="q127" onclick="scrollToCard('q127')">Q127. . Iterator vs ListIterator?</div>
-<div class="sidebar-link" data-target="q130" onclick="scrollToCard('q130')">Q130. . What is Spliterator?</div>
-<div class="sidebar-link" data-target="q133" onclick="scrollToCard('q133')">Q133. . BlockingQueue?</div>
-<div class="sidebar-link" data-target="q136" onclick="scrollToCard('q136')">Q136. . WeakHashMap use cases?</div>
-<div class="sidebar-link" data-target="q139" onclick="scrollToCard('q139')">Q139. . Performance considerations of collecti...</div>
-<div class="sidebar-link" data-target="q142" onclick="scrollToCard('q142')">Q142. . How to make collections thread-safe?</div>
-<div class="sidebar-link" data-target="q145" onclick="scrollToCard('q145')">Q145. . What causes memory leak in HashMap?</div>
-<div class="sidebar-link" data-target="q148" onclick="scrollToCard('q148')">Q148. . Immutability in collections?</div>
-<div class="sidebar-link" data-target="q151" onclick="scrollToCard('q151')">Q151. HashMap vs ConcurrentHashMap null handling?</div>
-<div class="sidebar-link" data-target="q154" onclick="scrollToCard('q154')">Q49. What is BitSet?</div>
-
-  </aside>
-  <div class="content">
-    
-    <div class="card" id="q106">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">106</span>
-        <span class="q-title">. Hierarchy of Collections?</span>
-        <span class="difficulty diff-adv">ADVANCED</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem("java-theme") || "light";
+          document.documentElement.setAttribute("data-theme", t);
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <nav class="topnav">
+      <span class="nav-logo">// Java Interview</span>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link">🏠 Home</a
+        ><a href="oop.html" class="nav-link">🧩 OOPS</a
+        ><a href="dsa.html" class="nav-link">🧮 DSA</a
+        ><a href="basics.html" class="nav-link">☕ Basic</a
+        ><a href="versions.html" class="nav-link">🚀 Version</a
+        ><a href="collections.html" class="nav-link active">📦 Collection</a
+        ><a href="exceptions.html" class="nav-link">⚠️ Exception</a
+        ><a href="concurrency.html" class="nav-link">⚡ Concurrency + Advance</a
+        ><a href="methods.html" class="nav-link">🛠️ Methods</a
+        ><a href="mastery.html" class="nav-link">🧠 Mastry</a
+        ><a href="quiz.html" class="nav-link">🎯 Quiz</a
+        ><a href="springboot.html" class="nav-link">🍃 Spring</a
+        ><a href="backend-track.html" class="nav-link">🧱 Backend</a>
       </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <pre>Iterable&lt;T&gt;
+      <button
+        class="theme-toggle"
+        id="themeToggle"
+        aria-label="Toggle light/dark theme"
+        onclick="toggleTheme()"
+        type="button"
+      >
+        <svg
+          class="icon-sun"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <circle cx="12" cy="12" r="4" />
+          <path
+            d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"
+          /></svg
+        ><svg
+          class="icon-moon"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+        </svg>
+      </button>
+    </nav>
+    <div class="breadcrumb">
+      <a href="index.html">Home</a> › PART 4: Collections Framework (Q106–150)
+    </div>
+    <header>
+      <div class="header-tag">// Java Interview — Senior Level</div>
+      <h1>📦 PART 4: Collections Framework (Q106–153)</h1>
+      <p class="subtitle">
+        List, Map, Set internals — ArrayList vs LinkedList, HashMap internals,
+        TreeMap, generics, iterators.
+      </p>
+      <div class="stats-row">
+        <div class="stat"><span class="stat-num">49</span> Questions</div>
+
+        <div class="stat"><span class="stat-num">21</span> Mid</div>
+        <div class="stat"><span class="stat-num">24</span> Advanced</div>
+        <div class="stat"><span class="stat-num">3</span> Expert</div>
+      </div>
+    </header>
+    <div class="controls">
+      <div class="search-wrap">
+        <svg
+          width="14"
+          height="14"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <circle cx="11" cy="11" r="8" />
+          <line x1="21" y1="21" x2="16.65" y2="16.65" />
+        </svg>
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Search questions..."
+          oninput="filterCards()"
+        />
+      </div>
+      <button class="filter-btn active" onclick="filterBy('all', this)">
+        All
+      </button>
+
+      <button class="filter-btn" onclick="filterBy('mid', this)">Mid</button>
+      <button class="filter-btn" onclick="filterBy('adv', this)">
+        Advanced
+      </button>
+      <button class="filter-btn" onclick="filterBy('exp', this)">Expert</button>
+      <button class="expand-all" onclick="toggleAll()">Expand All</button>
+    </div>
+    <div class="main">
+      <aside class="sidebar">
+        <div class="cat-header">Questions</div>
+        <div
+          class="sidebar-link"
+          data-target="q106"
+          onclick="scrollToCard('q106')"
+        >
+          Q106. . Hierarchy of Collections?
+        </div>
+        <div
+          class="sidebar-link"
+          data-target="q109"
+          onclick="scrollToCard('q109')"
+        >
+          Q109. . When to use LinkedList?
+        </div>
+        <div
+          class="sidebar-link"
+          data-target="q112"
+          onclick="scrollToCard('q112')"
+        >
+          Q112. . HashMap internal working?
+        </div>
+        <div
+          class="sidebar-link"
+          data-target="q115"
+          onclick="scrollToCard('q115')"
+        >
+          Q115. . HashMap vs Hashtable?
+        </div>
+        <div
+          class="sidebar-link"
+          data-target="q118"
+          onclick="scrollToCard('q118')"
+        >
+          Q118. . LinkedHashMap use cases?
+        </div>
+        <div
+          class="sidebar-link"
+          data-target="q121"
+          onclick="scrollToCard('q121')"
+        >
+          Q121. . HashSet vs TreeSet?
+        </div>
+        <div
+          class="sidebar-link"
+          data-target="q124"
+          onclick="scrollToCard('q124')"
+        >
+          Q124. . Comparable vs Comparator?
+        </div>
+        <div
+          class="sidebar-link"
+          data-target="q127"
+          onclick="scrollToCard('q127')"
+        >
+          Q127. . Iterator vs ListIterator?
+        </div>
+        <div
+          class="sidebar-link"
+          data-target="q130"
+          onclick="scrollToCard('q130')"
+        >
+          Q130. . What is Spliterator?
+        </div>
+        <div
+          class="sidebar-link"
+          data-target="q133"
+          onclick="scrollToCard('q133')"
+        >
+          Q133. . BlockingQueue?
+        </div>
+        <div
+          class="sidebar-link"
+          data-target="q136"
+          onclick="scrollToCard('q136')"
+        >
+          Q136. . WeakHashMap use cases?
+        </div>
+        <div
+          class="sidebar-link"
+          data-target="q139"
+          onclick="scrollToCard('q139')"
+        >
+          Q139. . Performance considerations of collecti...
+        </div>
+        <div
+          class="sidebar-link"
+          data-target="q142"
+          onclick="scrollToCard('q142')"
+        >
+          Q142. . How to make collections thread-safe?
+        </div>
+        <div
+          class="sidebar-link"
+          data-target="q145"
+          onclick="scrollToCard('q145')"
+        >
+          Q145. . What causes memory leak in HashMap?
+        </div>
+        <div
+          class="sidebar-link"
+          data-target="q148"
+          onclick="scrollToCard('q148')"
+        >
+          Q148. . Immutability in collections?
+        </div>
+        <div
+          class="sidebar-link"
+          data-target="q151"
+          onclick="scrollToCard('q151')"
+        >
+          Q151. HashMap vs ConcurrentHashMap null handling?
+        </div>
+        <div
+          class="sidebar-link"
+          data-target="q154"
+          onclick="scrollToCard('q154')"
+        >
+          Q49. What is BitSet?
+        </div>
+      </aside>
+      <div class="content">
+        <div class="card" id="q106">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">106</span>
+            <span class="q-title">. Hierarchy of Collections?</span>
+            <span class="difficulty diff-adv">ADVANCED</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <pre>
+Iterable&lt;T&gt;
   └── Collection&lt;T&gt;
         ├── List&lt;T&gt;
         │     ├── ArrayList
@@ -106,328 +304,773 @@ Map&lt;K,V&gt; (does NOT extend Collection)
   ├── IdentityHashMap
   ├── EnumMap
   └── ConcurrentHashMap</pre>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q107">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">107</span>
-        <span class="q-title">. Difference between List, Set, Map?</span>
-        <span class="difficulty diff-mid">MID</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <table>
-<tr><th></th><th>List</th><th>Set</th><th>Map</th></tr>
-<tr><td>Duplicates</td><td>Allowed</td><td>Not allowed</td><td>Keys unique, values allowed</td></tr>
-<tr><td>Order</td><td>Insertion order maintained</td><td>Depends on impl</td><td>Depends on impl</td></tr>
-<tr><td>Null</td><td>Allowed (multiple)</td><td>One null (HashSet)</td><td>One null key (HashMap)</td></tr>
-<tr><td>Interface</td><td><code>List&lt;E&gt;</code></td><td><code>Set&lt;E&gt;</code></td><td><code>Map&lt;K,V&gt;</code></td></tr>
-<tr><td>Access</td><td>Index (O(1) for ArrayList)</td><td>No index</td><td>By key</td></tr>
-<tr><td>Extends</td><td>Collection</td><td>Collection</td><td>Nothing (standalone)</td></tr>
-</table>
+        <div class="card" id="q107">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">107</span>
+            <span class="q-title">. Difference between List, Set, Map?</span>
+            <span class="difficulty diff-mid">MID</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <table>
+                  <tr>
+                    <th></th>
+                    <th>List</th>
+                    <th>Set</th>
+                    <th>Map</th>
+                  </tr>
+                  <tr>
+                    <td>Duplicates</td>
+                    <td>Allowed</td>
+                    <td>Not allowed</td>
+                    <td>Keys unique, values allowed</td>
+                  </tr>
+                  <tr>
+                    <td>Order</td>
+                    <td>Insertion order maintained</td>
+                    <td>Depends on impl</td>
+                    <td>Depends on impl</td>
+                  </tr>
+                  <tr>
+                    <td>Null</td>
+                    <td>Allowed (multiple)</td>
+                    <td>One null (HashSet)</td>
+                    <td>One null key (HashMap)</td>
+                  </tr>
+                  <tr>
+                    <td>Interface</td>
+                    <td><code>List&lt;E&gt;</code></td>
+                    <td><code>Set&lt;E&gt;</code></td>
+                    <td><code>Map&lt;K,V&gt;</code></td>
+                  </tr>
+                  <tr>
+                    <td>Access</td>
+                    <td>Index (O(1) for ArrayList)</td>
+                    <td>No index</td>
+                    <td>By key</td>
+                  </tr>
+                  <tr>
+                    <td>Extends</td>
+                    <td>Collection</td>
+                    <td>Collection</td>
+                    <td>Nothing (standalone)</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q108">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">108</span>
-        <span class="q-title">. ArrayList vs LinkedList?</span>
-        <span class="difficulty diff-adv">ADVANCED</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <table>
-<tr><th></th><th>ArrayList</th><th>LinkedList</th></tr>
-<tr><td>Internal</td><td>Dynamic array</td><td>Doubly-linked list</td></tr>
-<tr><td>Random access <code>get(i)</code></td><td>O(1)</td><td>O(n)</td></tr>
-<tr><td>Insert/delete at middle</td><td>O(n) – shift elements</td><td>O(1) – just relink nodes</td></tr>
-<tr><td>Insert/delete at end</td><td>O(1) amortized</td><td>O(1)</td></tr>
-<tr><td>Insert/delete at beginning</td><td>O(n)</td><td>O(1)</td></tr>
-<tr><td>Memory</td><td>Compact (array)</td><td>More overhead (node objects)</td></tr>
-<tr><td>Implements</td><td>List</td><td>List, Deque, Queue</td></tr>
-<tr><td>Cache performance</td><td>Better (contiguous memory)</td><td>Poor (scattered nodes)</td></tr>
-</table>
-<p><strong>Default choice</strong>: <code>ArrayList</code>. Use <code>LinkedList</code> only when frequent O(1) insertions/deletions at head/middle with iteration. In practice, ArrayList is almost always faster due to CPU cache effects even for some "LinkedList scenarios".</p>
+        <div class="card" id="q108">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">108</span>
+            <span class="q-title">. ArrayList vs LinkedList?</span>
+            <span class="difficulty diff-adv">ADVANCED</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <table>
+                  <tr>
+                    <th></th>
+                    <th>ArrayList</th>
+                    <th>LinkedList</th>
+                  </tr>
+                  <tr>
+                    <td>Internal</td>
+                    <td>Dynamic array</td>
+                    <td>Doubly-linked list</td>
+                  </tr>
+                  <tr>
+                    <td>Random access <code>get(i)</code></td>
+                    <td>O(1)</td>
+                    <td>O(n)</td>
+                  </tr>
+                  <tr>
+                    <td>Insert/delete at middle</td>
+                    <td>O(n) – shift elements</td>
+                    <td>O(1) – just relink nodes</td>
+                  </tr>
+                  <tr>
+                    <td>Insert/delete at end</td>
+                    <td>O(1) amortized</td>
+                    <td>O(1)</td>
+                  </tr>
+                  <tr>
+                    <td>Insert/delete at beginning</td>
+                    <td>O(n)</td>
+                    <td>O(1)</td>
+                  </tr>
+                  <tr>
+                    <td>Memory</td>
+                    <td>Compact (array)</td>
+                    <td>More overhead (node objects)</td>
+                  </tr>
+                  <tr>
+                    <td>Implements</td>
+                    <td>List</td>
+                    <td>List, Deque, Queue</td>
+                  </tr>
+                  <tr>
+                    <td>Cache performance</td>
+                    <td>Better (contiguous memory)</td>
+                    <td>Poor (scattered nodes)</td>
+                  </tr>
+                </table>
+                <p>
+                  <strong>Default choice</strong>: <code>ArrayList</code>. Use
+                  <code>LinkedList</code> only when frequent O(1)
+                  insertions/deletions at head/middle with iteration. In
+                  practice, ArrayList is almost always faster due to CPU cache
+                  effects even for some "LinkedList scenarios".
+                </p>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q109">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">109</span>
-        <span class="q-title">. When to use LinkedList?</span>
-        <span class="difficulty diff-adv">ADVANCED</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <p>LinkedList excels as a <strong>Deque (double-ended queue)</strong>:</p>
-<pre>LinkedList&lt;String&gt; deque = new LinkedList&lt;&gt;();
+        <div class="card" id="q109">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">109</span>
+            <span class="q-title">. When to use LinkedList?</span>
+            <span class="difficulty diff-adv">ADVANCED</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <p>
+                  LinkedList excels as a
+                  <strong>Deque (double-ended queue)</strong>:
+                </p>
+                <pre>
+LinkedList&lt;String&gt; deque = new LinkedList&lt;&gt;();
 deque.addFirst(&quot;first&quot;); // O(1)
 deque.addLast(&quot;last&quot;);   // O(1)
 deque.removeFirst();      // O(1)
 deque.removeLast();       // O(1)</pre>
-<p>Use cases:</p>
-<ol>
-<li><strong>Queue/Deque implementation</strong>: Where you frequently add/remove from both ends</li>
-<li><strong>LRU Cache</strong>: Remove from tail, add to head (but <code>LinkedHashMap</code> is usually better)</li>
-<li><strong>Stack with frequent push/pop at head</strong></li>
-</ol>
-<p><strong>Prefer <code>ArrayDeque</code></strong> over <code>LinkedList</code> for most queue/deque scenarios – ArrayDeque is faster (array-based, better cache behavior) and uses less memory.</p>
+                <p>Use cases:</p>
+                <ol>
+                  <li>
+                    <strong>Queue/Deque implementation</strong>: Where you
+                    frequently add/remove from both ends
+                  </li>
+                  <li>
+                    <strong>LRU Cache</strong>: Remove from tail, add to head
+                    (but <code>LinkedHashMap</code> is usually better)
+                  </li>
+                  <li><strong>Stack with frequent push/pop at head</strong></li>
+                </ol>
+                <p>
+                  <strong>Prefer <code>ArrayDeque</code></strong> over
+                  <code>LinkedList</code> for most queue/deque scenarios –
+                  ArrayDeque is faster (array-based, better cache behavior) and
+                  uses less memory.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q110">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">110</span>
-        <span class="q-title">. Vector vs ArrayList?</span>
-        <span class="difficulty diff-mid">MID</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <p>Both are resizable arrays, but:</p>
-<table>
-<tr><th></th><th>Vector</th><th>ArrayList</th></tr>
-<tr><td>Thread safety</td><td>Synchronized (all methods)</td><td>Not synchronized</td></tr>
-<tr><td>Performance</td><td>Slower (sync overhead)</td><td>Faster</td></tr>
-<tr><td>Growth</td><td>Doubles by default</td><td>Grows by 50%</td></tr>
-<tr><td>Legacy</td><td>Java 1.0</td><td>Java 1.2 (Collections)</td></tr>
-<tr><td>Recommendation</td><td>Legacy/avoid</td><td>Preferred</td></tr>
-</table>
-<p><strong>Vector is legacy</strong> – use <code>ArrayList</code> + explicit synchronization (<code>Collections.synchronizedList()</code>) or <code>CopyOnWriteArrayList</code> for concurrent use.</p>
+        <div class="card" id="q110">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">110</span>
+            <span class="q-title">. Vector vs ArrayList?</span>
+            <span class="difficulty diff-mid">MID</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <p>Both are resizable arrays, but:</p>
+                <table>
+                  <tr>
+                    <th></th>
+                    <th>Vector</th>
+                    <th>ArrayList</th>
+                  </tr>
+                  <tr>
+                    <td>Thread safety</td>
+                    <td>Synchronized (all methods)</td>
+                    <td>Not synchronized</td>
+                  </tr>
+                  <tr>
+                    <td>Performance</td>
+                    <td>Slower (sync overhead)</td>
+                    <td>Faster</td>
+                  </tr>
+                  <tr>
+                    <td>Growth</td>
+                    <td>Doubles by default</td>
+                    <td>Grows by 50%</td>
+                  </tr>
+                  <tr>
+                    <td>Legacy</td>
+                    <td>Java 1.0</td>
+                    <td>Java 1.2 (Collections)</td>
+                  </tr>
+                  <tr>
+                    <td>Recommendation</td>
+                    <td>Legacy/avoid</td>
+                    <td>Preferred</td>
+                  </tr>
+                </table>
+                <p>
+                  <strong>Vector is legacy</strong> – use
+                  <code>ArrayList</code> + explicit synchronization
+                  (<code>Collections.synchronizedList()</code>) or
+                  <code>CopyOnWriteArrayList</code> for concurrent use.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q111">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">111</span>
-        <span class="q-title">. Why Vector is legacy?</span>
-        <span class="difficulty diff-adv">ADVANCED</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <p>Vector synchronizes <em>every</em> method at the object level, even when no concurrent access is happening. This is:</p>
-<ol>
-<li><strong>Too coarse-grained</strong>: Even iteration requires locking every element access</li>
-<li><strong>Not composable</strong>: <code>if (!v.isEmpty()) v.get(0)</code> is still NOT thread-safe (race between isEmpty and get)</li>
-<li><strong>Performance penalty</strong>: Even single-threaded code pays sync cost</li>
-</ol>
-<p>Modern alternatives:</p>
-<ul>
-<li><code>ArrayList</code> for non-concurrent</li>
-<li><code>CopyOnWriteArrayList</code> for read-heavy concurrent</li>
-<li><code>Collections.synchronizedList(new ArrayList&lt;&gt;())</code> for simple sync need</li>
-<li><code>ConcurrentLinkedDeque</code> for lock-free concurrent deque</li>
-</ul>
+        <div class="card" id="q111">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">111</span>
+            <span class="q-title">. Why Vector is legacy?</span>
+            <span class="difficulty diff-adv">ADVANCED</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <p>
+                  Vector synchronizes <em>every</em> method at the object level,
+                  even when no concurrent access is happening. This is:
+                </p>
+                <ol>
+                  <li>
+                    <strong>Too coarse-grained</strong>: Even iteration requires
+                    locking every element access
+                  </li>
+                  <li>
+                    <strong>Not composable</strong>:
+                    <code>if (!v.isEmpty()) v.get(0)</code> is still NOT
+                    thread-safe (race between isEmpty and get)
+                  </li>
+                  <li>
+                    <strong>Performance penalty</strong>: Even single-threaded
+                    code pays sync cost
+                  </li>
+                </ol>
+                <p>Modern alternatives:</p>
+                <ul>
+                  <li><code>ArrayList</code> for non-concurrent</li>
+                  <li>
+                    <code>CopyOnWriteArrayList</code> for read-heavy concurrent
+                  </li>
+                  <li>
+                    <code
+                      >Collections.synchronizedList(new
+                      ArrayList&lt;&gt;())</code
+                    >
+                    for simple sync need
+                  </li>
+                  <li>
+                    <code>ConcurrentLinkedDeque</code> for lock-free concurrent
+                    deque
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q112">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">112</span>
-        <span class="q-title">. HashMap internal working?</span>
-        <span class="difficulty diff-adv">ADVANCED</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <p>HashMap uses an <strong>array of buckets</strong> (Node[]) with <strong>linked list</strong> (Java 7) or <strong>red-black tree</strong> (Java 8+ when chain length ≥ 8).</p>
-<pre>Array (buckets):
+        <div class="card" id="q112">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">112</span>
+            <span class="q-title">. HashMap internal working?</span>
+            <span class="difficulty diff-adv">ADVANCED</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <p>
+                  HashMap uses an <strong>array of buckets</strong> (Node[])
+                  with <strong>linked list</strong> (Java 7) or
+                  <strong>red-black tree</strong> (Java 8+ when chain length ≥
+                  8).
+                </p>
+                <pre>
+Array (buckets):
 [0] -&gt; null
 [1] -&gt; Node(&quot;Alice&quot;, 30) -&gt; Node(&quot;Bob&quot;, 25)  // collision - same bucket
 [2] -&gt; Node(&quot;Charlie&quot;, 35)
 [3] -&gt; null
 ...
 [15] -&gt; Node(&quot;Dave&quot;, 28)</pre>
-<p><strong>put(key, value) flow</strong>:</p>
-<ol>
-<li><code>key.hashCode()</code> computed</li>
-<li>Hash spread: <code>h ^ (h &gt;&gt;&gt; 16)</code> (reduces clustering)</li>
-<li>Bucket index: <code>hash &amp; (capacity - 1)</code> (bitwise AND, fast when capacity is power of 2)</li>
-<li>If bucket empty: insert new Node</li>
-<li>If bucket has entries: iterate/compare with <code>equals()</code></li>
-</ol>
-<ul>
-<li>Key found: update value</li>
-<li>Key not found: append (add to tree if chain ≥ 8)</li>
-</ul>
-<p><strong>get(key) flow</strong>:</p>
-<ol>
-<li>Compute hash → bucket index</li>
-<li>Traverse nodes in bucket comparing with <code>equals()</code></li>
-<li>Return value or null</li>
-</ol>
-<p><strong>Treeification</strong> (Java 8): When a single bucket's linked list reaches 8 nodes AND capacity ≥ 64, converts to red-black tree → O(log n) vs O(n) for long chains.</p>
+                <p><strong>put(key, value) flow</strong>:</p>
+                <ol>
+                  <li><code>key.hashCode()</code> computed</li>
+                  <li>
+                    Hash spread: <code>h ^ (h &gt;&gt;&gt; 16)</code> (reduces
+                    clustering)
+                  </li>
+                  <li>
+                    Bucket index:
+                    <code>hash &amp; (capacity - 1)</code> (bitwise AND, fast
+                    when capacity is power of 2)
+                  </li>
+                  <li>If bucket empty: insert new Node</li>
+                  <li>
+                    If bucket has entries: iterate/compare with
+                    <code>equals()</code>
+                  </li>
+                </ol>
+                <ul>
+                  <li>Key found: update value</li>
+                  <li>Key not found: append (add to tree if chain ≥ 8)</li>
+                </ul>
+                <p><strong>get(key) flow</strong>:</p>
+                <ol>
+                  <li>Compute hash → bucket index</li>
+                  <li>
+                    Traverse nodes in bucket comparing with
+                    <code>equals()</code>
+                  </li>
+                  <li>Return value or null</li>
+                </ol>
+                <p>
+                  <strong>Treeification</strong> (Java 8): When a single
+                  bucket's linked list reaches 8 nodes AND capacity ≥ 64,
+                  converts to red-black tree → O(log n) vs O(n) for long chains.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q113">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">113</span>
-        <span class="q-title">. HashMap capacity &amp; load factor?</span>
-        <span class="difficulty diff-adv">ADVANCED</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <p><strong>Default capacity</strong>: 16 (always power of 2)</p>
-<p><strong>Default load factor</strong>: 0.75</p>
-<p><strong>Threshold = capacity × load factor</strong>. When entries exceed threshold, HashMap <strong>rehashes</strong> (creates new array of double size, re-inserts all entries).</p>
-<p>Example: Default map with 16 capacity, threshold = 12. When 13th entry is added, resize to 32.</p>
-<p><strong>Why power of 2?</strong> <code>hash &amp; (n-1)</code> is faster than <code>hash % n</code> and distributes evenly.</p>
-<p><strong>Why 0.75?</strong> Balance between time (fewer collisions, bigger array) and space (fewer rehashes, smaller array). Below 0.6 = too many empty buckets. Above 0.85 = too many collisions.</p>
-<p><strong>Pre-sizing</strong>: If you know approximate size, provide it:</p>
-<pre>Map&lt;String, String&gt; map = new HashMap&lt;&gt;(expectedSize / 0.75 + 1);
+        <div class="card" id="q113">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">113</span>
+            <span class="q-title">. HashMap capacity &amp; load factor?</span>
+            <span class="difficulty diff-adv">ADVANCED</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <p><strong>Default capacity</strong>: 16 (always power of 2)</p>
+                <p><strong>Default load factor</strong>: 0.75</p>
+                <p>
+                  <strong>Threshold = capacity × load factor</strong>. When
+                  entries exceed threshold, HashMap
+                  <strong>rehashes</strong> (creates new array of double size,
+                  re-inserts all entries).
+                </p>
+                <p>
+                  Example: Default map with 16 capacity, threshold = 12. When
+                  13th entry is added, resize to 32.
+                </p>
+                <p>
+                  <strong>Why power of 2?</strong>
+                  <code>hash &amp; (n-1)</code> is faster than
+                  <code>hash % n</code> and distributes evenly.
+                </p>
+                <p>
+                  <strong>Why 0.75?</strong> Balance between time (fewer
+                  collisions, bigger array) and space (fewer rehashes, smaller
+                  array). Below 0.6 = too many empty buckets. Above 0.85 = too
+                  many collisions.
+                </p>
+                <p>
+                  <strong>Pre-sizing</strong>: If you know approximate size,
+                  provide it:
+                </p>
+                <pre>
+Map&lt;String, String&gt; map = new HashMap&lt;&gt;(expectedSize / 0.75 + 1);
 // Or use Guava: Maps.newHashMapWithExpectedSize(expectedSize)</pre>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q114">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">114</span>
-        <span class="q-title">. Collision handling in HashMap?</span>
-        <span class="difficulty diff-adv">ADVANCED</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <p>Collision: two keys hash to the same bucket.</p>
-<p><strong>Java 7</strong>: <strong>Separate chaining with linked list</strong>. New entries added to head (causes a subtle ABA problem in concurrent use that leads to infinite loops in multi-threaded HashMap – don't use HashMap from multiple threads!).</p>
-<p><strong>Java 8</strong>:</p>
-<ul>
-<li>Linked list for ≤ 8 nodes per bucket</li>
-<li><strong>Red-black tree</strong> for > 8 nodes (if capacity ≥ 64)</li>
-<li>Tree degrades back to list when nodes ≤ 6</li>
-</ul>
-<p><strong>Why switch to tree?</strong> In worst case (all keys hash to same bucket), linked list = O(n). Tree = O(log n). Mitigates hash DoS attacks where attacker crafts many keys with same hash.</p>
-<p>String's <code>hashCode()</code> is deterministic and used to be exploitable – Java uses random hash seed (<code>-XX:+UseStringDeduplication</code>) to mitigate.</p>
+        <div class="card" id="q114">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">114</span>
+            <span class="q-title">. Collision handling in HashMap?</span>
+            <span class="difficulty diff-adv">ADVANCED</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <p>Collision: two keys hash to the same bucket.</p>
+                <p>
+                  <strong>Java 7</strong>:
+                  <strong>Separate chaining with linked list</strong>. New
+                  entries added to head (causes a subtle ABA problem in
+                  concurrent use that leads to infinite loops in multi-threaded
+                  HashMap – don't use HashMap from multiple threads!).
+                </p>
+                <p><strong>Java 8</strong>:</p>
+                <ul>
+                  <li>Linked list for ≤ 8 nodes per bucket</li>
+                  <li>
+                    <strong>Red-black tree</strong> for > 8 nodes (if capacity ≥
+                    64)
+                  </li>
+                  <li>Tree degrades back to list when nodes ≤ 6</li>
+                </ul>
+                <p>
+                  <strong>Why switch to tree?</strong> In worst case (all keys
+                  hash to same bucket), linked list = O(n). Tree = O(log n).
+                  Mitigates hash DoS attacks where attacker crafts many keys
+                  with same hash.
+                </p>
+                <p>
+                  String's <code>hashCode()</code> is deterministic and used to
+                  be exploitable – Java uses random hash seed
+                  (<code>-XX:+UseStringDeduplication</code>) to mitigate.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q115">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">115</span>
-        <span class="q-title">. HashMap vs Hashtable?</span>
-        <span class="difficulty diff-mid">MID</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <table>
-<tr><th></th><th>HashMap</th><th>Hashtable</th></tr>
-<tr><td>Thread safety</td><td>Not synchronized</td><td>All methods synchronized</td></tr>
-<tr><td>Null keys</td><td>One null key allowed</td><td>No null keys</td></tr>
-<tr><td>Null values</td><td>Allowed</td><td>Not allowed</td></tr>
-<tr><td>Performance</td><td>Faster</td><td>Slower</td></tr>
-<tr><td>Legacy</td><td>No</td><td>Yes (Java 1.0)</td></tr>
-<tr><td>Iterator</td><td>Fail-fast</td><td>Enumerator (old API)</td></tr>
-<tr><td>Extends</td><td>AbstractMap</td><td>Dictionary (ancient)</td></tr>
-</table>
-<p><strong>Hashtable is legacy</strong> – use <code>ConcurrentHashMap</code> for thread-safe map (much better than Hashtable).</p>
+        <div class="card" id="q115">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">115</span>
+            <span class="q-title">. HashMap vs Hashtable?</span>
+            <span class="difficulty diff-mid">MID</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <table>
+                  <tr>
+                    <th></th>
+                    <th>HashMap</th>
+                    <th>Hashtable</th>
+                  </tr>
+                  <tr>
+                    <td>Thread safety</td>
+                    <td>Not synchronized</td>
+                    <td>All methods synchronized</td>
+                  </tr>
+                  <tr>
+                    <td>Null keys</td>
+                    <td>One null key allowed</td>
+                    <td>No null keys</td>
+                  </tr>
+                  <tr>
+                    <td>Null values</td>
+                    <td>Allowed</td>
+                    <td>Not allowed</td>
+                  </tr>
+                  <tr>
+                    <td>Performance</td>
+                    <td>Faster</td>
+                    <td>Slower</td>
+                  </tr>
+                  <tr>
+                    <td>Legacy</td>
+                    <td>No</td>
+                    <td>Yes (Java 1.0)</td>
+                  </tr>
+                  <tr>
+                    <td>Iterator</td>
+                    <td>Fail-fast</td>
+                    <td>Enumerator (old API)</td>
+                  </tr>
+                  <tr>
+                    <td>Extends</td>
+                    <td>AbstractMap</td>
+                    <td>Dictionary (ancient)</td>
+                  </tr>
+                </table>
+                <p>
+                  <strong>Hashtable is legacy</strong> – use
+                  <code>ConcurrentHashMap</code> for thread-safe map (much
+                  better than Hashtable).
+                </p>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q116">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">116</span>
-        <span class="q-title">. HashMap vs ConcurrentHashMap?</span>
-        <span class="difficulty diff-exp">EXPERT</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <table>
-<tr><th></th><th>HashMap</th><th>ConcurrentHashMap</th></tr>
-<tr><td>Thread safety</td><td>No</td><td>Yes</td></tr>
-<tr><td>Null keys</td><td>Yes</td><td>No</td></tr>
-<tr><td>Locking</td><td>None</td><td>Segment-level (Java 7) / CAS + bucket-level (Java 8)</td></tr>
-<tr><td>Performance (single-thread)</td><td>Faster</td><td>Slightly slower</td></tr>
-<tr><td>Performance (multi-thread)</td><td>Dangerous</td><td>Designed for it</td></tr>
-<tr><td>Concurrent reads</td><td>Unsafe (may see inconsistent state)</td><td>Safe, non-blocking</td></tr>
-<tr><td>Iterator</td><td>Fail-fast</td><td>Weakly consistent</td></tr>
-</table>
-<p><strong>Java 8 ConcurrentHashMap internals</strong>: No segment locks. Uses CAS for most operations. Only locks individual buckets during tree restructuring. <code>size()</code> uses <code>LongAdder</code>-like approach.</p>
-<p><strong>Key methods</strong>:</p>
-<ul>
-<li><code>putIfAbsent(k, v)</code>: Atomic put-if-missing</li>
-<li><code>computeIfAbsent(k, fn)</code>: Compute and store if missing</li>
-<li><code>merge(k, v, fn)</code>: Atomic merge</li>
-<li><code>compute(k, fn)</code>: Atomic compute</li>
-</ul>
+        <div class="card" id="q116">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">116</span>
+            <span class="q-title">. HashMap vs ConcurrentHashMap?</span>
+            <span class="difficulty diff-exp">EXPERT</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <table>
+                  <tr>
+                    <th></th>
+                    <th>HashMap</th>
+                    <th>ConcurrentHashMap</th>
+                  </tr>
+                  <tr>
+                    <td>Thread safety</td>
+                    <td>No</td>
+                    <td>Yes</td>
+                  </tr>
+                  <tr>
+                    <td>Null keys</td>
+                    <td>Yes</td>
+                    <td>No</td>
+                  </tr>
+                  <tr>
+                    <td>Locking</td>
+                    <td>None</td>
+                    <td>
+                      Segment-level (Java 7) / CAS + bucket-level (Java 8)
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Performance (single-thread)</td>
+                    <td>Faster</td>
+                    <td>Slightly slower</td>
+                  </tr>
+                  <tr>
+                    <td>Performance (multi-thread)</td>
+                    <td>Dangerous</td>
+                    <td>Designed for it</td>
+                  </tr>
+                  <tr>
+                    <td>Concurrent reads</td>
+                    <td>Unsafe (may see inconsistent state)</td>
+                    <td>Safe, non-blocking</td>
+                  </tr>
+                  <tr>
+                    <td>Iterator</td>
+                    <td>Fail-fast</td>
+                    <td>Weakly consistent</td>
+                  </tr>
+                </table>
+                <p>
+                  <strong>Java 8 ConcurrentHashMap internals</strong>: No
+                  segment locks. Uses CAS for most operations. Only locks
+                  individual buckets during tree restructuring.
+                  <code>size()</code> uses <code>LongAdder</code>-like approach.
+                </p>
+                <p><strong>Key methods</strong>:</p>
+                <ul>
+                  <li><code>putIfAbsent(k, v)</code>: Atomic put-if-missing</li>
+                  <li>
+                    <code>computeIfAbsent(k, fn)</code>: Compute and store if
+                    missing
+                  </li>
+                  <li><code>merge(k, v, fn)</code>: Atomic merge</li>
+                  <li><code>compute(k, fn)</code>: Atomic compute</li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q117">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">117</span>
-        <span class="q-title">. TreeMap vs HashMap?</span>
-        <span class="difficulty diff-adv">ADVANCED</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <table>
-<tr><th></th><th>HashMap</th><th>TreeMap</th></tr>
-<tr><td>Internal structure</td><td>Hash table</td><td>Red-black tree</td></tr>
-<tr><td>Ordering</td><td>No guaranteed order</td><td><strong>Sorted by key</strong></td></tr>
-<tr><td>Performance</td><td>O(1) average</td><td>O(log n)</td></tr>
-<tr><td>Null keys</td><td>One allowed</td><td>No null keys (comparison)</td></tr>
-<tr><td>Navigation</td><td>No</td><td><code>floorKey</code>, <code>ceilingKey</code>, <code>subMap</code>, <code>headMap</code>, <code>tailMap</code></td></tr>
-<tr><td>Implements</td><td>Map</td><td>SortedMap, NavigableMap</td></tr>
-</table>
-<p>Use TreeMap when:</p>
-<ul>
-<li>Need keys in sorted order</li>
-<li>Need range queries: "all entries with key between 100 and 200"</li>
-<li>Need floor/ceiling key operations</li>
-</ul>
-<pre>TreeMap&lt;Integer, String&gt; scores = new TreeMap&lt;&gt;();
+        <div class="card" id="q117">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">117</span>
+            <span class="q-title">. TreeMap vs HashMap?</span>
+            <span class="difficulty diff-adv">ADVANCED</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <table>
+                  <tr>
+                    <th></th>
+                    <th>HashMap</th>
+                    <th>TreeMap</th>
+                  </tr>
+                  <tr>
+                    <td>Internal structure</td>
+                    <td>Hash table</td>
+                    <td>Red-black tree</td>
+                  </tr>
+                  <tr>
+                    <td>Ordering</td>
+                    <td>No guaranteed order</td>
+                    <td><strong>Sorted by key</strong></td>
+                  </tr>
+                  <tr>
+                    <td>Performance</td>
+                    <td>O(1) average</td>
+                    <td>O(log n)</td>
+                  </tr>
+                  <tr>
+                    <td>Null keys</td>
+                    <td>One allowed</td>
+                    <td>No null keys (comparison)</td>
+                  </tr>
+                  <tr>
+                    <td>Navigation</td>
+                    <td>No</td>
+                    <td>
+                      <code>floorKey</code>, <code>ceilingKey</code>,
+                      <code>subMap</code>, <code>headMap</code>,
+                      <code>tailMap</code>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Implements</td>
+                    <td>Map</td>
+                    <td>SortedMap, NavigableMap</td>
+                  </tr>
+                </table>
+                <p>Use TreeMap when:</p>
+                <ul>
+                  <li>Need keys in sorted order</li>
+                  <li>
+                    Need range queries: "all entries with key between 100 and
+                    200"
+                  </li>
+                  <li>Need floor/ceiling key operations</li>
+                </ul>
+                <pre>
+TreeMap&lt;Integer, String&gt; scores = new TreeMap&lt;&gt;();
 scores.subMap(70, 100); // entries with keys 70-99
 scores.floorKey(85); // highest key ≤ 85
 scores.ceilingKey(70); // lowest key ≥ 70
 scores.headMap(50); // keys &lt; 50</pre>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q118">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">118</span>
-        <span class="q-title">. LinkedHashMap use cases?</span>
-        <span class="difficulty diff-exp">EXPERT</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <p><code>LinkedHashMap</code> maintains <strong>insertion order</strong> (or access order).</p>
-<pre>// Insertion order (default)
+        <div class="card" id="q118">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">118</span>
+            <span class="q-title">. LinkedHashMap use cases?</span>
+            <span class="difficulty diff-exp">EXPERT</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <p>
+                  <code>LinkedHashMap</code> maintains
+                  <strong>insertion order</strong> (or access order).
+                </p>
+                <pre>
+// Insertion order (default)
 Map&lt;String, Integer&gt; map = new LinkedHashMap&lt;&gt;();
 map.put(&quot;banana&quot;, 2); map.put(&quot;apple&quot;, 1); map.put(&quot;cherry&quot;, 3);
 // Iterates: banana, apple, cherry
@@ -438,151 +1081,296 @@ Map&lt;String, Integer&gt; lru = new LinkedHashMap&lt;&gt;(16, 0.75f, true) {
         return size() &gt; MAX_CACHE_SIZE; // evict oldest access
     }
 };</pre>
-<p>Use cases:</p>
-<ol>
-<li><strong>Preserve insertion order</strong> in map iteration</li>
-<li><strong>LRU Cache</strong> (access-order mode + removeEldestEntry)</li>
-<li><strong>Ordered JSON/config properties</strong></li>
-<li><strong>Event logging</strong> where insertion order matters</li>
-</ol>
+                <p>Use cases:</p>
+                <ol>
+                  <li>
+                    <strong>Preserve insertion order</strong> in map iteration
+                  </li>
+                  <li>
+                    <strong>LRU Cache</strong> (access-order mode +
+                    removeEldestEntry)
+                  </li>
+                  <li><strong>Ordered JSON/config properties</strong></li>
+                  <li>
+                    <strong>Event logging</strong> where insertion order matters
+                  </li>
+                </ol>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q119">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">119</span>
-        <span class="q-title">. Why Map doesn&#x27;t extend Collection?</span>
-        <span class="difficulty diff-mid">MID</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <p>Conceptual mismatch:</p>
-<ul>
-<li><code>Collection&lt;E&gt;</code> stores <strong>elements</strong></li>
-<li><code>Map&lt;K,V&gt;</code> stores <strong>key-value pairs</strong></li>
-</ul>
-<p>If <code>Map</code> extended <code>Collection</code>, what would <code>E</code> be? <code>Map.Entry&lt;K,V&gt;</code>? But then:</p>
-<ul>
-<li><code>add(Map.Entry&lt;K,V&gt;)</code> doesn't make sense vs <code>put(K, V)</code></li>
-<li><code>contains(Object)</code> – contains key? value? entry?</li>
-<li><code>remove(Object)</code> – remove by key? value?</li>
-<li><code>size()</code> – conflicts in contract</li>
-</ul>
-<p>The operations and semantics are fundamentally different. Map provides <code>entrySet()</code>, <code>keySet()</code>, <code>values()</code> which return Collection views.</p>
-<p>Josh Bloch (Java Collections designer): "Maps are not proper Collections because the element concept doesn't fit the Map abstraction."</p>
+        <div class="card" id="q119">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">119</span>
+            <span class="q-title"
+              >. Why Map doesn&#x27;t extend Collection?</span
+            >
+            <span class="difficulty diff-mid">MID</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <p>Conceptual mismatch:</p>
+                <ul>
+                  <li>
+                    <code>Collection&lt;E&gt;</code> stores
+                    <strong>elements</strong>
+                  </li>
+                  <li>
+                    <code>Map&lt;K,V&gt;</code> stores
+                    <strong>key-value pairs</strong>
+                  </li>
+                </ul>
+                <p>
+                  If <code>Map</code> extended <code>Collection</code>, what
+                  would <code>E</code> be? <code>Map.Entry&lt;K,V&gt;</code>?
+                  But then:
+                </p>
+                <ul>
+                  <li>
+                    <code>add(Map.Entry&lt;K,V&gt;)</code> doesn't make sense vs
+                    <code>put(K, V)</code>
+                  </li>
+                  <li>
+                    <code>contains(Object)</code> – contains key? value? entry?
+                  </li>
+                  <li><code>remove(Object)</code> – remove by key? value?</li>
+                  <li><code>size()</code> – conflicts in contract</li>
+                </ul>
+                <p>
+                  The operations and semantics are fundamentally different. Map
+                  provides <code>entrySet()</code>, <code>keySet()</code>,
+                  <code>values()</code> which return Collection views.
+                </p>
+                <p>
+                  Josh Bloch (Java Collections designer): "Maps are not proper
+                  Collections because the element concept doesn't fit the Map
+                  abstraction."
+                </p>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q120">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">120</span>
-        <span class="q-title">. Set internal uniqueness?</span>
-        <span class="difficulty diff-adv">ADVANCED</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <p><strong>HashSet</strong> is backed by a <strong>HashMap</strong> (values are a dummy <code>PRESENT</code> object):</p>
-<pre>public class HashSet&lt;E&gt; {
+        <div class="card" id="q120">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">120</span>
+            <span class="q-title">. Set internal uniqueness?</span>
+            <span class="difficulty diff-adv">ADVANCED</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <p>
+                  <strong>HashSet</strong> is backed by a
+                  <strong>HashMap</strong> (values are a dummy
+                  <code>PRESENT</code> object):
+                </p>
+                <pre>
+public class HashSet&lt;E&gt; {
     private transient HashMap&lt;E, Object&gt; map;
     private static final Object PRESENT = new Object();
     
     public boolean add(E e) { return map.put(e, PRESENT) == null; }
     public boolean contains(Object o) { return map.containsKey(o); }
 }</pre>
-<p>Uniqueness enforced via <code>hashCode()</code> and <code>equals()</code>:</p>
-<ol>
-<li>Compute <code>hashCode()</code> → find bucket</li>
-<li>Compare with <code>equals()</code> against each element in bucket</li>
-<li>If match found: not added (duplicate)</li>
-<li>If no match: added</li>
-</ol>
-<p>This is why <strong>overriding <code>equals()</code> without <code>hashCode()</code></strong> in Set elements causes duplicates:</p>
-<pre>class Point { int x, y; }
+                <p>
+                  Uniqueness enforced via <code>hashCode()</code> and
+                  <code>equals()</code>:
+                </p>
+                <ol>
+                  <li>Compute <code>hashCode()</code> → find bucket</li>
+                  <li>
+                    Compare with <code>equals()</code> against each element in
+                    bucket
+                  </li>
+                  <li>If match found: not added (duplicate)</li>
+                  <li>If no match: added</li>
+                </ol>
+                <p>
+                  This is why
+                  <strong
+                    >overriding <code>equals()</code> without
+                    <code>hashCode()</code></strong
+                  >
+                  in Set elements causes duplicates:
+                </p>
+                <pre>
+class Point { int x, y; }
 // Without hashCode override:
 Set&lt;Point&gt; set = new HashSet&lt;&gt;();
 set.add(new Point(1,1));
 set.add(new Point(1,1)); // Different hashCode! Different bucket! Both added!</pre>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q121">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">121</span>
-        <span class="q-title">. HashSet vs TreeSet?</span>
-        <span class="difficulty diff-mid">MID</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <table>
-<tr><th></th><th>HashSet</th><th>TreeSet</th></tr>
-<tr><td>Order</td><td>No order</td><td>Sorted (natural/comparator)</td></tr>
-<tr><td>Performance</td><td>O(1) add/remove/contains</td><td>O(log n)</td></tr>
-<tr><td>Null</td><td>Allows one null</td><td>No null (can't compare)</td></tr>
-<tr><td>Backed by</td><td>HashMap</td><td>TreeMap</td></tr>
-<tr><td>Interface</td><td>Set</td><td>SortedSet, NavigableSet</td></tr>
-<tr><td>Use case</td><td>Fast lookup, no order needed</td><td>Sorted unique elements, range queries</td></tr>
-</table>
-<pre>// TreeSet range operations
+        <div class="card" id="q121">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">121</span>
+            <span class="q-title">. HashSet vs TreeSet?</span>
+            <span class="difficulty diff-mid">MID</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <table>
+                  <tr>
+                    <th></th>
+                    <th>HashSet</th>
+                    <th>TreeSet</th>
+                  </tr>
+                  <tr>
+                    <td>Order</td>
+                    <td>No order</td>
+                    <td>Sorted (natural/comparator)</td>
+                  </tr>
+                  <tr>
+                    <td>Performance</td>
+                    <td>O(1) add/remove/contains</td>
+                    <td>O(log n)</td>
+                  </tr>
+                  <tr>
+                    <td>Null</td>
+                    <td>Allows one null</td>
+                    <td>No null (can't compare)</td>
+                  </tr>
+                  <tr>
+                    <td>Backed by</td>
+                    <td>HashMap</td>
+                    <td>TreeMap</td>
+                  </tr>
+                  <tr>
+                    <td>Interface</td>
+                    <td>Set</td>
+                    <td>SortedSet, NavigableSet</td>
+                  </tr>
+                  <tr>
+                    <td>Use case</td>
+                    <td>Fast lookup, no order needed</td>
+                    <td>Sorted unique elements, range queries</td>
+                  </tr>
+                </table>
+                <pre>
+// TreeSet range operations
 TreeSet&lt;Integer&gt; set = new TreeSet&lt;&gt;(Set.of(1, 5, 3, 7, 9));
 set.headSet(5);        // [1, 3] - elements &lt; 5
 set.tailSet(5);        // [5, 7, 9] - elements &gt;= 5
 set.subSet(3, 7);      // [3, 5] - elements &gt;= 3 and &lt; 7
 set.floor(6);          // 5 - greatest element &lt;= 6
 set.ceiling(6);        // 7 - smallest element &gt;= 6</pre>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q122">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">122</span>
-        <span class="q-title">. Why TreeSet is slower?</span>
-        <span class="difficulty diff-mid">MID</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <p>TreeSet maintains a <strong>red-black tree</strong> (self-balancing BST). Every add/remove/contains requires:</p>
-<ol>
-<li>Traversal from root to correct position: O(log n)</li>
-<li>Potentially rebalancing the tree: O(log n) rotations</li>
-</ol>
-<p>HashSet's hash-based approach achieves O(1) average case (single bucket lookup if no collisions).</p>
-<p>For n=1,000,000: HashSet find = 1 hash + ~1 comparison; TreeSet find = ~20 comparisons (log₂(1,000,000) ≈ 20).</p>
+        <div class="card" id="q122">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">122</span>
+            <span class="q-title">. Why TreeSet is slower?</span>
+            <span class="difficulty diff-mid">MID</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <p>
+                  TreeSet maintains a
+                  <strong>red-black tree</strong> (self-balancing BST). Every
+                  add/remove/contains requires:
+                </p>
+                <ol>
+                  <li>Traversal from root to correct position: O(log n)</li>
+                  <li>Potentially rebalancing the tree: O(log n) rotations</li>
+                </ol>
+                <p>
+                  HashSet's hash-based approach achieves O(1) average case
+                  (single bucket lookup if no collisions).
+                </p>
+                <p>
+                  For n=1,000,000: HashSet find = 1 hash + ~1 comparison;
+                  TreeSet find = ~20 comparisons (log₂(1,000,000) ≈ 20).
+                </p>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q123">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">123</span>
-        <span class="q-title">. What is Comparable?</span>
-        <span class="difficulty diff-mid">MID</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <p><code>Comparable&lt;T&gt;</code> is an interface for defining <strong>natural ordering</strong> of a class.</p>
-<pre>public interface Comparable&lt;T&gt; {
+        <div class="card" id="q123">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">123</span>
+            <span class="q-title">. What is Comparable?</span>
+            <span class="difficulty diff-mid">MID</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <p>
+                  <code>Comparable&lt;T&gt;</code> is an interface for defining
+                  <strong>natural ordering</strong> of a class.
+                </p>
+                <pre>
+public interface Comparable&lt;T&gt; {
     int compareTo(T other);
 }</pre>
-<ul>
-<li>Returns negative: <code>this &lt; other</code></li>
-<li>Returns 0: <code>this == other</code></li>
-<li>Returns positive: <code>this &gt; other</code></li>
-</ul>
-<pre>public class Employee implements Comparable&lt;Employee&gt; {
+                <ul>
+                  <li>Returns negative: <code>this &lt; other</code></li>
+                  <li>Returns 0: <code>this == other</code></li>
+                  <li>Returns positive: <code>this &gt; other</code></li>
+                </ul>
+                <pre>
+public class Employee implements Comparable&lt;Employee&gt; {
     private String name;
     private double salary;
     
@@ -591,32 +1379,80 @@ set.ceiling(6);        // 7 - smallest element &gt;= 6</pre>
         return Double.compare(this.salary, other.salary); // sort by salary
     }
 }</pre>
-<p>Used by <code>TreeSet</code>, <code>TreeMap</code>, <code>Collections.sort()</code>, <code>Arrays.sort()</code> when no explicit Comparator provided.</p>
-<p><strong>Contract</strong>: Must be consistent with equals. If <code>compareTo()</code> returns 0, <code>equals()</code> should return <code>true</code>.</p>
+                <p>
+                  Used by <code>TreeSet</code>, <code>TreeMap</code>,
+                  <code>Collections.sort()</code>,
+                  <code>Arrays.sort()</code> when no explicit Comparator
+                  provided.
+                </p>
+                <p>
+                  <strong>Contract</strong>: Must be consistent with equals. If
+                  <code>compareTo()</code> returns 0,
+                  <code>equals()</code> should return <code>true</code>.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q124">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">124</span>
-        <span class="q-title">. Comparable vs Comparator?</span>
-        <span class="difficulty diff-mid">MID</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <table>
-<tr><th></th><th>Comparable</th><th>Comparator</th></tr>
-<tr><td>Package</td><td><code>java.lang</code></td><td><code>java.util</code></td></tr>
-<tr><td>Method</td><td><code>compareTo(T)</code></td><td><code>compare(T, T)</code></td></tr>
-<tr><td>Defined by</td><td>The class itself</td><td>External class or lambda</td></tr>
-<tr><td>Orders</td><td>Natural/default</td><td>Multiple/custom</td></tr>
-<tr><td>Modifies</td><td>Source class</td><td>No modification</td></tr>
-<tr><td>Use</td><td>Sort by natural order</td><td>Sort by custom order</td></tr>
-</table>
-<pre>// Comparable - in the class
+        <div class="card" id="q124">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">124</span>
+            <span class="q-title">. Comparable vs Comparator?</span>
+            <span class="difficulty diff-mid">MID</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <table>
+                  <tr>
+                    <th></th>
+                    <th>Comparable</th>
+                    <th>Comparator</th>
+                  </tr>
+                  <tr>
+                    <td>Package</td>
+                    <td><code>java.lang</code></td>
+                    <td><code>java.util</code></td>
+                  </tr>
+                  <tr>
+                    <td>Method</td>
+                    <td><code>compareTo(T)</code></td>
+                    <td><code>compare(T, T)</code></td>
+                  </tr>
+                  <tr>
+                    <td>Defined by</td>
+                    <td>The class itself</td>
+                    <td>External class or lambda</td>
+                  </tr>
+                  <tr>
+                    <td>Orders</td>
+                    <td>Natural/default</td>
+                    <td>Multiple/custom</td>
+                  </tr>
+                  <tr>
+                    <td>Modifies</td>
+                    <td>Source class</td>
+                    <td>No modification</td>
+                  </tr>
+                  <tr>
+                    <td>Use</td>
+                    <td>Sort by natural order</td>
+                    <td>Sort by custom order</td>
+                  </tr>
+                </table>
+                <pre>
+// Comparable - in the class
 class Person implements Comparable&lt;Person&gt; {
     public int compareTo(Person other) { return this.age - other.age; }
 }
@@ -627,21 +1463,32 @@ Comparator&lt;Person&gt; byAgeDesc = Comparator.comparingInt(Person::getAge).rev
 Comparator&lt;Person&gt; complex = Comparator.comparing(Person::getLastName)
                                         .thenComparing(Person::getFirstName)
                                         .thenComparingInt(Person::getAge);</pre>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q125">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">125</span>
-        <span class="q-title">. Custom sorting?</span>
-        <span class="difficulty diff-adv">ADVANCED</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <pre>List&lt;Employee&gt; employees = ...;
+        <div class="card" id="q125">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">125</span>
+            <span class="q-title">. Custom sorting?</span>
+            <span class="difficulty diff-adv">ADVANCED</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <pre>
+List&lt;Employee&gt; employees = ...;
 
 // By salary descending
 employees.sort(Comparator.comparingDouble(Employee::getSalary).reversed());
@@ -659,55 +1506,120 @@ employees.sort(Comparator.comparing(Employee::getManager,
 employees.stream()
     .sorted(Comparator.comparing(Employee::getHireDate))
     .collect(Collectors.toList());</pre>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q126">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">126</span>
-        <span class="q-title">. Fail-fast vs fail-safe?</span>
-        <span class="difficulty diff-adv">ADVANCED</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <p><strong>Fail-fast iterators</strong> (ArrayList, HashMap, HashSet): Throw <code>ConcurrentModificationException</code> if collection is structurally modified during iteration (not through the iterator).</p>
-<p>Mechanism: <code>modCount</code> counter tracks structural modifications. Iterator checks <code>modCount</code> on each <code>next()</code> call.</p>
-<pre>List&lt;String&gt; list = new ArrayList&lt;&gt;(List.of(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;));
+        <div class="card" id="q126">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">126</span>
+            <span class="q-title">. Fail-fast vs fail-safe?</span>
+            <span class="difficulty diff-adv">ADVANCED</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <p>
+                  <strong>Fail-fast iterators</strong> (ArrayList, HashMap,
+                  HashSet): Throw
+                  <code>ConcurrentModificationException</code> if collection is
+                  structurally modified during iteration (not through the
+                  iterator).
+                </p>
+                <p>
+                  Mechanism: <code>modCount</code> counter tracks structural
+                  modifications. Iterator checks <code>modCount</code> on each
+                  <code>next()</code> call.
+                </p>
+                <pre>
+List&lt;String&gt; list = new ArrayList&lt;&gt;(List.of(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;));
 for (String s : list) {
     if (s.equals(&quot;b&quot;)) list.remove(s); // ConcurrentModificationException!
 }
 // Fix: list.removeIf(s -&gt; s.equals(&quot;b&quot;));
 // Or: use iterator.remove()</pre>
-<p><strong>Fail-safe iterators</strong> (CopyOnWriteArrayList, ConcurrentHashMap): Iterate over a snapshot or weakly-consistent view; no exception thrown, but may not reflect latest changes.</p>
-<pre>CopyOnWriteArrayList&lt;String&gt; cowList = new CopyOnWriteArrayList&lt;&gt;(List.of(&quot;a&quot;, &quot;b&quot;));
+                <p>
+                  <strong>Fail-safe iterators</strong> (CopyOnWriteArrayList,
+                  ConcurrentHashMap): Iterate over a snapshot or
+                  weakly-consistent view; no exception thrown, but may not
+                  reflect latest changes.
+                </p>
+                <pre>
+CopyOnWriteArrayList&lt;String&gt; cowList = new CopyOnWriteArrayList&lt;&gt;(List.of(&quot;a&quot;, &quot;b&quot;));
 for (String s : cowList) {
     cowList.add(&quot;new&quot;); // no exception, iterator sees original snapshot
 }</pre>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q127">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">127</span>
-        <span class="q-title">. Iterator vs ListIterator?</span>
-        <span class="difficulty diff-mid">MID</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <table>
-<tr><th></th><th>Iterator</th><th>ListIterator</th></tr>
-<tr><td>Direction</td><td>Forward only</td><td>Both forward and backward</td></tr>
-<tr><td>Interfaces</td><td><code>Iterator&lt;E&gt;</code></td><td><code>ListIterator&lt;E&gt;</code> extends Iterator</td></tr>
-<tr><td>Available for</td><td>All Collections</td><td>Lists only</td></tr>
-<tr><td>Methods</td><td><code>hasNext()</code>, <code>next()</code>, <code>remove()</code></td><td>+ <code>hasPrevious()</code>, <code>previous()</code>, <code>add()</code>, <code>set()</code>, <code>nextIndex()</code>, <code>previousIndex()</code></td></tr>
-</table>
-<pre>List&lt;String&gt; list = new ArrayList&lt;&gt;(List.of(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;));
+        <div class="card" id="q127">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">127</span>
+            <span class="q-title">. Iterator vs ListIterator?</span>
+            <span class="difficulty diff-mid">MID</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <table>
+                  <tr>
+                    <th></th>
+                    <th>Iterator</th>
+                    <th>ListIterator</th>
+                  </tr>
+                  <tr>
+                    <td>Direction</td>
+                    <td>Forward only</td>
+                    <td>Both forward and backward</td>
+                  </tr>
+                  <tr>
+                    <td>Interfaces</td>
+                    <td><code>Iterator&lt;E&gt;</code></td>
+                    <td><code>ListIterator&lt;E&gt;</code> extends Iterator</td>
+                  </tr>
+                  <tr>
+                    <td>Available for</td>
+                    <td>All Collections</td>
+                    <td>Lists only</td>
+                  </tr>
+                  <tr>
+                    <td>Methods</td>
+                    <td>
+                      <code>hasNext()</code>, <code>next()</code>,
+                      <code>remove()</code>
+                    </td>
+                    <td>
+                      + <code>hasPrevious()</code>, <code>previous()</code>,
+                      <code>add()</code>, <code>set()</code>,
+                      <code>nextIndex()</code>, <code>previousIndex()</code>
+                    </td>
+                  </tr>
+                </table>
+                <pre>
+List&lt;String&gt; list = new ArrayList&lt;&gt;(List.of(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;));
 ListIterator&lt;String&gt; it = list.listIterator();
 while (it.hasNext()) {
     String s = it.next();
@@ -716,155 +1628,321 @@ while (it.hasNext()) {
 while (it.hasPrevious()) {
     System.out.println(it.previous()); // C, B, A
 }</pre>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q128">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">128</span>
-        <span class="q-title">. Why Iterator remove method?</span>
-        <span class="difficulty diff-adv">ADVANCED</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <p>Calling <code>list.remove()</code> during for-each throws <code>ConcurrentModificationException</code>. Iterator's <code>remove()</code> is the <strong>safe way</strong> to remove during iteration.</p>
-<pre>Iterator&lt;String&gt; it = list.iterator();
+        <div class="card" id="q128">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">128</span>
+            <span class="q-title">. Why Iterator remove method?</span>
+            <span class="difficulty diff-adv">ADVANCED</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <p>
+                  Calling <code>list.remove()</code> during for-each throws
+                  <code>ConcurrentModificationException</code>. Iterator's
+                  <code>remove()</code> is the <strong>safe way</strong> to
+                  remove during iteration.
+                </p>
+                <pre>
+Iterator&lt;String&gt; it = list.iterator();
 while (it.hasNext()) {
     String s = it.next();
     if (condition(s)) it.remove(); // safe - updates modCount
 }</pre>
-<p><code>it.remove()</code> removes the last element returned by <code>next()</code>. Must call <code>next()</code> first. Can only call once per <code>next()</code>.</p>
-<p>Modern alternative (Java 8+):</p>
-<pre>list.removeIf(s -&gt; condition(s)); // cleaner</pre>
+                <p>
+                  <code>it.remove()</code> removes the last element returned by
+                  <code>next()</code>. Must call <code>next()</code> first. Can
+                  only call once per <code>next()</code>.
+                </p>
+                <p>Modern alternative (Java 8+):</p>
+                <pre>list.removeIf(s -&gt; condition(s)); // cleaner</pre>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q129">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">129</span>
-        <span class="q-title">. Stream vs Iterator?</span>
-        <span class="difficulty diff-mid">MID</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <table>
-<tr><th></th><th>Iterator</th><th>Stream</th></tr>
-<tr><td>Paradigm</td><td>Imperative</td><td>Functional/declarative</td></tr>
-<tr><td>Operation type</td><td>Sequential</td><td>Sequential or parallel</td></tr>
-<tr><td>Reusability</td><td>Can reset</td><td>Single-use</td></tr>
-<tr><td>Lazy</td><td>No</td><td>Yes (intermediate ops)</td></tr>
-<tr><td>Modification</td><td>Supports remove</td><td>Immutable source</td></tr>
-<tr><td>Short-circuit</td><td>Manual</td><td>Built-in (<code>findFirst</code>, <code>limit</code>)</td></tr>
-<tr><td>Parallel</td><td>No</td><td>Yes (<code>parallelStream()</code>)</td></tr>
-<tr><td>Chaining</td><td>No</td><td>Yes (fluent API)</td></tr>
-</table>
-<p>Use <code>Iterator</code> when: simple sequential traversal with possible removal. Use <code>Stream</code> when: transformations, filtering, aggregations, parallel processing.</p>
+        <div class="card" id="q129">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">129</span>
+            <span class="q-title">. Stream vs Iterator?</span>
+            <span class="difficulty diff-mid">MID</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <table>
+                  <tr>
+                    <th></th>
+                    <th>Iterator</th>
+                    <th>Stream</th>
+                  </tr>
+                  <tr>
+                    <td>Paradigm</td>
+                    <td>Imperative</td>
+                    <td>Functional/declarative</td>
+                  </tr>
+                  <tr>
+                    <td>Operation type</td>
+                    <td>Sequential</td>
+                    <td>Sequential or parallel</td>
+                  </tr>
+                  <tr>
+                    <td>Reusability</td>
+                    <td>Can reset</td>
+                    <td>Single-use</td>
+                  </tr>
+                  <tr>
+                    <td>Lazy</td>
+                    <td>No</td>
+                    <td>Yes (intermediate ops)</td>
+                  </tr>
+                  <tr>
+                    <td>Modification</td>
+                    <td>Supports remove</td>
+                    <td>Immutable source</td>
+                  </tr>
+                  <tr>
+                    <td>Short-circuit</td>
+                    <td>Manual</td>
+                    <td>
+                      Built-in (<code>findFirst</code>, <code>limit</code>)
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Parallel</td>
+                    <td>No</td>
+                    <td>Yes (<code>parallelStream()</code>)</td>
+                  </tr>
+                  <tr>
+                    <td>Chaining</td>
+                    <td>No</td>
+                    <td>Yes (fluent API)</td>
+                  </tr>
+                </table>
+                <p>
+                  Use <code>Iterator</code> when: simple sequential traversal
+                  with possible removal. Use <code>Stream</code> when:
+                  transformations, filtering, aggregations, parallel processing.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q130">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">130</span>
-        <span class="q-title">. What is Spliterator?</span>
-        <span class="difficulty diff-mid">MID</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <p><code>Spliterator</code> (Splittable Iterator) supports <strong>parallel traversal</strong> of a data source.</p>
-<pre>public interface Spliterator&lt;T&gt; {
+        <div class="card" id="q130">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">130</span>
+            <span class="q-title">. What is Spliterator?</span>
+            <span class="difficulty diff-mid">MID</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <p>
+                  <code>Spliterator</code> (Splittable Iterator) supports
+                  <strong>parallel traversal</strong> of a data source.
+                </p>
+                <pre>
+public interface Spliterator&lt;T&gt; {
     boolean tryAdvance(Consumer&lt;? super T&gt; action); // process one element
     Spliterator&lt;T&gt; trySplit(); // split for parallel processing
     long estimateSize(); // rough count
     int characteristics(); // ORDERED, SORTED, SIZED, DISTINCT, IMMUTABLE, etc.
 }</pre>
-<p>Stream API uses Spliterators internally for parallel streams:</p>
-<ol>
-<li><code>trySplit()</code> recursively splits the Spliterator</li>
-<li>Each split processed by different threads in ForkJoinPool</li>
-<li>Results combined</li>
-</ol>
-<p>Custom Spliterators: Implement for custom data structures to support parallel stream processing.</p>
+                <p>
+                  Stream API uses Spliterators internally for parallel streams:
+                </p>
+                <ol>
+                  <li>
+                    <code>trySplit()</code> recursively splits the Spliterator
+                  </li>
+                  <li>
+                    Each split processed by different threads in ForkJoinPool
+                  </li>
+                  <li>Results combined</li>
+                </ol>
+                <p>
+                  Custom Spliterators: Implement for custom data structures to
+                  support parallel stream processing.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q131">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">131</span>
-        <span class="q-title">. Queue vs Deque?</span>
-        <span class="difficulty diff-mid">MID</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <p><strong>Queue</strong>: FIFO – insert at tail, remove from head.</p>
-<pre>Queue&lt;String&gt; queue = new LinkedList&lt;&gt;();
+        <div class="card" id="q131">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">131</span>
+            <span class="q-title">. Queue vs Deque?</span>
+            <span class="difficulty diff-mid">MID</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <p>
+                  <strong>Queue</strong>: FIFO – insert at tail, remove from
+                  head.
+                </p>
+                <pre>
+Queue&lt;String&gt; queue = new LinkedList&lt;&gt;();
 queue.offer(&quot;a&quot;); // add to tail
 queue.poll();     // remove from head
 queue.peek();     // look at head without removing</pre>
-<p><strong>Deque</strong> (Double-Ended Queue): Insert/remove at both ends.</p>
-<pre>Deque&lt;String&gt; deque = new ArrayDeque&lt;&gt;();
+                <p>
+                  <strong>Deque</strong> (Double-Ended Queue): Insert/remove at
+                  both ends.
+                </p>
+                <pre>
+Deque&lt;String&gt; deque = new ArrayDeque&lt;&gt;();
 deque.offerFirst(&quot;a&quot;); // add to front
 deque.offerLast(&quot;b&quot;);  // add to back
 deque.pollFirst();      // remove from front
 deque.pollLast();       // remove from back</pre>
-<p><code>ArrayDeque</code> is preferred over <code>LinkedList</code> for queue/deque use cases (faster, less memory).</p>
-<p><code>ArrayDeque</code> as stack: <code>push()</code> = <code>addFirst()</code>, <code>pop()</code> = <code>removeFirst()</code> – faster than <code>Stack</code>.</p>
+                <p>
+                  <code>ArrayDeque</code> is preferred over
+                  <code>LinkedList</code> for queue/deque use cases (faster,
+                  less memory).
+                </p>
+                <p>
+                  <code>ArrayDeque</code> as stack: <code>push()</code> =
+                  <code>addFirst()</code>, <code>pop()</code> =
+                  <code>removeFirst()</code> – faster than <code>Stack</code>.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q132">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">132</span>
-        <span class="q-title">. PriorityQueue internal working?</span>
-        <span class="difficulty diff-adv">ADVANCED</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <p><code>PriorityQueue</code> uses a <strong>min-heap</strong> (binary heap stored in array). Smallest element (by natural order or Comparator) is always at the head.</p>
-<pre>PriorityQueue&lt;Integer&gt; pq = new PriorityQueue&lt;&gt;();
+        <div class="card" id="q132">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">132</span>
+            <span class="q-title">. PriorityQueue internal working?</span>
+            <span class="difficulty diff-adv">ADVANCED</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <p>
+                  <code>PriorityQueue</code> uses a
+                  <strong>min-heap</strong> (binary heap stored in array).
+                  Smallest element (by natural order or Comparator) is always at
+                  the head.
+                </p>
+                <pre>
+PriorityQueue&lt;Integer&gt; pq = new PriorityQueue&lt;&gt;();
 pq.offer(5); pq.offer(1); pq.offer(3);
 pq.poll(); // returns 1 (minimum)</pre>
-<p><strong>Internal structure</strong>: Array where element at index <code>i</code> has children at <code>2i+1</code> and <code>2i+2</code>, parent at <code>(i-1)/2</code>.</p>
-<p>Operations:</p>
-<ul>
-<li><code>offer(e)</code>: Add at end, sift up – O(log n)</li>
-<li><code>poll()</code>: Remove root (min), replace with last, sift down – O(log n)</li>
-<li><code>peek()</code>: Return root – O(1)</li>
-<li><code>remove(o)</code>: Find and remove arbitrary element – O(n) to find</li>
-</ul>
-<p>Not sorted (heap order, not sorted order). Iteration is NOT in priority order; only poll() guarantees order.</p>
-<p><strong>Max-heap</strong>:</p>
-<pre>PriorityQueue&lt;Integer&gt; maxHeap = new PriorityQueue&lt;&gt;(Comparator.reverseOrder());</pre>
+                <p>
+                  <strong>Internal structure</strong>: Array where element at
+                  index <code>i</code> has children at <code>2i+1</code> and
+                  <code>2i+2</code>, parent at <code>(i-1)/2</code>.
+                </p>
+                <p>Operations:</p>
+                <ul>
+                  <li><code>offer(e)</code>: Add at end, sift up – O(log n)</li>
+                  <li>
+                    <code>poll()</code>: Remove root (min), replace with last,
+                    sift down – O(log n)
+                  </li>
+                  <li><code>peek()</code>: Return root – O(1)</li>
+                  <li>
+                    <code>remove(o)</code>: Find and remove arbitrary element –
+                    O(n) to find
+                  </li>
+                </ul>
+                <p>
+                  Not sorted (heap order, not sorted order). Iteration is NOT in
+                  priority order; only poll() guarantees order.
+                </p>
+                <p><strong>Max-heap</strong>:</p>
+                <pre>
+PriorityQueue&lt;Integer&gt; maxHeap = new PriorityQueue&lt;&gt;(Comparator.reverseOrder());</pre>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q133">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">133</span>
-        <span class="q-title">. BlockingQueue?</span>
-        <span class="difficulty diff-adv">ADVANCED</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <p><code>BlockingQueue</code> extends <code>Queue</code> with <strong>blocking operations</strong> for producer-consumer patterns:</p>
-<pre>BlockingQueue&lt;Task&gt; queue = new LinkedBlockingQueue&lt;&gt;(100); // capacity 100
+        <div class="card" id="q133">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">133</span>
+            <span class="q-title">. BlockingQueue?</span>
+            <span class="difficulty diff-adv">ADVANCED</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <p>
+                  <code>BlockingQueue</code> extends <code>Queue</code> with
+                  <strong>blocking operations</strong> for producer-consumer
+                  patterns:
+                </p>
+                <pre>
+BlockingQueue&lt;Task&gt; queue = new LinkedBlockingQueue&lt;&gt;(100); // capacity 100
 
 // Producer
 queue.put(task);    // blocks if full
@@ -873,314 +1951,690 @@ queue.offer(task, 5, TimeUnit.SECONDS); // blocks up to 5s
 // Consumer
 Task task = queue.take();    // blocks if empty
 Task task = queue.poll(5, TimeUnit.SECONDS); // blocks up to 5s</pre>
-<p>Implementations:</p>
-<ul>
-<li><code>LinkedBlockingQueue</code>: Unbounded (or capacity-limited), linked nodes</li>
-<li><code>ArrayBlockingQueue</code>: Fixed capacity, array-backed, fair/unfair option</li>
-<li><code>PriorityBlockingQueue</code>: Priority ordered, unbounded</li>
-<li><code>DelayQueue</code>: Elements available after a delay</li>
-<li><code>SynchronousQueue</code>: No storage; direct handoff between producer and consumer</li>
-<li><code>LinkedTransferQueue</code>: More efficient for some producer-consumer scenarios</li>
-</ul>
-<p>Used in: Thread pool's work queue (<code>Executors.newFixedThreadPool</code> uses <code>LinkedBlockingQueue</code>), message passing between threads.</p>
+                <p>Implementations:</p>
+                <ul>
+                  <li>
+                    <code>LinkedBlockingQueue</code>: Unbounded (or
+                    capacity-limited), linked nodes
+                  </li>
+                  <li>
+                    <code>ArrayBlockingQueue</code>: Fixed capacity,
+                    array-backed, fair/unfair option
+                  </li>
+                  <li>
+                    <code>PriorityBlockingQueue</code>: Priority ordered,
+                    unbounded
+                  </li>
+                  <li>
+                    <code>DelayQueue</code>: Elements available after a delay
+                  </li>
+                  <li>
+                    <code>SynchronousQueue</code>: No storage; direct handoff
+                    between producer and consumer
+                  </li>
+                  <li>
+                    <code>LinkedTransferQueue</code>: More efficient for some
+                    producer-consumer scenarios
+                  </li>
+                </ul>
+                <p>
+                  Used in: Thread pool's work queue (<code
+                    >Executors.newFixedThreadPool</code
+                  >
+                  uses <code>LinkedBlockingQueue</code>), message passing
+                  between threads.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q134">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">134</span>
-        <span class="q-title">. Concurrent collections?</span>
-        <span class="difficulty diff-adv">ADVANCED</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <table>
-<tr><th>Regular</th><th>Concurrent</th></tr>
-<tr><td>ArrayList</td><td>CopyOnWriteArrayList</td></tr>
-<tr><td>HashSet</td><td>ConcurrentSkipListSet</td></tr>
-<tr><td>HashMap</td><td>ConcurrentHashMap</td></tr>
-<tr><td>TreeMap</td><td>ConcurrentSkipListMap</td></tr>
-<tr><td>LinkedList</td><td>ConcurrentLinkedDeque</td></tr>
-<tr><td>PriorityQueue</td><td>PriorityBlockingQueue</td></tr>
-</table>
-<p><code>ConcurrentSkipList*</code>: Lock-free, sorted, O(log n) operations. Alternative to synchronized TreeMap/TreeSet.</p>
-<p><code>ConcurrentLinkedDeque</code>: Lock-free, non-blocking concurrent deque. High throughput.</p>
+        <div class="card" id="q134">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">134</span>
+            <span class="q-title">. Concurrent collections?</span>
+            <span class="difficulty diff-adv">ADVANCED</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <table>
+                  <tr>
+                    <th>Regular</th>
+                    <th>Concurrent</th>
+                  </tr>
+                  <tr>
+                    <td>ArrayList</td>
+                    <td>CopyOnWriteArrayList</td>
+                  </tr>
+                  <tr>
+                    <td>HashSet</td>
+                    <td>ConcurrentSkipListSet</td>
+                  </tr>
+                  <tr>
+                    <td>HashMap</td>
+                    <td>ConcurrentHashMap</td>
+                  </tr>
+                  <tr>
+                    <td>TreeMap</td>
+                    <td>ConcurrentSkipListMap</td>
+                  </tr>
+                  <tr>
+                    <td>LinkedList</td>
+                    <td>ConcurrentLinkedDeque</td>
+                  </tr>
+                  <tr>
+                    <td>PriorityQueue</td>
+                    <td>PriorityBlockingQueue</td>
+                  </tr>
+                </table>
+                <p>
+                  <code>ConcurrentSkipList*</code>: Lock-free, sorted, O(log n)
+                  operations. Alternative to synchronized TreeMap/TreeSet.
+                </p>
+                <p>
+                  <code>ConcurrentLinkedDeque</code>: Lock-free, non-blocking
+                  concurrent deque. High throughput.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q135">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">135</span>
-        <span class="q-title">. Why CopyOnWriteArrayList?</span>
-        <span class="difficulty diff-mid">MID</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <p><code>CopyOnWriteArrayList</code>: On every write (add, set, remove), creates a <strong>new copy</strong> of the entire array. Reads are non-blocking (use snapshot of array at time of iterator creation).</p>
-<pre>CopyOnWriteArrayList&lt;String&gt; list = new CopyOnWriteArrayList&lt;&gt;();
+        <div class="card" id="q135">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">135</span>
+            <span class="q-title">. Why CopyOnWriteArrayList?</span>
+            <span class="difficulty diff-mid">MID</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <p>
+                  <code>CopyOnWriteArrayList</code>: On every write (add, set,
+                  remove), creates a <strong>new copy</strong> of the entire
+                  array. Reads are non-blocking (use snapshot of array at time
+                  of iterator creation).
+                </p>
+                <pre>
+CopyOnWriteArrayList&lt;String&gt; list = new CopyOnWriteArrayList&lt;&gt;();
 // Read: No locking, uses current array reference
 // Write: Creates new array, copies, modifies, switches reference atomically</pre>
-<p><strong>Best for</strong>: Read-heavy, write-rare scenarios (observer lists, listener registries, routing tables).</p>
-<p><strong>Terrible for</strong>: High write frequency (copies entire array on each write – expensive for large lists).</p>
-<p>Trade-offs:</p>
-<ul>
-<li>Reads: Very fast, no locking</li>
-<li>Writes: Slow (O(n) copy), expensive</li>
-<li>Memory: May hold multiple array versions during GC</li>
-<li>Iteration: Safe (snapshot), won't see concurrent modifications</li>
-</ul>
+                <p>
+                  <strong>Best for</strong>: Read-heavy, write-rare scenarios
+                  (observer lists, listener registries, routing tables).
+                </p>
+                <p>
+                  <strong>Terrible for</strong>: High write frequency (copies
+                  entire array on each write – expensive for large lists).
+                </p>
+                <p>Trade-offs:</p>
+                <ul>
+                  <li>Reads: Very fast, no locking</li>
+                  <li>Writes: Slow (O(n) copy), expensive</li>
+                  <li>Memory: May hold multiple array versions during GC</li>
+                  <li>
+                    Iteration: Safe (snapshot), won't see concurrent
+                    modifications
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q136">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">136</span>
-        <span class="q-title">. WeakHashMap use cases?</span>
-        <span class="difficulty diff-exp">EXPERT</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <p><code>WeakHashMap</code>: Keys are held with <strong>weak references</strong>. If no strong reference to a key exists elsewhere, GC can collect the key and the entry is automatically removed.</p>
-<pre>WeakHashMap&lt;Object, String&gt; cache = new WeakHashMap&lt;&gt;();
+        <div class="card" id="q136">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">136</span>
+            <span class="q-title">. WeakHashMap use cases?</span>
+            <span class="difficulty diff-exp">EXPERT</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <p>
+                  <code>WeakHashMap</code>: Keys are held with
+                  <strong>weak references</strong>. If no strong reference to a
+                  key exists elsewhere, GC can collect the key and the entry is
+                  automatically removed.
+                </p>
+                <pre>
+WeakHashMap&lt;Object, String&gt; cache = new WeakHashMap&lt;&gt;();
 Object key = new Object();
 cache.put(key, &quot;value&quot;);
 key = null; // Remove strong reference
 // After GC, the entry may be removed from the map
 System.gc();
 cache.size(); // may be 0</pre>
-<p>Use cases:</p>
-<ol>
-<li><strong>Caches</strong> where values should be collected when key is no longer used</li>
-<li><strong>Metadata/attributes</strong> attached to objects (without preventing GC)</li>
-<li><strong>Canonical mapping</strong>: canonicalize instances (no duplicate instances of same logical object)</li>
-</ol>
-<p><strong>Pitfall</strong>: If key is a string literal (interned, always strongly reachable), it's never collected. WeakHashMap with <code>String</code> keys often doesn't work as expected.</p>
+                <p>Use cases:</p>
+                <ol>
+                  <li>
+                    <strong>Caches</strong> where values should be collected
+                    when key is no longer used
+                  </li>
+                  <li>
+                    <strong>Metadata/attributes</strong> attached to objects
+                    (without preventing GC)
+                  </li>
+                  <li>
+                    <strong>Canonical mapping</strong>: canonicalize instances
+                    (no duplicate instances of same logical object)
+                  </li>
+                </ol>
+                <p>
+                  <strong>Pitfall</strong>: If key is a string literal
+                  (interned, always strongly reachable), it's never collected.
+                  WeakHashMap with <code>String</code> keys often doesn't work
+                  as expected.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q137">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">137</span>
-        <span class="q-title">. IdentityHashMap?</span>
-        <span class="difficulty diff-adv">ADVANCED</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <p><code>IdentityHashMap</code>: Uses <code>==</code> (reference equality) instead of <code>.equals()</code> for key comparison, and <code>System.identityHashCode()</code> instead of <code>hashCode()</code>.</p>
-<pre>IdentityHashMap&lt;String, Integer&gt; map = new IdentityHashMap&lt;&gt;();
+        <div class="card" id="q137">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">137</span>
+            <span class="q-title">. IdentityHashMap?</span>
+            <span class="difficulty diff-adv">ADVANCED</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <p>
+                  <code>IdentityHashMap</code>: Uses <code>==</code> (reference
+                  equality) instead of <code>.equals()</code> for key
+                  comparison, and <code>System.identityHashCode()</code> instead
+                  of <code>hashCode()</code>.
+                </p>
+                <pre>
+IdentityHashMap&lt;String, Integer&gt; map = new IdentityHashMap&lt;&gt;();
 String a = new String(&quot;key&quot;);
 String b = new String(&quot;key&quot;);
 map.put(a, 1);
 map.put(b, 2);
 map.size(); // 2 - different objects, same content but different identity</pre>
-<p>Use cases:</p>
-<ol>
-<li><strong>Object graph traversal</strong>: Detect cycles using object identity (not equality)</li>
-<li><strong>Serialization</strong>: Track already-serialized objects</li>
-<li><strong>Deep clone</strong>: Track already-copied objects</li>
-<li><strong>Proxy systems</strong>: Map by object identity</li>
-</ol>
+                <p>Use cases:</p>
+                <ol>
+                  <li>
+                    <strong>Object graph traversal</strong>: Detect cycles using
+                    object identity (not equality)
+                  </li>
+                  <li>
+                    <strong>Serialization</strong>: Track already-serialized
+                    objects
+                  </li>
+                  <li>
+                    <strong>Deep clone</strong>: Track already-copied objects
+                  </li>
+                  <li>
+                    <strong>Proxy systems</strong>: Map by object identity
+                  </li>
+                </ol>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q138">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">138</span>
-        <span class="q-title">. EnumMap?</span>
-        <span class="difficulty diff-adv">ADVANCED</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <p><code>EnumMap&lt;K extends Enum&lt;K&gt;, V&gt;</code>: HashMap optimized for enum keys using a compact array internally.</p>
-<pre>enum Day { MON, TUE, WED, THU, FRI, SAT, SUN }
+        <div class="card" id="q138">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">138</span>
+            <span class="q-title">. EnumMap?</span>
+            <span class="difficulty diff-adv">ADVANCED</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <p>
+                  <code>EnumMap&lt;K extends Enum&lt;K&gt;, V&gt;</code>:
+                  HashMap optimized for enum keys using a compact array
+                  internally.
+                </p>
+                <pre>
+enum Day { MON, TUE, WED, THU, FRI, SAT, SUN }
 
 EnumMap&lt;Day, String&gt; schedule = new EnumMap&lt;&gt;(Day.class);
 schedule.put(Day.MON, &quot;Team meeting&quot;);
 schedule.put(Day.FRI, &quot;Code review&quot;);</pre>
-<p>Advantages over HashMap with enum keys:</p>
-<ul>
-<li><strong>Faster</strong>: Array indexed by enum ordinal – O(1) with no hash computation or collision</li>
-<li><strong>Memory-efficient</strong>: Compact array representation</li>
-<li><strong>Ordered</strong>: Iterates in enum declaration order</li>
-<li><strong>No null keys</strong> (enum values can't be null)</li>
-</ul>
-<p>Always prefer <code>EnumMap</code> over <code>HashMap</code> when keys are enums.</p>
+                <p>Advantages over HashMap with enum keys:</p>
+                <ul>
+                  <li>
+                    <strong>Faster</strong>: Array indexed by enum ordinal –
+                    O(1) with no hash computation or collision
+                  </li>
+                  <li>
+                    <strong>Memory-efficient</strong>: Compact array
+                    representation
+                  </li>
+                  <li>
+                    <strong>Ordered</strong>: Iterates in enum declaration order
+                  </li>
+                  <li>
+                    <strong>No null keys</strong> (enum values can't be null)
+                  </li>
+                </ul>
+                <p>
+                  Always prefer <code>EnumMap</code> over
+                  <code>HashMap</code> when keys are enums.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q139">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">139</span>
-        <span class="q-title">. Performance considerations of collections?</span>
-        <span class="difficulty diff-mid">MID</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <p>Key principles:</p>
-<ol>
-<li><strong>Pre-size collections</strong>: <code>new ArrayList&lt;&gt;(expectedSize)</code> or <code>new HashMap&lt;&gt;(capacity/0.75)</code></li>
-<li><strong>ArrayList vs LinkedList</strong>: ArrayList almost always wins in practice (cache efficiency)</li>
-<li><strong>HashSet for contains()</strong>: O(1) vs ArrayList's O(n)</li>
-<li><strong>Avoid Iterator wrapping</strong>: Direct array iteration > stream > iterator for simple cases</li>
-<li><strong>Primitive collections</strong>: Use <code>IntStream</code>, or libraries like Eclipse Collections, Trove for primitive lists (avoid boxing)</li>
-<li><strong>Immutable collections</strong>: <code>List.of()</code> (Java 9) – more memory-efficient than ArrayList with no-modification</li>
-<li><strong>EnumMap/EnumSet</strong>: For enum-keyed maps and sets – very fast</li>
-</ol>
+        <div class="card" id="q139">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">139</span>
+            <span class="q-title"
+              >. Performance considerations of collections?</span
+            >
+            <span class="difficulty diff-mid">MID</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <p>Key principles:</p>
+                <ol>
+                  <li>
+                    <strong>Pre-size collections</strong>:
+                    <code>new ArrayList&lt;&gt;(expectedSize)</code> or
+                    <code>new HashMap&lt;&gt;(capacity/0.75)</code>
+                  </li>
+                  <li>
+                    <strong>ArrayList vs LinkedList</strong>: ArrayList almost
+                    always wins in practice (cache efficiency)
+                  </li>
+                  <li>
+                    <strong>HashSet for contains()</strong>: O(1) vs ArrayList's
+                    O(n)
+                  </li>
+                  <li>
+                    <strong>Avoid Iterator wrapping</strong>: Direct array
+                    iteration > stream > iterator for simple cases
+                  </li>
+                  <li>
+                    <strong>Primitive collections</strong>: Use
+                    <code>IntStream</code>, or libraries like Eclipse
+                    Collections, Trove for primitive lists (avoid boxing)
+                  </li>
+                  <li>
+                    <strong>Immutable collections</strong>:
+                    <code>List.of()</code> (Java 9) – more memory-efficient than
+                    ArrayList with no-modification
+                  </li>
+                  <li>
+                    <strong>EnumMap/EnumSet</strong>: For enum-keyed maps and
+                    sets – very fast
+                  </li>
+                </ol>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q140">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">140</span>
-        <span class="q-title">. Time complexity of common operations?</span>
-        <span class="difficulty diff-adv">ADVANCED</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <table>
-<tr><th>Operation</th><th>ArrayList</th><th>LinkedList</th><th>HashMap</th><th>TreeMap</th><th>HashSet</th><th>TreeSet</th></tr>
-<tr><td>Add</td><td>O(1) amort</td><td>O(1)</td><td>O(1) avg</td><td>O(log n)</td><td>O(1) avg</td><td>O(log n)</td></tr>
-<tr><td>Remove</td><td>O(n)</td><td>O(1)*</td><td>O(1) avg</td><td>O(log n)</td><td>O(1) avg</td><td>O(log n)</td></tr>
-<tr><td>Get/Contains</td><td>O(1) idx / O(n) value</td><td>O(n)</td><td>O(1) avg</td><td>O(log n)</td><td>O(1) avg</td><td>O(log n)</td></tr>
-<tr><td>Iteration</td><td>O(n)</td><td>O(n)</td><td>O(capacity)</td><td>O(n)</td><td>O(capacity)</td><td>O(n)</td></tr>
-</table>
-<p>*LinkedList remove is O(n) if you need to find the element first; O(1) with iterator.</p>
-<p>HashMap worst case (all collisions): O(n). After Java 8 treeification: O(log n) worst case.</p>
+        <div class="card" id="q140">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">140</span>
+            <span class="q-title">. Time complexity of common operations?</span>
+            <span class="difficulty diff-adv">ADVANCED</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <table>
+                  <tr>
+                    <th>Operation</th>
+                    <th>ArrayList</th>
+                    <th>LinkedList</th>
+                    <th>HashMap</th>
+                    <th>TreeMap</th>
+                    <th>HashSet</th>
+                    <th>TreeSet</th>
+                  </tr>
+                  <tr>
+                    <td>Add</td>
+                    <td>O(1) amort</td>
+                    <td>O(1)</td>
+                    <td>O(1) avg</td>
+                    <td>O(log n)</td>
+                    <td>O(1) avg</td>
+                    <td>O(log n)</td>
+                  </tr>
+                  <tr>
+                    <td>Remove</td>
+                    <td>O(n)</td>
+                    <td>O(1)*</td>
+                    <td>O(1) avg</td>
+                    <td>O(log n)</td>
+                    <td>O(1) avg</td>
+                    <td>O(log n)</td>
+                  </tr>
+                  <tr>
+                    <td>Get/Contains</td>
+                    <td>O(1) idx / O(n) value</td>
+                    <td>O(n)</td>
+                    <td>O(1) avg</td>
+                    <td>O(log n)</td>
+                    <td>O(1) avg</td>
+                    <td>O(log n)</td>
+                  </tr>
+                  <tr>
+                    <td>Iteration</td>
+                    <td>O(n)</td>
+                    <td>O(n)</td>
+                    <td>O(capacity)</td>
+                    <td>O(n)</td>
+                    <td>O(capacity)</td>
+                    <td>O(n)</td>
+                  </tr>
+                </table>
+                <p>
+                  *LinkedList remove is O(n) if you need to find the element
+                  first; O(1) with iterator.
+                </p>
+                <p>
+                  HashMap worst case (all collisions): O(n). After Java 8
+                  treeification: O(log n) worst case.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q141">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">141</span>
-        <span class="q-title">. Collection synchronization techniques?</span>
-        <span class="difficulty diff-adv">ADVANCED</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <ol>
-<li><strong>Use concurrent collections</strong> (best):</li>
-</ol>
-<pre>Map&lt;K,V&gt; map = new ConcurrentHashMap&lt;&gt;();
+        <div class="card" id="q141">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">141</span>
+            <span class="q-title"
+              >. Collection synchronization techniques?</span
+            >
+            <span class="difficulty diff-adv">ADVANCED</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <ol>
+                  <li><strong>Use concurrent collections</strong> (best):</li>
+                </ol>
+                <pre>
+Map&lt;K,V&gt; map = new ConcurrentHashMap&lt;&gt;();
 List&lt;E&gt; list = new CopyOnWriteArrayList&lt;&gt;();</pre>
-<ol>
-<li><strong>Collections.synchronizedXxx()</strong> (synchronized wrapper):</li>
-</ol>
-<pre>List&lt;String&gt; syncList = Collections.synchronizedList(new ArrayList&lt;&gt;());
+                <ol>
+                  <li>
+                    <strong>Collections.synchronizedXxx()</strong> (synchronized
+                    wrapper):
+                  </li>
+                </ol>
+                <pre>
+List&lt;String&gt; syncList = Collections.synchronizedList(new ArrayList&lt;&gt;());
 Map&lt;K,V&gt; syncMap = Collections.synchronizedMap(new HashMap&lt;&gt;());
 // Must synchronize on collection for iteration:
 synchronized (syncList) { for (String s : syncList) {} }</pre>
-<ol>
-<li><strong>Manual synchronization</strong>: <code>synchronized</code> block or <code>ReentrantLock</code></li>
-</ol>
-<ol>
-<li><strong>Immutability</strong>: <code>List.of()</code>, <code>Collections.unmodifiableList()</code> – no sync needed for reads</li>
-</ol>
+                <ol>
+                  <li>
+                    <strong>Manual synchronization</strong>:
+                    <code>synchronized</code> block or
+                    <code>ReentrantLock</code>
+                  </li>
+                </ol>
+                <ol>
+                  <li>
+                    <strong>Immutability</strong>: <code>List.of()</code>,
+                    <code>Collections.unmodifiableList()</code> – no sync needed
+                    for reads
+                  </li>
+                </ol>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q142">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">142</span>
-        <span class="q-title">. How to make collections thread-safe?</span>
-        <span class="difficulty diff-adv">ADVANCED</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <p>Choose based on use pattern:</p>
-<ul>
-<li><strong>Read-heavy</strong>: <code>CopyOnWriteArrayList</code> / <code>Collections.unmodifiableList()</code></li>
-<li><strong>Write-heavy, all operations</strong>: <code>Collections.synchronizedList()</code> + external lock on iteration</li>
-<li><strong>Concurrent read+write</strong>: <code>ConcurrentHashMap</code>, <code>ConcurrentSkipListMap</code></li>
-<li><strong>Queue for producer-consumer</strong>: <code>BlockingQueue</code> implementations</li>
-<li><strong>Immutable</strong>: <code>List.of()</code>, <code>Map.of()</code> (Java 9+) – zero synchronization needed</li>
-</ul>
+        <div class="card" id="q142">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">142</span>
+            <span class="q-title">. How to make collections thread-safe?</span>
+            <span class="difficulty diff-adv">ADVANCED</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <p>Choose based on use pattern:</p>
+                <ul>
+                  <li>
+                    <strong>Read-heavy</strong>:
+                    <code>CopyOnWriteArrayList</code> /
+                    <code>Collections.unmodifiableList()</code>
+                  </li>
+                  <li>
+                    <strong>Write-heavy, all operations</strong>:
+                    <code>Collections.synchronizedList()</code> + external lock
+                    on iteration
+                  </li>
+                  <li>
+                    <strong>Concurrent read+write</strong>:
+                    <code>ConcurrentHashMap</code>,
+                    <code>ConcurrentSkipListMap</code>
+                  </li>
+                  <li>
+                    <strong>Queue for producer-consumer</strong>:
+                    <code>BlockingQueue</code> implementations
+                  </li>
+                  <li>
+                    <strong>Immutable</strong>: <code>List.of()</code>,
+                    <code>Map.of()</code> (Java 9+) – zero synchronization
+                    needed
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q143">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">143</span>
-        <span class="q-title">. Collections vs Arrays utility classes?</span>
-        <span class="difficulty diff-mid">MID</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <p><strong><code>java.util.Collections</code></strong>: Static methods for Collection operations:</p>
-<ul>
-<li><code>sort()</code>, <code>reverse()</code>, <code>shuffle()</code>, <code>rotate()</code></li>
-<li><code>min()</code>, <code>max()</code>, <code>frequency()</code>, <code>disjoint()</code></li>
-<li><code>unmodifiableList()</code>, <code>synchronizedList()</code></li>
-<li><code>singletonList()</code>, <code>emptyList()</code>, <code>nCopies()</code></li>
-<li><code>binarySearch()</code> (on sorted list)</li>
-<li><code>fill()</code>, <code>copy()</code>, <code>swap()</code></li>
-</ul>
-<p><strong><code>java.util.Arrays</code></strong>: Static methods for array operations:</p>
-<ul>
-<li><code>sort()</code>, <code>parallelSort()</code></li>
-<li><code>binarySearch()</code></li>
-<li><code>copyOf()</code>, <code>copyOfRange()</code></li>
-<li><code>fill()</code></li>
-<li><code>equals()</code>, <code>deepEquals()</code></li>
-<li><code>toString()</code>, <code>deepToString()</code></li>
-<li><code>asList()</code> – convert array to fixed-size List (backed by array, no add/remove)</li>
-<li><code>stream()</code> – create stream from array</li>
-</ul>
+        <div class="card" id="q143">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">143</span>
+            <span class="q-title"
+              >. Collections vs Arrays utility classes?</span
+            >
+            <span class="difficulty diff-mid">MID</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <p>
+                  <strong><code>java.util.Collections</code></strong
+                  >: Static methods for Collection operations:
+                </p>
+                <ul>
+                  <li>
+                    <code>sort()</code>, <code>reverse()</code>,
+                    <code>shuffle()</code>, <code>rotate()</code>
+                  </li>
+                  <li>
+                    <code>min()</code>, <code>max()</code>,
+                    <code>frequency()</code>, <code>disjoint()</code>
+                  </li>
+                  <li>
+                    <code>unmodifiableList()</code>,
+                    <code>synchronizedList()</code>
+                  </li>
+                  <li>
+                    <code>singletonList()</code>, <code>emptyList()</code>,
+                    <code>nCopies()</code>
+                  </li>
+                  <li><code>binarySearch()</code> (on sorted list)</li>
+                  <li>
+                    <code>fill()</code>, <code>copy()</code>,
+                    <code>swap()</code>
+                  </li>
+                </ul>
+                <p>
+                  <strong><code>java.util.Arrays</code></strong
+                  >: Static methods for array operations:
+                </p>
+                <ul>
+                  <li><code>sort()</code>, <code>parallelSort()</code></li>
+                  <li><code>binarySearch()</code></li>
+                  <li><code>copyOf()</code>, <code>copyOfRange()</code></li>
+                  <li><code>fill()</code></li>
+                  <li><code>equals()</code>, <code>deepEquals()</code></li>
+                  <li><code>toString()</code>, <code>deepToString()</code></li>
+                  <li>
+                    <code>asList()</code> – convert array to fixed-size List
+                    (backed by array, no add/remove)
+                  </li>
+                  <li><code>stream()</code> – create stream from array</li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q144">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">144</span>
-        <span class="q-title">. Why equals/hashCode critical in collections?</span>
-        <span class="difficulty diff-mid">MID</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <p>Any hash-based collection (HashMap, HashSet, HashTable) uses both:</p>
-<ol>
-<li><code>hashCode()</code> to find the bucket</li>
-<li><code>equals()</code> to confirm the key match</li>
-</ol>
-<p>Breaking the contract causes:</p>
-<ul>
-<li><strong>Missed lookups</strong>: equal objects land in different buckets (not found)</li>
-<li><strong>Duplicate insertions</strong>: Two "equal" objects in same Set</li>
-<li><strong>Memory leaks</strong>: Keys added but never removable</li>
-</ul>
-<pre>class BadKey {
+        <div class="card" id="q144">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">144</span>
+            <span class="q-title"
+              >. Why equals/hashCode critical in collections?</span
+            >
+            <span class="difficulty diff-mid">MID</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <p>
+                  Any hash-based collection (HashMap, HashSet, HashTable) uses
+                  both:
+                </p>
+                <ol>
+                  <li><code>hashCode()</code> to find the bucket</li>
+                  <li><code>equals()</code> to confirm the key match</li>
+                </ol>
+                <p>Breaking the contract causes:</p>
+                <ul>
+                  <li>
+                    <strong>Missed lookups</strong>: equal objects land in
+                    different buckets (not found)
+                  </li>
+                  <li>
+                    <strong>Duplicate insertions</strong>: Two "equal" objects
+                    in same Set
+                  </li>
+                  <li>
+                    <strong>Memory leaks</strong>: Keys added but never
+                    removable
+                  </li>
+                </ul>
+                <pre>
+class BadKey {
     int value;
     @Override public boolean equals(Object o) { ... } // overrides equals
     // NO hashCode override!
@@ -1190,152 +2644,294 @@ Set&lt;BadKey&gt; set = new HashSet&lt;&gt;();
 BadKey k1 = new BadKey(5);
 set.add(k1);
 set.contains(new BadKey(5)); // FALSE! Different hashCode → different bucket</pre>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q145">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">145</span>
-        <span class="q-title">. What causes memory leak in HashMap?</span>
-        <span class="difficulty diff-adv">ADVANCED</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <ol>
-<li><strong>Mutable key whose hashCode changes after insertion</strong>:</li>
-</ol>
-<pre>List&lt;String&gt; key = new ArrayList&lt;&gt;(List.of(&quot;a&quot;));
+        <div class="card" id="q145">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">145</span>
+            <span class="q-title">. What causes memory leak in HashMap?</span>
+            <span class="difficulty diff-adv">ADVANCED</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <ol>
+                  <li>
+                    <strong
+                      >Mutable key whose hashCode changes after
+                      insertion</strong
+                    >:
+                  </li>
+                </ol>
+                <pre>
+List&lt;String&gt; key = new ArrayList&lt;&gt;(List.of(&quot;a&quot;));
 map.put(key, &quot;value&quot;);
 key.add(&quot;b&quot;); // hashCode changes! Entry now in wrong bucket!
 // map.get(key) returns null even though key is in map
 // Old entry is leaked - impossible to reach without iterating all buckets</pre>
-<ol>
-<li><strong>Keys not removed</strong>: <code>static</code> HashMap accumulating entries indefinitely</li>
-</ol>
-<ol>
-<li><strong>ThreadLocal HashMap</strong>: If thread pool threads survive but application context changes, <code>ThreadLocal</code> + <code>HashMap</code> can leak class loaders in web app redeployment scenarios.</li>
-</ol>
-<ol>
-<li><strong>Inner class in static context</strong>: Anonymous inner class holding reference to outer instance.</li>
-</ol>
+                <ol>
+                  <li>
+                    <strong>Keys not removed</strong>:
+                    <code>static</code> HashMap accumulating entries
+                    indefinitely
+                  </li>
+                </ol>
+                <ol>
+                  <li>
+                    <strong>ThreadLocal HashMap</strong>: If thread pool threads
+                    survive but application context changes,
+                    <code>ThreadLocal</code> + <code>HashMap</code> can leak
+                    class loaders in web app redeployment scenarios.
+                  </li>
+                </ol>
+                <ol>
+                  <li>
+                    <strong>Inner class in static context</strong>: Anonymous
+                    inner class holding reference to outer instance.
+                  </li>
+                </ol>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q146">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">146</span>
-        <span class="q-title">. How iteration works internally?</span>
-        <span class="difficulty diff-adv">ADVANCED</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <p><strong>ArrayList</strong>: Index-based, <code>cursor</code> variable incremented:</p>
-<pre>// Simplified Iterator for ArrayList
+        <div class="card" id="q146">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">146</span>
+            <span class="q-title">. How iteration works internally?</span>
+            <span class="difficulty diff-adv">ADVANCED</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <p>
+                  <strong>ArrayList</strong>: Index-based,
+                  <code>cursor</code> variable incremented:
+                </p>
+                <pre>
+// Simplified Iterator for ArrayList
 int cursor = 0;
 public boolean hasNext() { return cursor &lt; size; }
 public E next() { 
     checkForModification(); // modCount check
     return elementData[cursor++]; 
 }</pre>
-<p><strong>HashMap</strong>: Iterates through buckets array, then through linked list/tree nodes within each bucket:</p>
-<pre>// Visits all capacity buckets even if empty (why iteration is O(capacity))
+                <p>
+                  <strong>HashMap</strong>: Iterates through buckets array, then
+                  through linked list/tree nodes within each bucket:
+                </p>
+                <pre>
+// Visits all capacity buckets even if empty (why iteration is O(capacity))
 for (int i = 0; i &lt; table.length; i++) {
     Node&lt;K,V&gt; node = table[i];
     while (node != null) { visit(node); node = node.next; }
 }</pre>
-<p><strong>LinkedList</strong>: Follows <code>next</code> pointers from head.</p>
+                <p>
+                  <strong>LinkedList</strong>: Follows
+                  <code>next</code> pointers from head.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q147">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">147</span>
-        <span class="q-title">. What is structural modification?</span>
-        <span class="difficulty diff-mid">MID</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <p>A structural modification is any operation that <strong>changes the size</strong> of a collection: add, remove, clear.</p>
-<p>Modifying an element's value (via <code>set()</code>) is NOT a structural modification.</p>
-<p>Why it matters: Fail-fast iterators track structural modifications via <code>modCount</code>. Any structural modification during iteration (except via the iterator itself) causes <code>ConcurrentModificationException</code>.</p>
-<pre>list.set(0, &quot;new value&quot;); // NOT structural, safe during iteration (via index, not iterator)
+        <div class="card" id="q147">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">147</span>
+            <span class="q-title">. What is structural modification?</span>
+            <span class="difficulty diff-mid">MID</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <p>
+                  A structural modification is any operation that
+                  <strong>changes the size</strong> of a collection: add,
+                  remove, clear.
+                </p>
+                <p>
+                  Modifying an element's value (via <code>set()</code>) is NOT a
+                  structural modification.
+                </p>
+                <p>
+                  Why it matters: Fail-fast iterators track structural
+                  modifications via <code>modCount</code>. Any structural
+                  modification during iteration (except via the iterator itself)
+                  causes <code>ConcurrentModificationException</code>.
+                </p>
+                <pre>
+list.set(0, &quot;new value&quot;); // NOT structural, safe during iteration (via index, not iterator)
 list.add(&quot;item&quot;);         // structural, throws if done during fail-fast iteration</pre>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q148">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">148</span>
-        <span class="q-title">. Immutability in collections?</span>
-        <span class="difficulty diff-adv">ADVANCED</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <p><strong>Immutable</strong>: Cannot be modified (contents AND structure). Throw <code>UnsupportedOperationException</code>.</p>
-<p>Java 9+ factory methods:</p>
-<pre>List&lt;String&gt; list = List.of(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;); // immutable
+        <div class="card" id="q148">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">148</span>
+            <span class="q-title">. Immutability in collections?</span>
+            <span class="difficulty diff-adv">ADVANCED</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <p>
+                  <strong>Immutable</strong>: Cannot be modified (contents AND
+                  structure). Throw <code>UnsupportedOperationException</code>.
+                </p>
+                <p>Java 9+ factory methods:</p>
+                <pre>
+List&lt;String&gt; list = List.of(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;); // immutable
 Set&lt;String&gt; set = Set.of(&quot;x&quot;, &quot;y&quot;);         // immutable
 Map&lt;String, Integer&gt; map = Map.of(&quot;a&quot;, 1, &quot;b&quot;, 2); // immutable</pre>
-<p>Properties:</p>
-<ul>
-<li>No null elements/keys</li>
-<li><code>set()</code>, <code>add()</code>, <code>remove()</code> throw <code>UnsupportedOperationException</code></li>
-<li>Compact memory representation (no backing array overhead)</li>
-<li>Iteration order: List – insertion; Set/Map – unspecified</li>
-</ul>
-<p>Guava: <code>ImmutableList.of()</code>, <code>ImmutableMap.of()</code>, <code>ImmutableSet.of()</code> – similar but with richer API.</p>
+                <p>Properties:</p>
+                <ul>
+                  <li>No null elements/keys</li>
+                  <li>
+                    <code>set()</code>, <code>add()</code>,
+                    <code>remove()</code> throw
+                    <code>UnsupportedOperationException</code>
+                  </li>
+                  <li>
+                    Compact memory representation (no backing array overhead)
+                  </li>
+                  <li>
+                    Iteration order: List – insertion; Set/Map – unspecified
+                  </li>
+                </ul>
+                <p>
+                  Guava: <code>ImmutableList.of()</code>,
+                  <code>ImmutableMap.of()</code>,
+                  <code>ImmutableSet.of()</code> – similar but with richer API.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q149">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">149</span>
-        <span class="q-title">. Unmodifiable vs immutable?</span>
-        <span class="difficulty diff-mid">MID</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <p><strong>Unmodifiable</strong> (<code>Collections.unmodifiableList()</code>): A <strong>view</strong> wrapping the original. Throws exception on mutation, but the <strong>underlying collection can still be mutated</strong> by direct reference.</p>
-<pre>List&lt;String&gt; original = new ArrayList&lt;&gt;(List.of(&quot;a&quot;, &quot;b&quot;));
+        <div class="card" id="q149">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">149</span>
+            <span class="q-title">. Unmodifiable vs immutable?</span>
+            <span class="difficulty diff-mid">MID</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <p>
+                  <strong>Unmodifiable</strong>
+                  (<code>Collections.unmodifiableList()</code>): A
+                  <strong>view</strong> wrapping the original. Throws exception
+                  on mutation, but the
+                  <strong>underlying collection can still be mutated</strong> by
+                  direct reference.
+                </p>
+                <pre>
+List&lt;String&gt; original = new ArrayList&lt;&gt;(List.of(&quot;a&quot;, &quot;b&quot;));
 List&lt;String&gt; unmod = Collections.unmodifiableList(original);
 
 unmod.add(&quot;c&quot;); // UnsupportedOperationException
 original.add(&quot;c&quot;); // OK! unmod now shows &quot;a&quot;, &quot;b&quot;, &quot;c&quot;</pre>
-<p><strong>Immutable</strong> (<code>List.of()</code>): No underlying mutable collection. Truly frozen.</p>
-<pre>List&lt;String&gt; immutable = List.of(&quot;a&quot;, &quot;b&quot;);
+                <p>
+                  <strong>Immutable</strong> (<code>List.of()</code>): No
+                  underlying mutable collection. Truly frozen.
+                </p>
+                <pre>
+List&lt;String&gt; immutable = List.of(&quot;a&quot;, &quot;b&quot;);
 // No way to modify this - period</pre>
-<p>Use <code>List.of()</code> when you have control over creation. Use <code>Collections.unmodifiableList()</code> to expose a view of a mutable collection.</p>
-<p><strong>Deep vs shallow immutability</strong>: Both are <em>shallowly</em> immutable – can't add/remove elements, but the elements themselves can be mutated if they're mutable objects.</p>
+                <p>
+                  Use <code>List.of()</code> when you have control over
+                  creation. Use <code>Collections.unmodifiableList()</code> to
+                  expose a view of a mutable collection.
+                </p>
+                <p>
+                  <strong>Deep vs shallow immutability</strong>: Both are
+                  <em>shallowly</em> immutable – can't add/remove elements, but
+                  the elements themselves can be mutated if they're mutable
+                  objects.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q150">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">150</span>
-        <span class="q-title">. Java 9 factory methods for collections?</span>
-        <span class="difficulty diff-adv">ADVANCED</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <pre>// List
+        <div class="card" id="q150">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">150</span>
+            <span class="q-title"
+              >. Java 9 factory methods for collections?</span
+            >
+            <span class="difficulty diff-adv">ADVANCED</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <pre>
+// List
 List&lt;String&gt; list = List.of(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;);
 List&lt;String&gt; copy = List.copyOf(existingCollection);
 
@@ -1352,32 +2948,72 @@ Map&lt;String, Integer&gt; map = Map.ofEntries(
     // no limit
 );
 Map&lt;String, Integer&gt; copy = Map.copyOf(existingMap);</pre>
-<p>Key characteristics vs old approaches:</p>
-<ul>
-<li>Throw <code>NullPointerException</code> for null elements/keys/values</li>
-<li>Throw <code>IllegalArgumentException</code> for duplicate elements/keys (in Set/Map)</li>
-<li>Unspecified iteration order (Set, Map)</li>
-<li>More memory-efficient than <code>Arrays.asList()</code> + Collections wrappers</li>
-<li>Serializable</li>
-</ul>
+                <p>Key characteristics vs old approaches:</p>
+                <ul>
+                  <li>
+                    Throw <code>NullPointerException</code> for null
+                    elements/keys/values
+                  </li>
+                  <li>
+                    Throw <code>IllegalArgumentException</code> for duplicate
+                    elements/keys (in Set/Map)
+                  </li>
+                  <li>Unspecified iteration order (Set, Map)</li>
+                  <li>
+                    More memory-efficient than <code>Arrays.asList()</code> +
+                    Collections wrappers
+                  </li>
+                  <li>Serializable</li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q151">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">151</span>
-        <span class="q-title">Why does HashMap allow null keys/values but ConcurrentHashMap does not?</span>
-        <span class="difficulty diff-adv">ADVANCED</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <p><strong><code>HashMap</code></strong> permits one <code>null</code> key (stored in bucket 0 with hash 0) and any number of <code>null</code> values.</p>
-<p><strong><code>ConcurrentHashMap</code></strong> rejects both — <code>put(null, x)</code>, <code>put(k, null)</code>, and <code>get(null)</code> all throw <code>NullPointerException</code>.</p>
-<p><strong>Why the difference?</strong> In a concurrent map, <code>map.get(k) == null</code> is ambiguous — it could mean "absent" or "present with null value". Without locks, you can't disambiguate using <code>containsKey</code>; the entry could be added or removed between the two calls. Doug Lea (the author) chose to ban <code>null</code> entirely so the API is unambiguous and lock-free reads stay correct.</p>
-<pre>// HashMap — works
+        <div class="card" id="q151">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">151</span>
+            <span class="q-title"
+              >Why does HashMap allow null keys/values but ConcurrentHashMap
+              does not?</span
+            >
+            <span class="difficulty diff-adv">ADVANCED</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <p>
+                  <strong><code>HashMap</code></strong> permits one
+                  <code>null</code> key (stored in bucket 0 with hash 0) and any
+                  number of <code>null</code> values.
+                </p>
+                <p>
+                  <strong><code>ConcurrentHashMap</code></strong> rejects both —
+                  <code>put(null, x)</code>, <code>put(k, null)</code>, and
+                  <code>get(null)</code> all throw
+                  <code>NullPointerException</code>.
+                </p>
+                <p>
+                  <strong>Why the difference?</strong> In a concurrent map,
+                  <code>map.get(k) == null</code> is ambiguous — it could mean
+                  "absent" or "present with null value". Without locks, you
+                  can't disambiguate using <code>containsKey</code>; the entry
+                  could be added or removed between the two calls. Doug Lea (the
+                  author) chose to ban <code>null</code> entirely so the API is
+                  unambiguous and lock-free reads stay correct.
+                </p>
+                <pre>
+// HashMap — works
 Map&lt;String, String&gt; m = new HashMap&lt;&gt;();
 m.put(null, "x");
 m.put("k", null);
@@ -1386,35 +3022,91 @@ m.put("k", null);
 Map&lt;String, String&gt; cm = new ConcurrentHashMap&lt;&gt;();
 cm.put(null, "x");   // NPE
 cm.put("k", null);   // NPE</pre>
-<p>The same restriction applies to <code>ConcurrentSkipListMap</code> and <code>Hashtable</code> (Hashtable for the same disambiguation reason in its synchronized API).</p>
+                <p>
+                  The same restriction applies to
+                  <code>ConcurrentSkipListMap</code> and
+                  <code>Hashtable</code> (Hashtable for the same disambiguation
+                  reason in its synchronized API).
+                </p>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q152">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">152</span>
-        <span class="q-title">Collections.synchronizedMap vs ConcurrentHashMap — which and when?</span>
-        <span class="difficulty diff-adv">ADVANCED</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <table>
-<tr><th>Aspect</th><th>Collections.synchronizedMap</th><th>ConcurrentHashMap</th></tr>
-<tr><td>Locking</td><td>Single lock on the whole map</td><td>Fine-grained — per-bin CAS + synchronized</td></tr>
-<tr><td>Read concurrency</td><td>Blocks readers during writes</td><td>Readers do not block</td></tr>
-<tr><td>Iterator</td><td>Fail-fast (<code>ConcurrentModificationException</code>); needs external <code>synchronized</code> block</td><td>Weakly consistent — never throws CME</td></tr>
-<tr><td>null support</td><td>Allowed</td><td>Not allowed</td></tr>
-<tr><td>Compound ops</td><td>Need explicit lock</td><td><code>putIfAbsent</code>, <code>compute</code>, <code>merge</code> are atomic</td></tr>
-</table>
-<p><strong>Rule of thumb:</strong> if you need a thread-safe map, default to <code>ConcurrentHashMap</code>. Use <code>synchronizedMap</code> only when:</p>
-<ul>
-<li>You need to support null keys/values, OR</li>
-<li>You need to lock the map for a multi-step operation and want one obvious lock object.</li>
-</ul>
-<pre>// Compound op done correctly on ConcurrentHashMap
+        <div class="card" id="q152">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">152</span>
+            <span class="q-title"
+              >Collections.synchronizedMap vs ConcurrentHashMap — which and
+              when?</span
+            >
+            <span class="difficulty diff-adv">ADVANCED</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <table>
+                  <tr>
+                    <th>Aspect</th>
+                    <th>Collections.synchronizedMap</th>
+                    <th>ConcurrentHashMap</th>
+                  </tr>
+                  <tr>
+                    <td>Locking</td>
+                    <td>Single lock on the whole map</td>
+                    <td>Fine-grained — per-bin CAS + synchronized</td>
+                  </tr>
+                  <tr>
+                    <td>Read concurrency</td>
+                    <td>Blocks readers during writes</td>
+                    <td>Readers do not block</td>
+                  </tr>
+                  <tr>
+                    <td>Iterator</td>
+                    <td>
+                      Fail-fast (<code>ConcurrentModificationException</code>);
+                      needs external <code>synchronized</code> block
+                    </td>
+                    <td>Weakly consistent — never throws CME</td>
+                  </tr>
+                  <tr>
+                    <td>null support</td>
+                    <td>Allowed</td>
+                    <td>Not allowed</td>
+                  </tr>
+                  <tr>
+                    <td>Compound ops</td>
+                    <td>Need explicit lock</td>
+                    <td>
+                      <code>putIfAbsent</code>, <code>compute</code>,
+                      <code>merge</code> are atomic
+                    </td>
+                  </tr>
+                </table>
+                <p>
+                  <strong>Rule of thumb:</strong> if you need a thread-safe map,
+                  default to <code>ConcurrentHashMap</code>. Use
+                  <code>synchronizedMap</code> only when:
+                </p>
+                <ul>
+                  <li>You need to support null keys/values, OR</li>
+                  <li>
+                    You need to lock the map for a multi-step operation and want
+                    one obvious lock object.
+                  </li>
+                </ul>
+                <pre>
+// Compound op done correctly on ConcurrentHashMap
 cm.compute("counter", (k, v) -&gt; v == null ? 1 : v + 1);
 
 // Same on synchronizedMap — must lock externally
@@ -1422,65 +3114,143 @@ synchronized (sm) {
   Integer v = sm.get("counter");
   sm.put("counter", v == null ? 1 : v + 1);
 }</pre>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q153">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">153</span>
-        <span class="q-title">When would you choose LinkedHashMap over HashMap?</span>
-        <span class="difficulty diff-mid">MID</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <p><code>LinkedHashMap</code> extends <code>HashMap</code> and maintains a <strong>doubly-linked list</strong> across all entries, giving predictable iteration order at a small memory cost (two extra pointers per entry).</p>
-<p><strong>Two iteration modes:</strong></p>
-<ul>
-<li><strong>Insertion order</strong> (default): entries iterate in the order they were first inserted.</li>
-<li><strong>Access order</strong>: pass <code>accessOrder=true</code>; <code>get</code>/<code>put</code> moves the entry to the tail. This is the foundation for an LRU cache.</li>
-</ul>
-<pre>// Bounded LRU cache in ~5 lines
+        <div class="card" id="q153">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">153</span>
+            <span class="q-title"
+              >When would you choose LinkedHashMap over HashMap?</span
+            >
+            <span class="difficulty diff-mid">MID</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <p>
+                  <code>LinkedHashMap</code> extends <code>HashMap</code> and
+                  maintains a <strong>doubly-linked list</strong> across all
+                  entries, giving predictable iteration order at a small memory
+                  cost (two extra pointers per entry).
+                </p>
+                <p><strong>Two iteration modes:</strong></p>
+                <ul>
+                  <li>
+                    <strong>Insertion order</strong> (default): entries iterate
+                    in the order they were first inserted.
+                  </li>
+                  <li>
+                    <strong>Access order</strong>: pass
+                    <code>accessOrder=true</code>; <code>get</code>/<code
+                      >put</code
+                    >
+                    moves the entry to the tail. This is the foundation for an
+                    LRU cache.
+                  </li>
+                </ul>
+                <pre>
+// Bounded LRU cache in ~5 lines
 Map&lt;K, V&gt; lru = new LinkedHashMap&lt;&gt;(16, 0.75f, true) {
   protected boolean removeEldestEntry(Map.Entry&lt;K, V&gt; e) {
     return size() &gt; MAX_ENTRIES;
   }
 };</pre>
-<p><strong>Use it when:</strong></p>
-<ul>
-<li>You need stable iteration order (e.g. JSON serialisation, deterministic test output).</li>
-<li>You're building a simple LRU cache and don't need concurrency.</li>
-<li>You'd otherwise post-process by sorting — the linked list is cheaper.</li>
-</ul>
-<div class="warn-box"><code>LinkedHashMap</code> is <strong>not thread-safe</strong>. For concurrent LRU semantics, prefer Caffeine or <code>ConcurrentHashMap</code> with a separate eviction policy.</div>
+                <p><strong>Use it when:</strong></p>
+                <ul>
+                  <li>
+                    You need stable iteration order (e.g. JSON serialisation,
+                    deterministic test output).
+                  </li>
+                  <li>
+                    You're building a simple LRU cache and don't need
+                    concurrency.
+                  </li>
+                  <li>
+                    You'd otherwise post-process by sorting — the linked list is
+                    cheaper.
+                  </li>
+                </ul>
+                <div class="warn-box">
+                  <code>LinkedHashMap</code> is
+                  <strong>not thread-safe</strong>. For concurrent LRU
+                  semantics, prefer Caffeine or
+                  <code>ConcurrentHashMap</code> with a separate eviction
+                  policy.
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q154">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">49</span>
-        <span class="q-title">What is BitSet in Java?</span>
-        <span class="difficulty diff-mid">MID</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <p><code>BitSet</code> (in <code>java.util</code>) is a special-purpose collection that stores a sequence of bits (0s and 1s). Each bit can be <strong>set</strong>, <strong>cleared</strong>, or <strong>flipped</strong>, and the set grows automatically as needed.</p>
-<p><strong>Key methods:</strong></p>
-<ul>
-<li><code>set(int bitIndex)</code> — sets the bit at index to <code>true</code></li>
-<li><code>clear(int bitIndex)</code> — sets the bit to <code>false</code></li>
-<li><code>get(int bitIndex)</code> — returns the current bit value</li>
-<li><code>flip(int bitIndex)</code> — toggles the bit</li>
-<li><code>and(BitSet set)</code>, <code>or(BitSet set)</code>, <code>xor(BitSet set)</code> — bitwise operations</li>
-<li><code>cardinality()</code> — number of bits set to <code>true</code></li>
-<li><code>size()</code> / <code>length()</code> — capacity vs. highest set index + 1</li>
-</ul>
-<pre>BitSet bs = new BitSet(8);
+        <div class="card" id="q154">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">49</span>
+            <span class="q-title">What is BitSet in Java?</span>
+            <span class="difficulty diff-mid">MID</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <p>
+                  <code>BitSet</code> (in <code>java.util</code>) is a
+                  special-purpose collection that stores a sequence of bits (0s
+                  and 1s). Each bit can be <strong>set</strong>,
+                  <strong>cleared</strong>, or <strong>flipped</strong>, and the
+                  set grows automatically as needed.
+                </p>
+                <p><strong>Key methods:</strong></p>
+                <ul>
+                  <li>
+                    <code>set(int bitIndex)</code> — sets the bit at index to
+                    <code>true</code>
+                  </li>
+                  <li>
+                    <code>clear(int bitIndex)</code> — sets the bit to
+                    <code>false</code>
+                  </li>
+                  <li>
+                    <code>get(int bitIndex)</code> — returns the current bit
+                    value
+                  </li>
+                  <li><code>flip(int bitIndex)</code> — toggles the bit</li>
+                  <li>
+                    <code>and(BitSet set)</code>, <code>or(BitSet set)</code>,
+                    <code>xor(BitSet set)</code> — bitwise operations
+                  </li>
+                  <li>
+                    <code>cardinality()</code> — number of bits set to
+                    <code>true</code>
+                  </li>
+                  <li>
+                    <code>size()</code> / <code>length()</code> — capacity vs.
+                    highest set index + 1
+                  </li>
+                </ul>
+                <pre>
+BitSet bs = new BitSet(8);
 bs.set(0);
 bs.set(3);
 bs.set(7);
@@ -1494,21 +3264,33 @@ bs2.set(0);
 bs2.set(5);
 bs.and(bs2);
 System.out.println(bs);        // {0}  — only bit 0 was common</pre>
-<p><strong>Memory efficiency:</strong> <code>BitSet</code> internally uses a <code>long[]</code> array — each <code>long</code> holds 64 bits. This makes it far more memory-efficient than <code>boolean[]</code> for large flag sets (64× compression).</p>
-<p><strong>Common use cases:</strong></p>
-<ul>
-<li>Sieve of Eratosthenes (finding primes efficiently)</li>
-<li>Tracking visited nodes in graph algorithms</li>
-<li>Bloom filters and other probabilistic structures</li>
-<li>Efficient set-membership testing for integer ranges</li>
-</ul>
-<div class="warn-box"><code>BitSet</code> is <strong>not thread-safe</strong>. For concurrent use, wrap it or use <code>AtomicLongArray</code> with manual bit manipulation.</div>
+                <p>
+                  <strong>Memory efficiency:</strong>
+                  <code>BitSet</code> internally uses a
+                  <code>long[]</code> array — each <code>long</code> holds 64
+                  bits. This makes it far more memory-efficient than
+                  <code>boolean[]</code> for large flag sets (64× compression).
+                </p>
+                <p><strong>Common use cases:</strong></p>
+                <ul>
+                  <li>Sieve of Eratosthenes (finding primes efficiently)</li>
+                  <li>Tracking visited nodes in graph algorithms</li>
+                  <li>Bloom filters and other probabilistic structures</li>
+                  <li>Efficient set-membership testing for integer ranges</li>
+                </ul>
+                <div class="warn-box">
+                  <code>BitSet</code> is <strong>not thread-safe</strong>. For
+                  concurrent use, wrap it or use
+                  <code>AtomicLongArray</code> with manual bit manipulation.
+                </div>
+              </div>
+            </div>
           </div>
         </div>
+        <div style="height: 60px"></div>
       </div>
     </div>
-    <div style="height:60px"></div>
-  </div>
-</div>
 
-<script src="assets/main.js" defer></script>
+    <script src="assets/main.js" defer></script>
+  </body>
+</html>

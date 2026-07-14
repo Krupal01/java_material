@@ -1,103 +1,325 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PART 2: Java Versions &amp; Evolution (Q41–75) — Java Interview Guide</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      PART 2: Java Versions &amp; Evolution (Q41–75) — Java Interview Guide
+    </title>
 
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/theme.css">
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Syne:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/theme.css" />
 
-  <script>(function(){try{var t=localStorage.getItem("java-theme")||"light";document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
-</head>
-<body>
-<nav class="topnav"><span class="nav-logo">// Java Interview</span><div class="nav-links"><a href="index.html" class="nav-link">🏠 Home</a><a href="oop.html" class="nav-link">🧩 OOPS</a><a href="basics.html" class="nav-link">☕ Basic</a><a href="versions.html" class="nav-link active">🚀 Version</a><a href="collections.html" class="nav-link">📦 Collection</a><a href="exceptions.html" class="nav-link">⚠️ Exception</a><a href="concurrency.html" class="nav-link">⚡ Concurrency + Advance</a><a href="methods.html" class="nav-link">🛠️ Methods</a><a href="mastery.html" class="nav-link">🧠 Mastry</a><a href="quiz.html" class="nav-link">🎯 Quiz</a><a href="springboot.html" class="nav-link">🍃 Spring</a><a href="backend-track.html" class="nav-link">🧱 Backend</a></div><button class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme" onclick="toggleTheme()" type="button"><svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg><svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button></nav>
-<div class="breadcrumb">
-  <a href="index.html">Home</a> › PART 2: Java Versions &amp; Evolution (Q41–75)
-</div>
-<header>
-  <div class="header-tag">// Java Interview — Senior Level</div>
-  <h1>🚀 PART 2: Java Versions &amp; Evolution (Q41–75)</h1>
-  <p class="subtitle">Java 5 through Java 21+ — generics, lambdas, streams, modules, records, sealed classes, virtual threads.</p>
-  <div class="stats-row">
-    <div class="stat"><span class="stat-num">35</span> Questions</div>
-    
-    <div class='stat'><span class='stat-num'>22</span> Mid</div>
-    <div class='stat'><span class='stat-num'>7</span> Advanced</div>
-    <div class='stat'><span class='stat-num'>6</span> Expert</div>
-  </div>
-</header>
-<div class="controls">
-  <div class="search-wrap">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-    <input type="text" id="searchInput" placeholder="Search questions..." oninput="filterCards()">
-  </div>
-  <button class="filter-btn active" onclick="filterBy('all',this)">All</button>
-  
-  <button class='filter-btn' onclick='filterBy("mid",this)'>Mid</button>
-  <button class='filter-btn' onclick='filterBy("adv",this)'>Advanced</button>
-  <button class='filter-btn' onclick='filterBy("exp",this)'>Expert</button>
-  <button class="expand-all" onclick="toggleAll()">Expand All</button>
-</div>
-<div class="main">
-  <aside class="sidebar">
-    <div class="cat-header">Questions</div>
-    <div class="sidebar-link" data-target="q41" onclick="scrollToCard('q41')">Q41. What features were introduced in Java 5?</div>
-<div class="sidebar-link" data-target="q44" onclick="scrollToCard('q44')">Q44. Java 7 major features?</div>
-<div class="sidebar-link" data-target="q47" onclick="scrollToCard('q47')">Q47. Java 8 key features?</div>
-<div class="sidebar-link" data-target="q50" onclick="scrollToCard('q50')">Q50. Predicate vs Function?</div>
-<div class="sidebar-link" data-target="q53" onclick="scrollToCard('q53')">Q53. What is Optional?</div>
-<div class="sidebar-link" data-target="q56" onclick="scrollToCard('q56')">Q56. Java 10 local variable type inference?</div>
-<div class="sidebar-link" data-target="q59" onclick="scrollToCard('q59')">Q59. Difference between Java 8 and Java 11?</div>
-<div class="sidebar-link" data-target="q62" onclick="scrollToCard('q62')">Q62. What are switch expressions?</div>
-<div class="sidebar-link" data-target="q65" onclick="scrollToCard('q65')">Q65. Java 15 sealed classes?</div>
-<div class="sidebar-link" data-target="q68" onclick="scrollToCard('q68')">Q68. Garbage collection improvements post Jav...</div>
-<div class="sidebar-link" data-target="q71" onclick="scrollToCard('q71')">Q71. Impact of newer Java versions on Spring ...</div>
-<div class="sidebar-link" data-target="q74" onclick="scrollToCard('q74')">Q74. How do you choose Java version for produ...</div>
-
-  </aside>
-  <div class="content">
-    
-    <div class="card" id="q41">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">41</span>
-        <span class="q-title">What features were introduced in Java 5?</span>
-        <span class="difficulty diff-mid">MID</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem("java-theme") || "light";
+          document.documentElement.setAttribute("data-theme", t);
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <nav class="topnav">
+      <span class="nav-logo">// Java Interview</span>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link">🏠 Home</a
+        ><a href="oop.html" class="nav-link">🧩 OOPS</a
+        ><a href="dsa.html" class="nav-link">🧮 DSA</a
+        ><a href="basics.html" class="nav-link">☕ Basic</a
+        ><a href="versions.html" class="nav-link active">🚀 Version</a
+        ><a href="collections.html" class="nav-link">📦 Collection</a
+        ><a href="exceptions.html" class="nav-link">⚠️ Exception</a
+        ><a href="concurrency.html" class="nav-link">⚡ Concurrency + Advance</a
+        ><a href="methods.html" class="nav-link">🛠️ Methods</a
+        ><a href="mastery.html" class="nav-link">🧠 Mastry</a
+        ><a href="quiz.html" class="nav-link">🎯 Quiz</a
+        ><a href="springboot.html" class="nav-link">🍃 Spring</a
+        ><a href="backend-track.html" class="nav-link">🧱 Backend</a>
       </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <p>Java 5 (2004) was a watershed release:</p>
-<ol>
-<li><strong>Generics</strong>: Type-safe collections and classes</li>
-<li><strong>Enhanced for-loop (for-each)</strong>: <code>for (String s : list)</code></li>
-<li><strong>Autoboxing/unboxing</strong>: Automatic primitive-wrapper conversion</li>
-<li><strong>Enums</strong>: <code>enum Direction { NORTH, SOUTH, EAST, WEST }</code></li>
-<li><strong>Varargs</strong>: <code>void method(String... args)</code></li>
-<li><strong>Annotations</strong>: <code>@Override</code>, <code>@Deprecated</code>, <code>@SuppressWarnings</code>, custom annotations</li>
-<li><strong>Static imports</strong>: <code>import static java.lang.Math.PI</code></li>
-<li><strong>Concurrent utilities</strong>: <code>java.util.concurrent</code> – Executor framework, locks, atomic classes</li>
-<li><strong>Formatted I/O</strong>: <code>printf</code>, <code>String.format</code></li>
-<li><strong><code>Iterable</code> interface</strong>: Enables for-each on custom classes</li>
-</ol>
-<p>Java 5 generics are implemented via <strong>type erasure</strong> – generic type info is removed at runtime. This is a compromise for backward compatibility but has implications: can't do <code>new T()</code>, <code>instanceof T</code>, or <code>List&lt;String&gt;.class</code>.</p>
+      <button
+        class="theme-toggle"
+        id="themeToggle"
+        aria-label="Toggle light/dark theme"
+        onclick="toggleTheme()"
+        type="button"
+      >
+        <svg
+          class="icon-sun"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <circle cx="12" cy="12" r="4" />
+          <path
+            d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"
+          /></svg
+        ><svg
+          class="icon-moon"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+        </svg>
+      </button>
+    </nav>
+    <div class="breadcrumb">
+      <a href="index.html">Home</a> › PART 2: Java Versions &amp; Evolution
+      (Q41–75)
+    </div>
+    <header>
+      <div class="header-tag">// Java Interview — Senior Level</div>
+      <h1>🚀 PART 2: Java Versions &amp; Evolution (Q41–75)</h1>
+      <p class="subtitle">
+        Java 5 through Java 21+ — generics, lambdas, streams, modules, records,
+        sealed classes, virtual threads.
+      </p>
+      <div class="stats-row">
+        <div class="stat"><span class="stat-num">35</span> Questions</div>
+
+        <div class="stat"><span class="stat-num">22</span> Mid</div>
+        <div class="stat"><span class="stat-num">7</span> Advanced</div>
+        <div class="stat"><span class="stat-num">6</span> Expert</div>
+      </div>
+    </header>
+    <div class="controls">
+      <div class="search-wrap">
+        <svg
+          width="14"
+          height="14"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <circle cx="11" cy="11" r="8" />
+          <line x1="21" y1="21" x2="16.65" y2="16.65" />
+        </svg>
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Search questions..."
+          oninput="filterCards()"
+        />
+      </div>
+      <button class="filter-btn active" onclick="filterBy('all', this)">
+        All
+      </button>
+
+      <button class="filter-btn" onclick="filterBy('mid', this)">Mid</button>
+      <button class="filter-btn" onclick="filterBy('adv', this)">
+        Advanced
+      </button>
+      <button class="filter-btn" onclick="filterBy('exp', this)">Expert</button>
+      <button class="expand-all" onclick="toggleAll()">Expand All</button>
+    </div>
+    <div class="main">
+      <aside class="sidebar">
+        <div class="cat-header">Questions</div>
+        <div
+          class="sidebar-link"
+          data-target="q41"
+          onclick="scrollToCard('q41')"
+        >
+          Q41. What features were introduced in Java 5?
+        </div>
+        <div
+          class="sidebar-link"
+          data-target="q44"
+          onclick="scrollToCard('q44')"
+        >
+          Q44. Java 7 major features?
+        </div>
+        <div
+          class="sidebar-link"
+          data-target="q47"
+          onclick="scrollToCard('q47')"
+        >
+          Q47. Java 8 key features?
+        </div>
+        <div
+          class="sidebar-link"
+          data-target="q50"
+          onclick="scrollToCard('q50')"
+        >
+          Q50. Predicate vs Function?
+        </div>
+        <div
+          class="sidebar-link"
+          data-target="q53"
+          onclick="scrollToCard('q53')"
+        >
+          Q53. What is Optional?
+        </div>
+        <div
+          class="sidebar-link"
+          data-target="q56"
+          onclick="scrollToCard('q56')"
+        >
+          Q56. Java 10 local variable type inference?
+        </div>
+        <div
+          class="sidebar-link"
+          data-target="q59"
+          onclick="scrollToCard('q59')"
+        >
+          Q59. Difference between Java 8 and Java 11?
+        </div>
+        <div
+          class="sidebar-link"
+          data-target="q62"
+          onclick="scrollToCard('q62')"
+        >
+          Q62. What are switch expressions?
+        </div>
+        <div
+          class="sidebar-link"
+          data-target="q65"
+          onclick="scrollToCard('q65')"
+        >
+          Q65. Java 15 sealed classes?
+        </div>
+        <div
+          class="sidebar-link"
+          data-target="q68"
+          onclick="scrollToCard('q68')"
+        >
+          Q68. Garbage collection improvements post Jav...
+        </div>
+        <div
+          class="sidebar-link"
+          data-target="q71"
+          onclick="scrollToCard('q71')"
+        >
+          Q71. Impact of newer Java versions on Spring ...
+        </div>
+        <div
+          class="sidebar-link"
+          data-target="q74"
+          onclick="scrollToCard('q74')"
+        >
+          Q74. How do you choose Java version for produ...
+        </div>
+      </aside>
+      <div class="content">
+        <div class="card" id="q41">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">41</span>
+            <span class="q-title"
+              >What features were introduced in Java 5?</span
+            >
+            <span class="difficulty diff-mid">MID</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <p>Java 5 (2004) was a watershed release:</p>
+                <ol>
+                  <li>
+                    <strong>Generics</strong>: Type-safe collections and classes
+                  </li>
+                  <li>
+                    <strong>Enhanced for-loop (for-each)</strong>:
+                    <code>for (String s : list)</code>
+                  </li>
+                  <li>
+                    <strong>Autoboxing/unboxing</strong>: Automatic
+                    primitive-wrapper conversion
+                  </li>
+                  <li>
+                    <strong>Enums</strong>:
+                    <code>enum Direction { NORTH, SOUTH, EAST, WEST }</code>
+                  </li>
+                  <li>
+                    <strong>Varargs</strong>:
+                    <code>void method(String... args)</code>
+                  </li>
+                  <li>
+                    <strong>Annotations</strong>: <code>@Override</code>,
+                    <code>@Deprecated</code>, <code>@SuppressWarnings</code>,
+                    custom annotations
+                  </li>
+                  <li>
+                    <strong>Static imports</strong>:
+                    <code>import static java.lang.Math.PI</code>
+                  </li>
+                  <li>
+                    <strong>Concurrent utilities</strong>:
+                    <code>java.util.concurrent</code> – Executor framework,
+                    locks, atomic classes
+                  </li>
+                  <li>
+                    <strong>Formatted I/O</strong>: <code>printf</code>,
+                    <code>String.format</code>
+                  </li>
+                  <li>
+                    <strong><code>Iterable</code> interface</strong>: Enables
+                    for-each on custom classes
+                  </li>
+                </ol>
+                <p>
+                  Java 5 generics are implemented via
+                  <strong>type erasure</strong> – generic type info is removed
+                  at runtime. This is a compromise for backward compatibility
+                  but has implications: can't do <code>new T()</code>,
+                  <code>instanceof T</code>, or
+                  <code>List&lt;String&gt;.class</code>.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q42">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">42</span>
-        <span class="q-title">What is generics?</span>
-        <span class="difficulty diff-mid">MID</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <p>Generics enable <strong>type-safe, reusable code</strong> by parameterizing types.</p>
-<pre>// Without generics (Java 1.4)
+        <div class="card" id="q42">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">42</span>
+            <span class="q-title">What is generics?</span>
+            <span class="difficulty diff-mid">MID</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <p>
+                  Generics enable <strong>type-safe, reusable code</strong> by
+                  parameterizing types.
+                </p>
+                <pre>
+// Without generics (Java 1.4)
 List list = new ArrayList();
 list.add(&quot;hello&quot;);
 String s = (String) list.get(0); // Unsafe cast, possible ClassCastException
@@ -106,100 +328,204 @@ String s = (String) list.get(0); // Unsafe cast, possible ClassCastException
 List&lt;String&gt; list = new ArrayList&lt;&gt;();
 list.add(&quot;hello&quot;);
 String s = list.get(0); // No cast needed, type-safe</pre>
-<p><strong>Type erasure</strong>: At compile time, <code>List&lt;String&gt;</code> is checked. At runtime, it becomes <code>List</code> (raw type). Generic info is mostly lost.</p>
-<p><strong>Wildcards</strong>:</p>
-<ul>
-<li><code>? extends T</code> (upper bounded): read-only, covariant. "Producer Extends"</li>
-<li><code>? super T</code> (lower bounded): write-capable, contravariant. "Consumer Super"</li>
-<li><strong>PECS rule</strong> (Producer Extends, Consumer Super)</li>
-</ul>
-<pre>// Copy elements from src to dest
+                <p>
+                  <strong>Type erasure</strong>: At compile time,
+                  <code>List&lt;String&gt;</code> is checked. At runtime, it
+                  becomes <code>List</code> (raw type). Generic info is mostly
+                  lost.
+                </p>
+                <p><strong>Wildcards</strong>:</p>
+                <ul>
+                  <li>
+                    <code>? extends T</code> (upper bounded): read-only,
+                    covariant. "Producer Extends"
+                  </li>
+                  <li>
+                    <code>? super T</code> (lower bounded): write-capable,
+                    contravariant. "Consumer Super"
+                  </li>
+                  <li>
+                    <strong>PECS rule</strong> (Producer Extends, Consumer
+                    Super)
+                  </li>
+                </ul>
+                <pre>
+// Copy elements from src to dest
 &lt;T&gt; void copy(List&lt;? super T&gt; dest, List&lt;? extends T&gt; src) {
     for (T item : src) dest.add(item);
 }</pre>
-<p><strong>Bounded type parameters</strong>:</p>
-<pre>&lt;T extends Comparable&lt;T&gt;&gt; T max(T a, T b) { return a.compareTo(b) &gt; 0 ? a : b; }</pre>
-<p><strong>Generic methods vs generic classes</strong>: Method can have its own type parameters independent of the class.</p>
-<p>Reifiable types: Only raw types, non-generic types, unbounded wildcards are reifiable (accessible at runtime via reflection).</p>
+                <p><strong>Bounded type parameters</strong>:</p>
+                <pre>
+&lt;T extends Comparable&lt;T&gt;&gt; T max(T a, T b) { return a.compareTo(b) &gt; 0 ? a : b; }</pre>
+                <p>
+                  <strong>Generic methods vs generic classes</strong>: Method
+                  can have its own type parameters independent of the class.
+                </p>
+                <p>
+                  Reifiable types: Only raw types, non-generic types, unbounded
+                  wildcards are reifiable (accessible at runtime via
+                  reflection).
+                </p>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q43">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">43</span>
-        <span class="q-title">What is enhanced for-loop?</span>
-        <span class="difficulty diff-mid">MID</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <p>The enhanced for-loop (for-each) iterates over arrays and <code>Iterable</code> implementations:</p>
-<pre>// Array
+        <div class="card" id="q43">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">43</span>
+            <span class="q-title">What is enhanced for-loop?</span>
+            <span class="difficulty diff-mid">MID</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <p>
+                  The enhanced for-loop (for-each) iterates over arrays and
+                  <code>Iterable</code> implementations:
+                </p>
+                <pre>
+// Array
 int[] numbers = {1, 2, 3};
 for (int n : numbers) { System.out.println(n); }
 
 // Iterable
 List&lt;String&gt; names = List.of(&quot;Alice&quot;, &quot;Bob&quot;);
 for (String name : names) { System.out.println(name); }</pre>
-<p>Under the hood, for <code>Iterable</code>, the compiler generates:</p>
-<pre>Iterator&lt;String&gt; it = names.iterator();
+                <p>
+                  Under the hood, for <code>Iterable</code>, the compiler
+                  generates:
+                </p>
+                <pre>
+Iterator&lt;String&gt; it = names.iterator();
 while (it.hasNext()) {
     String name = it.next();
     // body
 }</pre>
-<p>For arrays, it generates a traditional index-based loop.</p>
-<p><strong>Limitations</strong>:</p>
-<ul>
-<li>Can't modify the collection during iteration (ConcurrentModificationException)</li>
-<li>Can't access index</li>
-<li>Can't iterate multiple collections simultaneously</li>
-<li>Can't iterate in reverse</li>
-</ul>
-<p>For indexed access, use <code>for (int i = 0; i &lt; list.size(); i++)</code>. For removal during iteration, use <code>it.remove()</code> or <code>list.removeIf()</code>.</p>
+                <p>For arrays, it generates a traditional index-based loop.</p>
+                <p><strong>Limitations</strong>:</p>
+                <ul>
+                  <li>
+                    Can't modify the collection during iteration
+                    (ConcurrentModificationException)
+                  </li>
+                  <li>Can't access index</li>
+                  <li>Can't iterate multiple collections simultaneously</li>
+                  <li>Can't iterate in reverse</li>
+                </ul>
+                <p>
+                  For indexed access, use
+                  <code>for (int i = 0; i &lt; list.size(); i++)</code>. For
+                  removal during iteration, use <code>it.remove()</code> or
+                  <code>list.removeIf()</code>.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q44">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">44</span>
-        <span class="q-title">Java 7 major features?</span>
-        <span class="difficulty diff-mid">MID</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <ol>
-<li><strong>try-with-resources</strong>: Auto-closing of <code>AutoCloseable</code> resources</li>
-<li><strong>Multi-catch</strong>: <code>catch (IOException | SQLException e)</code></li>
-<li><strong>Diamond operator</strong>: <code>List&lt;String&gt; list = new ArrayList&lt;&gt;()</code> (infer generic type)</li>
-<li><strong>String in switch</strong>: <code>switch (str) { case &quot;value&quot;: }</code></li>
-<li><strong>Numeric literals with underscores</strong>: <code>1_000_000</code>, <code>0xFF_FF</code></li>
-<li><strong>Binary literals</strong>: <code>0b1010</code></li>
-<li><strong>Fork/Join framework</strong>: <code>ForkJoinPool</code>, <code>RecursiveTask</code></li>
-<li><strong>NIO.2 (java.nio.file)</strong>: <code>Path</code>, <code>Files</code>, <code>WatchService</code>, better file handling</li>
-<li><strong>invokedynamic bytecode</strong>: Foundation for lambdas in Java 8</li>
-</ol>
-<p>Java 7 Project Coin: Small language improvements collected under "Project Coin".</p>
+        <div class="card" id="q44">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">44</span>
+            <span class="q-title">Java 7 major features?</span>
+            <span class="difficulty diff-mid">MID</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <ol>
+                  <li>
+                    <strong>try-with-resources</strong>: Auto-closing of
+                    <code>AutoCloseable</code> resources
+                  </li>
+                  <li>
+                    <strong>Multi-catch</strong>:
+                    <code>catch (IOException | SQLException e)</code>
+                  </li>
+                  <li>
+                    <strong>Diamond operator</strong>:
+                    <code
+                      >List&lt;String&gt; list = new ArrayList&lt;&gt;()</code
+                    >
+                    (infer generic type)
+                  </li>
+                  <li>
+                    <strong>String in switch</strong>:
+                    <code>switch (str) { case &quot;value&quot;: }</code>
+                  </li>
+                  <li>
+                    <strong>Numeric literals with underscores</strong>:
+                    <code>1_000_000</code>, <code>0xFF_FF</code>
+                  </li>
+                  <li><strong>Binary literals</strong>: <code>0b1010</code></li>
+                  <li>
+                    <strong>Fork/Join framework</strong>:
+                    <code>ForkJoinPool</code>, <code>RecursiveTask</code>
+                  </li>
+                  <li>
+                    <strong>NIO.2 (java.nio.file)</strong>: <code>Path</code>,
+                    <code>Files</code>, <code>WatchService</code>, better file
+                    handling
+                  </li>
+                  <li>
+                    <strong>invokedynamic bytecode</strong>: Foundation for
+                    lambdas in Java 8
+                  </li>
+                </ol>
+                <p>
+                  Java 7 Project Coin: Small language improvements collected
+                  under "Project Coin".
+                </p>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q45">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">45</span>
-        <span class="q-title">What is try-with-resources?</span>
-        <span class="difficulty diff-mid">MID</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <p>try-with-resources automatically closes resources that implement <code>AutoCloseable</code>:</p>
-<pre>// Java 6 way (verbose, easy to forget closing in finally)
+        <div class="card" id="q45">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">45</span>
+            <span class="q-title">What is try-with-resources?</span>
+            <span class="difficulty diff-mid">MID</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <p>
+                  try-with-resources automatically closes resources that
+                  implement <code>AutoCloseable</code>:
+                </p>
+                <pre>
+// Java 6 way (verbose, easy to forget closing in finally)
 Connection conn = null;
 try {
     conn = dataSource.getConnection();
@@ -214,32 +540,57 @@ try (Connection conn = dataSource.getConnection();
     // use conn and stmt
     // both auto-closed in reverse order on exit
 }</pre>
-<p><strong>Close order</strong>: Resources closed in reverse order of opening (stmt closed before conn).</p>
-<p><strong>Suppressed exceptions</strong>: If body throws AND close() throws, the close() exception is <em>suppressed</em> and attached to the primary exception:</p>
-<pre>try {
+                <p>
+                  <strong>Close order</strong>: Resources closed in reverse
+                  order of opening (stmt closed before conn).
+                </p>
+                <p>
+                  <strong>Suppressed exceptions</strong>: If body throws AND
+                  close() throws, the close() exception is
+                  <em>suppressed</em> and attached to the primary exception:
+                </p>
+                <pre>
+try {
     Throwable t = e.getSuppressed()[0]; // access suppressed exception
 }</pre>
-<p>Java 9 improvement: Can reference effectively-final variables:</p>
-<pre>Connection conn = getConnection();
+                <p>
+                  Java 9 improvement: Can reference effectively-final variables:
+                </p>
+                <pre>
+Connection conn = getConnection();
 try (conn) { // no need to redeclare
     // use conn
 }</pre>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q46">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">46</span>
-        <span class="q-title">What is multi-catch exception?</span>
-        <span class="difficulty diff-mid">MID</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <p>Multi-catch allows catching multiple exception types in one <code>catch</code> block:</p>
-<pre>// Java 6
+        <div class="card" id="q46">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">46</span>
+            <span class="q-title">What is multi-catch exception?</span>
+            <span class="difficulty diff-mid">MID</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <p>
+                  Multi-catch allows catching multiple exception types in one
+                  <code>catch</code> block:
+                </p>
+                <pre>
+// Java 6
 try { ... }
 catch (IOException e) { log(e); throw new ServiceException(e); }
 catch (SQLException e) { log(e); throw new ServiceException(e); } // code duplication
@@ -250,57 +601,139 @@ catch (IOException | SQLException e) {
     log(e); // DRY
     throw new ServiceException(e);
 }</pre>
-<p><strong>Important rule</strong>: In multi-catch, the variable <code>e</code> is implicitly <strong>final</strong> (can't reassign). This makes sense because <code>e</code> could be either type.</p>
-<p><strong>Can't catch related exceptions</strong>: <code>catch (Exception | IOException e)</code> is illegal because <code>IOException extends Exception</code> – it would be redundant.</p>
+                <p>
+                  <strong>Important rule</strong>: In multi-catch, the variable
+                  <code>e</code> is implicitly <strong>final</strong> (can't
+                  reassign). This makes sense because <code>e</code> could be
+                  either type.
+                </p>
+                <p>
+                  <strong>Can't catch related exceptions</strong>:
+                  <code>catch (Exception | IOException e)</code> is illegal
+                  because <code>IOException extends Exception</code> – it would
+                  be redundant.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q47">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">47</span>
-        <span class="q-title">Java 8 key features?</span>
-        <span class="difficulty diff-mid">MID</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <p>Java 8 (2014) was the most transformative release since Java 5:</p>
-<ol>
-<li><strong>Lambda expressions</strong>: <code>(x, y) -&gt; x + y</code></li>
-<li><strong>Functional interfaces</strong>: <code>@FunctionalInterface</code></li>
-<li><strong>Stream API</strong>: Declarative data processing</li>
-<li><strong>Optional<T></strong>: Null-safe value containers</li>
-<li><strong>Default and static methods in interfaces</strong></li>
-<li><strong>Method references</strong>: <code>String::toUpperCase</code>, <code>System.out::println</code></li>
-<li><strong>New Date/Time API (java.time)</strong>: <code>LocalDate</code>, <code>LocalDateTime</code>, <code>ZonedDateTime</code>, <code>Duration</code>, <code>Period</code></li>
-<li><strong>CompletableFuture</strong>: Async programming</li>
-<li><strong>Nashorn JavaScript engine</strong> (deprecated in 11)</li>
-<li><strong>Base64 encoding</strong>: <code>Base64.getEncoder()</code></li>
-<li><strong>forEach on Iterable</strong>: <code>list.forEach(System.out::println)</code></li>
-<li><strong>Map.getOrDefault()<code>, </code>Map.computeIfAbsent()`, etc.</strong></li>
-<li><strong>StringJoiner</strong></li>
-<li><strong>Parallel array sorting</strong>: <code>Arrays.parallelSort()</code></li>
-</ol>
-<p>Java 8 enabled functional programming patterns in Java and drastically changed how Java code is written.</p>
+        <div class="card" id="q47">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">47</span>
+            <span class="q-title">Java 8 key features?</span>
+            <span class="difficulty diff-mid">MID</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <p>
+                  Java 8 (2014) was the most transformative release since Java
+                  5:
+                </p>
+                <ol>
+                  <li>
+                    <strong>Lambda expressions</strong>:
+                    <code>(x, y) -&gt; x + y</code>
+                  </li>
+                  <li>
+                    <strong>Functional interfaces</strong>:
+                    <code>@FunctionalInterface</code>
+                  </li>
+                  <li>
+                    <strong>Stream API</strong>: Declarative data processing
+                  </li>
+                  <li>
+                    <strong>Optional</strong>: Null-safe value
+                    containers&lt;T&gt;
+                  </li>
+                  <li>
+                    <strong>Default and static methods in interfaces</strong>
+                  </li>
+                  <li>
+                    <strong>Method references</strong>:
+                    <code>String::toUpperCase</code>,
+                    <code>System.out::println</code>
+                  </li>
+                  <li>
+                    <strong>New Date/Time API (java.time)</strong>:
+                    <code>LocalDate</code>, <code>LocalDateTime</code>,
+                    <code>ZonedDateTime</code>, <code>Duration</code>,
+                    <code>Period</code>
+                  </li>
+                  <li><strong>CompletableFuture</strong>: Async programming</li>
+                  <li>
+                    <strong>Nashorn JavaScript engine</strong> (deprecated in
+                    11)
+                  </li>
+                  <li>
+                    <strong>Base64 encoding</strong>:
+                    <code>Base64.getEncoder()</code>
+                  </li>
+                  <li>
+                    <strong>forEach on Iterable</strong>:
+                    <code>list.forEach(System.out::println)</code>
+                  </li>
+                  <li>
+                    <strong
+                      >Map.getOrDefault()<code>, </code>Map.computeIfAbsent()`,
+                      etc.</strong
+                    >
+                  </li>
+                  <li><strong>StringJoiner</strong></li>
+                  <li>
+                    <strong>Parallel array sorting</strong>:
+                    <code>Arrays.parallelSort()</code>
+                  </li>
+                </ol>
+                <p>
+                  Java 8 enabled functional programming patterns in Java and
+                  drastically changed how Java code is written.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q48">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">48</span>
-        <span class="q-title">What is lambda expression?</span>
-        <span class="difficulty diff-mid">MID</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <p>A lambda is a <strong>concise anonymous function</strong> that can be passed around as a value.</p>
-<p>Syntax: <code>(parameters) -&gt; expression</code> or <code>(parameters) -&gt; { statements; }</code></p>
-<pre>// Old way
+        <div class="card" id="q48">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">48</span>
+            <span class="q-title">What is lambda expression?</span>
+            <span class="difficulty diff-mid">MID</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <p>
+                  A lambda is a <strong>concise anonymous function</strong> that
+                  can be passed around as a value.
+                </p>
+                <p>
+                  Syntax: <code>(parameters) -&gt; expression</code> or
+                  <code>(parameters) -&gt; { statements; }</code>
+                </p>
+                <pre>
+// Old way
 Runnable r = new Runnable() {
     @Override
     public void run() { System.out.println(&quot;Hello&quot;); }
@@ -317,77 +750,175 @@ Function&lt;String, String&gt; process = input -&gt; {
     String trimmed = input.trim();
     return trimmed.toUpperCase();
 };</pre>
-<p><strong>Target typing</strong>: Lambda type is inferred from context. The target must be a <strong>functional interface</strong> (exactly one abstract method).</p>
-<p><strong>Variable capture</strong>: Lambdas can capture <strong>effectively final</strong> local variables (not just <code>final</code>). Effectively final = not reassigned after initialization.</p>
-<pre>String prefix = &quot;Hello&quot;; // effectively final
+                <p>
+                  <strong>Target typing</strong>: Lambda type is inferred from
+                  context. The target must be a
+                  <strong>functional interface</strong> (exactly one abstract
+                  method).
+                </p>
+                <p>
+                  <strong>Variable capture</strong>: Lambdas can capture
+                  <strong>effectively final</strong> local variables (not just
+                  <code>final</code>). Effectively final = not reassigned after
+                  initialization.
+                </p>
+                <pre>
+String prefix = &quot;Hello&quot;; // effectively final
 Function&lt;String, String&gt; greet = name -&gt; prefix + &quot; &quot; + name; // OK
 prefix = &quot;Hi&quot;; // This would make lambda illegal</pre>
-<p><strong>Method references</strong> are lambdas in disguise: <code>String::toUpperCase</code> = <code>s -&gt; s.toUpperCase()</code></p>
-<p>Types of method references:</p>
-<ul>
-<li>Static: <code>Integer::parseInt</code></li>
-<li>Instance (bound): <code>str::contains</code> (specific instance)</li>
-<li>Instance (unbound): <code>String::toUpperCase</code> (called on parameter)</li>
-<li>Constructor: <code>ArrayList::new</code></li>
-</ul>
+                <p>
+                  <strong>Method references</strong> are lambdas in disguise:
+                  <code>String::toUpperCase</code> =
+                  <code>s -&gt; s.toUpperCase()</code>
+                </p>
+                <p>Types of method references:</p>
+                <ul>
+                  <li>Static: <code>Integer::parseInt</code></li>
+                  <li>
+                    Instance (bound): <code>str::contains</code> (specific
+                    instance)
+                  </li>
+                  <li>
+                    Instance (unbound): <code>String::toUpperCase</code> (called
+                    on parameter)
+                  </li>
+                  <li>Constructor: <code>ArrayList::new</code></li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q49">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">49</span>
-        <span class="q-title">Functional interface?</span>
-        <span class="difficulty diff-mid">MID</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <p>A functional interface has <strong>exactly one abstract method</strong>. Lambdas can be used wherever a functional interface is expected.</p>
-<p><code>@FunctionalInterface</code> annotation: Optional but recommended (compile-time check).</p>
-<p>Built-in functional interfaces (<code>java.util.function</code>):</p>
-<table>
-<tr><th>Interface</th><th>Signature</th><th>Use</th></tr>
-<tr><td><code>Runnable</code></td><td><code>() -&gt; void</code></td><td>Run code</td></tr>
-<tr><td><code>Supplier&lt;T&gt;</code></td><td><code>() -&gt; T</code></td><td>Produce value</td></tr>
-<tr><td><code>Consumer&lt;T&gt;</code></td><td><code>T -&gt; void</code></td><td>Consume value</td></tr>
-<tr><td><code>Function&lt;T,R&gt;</code></td><td><code>T -&gt; R</code></td><td>Transform</td></tr>
-<tr><td><code>Predicate&lt;T&gt;</code></td><td><code>T -&gt; boolean</code></td><td>Test condition</td></tr>
-<tr><td><code>BiFunction&lt;T,U,R&gt;</code></td><td><code>(T,U) -&gt; R</code></td><td>Two-arg transform</td></tr>
-<tr><td><code>UnaryOperator&lt;T&gt;</code></td><td><code>T -&gt; T</code></td><td>Transform same type</td></tr>
-<tr><td><code>BinaryOperator&lt;T&gt;</code></td><td><code>(T,T) -&gt; T</code></td><td>Reduce same type</td></tr>
-</table>
-<p>Functional interfaces <strong>can</strong> have:</p>
-<ul>
-<li>Default methods</li>
-<li>Static methods</li>
-<li>Methods from <code>Object</code> (<code>equals</code>, <code>toString</code>, etc.) – don't count as abstract</li>
-</ul>
+        <div class="card" id="q49">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">49</span>
+            <span class="q-title">Functional interface?</span>
+            <span class="difficulty diff-mid">MID</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <p>
+                  A functional interface has
+                  <strong>exactly one abstract method</strong>. Lambdas can be
+                  used wherever a functional interface is expected.
+                </p>
+                <p>
+                  <code>@FunctionalInterface</code> annotation: Optional but
+                  recommended (compile-time check).
+                </p>
+                <p>
+                  Built-in functional interfaces
+                  (<code>java.util.function</code>):
+                </p>
+                <table>
+                  <tr>
+                    <th>Interface</th>
+                    <th>Signature</th>
+                    <th>Use</th>
+                  </tr>
+                  <tr>
+                    <td><code>Runnable</code></td>
+                    <td><code>() -&gt; void</code></td>
+                    <td>Run code</td>
+                  </tr>
+                  <tr>
+                    <td><code>Supplier&lt;T&gt;</code></td>
+                    <td><code>() -&gt; T</code></td>
+                    <td>Produce value</td>
+                  </tr>
+                  <tr>
+                    <td><code>Consumer&lt;T&gt;</code></td>
+                    <td><code>T -&gt; void</code></td>
+                    <td>Consume value</td>
+                  </tr>
+                  <tr>
+                    <td><code>Function&lt;T,R&gt;</code></td>
+                    <td><code>T -&gt; R</code></td>
+                    <td>Transform</td>
+                  </tr>
+                  <tr>
+                    <td><code>Predicate&lt;T&gt;</code></td>
+                    <td><code>T -&gt; boolean</code></td>
+                    <td>Test condition</td>
+                  </tr>
+                  <tr>
+                    <td><code>BiFunction&lt;T,U,R&gt;</code></td>
+                    <td><code>(T,U) -&gt; R</code></td>
+                    <td>Two-arg transform</td>
+                  </tr>
+                  <tr>
+                    <td><code>UnaryOperator&lt;T&gt;</code></td>
+                    <td><code>T -&gt; T</code></td>
+                    <td>Transform same type</td>
+                  </tr>
+                  <tr>
+                    <td><code>BinaryOperator&lt;T&gt;</code></td>
+                    <td><code>(T,T) -&gt; T</code></td>
+                    <td>Reduce same type</td>
+                  </tr>
+                </table>
+                <p>Functional interfaces <strong>can</strong> have:</p>
+                <ul>
+                  <li>Default methods</li>
+                  <li>Static methods</li>
+                  <li>
+                    Methods from <code>Object</code> (<code>equals</code>,
+                    <code>toString</code>, etc.) – don't count as abstract
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q50">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">50</span>
-        <span class="q-title">Predicate vs Function?</span>
-        <span class="difficulty diff-mid">MID</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <p><strong><code>Predicate&lt;T&gt;</code></strong>: Takes T, returns <code>boolean</code></p>
-<pre>Predicate&lt;String&gt; isLong = s -&gt; s.length() &gt; 10;
+        <div class="card" id="q50">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">50</span>
+            <span class="q-title">Predicate vs Function?</span>
+            <span class="difficulty diff-mid">MID</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <p>
+                  <strong><code>Predicate&lt;T&gt;</code></strong
+                  >: Takes T, returns <code>boolean</code>
+                </p>
+                <pre>
+Predicate&lt;String&gt; isLong = s -&gt; s.length() &gt; 10;
 isLong.test(&quot;Hello World!&quot;); // true
 
 // Composing predicates
 Predicate&lt;String&gt; isLongAndUpper = isLong.and(s -&gt; s.equals(s.toUpperCase()));
 Predicate&lt;String&gt; isLongOrEmpty = isLong.or(String::isEmpty);
 Predicate&lt;String&gt; isShort = isLong.negate();</pre>
-<p><strong><code>Function&lt;T, R&gt;</code></strong>: Takes T, returns R</p>
-<pre>Function&lt;String, Integer&gt; length = String::length;
+                <p>
+                  <strong><code>Function&lt;T, R&gt;</code></strong
+                  >: Takes T, returns R
+                </p>
+                <pre>
+Function&lt;String, Integer&gt; length = String::length;
 length.apply(&quot;Hello&quot;); // 5
 
 // Composing functions
@@ -395,25 +926,51 @@ Function&lt;String, String&gt; trim = String::trim;
 Function&lt;String, String&gt; upper = String::toUpperCase;
 Function&lt;String, String&gt; trimThenUpper = trim.andThen(upper);
 Function&lt;String, String&gt; upperAfterTrim = upper.compose(trim); // same result</pre>
-<p>Use <code>Predicate</code> for filtering/testing, <code>Function</code> for transforming.</p>
-<p><strong><code>BiPredicate&lt;T, U&gt;</code></strong>: Two arguments, returns boolean.</p>
-<p><strong><code>BiFunction&lt;T, U, R&gt;</code></strong>: Two arguments, returns R.</p>
+                <p>
+                  Use <code>Predicate</code> for filtering/testing,
+                  <code>Function</code> for transforming.
+                </p>
+                <p>
+                  <strong><code>BiPredicate&lt;T, U&gt;</code></strong
+                  >: Two arguments, returns boolean.
+                </p>
+                <p>
+                  <strong><code>BiFunction&lt;T, U, R&gt;</code></strong
+                  >: Two arguments, returns R.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q51">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">51</span>
-        <span class="q-title">What is Stream API?</span>
-        <span class="difficulty diff-mid">MID</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <p>Stream API provides a <strong>declarative, functional approach to processing sequences of elements</strong>.</p>
-<pre>List&lt;String&gt; names = Arrays.asList(&quot;Alice&quot;, &quot;Bob&quot;, &quot;Charlie&quot;, &quot;David&quot;);
+        <div class="card" id="q51">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">51</span>
+            <span class="q-title">What is Stream API?</span>
+            <span class="difficulty diff-mid">MID</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <p>
+                  Stream API provides a
+                  <strong
+                    >declarative, functional approach to processing sequences of
+                    elements</strong
+                  >.
+                </p>
+                <pre>
+List&lt;String&gt; names = Arrays.asList(&quot;Alice&quot;, &quot;Bob&quot;, &quot;Charlie&quot;, &quot;David&quot;);
 
 // Imperative
 List&lt;String&gt; result = new ArrayList&lt;&gt;();
@@ -428,68 +985,155 @@ List&lt;String&gt; result = names.stream()
     .map(String::toUpperCase)
     .sorted()
     .collect(Collectors.toList());</pre>
-<p><strong>Key characteristics</strong>:</p>
-<ol>
-<li><strong>Lazy</strong>: Intermediate operations don't execute until a terminal operation is called</li>
-<li><strong>Single use</strong>: Streams can't be reused</li>
-<li><strong>Non-interfering</strong>: Should not modify the source during processing</li>
-<li><strong>Stateless</strong> (mostly): Operations should be side-effect-free for parallel safety</li>
-</ol>
-<p><strong>Operations</strong>:</p>
-<ul>
-<li><strong>Intermediate</strong> (lazy): <code>filter</code>, <code>map</code>, <code>flatMap</code>, <code>sorted</code>, <code>distinct</code>, <code>limit</code>, <code>skip</code>, <code>peek</code></li>
-<li><strong>Terminal</strong> (trigger execution): <code>collect</code>, <code>forEach</code>, <code>reduce</code>, <code>count</code>, <code>findFirst</code>, <code>anyMatch</code>, <code>allMatch</code>, <code>toList()</code> (Java 16)</li>
-</ul>
-<p><strong>Specialized streams</strong>: <code>IntStream</code>, <code>LongStream</code>, <code>DoubleStream</code> – avoid boxing overhead.</p>
-<pre>IntStream.range(0, 10).sum(); // 45
+                <p><strong>Key characteristics</strong>:</p>
+                <ol>
+                  <li>
+                    <strong>Lazy</strong>: Intermediate operations don't execute
+                    until a terminal operation is called
+                  </li>
+                  <li><strong>Single use</strong>: Streams can't be reused</li>
+                  <li>
+                    <strong>Non-interfering</strong>: Should not modify the
+                    source during processing
+                  </li>
+                  <li>
+                    <strong>Stateless</strong> (mostly): Operations should be
+                    side-effect-free for parallel safety
+                  </li>
+                </ol>
+                <p><strong>Operations</strong>:</p>
+                <ul>
+                  <li>
+                    <strong>Intermediate</strong> (lazy): <code>filter</code>,
+                    <code>map</code>, <code>flatMap</code>, <code>sorted</code>,
+                    <code>distinct</code>, <code>limit</code>,
+                    <code>skip</code>, <code>peek</code>
+                  </li>
+                  <li>
+                    <strong>Terminal</strong> (trigger execution):
+                    <code>collect</code>, <code>forEach</code>,
+                    <code>reduce</code>, <code>count</code>,
+                    <code>findFirst</code>, <code>anyMatch</code>,
+                    <code>allMatch</code>, <code>toList()</code> (Java 16)
+                  </li>
+                </ul>
+                <p>
+                  <strong>Specialized streams</strong>: <code>IntStream</code>,
+                  <code>LongStream</code>, <code>DoubleStream</code> – avoid
+                  boxing overhead.
+                </p>
+                <pre>
+IntStream.range(0, 10).sum(); // 45
 IntStream.of(1, 2, 3).average(); // OptionalDouble</pre>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q52">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">52</span>
-        <span class="q-title">How does Stream differ from Collection?</span>
-        <span class="difficulty diff-mid">MID</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <table>
-<tr><th>Collection</th><th>Stream</th></tr>
-<tr><td>Stores data</td><td>Processes data</td></tr>
-<tr><td>In-memory data structure</td><td>Computational pipeline</td></tr>
-<tr><td>Can be traversed multiple times</td><td>Single-use</td></tr>
-<tr><td>Eager: elements computed when added</td><td>Lazy: computed on demand</td></tr>
-<tr><td>Mutate elements</td><td>No mutation (produces new stream/result)</td></tr>
-<tr><td>Has size</td><td>May be infinite (<code>Stream.iterate</code>, <code>Stream.generate</code>)</td></tr>
-<tr><td><code>Iterable</code></td><td><code>BaseStream</code></td></tr>
-</table>
-<p>Key distinction: A Collection <strong>is</strong> data. A Stream <strong>processes</strong> data.</p>
-<pre>// Infinite stream (possible only with laziness)
+        <div class="card" id="q52">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">52</span>
+            <span class="q-title">How does Stream differ from Collection?</span>
+            <span class="difficulty diff-mid">MID</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <table>
+                  <tr>
+                    <th>Collection</th>
+                    <th>Stream</th>
+                  </tr>
+                  <tr>
+                    <td>Stores data</td>
+                    <td>Processes data</td>
+                  </tr>
+                  <tr>
+                    <td>In-memory data structure</td>
+                    <td>Computational pipeline</td>
+                  </tr>
+                  <tr>
+                    <td>Can be traversed multiple times</td>
+                    <td>Single-use</td>
+                  </tr>
+                  <tr>
+                    <td>Eager: elements computed when added</td>
+                    <td>Lazy: computed on demand</td>
+                  </tr>
+                  <tr>
+                    <td>Mutate elements</td>
+                    <td>No mutation (produces new stream/result)</td>
+                  </tr>
+                  <tr>
+                    <td>Has size</td>
+                    <td>
+                      May be infinite (<code>Stream.iterate</code>,
+                      <code>Stream.generate</code>)
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><code>Iterable</code></td>
+                    <td><code>BaseStream</code></td>
+                  </tr>
+                </table>
+                <p>
+                  Key distinction: A Collection <strong>is</strong> data. A
+                  Stream <strong>processes</strong> data.
+                </p>
+                <pre>
+// Infinite stream (possible only with laziness)
 Stream.iterate(0, n -&gt; n + 2)
     .filter(n -&gt; n % 6 == 0)
     .limit(5)
     .forEach(System.out::println); // 0, 6, 12, 18, 24</pre>
-<p>Streams can be created FROM collections (<code>.stream()</code>), arrays (<code>Arrays.stream()</code>), values (<code>Stream.of()</code>), files (<code>Files.lines()</code>), etc.</p>
+                <p>
+                  Streams can be created FROM collections
+                  (<code>.stream()</code>), arrays
+                  (<code>Arrays.stream()</code>), values
+                  (<code>Stream.of()</code>), files
+                  (<code>Files.lines()</code>), etc.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q53">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">53</span>
-        <span class="q-title">What is Optional?</span>
-        <span class="difficulty diff-mid">MID</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <p><code>Optional&lt;T&gt;</code> is a container that may or may not contain a value. It's a way to express "nullable return" explicitly in the type system.</p>
-<pre>// Instead of returning null
+        <div class="card" id="q53">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">53</span>
+            <span class="q-title">What is Optional?</span>
+            <span class="difficulty diff-mid">MID</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <p>
+                  <code>Optional&lt;T&gt;</code> is a container that may or may
+                  not contain a value. It's a way to express "nullable return"
+                  explicitly in the type system.
+                </p>
+                <pre>
+// Instead of returning null
 public Optional&lt;User&gt; findById(Long id) {
     return users.stream()
         .filter(u -&gt; u.getId().equals(id))
@@ -506,40 +1150,80 @@ if (user.isPresent()) user.get(); // like null check
 user.ifPresent(u -&gt; sendEmail(u.getEmail()));
 String name = user.map(User::getName).orElse(&quot;Unknown&quot;);
 User found = user.orElseThrow(() -&gt; new UserNotFoundException(id));</pre>
-<p><strong>Methods</strong>:</p>
-<ul>
-<li><code>isPresent()</code>, <code>isEmpty()</code> (Java 11)</li>
-<li><code>get()</code> (throws if empty – use cautiously)</li>
-<li><code>orElse(default)</code> – always evaluates default</li>
-<li><code>orElseGet(supplier)</code> – lazy, only evaluates if empty</li>
-<li><code>orElseThrow(supplier)</code></li>
-<li><code>map()</code>, <code>flatMap()</code>, <code>filter()</code></li>
-<li><code>ifPresent()</code>, <code>ifPresentOrElse()</code> (Java 9)</li>
-<li><code>or(supplier)</code> (Java 9) – return other Optional if empty</li>
-<li><code>stream()</code> (Java 9) – 0 or 1 element stream</li>
-</ul>
-<p><strong>When NOT to use Optional</strong>:</p>
-<ul>
-<li>As method parameter (use overloads or nullability annotations instead)</li>
-<li>As field in a class (not serializable, overhead)</li>
-<li>In collections (use empty collection instead of Optional<List>)</li>
-</ul>
+                <p><strong>Methods</strong>:</p>
+                <ul>
+                  <li>
+                    <code>isPresent()</code>, <code>isEmpty()</code> (Java 11)
+                  </li>
+                  <li><code>get()</code> (throws if empty – use cautiously)</li>
+                  <li>
+                    <code>orElse(default)</code> – always evaluates default
+                  </li>
+                  <li>
+                    <code>orElseGet(supplier)</code> – lazy, only evaluates if
+                    empty
+                  </li>
+                  <li><code>orElseThrow(supplier)</code></li>
+                  <li>
+                    <code>map()</code>, <code>flatMap()</code>,
+                    <code>filter()</code>
+                  </li>
+                  <li>
+                    <code>ifPresent()</code>,
+                    <code>ifPresentOrElse()</code> (Java 9)
+                  </li>
+                  <li>
+                    <code>or(supplier)</code> (Java 9) – return other Optional
+                    if empty
+                  </li>
+                  <li>
+                    <code>stream()</code> (Java 9) – 0 or 1 element stream
+                  </li>
+                </ul>
+                <p><strong>When NOT to use Optional</strong>:</p>
+                <ul>
+                  <li>
+                    As method parameter (use overloads or nullability
+                    annotations instead)
+                  </li>
+                  <li>As field in a class (not serializable, overhead)</li>
+                  <li>
+                    In collections (use empty collection instead of
+                    Optional&lt;List&gt;)
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q54">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">54</span>
-        <span class="q-title">Java 9 module system (JPMS)?</span>
-        <span class="difficulty diff-mid">MID</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <p><strong>Java Platform Module System (JPMS / Project Jigsaw)</strong> – <code>module-info.java</code></p>
-<pre>module com.company.service {
+        <div class="card" id="q54">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">54</span>
+            <span class="q-title">Java 9 module system (JPMS)?</span>
+            <span class="difficulty diff-mid">MID</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <p>
+                  <strong
+                    >Java Platform Module System (JPMS / Project Jigsaw)</strong
+                  >
+                  – <code>module-info.java</code>
+                </p>
+                <pre>
+module com.company.service {
     requires java.sql;              // depend on module
     requires transitive java.logging; // transitive dependency
     exports com.company.service.api;  // make packages available
@@ -548,176 +1232,386 @@ User found = user.orElseThrow(() -&gt; new UserNotFoundException(id));</pre>
     uses com.company.spi.Plugin;       // ServiceLoader
     provides com.company.spi.Plugin with com.company.service.DefaultPlugin;
 }</pre>
-<p><strong>Goals</strong>:</p>
-<ol>
-<li><strong>Strong encapsulation</strong>: Even public types in unexported packages aren't accessible</li>
-<li><strong>Reliable configuration</strong>: Explicit dependency graph; missing modules detected at startup</li>
-<li><strong>Scalable platform</strong>: Build custom JREs with only needed modules (<code>jlink</code>)</li>
-</ol>
-<p><strong>Module types</strong>:</p>
-<ul>
-<li>Named module: Has <code>module-info.java</code></li>
-<li>Unnamed module: Classpath code (backward compatible)</li>
-<li>Automatic module: JAR on module path without <code>module-info.java</code></li>
-</ul>
-<p><strong>Impact in practice</strong>: Most enterprise apps still use classpath (unnamed module) for backward compatibility. Libraries are adding <code>module-info.java</code>. Spring Boot has limited module support.</p>
+                <p><strong>Goals</strong>:</p>
+                <ol>
+                  <li>
+                    <strong>Strong encapsulation</strong>: Even public types in
+                    unexported packages aren't accessible
+                  </li>
+                  <li>
+                    <strong>Reliable configuration</strong>: Explicit dependency
+                    graph; missing modules detected at startup
+                  </li>
+                  <li>
+                    <strong>Scalable platform</strong>: Build custom JREs with
+                    only needed modules (<code>jlink</code>)
+                  </li>
+                </ol>
+                <p><strong>Module types</strong>:</p>
+                <ul>
+                  <li>Named module: Has <code>module-info.java</code></li>
+                  <li>Unnamed module: Classpath code (backward compatible)</li>
+                  <li>
+                    Automatic module: JAR on module path without
+                    <code>module-info.java</code>
+                  </li>
+                </ul>
+                <p>
+                  <strong>Impact in practice</strong>: Most enterprise apps
+                  still use classpath (unnamed module) for backward
+                  compatibility. Libraries are adding
+                  <code>module-info.java</code>. Spring Boot has limited module
+                  support.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q55">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">55</span>
-        <span class="q-title">What is jlink?</span>
-        <span class="difficulty diff-mid">MID</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <p><code>jlink</code> is a tool to <strong>create custom, minimal JRE images</strong> containing only the modules your application needs.</p>
-<pre>jlink --module-path $JAVA_HOME/jmods:mods \
+        <div class="card" id="q55">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">55</span>
+            <span class="q-title">What is jlink?</span>
+            <span class="difficulty diff-mid">MID</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <p>
+                  <code>jlink</code> is a tool to
+                  <strong>create custom, minimal JRE images</strong> containing
+                  only the modules your application needs.
+                </p>
+                <pre>
+jlink --module-path $JAVA_HOME/jmods:mods \
       --add-modules com.example.myapp \
       --output custom-runtime \
       --strip-debug \
       --compress=2</pre>
-<p>Benefits:</p>
-<ul>
-<li><strong>Smaller deployments</strong>: Runtime can be 20–50MB vs 200MB+ full JDK</li>
-<li><strong>Faster startup</strong>: Fewer classes to load</li>
-<li><strong>Security</strong>: Reduced attack surface</li>
-<li><strong>Docker images</strong>: Much smaller container images</li>
-</ul>
-<p>Used heavily in <strong>containerized microservices</strong> and <strong>GraalVM native image</strong> scenarios.</p>
+                <p>Benefits:</p>
+                <ul>
+                  <li>
+                    <strong>Smaller deployments</strong>: Runtime can be 20–50MB
+                    vs 200MB+ full JDK
+                  </li>
+                  <li>
+                    <strong>Faster startup</strong>: Fewer classes to load
+                  </li>
+                  <li><strong>Security</strong>: Reduced attack surface</li>
+                  <li>
+                    <strong>Docker images</strong>: Much smaller container
+                    images
+                  </li>
+                </ul>
+                <p>
+                  Used heavily in
+                  <strong>containerized microservices</strong> and
+                  <strong>GraalVM native image</strong> scenarios.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q56">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">56</span>
-        <span class="q-title">Java 10 local variable type inference?</span>
-        <span class="difficulty diff-mid">MID</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <p>Java 10 introduced <code>var</code> for local variable type inference:</p>
-<pre>// Before
+        <div class="card" id="q56">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">56</span>
+            <span class="q-title">Java 10 local variable type inference?</span>
+            <span class="difficulty diff-mid">MID</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <p>
+                  Java 10 introduced <code>var</code> for local variable type
+                  inference:
+                </p>
+                <pre>
+// Before
 ArrayList&lt;Map&lt;String, List&lt;Integer&gt;&gt;&gt; map = new ArrayList&lt;&gt;();
 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
 // With var
 var map = new ArrayList&lt;Map&lt;String, List&lt;Integer&gt;&gt;&gt;();
 var conn = (HttpURLConnection) url.openConnection();</pre>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q57">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">57</span>
-        <span class="q-title">What is var keyword?</span>
-        <span class="difficulty diff-mid">MID</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <p><code>var</code> is <strong>not a type</strong> – it's syntactic sugar for type inference in local variables. The compiler infers the type from the right-hand side; the type is still static.</p>
-<p><strong>Where var can be used</strong>:</p>
-<ul>
-<li>Local variable declarations with initializer</li>
-<li>for-loop index and enhanced for-loop</li>
-<li>try-with-resources</li>
-</ul>
-<p><strong>Where var CANNOT be used</strong>:</p>
-<ul>
-<li>Method parameters or return types</li>
-<li>Fields</li>
-<li><code>var x = null;</code> (can't infer from null)</li>
-<li>Lambda parameters (actually CAN in Java 11: <code>(var x, var y) -&gt; x + y</code>)</li>
-</ul>
-<p><strong>Senior considerations</strong>:</p>
-<ul>
-<li>Improves readability for complex generic types</li>
-<li>Can <em>harm</em> readability with primitives or unclear types: <code>var result = compute();</code> – what type is result?</li>
-<li>Good practice: use var when the type is obvious from the right side</li>
-<li><code>var</code> is a reserved type name, not a keyword – <code>int var = 5;</code> is still valid (terrible style, but compiles)</li>
-</ul>
+        <div class="card" id="q57">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">57</span>
+            <span class="q-title">What is var keyword?</span>
+            <span class="difficulty diff-mid">MID</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <p>
+                  <code>var</code> is <strong>not a type</strong> – it's
+                  syntactic sugar for type inference in local variables. The
+                  compiler infers the type from the right-hand side; the type is
+                  still static.
+                </p>
+                <p><strong>Where var can be used</strong>:</p>
+                <ul>
+                  <li>Local variable declarations with initializer</li>
+                  <li>for-loop index and enhanced for-loop</li>
+                  <li>try-with-resources</li>
+                </ul>
+                <p><strong>Where var CANNOT be used</strong>:</p>
+                <ul>
+                  <li>Method parameters or return types</li>
+                  <li>Fields</li>
+                  <li><code>var x = null;</code> (can't infer from null)</li>
+                  <li>
+                    Lambda parameters (actually CAN in Java 11:
+                    <code>(var x, var y) -&gt; x + y</code>)
+                  </li>
+                </ul>
+                <p><strong>Senior considerations</strong>:</p>
+                <ul>
+                  <li>Improves readability for complex generic types</li>
+                  <li>
+                    Can <em>harm</em> readability with primitives or unclear
+                    types: <code>var result = compute();</code> – what type is
+                    result?
+                  </li>
+                  <li>
+                    Good practice: use var when the type is obvious from the
+                    right side
+                  </li>
+                  <li>
+                    <code>var</code> is a reserved type name, not a keyword –
+                    <code>int var = 5;</code> is still valid (terrible style,
+                    but compiles)
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q58">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">58</span>
-        <span class="q-title">Java 11 features?</span>
-        <span class="difficulty diff-mid">MID</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <p>Java 11 (2018) – LTS release, major features:</p>
-<ol>
-<li><strong>HTTP Client API</strong> (java.net.http) – finalized from Java 9 incubator</li>
-<li><strong>String new methods</strong>: <code>isBlank()</code>, <code>lines()</code>, <code>strip()</code>, <code>stripLeading()</code>, <code>stripTrailing()</code>, <code>repeat(n)</code></li>
-<li><strong>Files.readString()<code>, </code>Files.writeString()`</strong></li>
-<li><strong><code>var</code> in lambda parameters</strong>: <code>(var x, var y) -&gt; x + y</code></li>
-<li><strong>Running single-file programs</strong>: <code>java HelloWorld.java</code> without compiling</li>
-<li><strong>Epsilon GC</strong>: No-op GC (for testing/benchmarking)</li>
-<li><strong>ZGC</strong>: Low-latency GC (experimental)</li>
-<li><strong>Nest-based access control</strong>: Inner classes don't need synthetic accessor methods</li>
-<li><strong>Removal of Java EE and CORBA modules</strong>: <code>javax.xml.bind</code>, <code>javax.activation</code> removed (need to add as dependencies)</li>
-<li><strong>Removed Nashorn JavaScript engine</strong> (deprecated, finally removed in 15)</li>
-</ol>
-<p><code>strip()</code> vs <code>trim()</code>: <code>trim()</code> removes ASCII whitespace (≤ '\u0020'). <code>strip()</code> removes Unicode whitespace (uses <code>Character.isWhitespace()</code>).</p>
+        <div class="card" id="q58">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">58</span>
+            <span class="q-title">Java 11 features?</span>
+            <span class="difficulty diff-mid">MID</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <p>Java 11 (2018) – LTS release, major features:</p>
+                <ol>
+                  <li>
+                    <strong>HTTP Client API</strong> (java.net.http) – finalized
+                    from Java 9 incubator
+                  </li>
+                  <li>
+                    <strong>String new methods</strong>: <code>isBlank()</code>,
+                    <code>lines()</code>, <code>strip()</code>,
+                    <code>stripLeading()</code>, <code>stripTrailing()</code>,
+                    <code>repeat(n)</code>
+                  </li>
+                  <li>
+                    <strong
+                      >Files.readString()<code>, </code
+                      >Files.writeString()`</strong
+                    >
+                  </li>
+                  <li>
+                    <strong><code>var</code> in lambda parameters</strong>:
+                    <code>(var x, var y) -&gt; x + y</code>
+                  </li>
+                  <li>
+                    <strong>Running single-file programs</strong>:
+                    <code>java HelloWorld.java</code> without compiling
+                  </li>
+                  <li>
+                    <strong>Epsilon GC</strong>: No-op GC (for
+                    testing/benchmarking)
+                  </li>
+                  <li><strong>ZGC</strong>: Low-latency GC (experimental)</li>
+                  <li>
+                    <strong>Nest-based access control</strong>: Inner classes
+                    don't need synthetic accessor methods
+                  </li>
+                  <li>
+                    <strong>Removal of Java EE and CORBA modules</strong>:
+                    <code>javax.xml.bind</code>,
+                    <code>javax.activation</code> removed (need to add as
+                    dependencies)
+                  </li>
+                  <li>
+                    <strong>Removed Nashorn JavaScript engine</strong>
+                    (deprecated, finally removed in 15)
+                  </li>
+                </ol>
+                <p>
+                  <code>strip()</code> vs <code>trim()</code>:
+                  <code>trim()</code> removes ASCII whitespace (≤ '\u0020').
+                  <code>strip()</code> removes Unicode whitespace (uses
+                  <code>Character.isWhitespace()</code>).
+                </p>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q59">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">59</span>
-        <span class="q-title">Difference between Java 8 and Java 11?</span>
-        <span class="difficulty diff-mid">MID</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <p>Key differences for a senior developer:</p>
-<table>
-<tr><th>Area</th><th>Java 8</th><th>Java 11</th></tr>
-<tr><td>String API</td><td>No <code>isBlank()</code>, <code>lines()</code>, <code>strip()</code></td><td>Added these</td></tr>
-<tr><td>HTTP Client</td><td>HttpURLConnection (old)</td><td>java.net.http (modern, async)</td></tr>
-<tr><td>Local var</td><td>No <code>var</code></td><td><code>var</code> in lambdas</td></tr>
-<tr><td>GC</td><td>CMS (deprecated), G1 default</td><td>ZGC (experimental), Epsilon</td></tr>
-<tr><td>Single file</td><td>Must compile first</td><td><code>java File.java</code> directly</td></tr>
-<tr><td>Java EE</td><td>javax.* modules included</td><td>Removed (must add as deps)</td></tr>
-<tr><td>Optional</td><td>No <code>isEmpty()</code>, <code>or()</code>, <code>ifPresentOrElse()</code></td><td>Added in 9/10</td></tr>
-<tr><td>Collection</td><td>No <code>List.copyOf()</code> etc.</td><td>Added in 10</td></tr>
-<tr><td>Modules</td><td>Not available</td><td>JPMS available (since 9)</td></tr>
-</table>
-<p>Practically: Java 8 → Java 11 migration requires: removing Java EE dependencies (add explicitly), updating deprecated APIs, checking module compatibility.</p>
+        <div class="card" id="q59">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">59</span>
+            <span class="q-title">Difference between Java 8 and Java 11?</span>
+            <span class="difficulty diff-mid">MID</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <p>Key differences for a senior developer:</p>
+                <table>
+                  <tr>
+                    <th>Area</th>
+                    <th>Java 8</th>
+                    <th>Java 11</th>
+                  </tr>
+                  <tr>
+                    <td>String API</td>
+                    <td>
+                      No <code>isBlank()</code>, <code>lines()</code>,
+                      <code>strip()</code>
+                    </td>
+                    <td>Added these</td>
+                  </tr>
+                  <tr>
+                    <td>HTTP Client</td>
+                    <td>HttpURLConnection (old)</td>
+                    <td>java.net.http (modern, async)</td>
+                  </tr>
+                  <tr>
+                    <td>Local var</td>
+                    <td>No <code>var</code></td>
+                    <td><code>var</code> in lambdas</td>
+                  </tr>
+                  <tr>
+                    <td>GC</td>
+                    <td>CMS (deprecated), G1 default</td>
+                    <td>ZGC (experimental), Epsilon</td>
+                  </tr>
+                  <tr>
+                    <td>Single file</td>
+                    <td>Must compile first</td>
+                    <td><code>java File.java</code> directly</td>
+                  </tr>
+                  <tr>
+                    <td>Java EE</td>
+                    <td>javax.* modules included</td>
+                    <td>Removed (must add as deps)</td>
+                  </tr>
+                  <tr>
+                    <td>Optional</td>
+                    <td>
+                      No <code>isEmpty()</code>, <code>or()</code>,
+                      <code>ifPresentOrElse()</code>
+                    </td>
+                    <td>Added in 9/10</td>
+                  </tr>
+                  <tr>
+                    <td>Collection</td>
+                    <td>No <code>List.copyOf()</code> etc.</td>
+                    <td>Added in 10</td>
+                  </tr>
+                  <tr>
+                    <td>Modules</td>
+                    <td>Not available</td>
+                    <td>JPMS available (since 9)</td>
+                  </tr>
+                </table>
+                <p>
+                  Practically: Java 8 → Java 11 migration requires: removing
+                  Java EE dependencies (add explicitly), updating deprecated
+                  APIs, checking module compatibility.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q60">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">60</span>
-        <span class="q-title">What is HTTP Client API?</span>
-        <span class="difficulty diff-mid">MID</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <p><code>java.net.http</code> (finalized in Java 11) – modern replacement for <code>HttpURLConnection</code>:</p>
-<pre>HttpClient client = HttpClient.newBuilder()
+        <div class="card" id="q60">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">60</span>
+            <span class="q-title">What is HTTP Client API?</span>
+            <span class="difficulty diff-mid">MID</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <p>
+                  <code>java.net.http</code> (finalized in Java 11) – modern
+                  replacement for <code>HttpURLConnection</code>:
+                </p>
+                <pre>
+HttpClient client = HttpClient.newBuilder()
     .version(HttpClient.Version.HTTP_2)
     .connectTimeout(Duration.ofSeconds(10))
     .build();
@@ -734,55 +1628,87 @@ HttpResponse&lt;String&gt; response = client.send(request, HttpResponse.BodyHand
 // Asynchronous
 CompletableFuture&lt;HttpResponse&lt;String&gt;&gt; future = client.sendAsync(request, HttpResponse.BodyHandlers.ofString());
 future.thenApply(HttpResponse::body).thenAccept(System.out::println);</pre>
-<p>Features:</p>
-<ul>
-<li>HTTP/1.1 and HTTP/2 support</li>
-<li>WebSocket support</li>
-<li>Async (CompletableFuture)</li>
-<li>Reactive streams support</li>
-<li>Authentication, cookie management, redirect policies</li>
-</ul>
+                <p>Features:</p>
+                <ul>
+                  <li>HTTP/1.1 and HTTP/2 support</li>
+                  <li>WebSocket support</li>
+                  <li>Async (CompletableFuture)</li>
+                  <li>Reactive streams support</li>
+                  <li>Authentication, cookie management, redirect policies</li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q61">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">61</span>
-        <span class="q-title">Java 12–13 useful features?</span>
-        <span class="difficulty diff-adv">ADVANCED</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <p><strong>Java 12</strong>:</p>
-<ul>
-<li><code>switch</code> expressions (preview): <code>yield</code> keyword</li>
-<li><code>String.indent()</code>, <code>String.transform()</code></li>
-<li><code>Collectors.teeing()</code> – combine two collectors</li>
-</ul>
-<p><strong>Java 13</strong>:</p>
-<ul>
-<li><code>switch</code> expressions (second preview)</li>
-<li>Text blocks (preview): Multi-line strings</li>
-</ul>
+        <div class="card" id="q61">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">61</span>
+            <span class="q-title">Java 12–13 useful features?</span>
+            <span class="difficulty diff-adv">ADVANCED</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <p><strong>Java 12</strong>:</p>
+                <ul>
+                  <li>
+                    <code>switch</code> expressions (preview):
+                    <code>yield</code> keyword
+                  </li>
+                  <li>
+                    <code>String.indent()</code>,
+                    <code>String.transform()</code>
+                  </li>
+                  <li>
+                    <code>Collectors.teeing()</code> – combine two collectors
+                  </li>
+                </ul>
+                <p><strong>Java 13</strong>:</p>
+                <ul>
+                  <li><code>switch</code> expressions (second preview)</li>
+                  <li>Text blocks (preview): Multi-line strings</li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q62">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">62</span>
-        <span class="q-title">What are switch expressions?</span>
-        <span class="difficulty diff-exp">EXPERT</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <p>Switch <strong>expressions</strong> (finalized in Java 14) vs switch <strong>statements</strong>:</p>
-<pre>// Old switch statement (fall-through bug-prone)
+        <div class="card" id="q62">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">62</span>
+            <span class="q-title">What are switch expressions?</span>
+            <span class="difficulty diff-exp">EXPERT</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <p>
+                  Switch <strong>expressions</strong> (finalized in Java 14) vs
+                  switch <strong>statements</strong>:
+                </p>
+                <pre>
+// Old switch statement (fall-through bug-prone)
 String result;
 switch (day) {
     case MONDAY: case TUESDAY: case WEDNESDAY:
@@ -807,37 +1733,64 @@ int numLetters = switch (day) {
         yield s.length(); // yield returns value
     }
 };</pre>
-<p>Benefits:</p>
-<ul>
-<li><strong>Expression</strong> (produces a value, can be used in assignments)</li>
-<li><strong>Exhaustiveness</strong>: Compiler checks all cases covered (for enums)</li>
-<li><strong>No fall-through</strong>: Arrow form doesn't fall through</li>
-<li><strong>Cleaner</strong>: No <code>break</code> statements</li>
-</ul>
-<p>Pattern matching in switch (Java 21):</p>
-<pre>Object obj = ...;
+                <p>Benefits:</p>
+                <ul>
+                  <li>
+                    <strong>Expression</strong> (produces a value, can be used
+                    in assignments)
+                  </li>
+                  <li>
+                    <strong>Exhaustiveness</strong>: Compiler checks all cases
+                    covered (for enums)
+                  </li>
+                  <li>
+                    <strong>No fall-through</strong>: Arrow form doesn't fall
+                    through
+                  </li>
+                  <li>
+                    <strong>Cleaner</strong>: No <code>break</code> statements
+                  </li>
+                </ul>
+                <p>Pattern matching in switch (Java 21):</p>
+                <pre>
+Object obj = ...;
 String result = switch (obj) {
     case Integer i -&gt; &quot;Integer: &quot; + i;
     case String s when s.length() &gt; 5 -&gt; &quot;Long string&quot;;
     case String s -&gt; &quot;Short string&quot;;
     default -&gt; &quot;Other&quot;;
 };</pre>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q63">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">63</span>
-        <span class="q-title">Java 14 records?</span>
-        <span class="difficulty diff-adv">ADVANCED</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <p>Records (finalized in Java 16) are <strong>immutable data carrier classes</strong> with concise syntax:</p>
-<pre>// Traditional immutable class (boilerplate)
+        <div class="card" id="q63">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">63</span>
+            <span class="q-title">Java 14 records?</span>
+            <span class="difficulty diff-adv">ADVANCED</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <p>
+                  Records (finalized in Java 16) are
+                  <strong>immutable data carrier classes</strong> with concise
+                  syntax:
+                </p>
+                <pre>
+// Traditional immutable class (boilerplate)
 public final class Point {
     private final int x;
     private final int y;
@@ -852,8 +1805,9 @@ public final class Point {
 // Record
 public record Point(int x, int y) {}
 // Compiler auto-generates: constructor, accessors x(), y(), equals(), hashCode(), toString()</pre>
-<p>Customization:</p>
-<pre>public record Range(int min, int max) {
+                <p>Customization:</p>
+                <pre>
+public record Range(int min, int max) {
     // Compact constructor (validates)
     Range {
         if (min &gt; max) throw new IllegalArgumentException(&quot;min &gt; max&quot;);
@@ -865,78 +1819,119 @@ public record Point(int x, int y) {}
     // Custom accessor
     @Override public int min() { return Math.abs(min); } // override accessor
 }</pre>
-<p>Records can:</p>
-<ul>
-<li>Implement interfaces</li>
-<li>Have static fields/methods</li>
-<li>Have instance methods</li>
-</ul>
-<p>Records cannot:</p>
-<ul>
-<li>Extend classes (implicitly extend Record)</li>
-<li>Be extended</li>
-<li>Have instance fields beyond record components</li>
-<li>Be abstract</li>
-</ul>
+                <p>Records can:</p>
+                <ul>
+                  <li>Implement interfaces</li>
+                  <li>Have static fields/methods</li>
+                  <li>Have instance methods</li>
+                </ul>
+                <p>Records cannot:</p>
+                <ul>
+                  <li>Extend classes (implicitly extend Record)</li>
+                  <li>Be extended</li>
+                  <li>Have instance fields beyond record components</li>
+                  <li>Be abstract</li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q64">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">64</span>
-        <span class="q-title">Use cases of records?</span>
-        <span class="difficulty diff-exp">EXPERT</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <ol>
-<li><strong>DTOs (Data Transfer Objects)</strong>: API request/response models</li>
-</ol>
-<pre>public record UserDTO(String name, String email, int age) {}</pre>
-<ol>
-<li><strong>Value objects</strong> (DDD): Domain primitives</li>
-</ol>
-<pre>public record Money(BigDecimal amount, Currency currency) {}
+        <div class="card" id="q64">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">64</span>
+            <span class="q-title">Use cases of records?</span>
+            <span class="difficulty diff-exp">EXPERT</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <ol>
+                  <li>
+                    <strong>DTOs (Data Transfer Objects)</strong>: API
+                    request/response models
+                  </li>
+                </ol>
+                <pre>
+public record UserDTO(String name, String email, int age) {}</pre>
+                <ol>
+                  <li>
+                    <strong>Value objects</strong> (DDD): Domain primitives
+                  </li>
+                </ol>
+                <pre>
+public record Money(BigDecimal amount, Currency currency) {}
 public record EmailAddress(String value) {
     EmailAddress { if (!value.contains(&quot;@&quot;)) throw new IllegalArgumentException(); }
 }</pre>
-<ol>
-<li><strong>Multiple return values</strong>:</li>
-</ol>
-<pre>public record PagedResult&lt;T&gt;(List&lt;T&gt; items, int totalCount) {}</pre>
-<ol>
-<li><strong>Composite map keys</strong>:</li>
-</ol>
-<pre>record CacheKey(String region, Long id) {} // equals/hashCode auto-generated
+                <ol>
+                  <li><strong>Multiple return values</strong>:</li>
+                </ol>
+                <pre>
+public record PagedResult&lt;T&gt;(List&lt;T&gt; items, int totalCount) {}</pre>
+                <ol>
+                  <li><strong>Composite map keys</strong>:</li>
+                </ol>
+                <pre>
+record CacheKey(String region, Long id) {} // equals/hashCode auto-generated
 Map&lt;CacheKey, Object&gt; cache = new HashMap&lt;&gt;();</pre>
-<ol>
-<li><strong>Intermediate stream results</strong>:</li>
-</ol>
-<pre>.map(person -&gt; new PersonScore(person.name(), calculateScore(person)))
+                <ol>
+                  <li><strong>Intermediate stream results</strong>:</li>
+                </ol>
+                <pre>
+.map(person -&gt; new PersonScore(person.name(), calculateScore(person)))
 .filter(ps -&gt; ps.score() &gt; 50)</pre>
-<p>Records work well with <strong>pattern matching</strong> (Java 21):</p>
-<pre>if (obj instanceof Point(int x, int y)) { // deconstruct
+                <p>
+                  Records work well with <strong>pattern matching</strong> (Java
+                  21):
+                </p>
+                <pre>
+if (obj instanceof Point(int x, int y)) { // deconstruct
     System.out.println(&quot;x=&quot; + x + &quot; y=&quot; + y);
 }</pre>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q65">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">65</span>
-        <span class="q-title">Java 15 sealed classes?</span>
-        <span class="difficulty diff-adv">ADVANCED</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <p>Sealed classes (finalized in Java 17) <strong>restrict which classes can extend or implement</strong> a class/interface:</p>
-<pre>public sealed class Shape
+        <div class="card" id="q65">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">65</span>
+            <span class="q-title">Java 15 sealed classes?</span>
+            <span class="difficulty diff-adv">ADVANCED</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <p>
+                  Sealed classes (finalized in Java 17)
+                  <strong
+                    >restrict which classes can extend or implement</strong
+                  >
+                  a class/interface:
+                </p>
+                <pre>
+public sealed class Shape
     permits Circle, Rectangle, Triangle {
 }
 
@@ -951,35 +1946,63 @@ public non-sealed class Rectangle extends Shape { // can be freely extended
 public sealed class Triangle extends Shape
     permits EquilateralTriangle, RightTriangle { // further restricted
 }</pre>
-<p>Permitted classes must be: in the same package (or module), and must be <code>final</code>, <code>sealed</code>, or <code>non-sealed</code>.</p>
-<p><strong>Benefits</strong>:</p>
-<ol>
-<li><strong>Controlled hierarchy</strong>: Know all possible subtypes at compile time</li>
-<li><strong>Pattern matching exhaustiveness</strong>: Compiler knows all cases</li>
-<li><strong>Domain modeling</strong>: Express algebraic data types</li>
-</ol>
-<pre>double area = switch (shape) {
+                <p>
+                  Permitted classes must be: in the same package (or module),
+                  and must be <code>final</code>, <code>sealed</code>, or
+                  <code>non-sealed</code>.
+                </p>
+                <p><strong>Benefits</strong>:</p>
+                <ol>
+                  <li>
+                    <strong>Controlled hierarchy</strong>: Know all possible
+                    subtypes at compile time
+                  </li>
+                  <li>
+                    <strong>Pattern matching exhaustiveness</strong>: Compiler
+                    knows all cases
+                  </li>
+                  <li>
+                    <strong>Domain modeling</strong>: Express algebraic data
+                    types
+                  </li>
+                </ol>
+                <pre>
+double area = switch (shape) {
     case Circle c -&gt; Math.PI * c.radius() * c.radius();
     case Rectangle r -&gt; r.width() * r.height();
     case Triangle t -&gt; calculateTriangleArea(t);
     // No default needed - compiler knows all cases!
 };</pre>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q66">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">66</span>
-        <span class="q-title">Java 16 pattern matching?</span>
-        <span class="difficulty diff-exp">EXPERT</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <p>Pattern matching (finalized in Java 16 for <code>instanceof</code>):</p>
-<pre>// Old way
+        <div class="card" id="q66">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">66</span>
+            <span class="q-title">Java 16 pattern matching?</span>
+            <span class="difficulty diff-exp">EXPERT</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <p>
+                  Pattern matching (finalized in Java 16 for
+                  <code>instanceof</code>):
+                </p>
+                <pre>
+// Old way
 if (obj instanceof String) {
     String s = (String) obj; // redundant cast
     System.out.println(s.length());
@@ -994,8 +2017,9 @@ if (obj instanceof String s) {
 if (obj instanceof String s &amp;&amp; s.length() &gt; 5) {
     System.out.println(&quot;Long string: &quot; + s);
 }</pre>
-<p>Pattern matching in switch (Java 21):</p>
-<pre>static String describe(Object obj) {
+                <p>Pattern matching in switch (Java 21):</p>
+                <pre>
+static String describe(Object obj) {
     return switch (obj) {
         case Integer i when i &lt; 0 -&gt; &quot;Negative integer: &quot; + i;
         case Integer i -&gt; &quot;Positive integer: &quot; + i;
@@ -1005,97 +2029,165 @@ if (obj instanceof String s &amp;&amp; s.length() &gt; 5) {
         default -&gt; &quot;Something else&quot;;
     };
 }</pre>
-<p>Record patterns (Java 21):</p>
-<pre>if (obj instanceof Point(int x, int y) p) {
+                <p>Record patterns (Java 21):</p>
+                <pre>
+if (obj instanceof Point(int x, int y) p) {
     System.out.println(&quot;Point at &quot; + x + &quot;, &quot; + y);
 }</pre>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q67">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">67</span>
-        <span class="q-title">Java 17 LTS significance?</span>
-        <span class="difficulty diff-mid">MID</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <p>Java 17 (September 2021) is an <strong>LTS (Long-Term Support)</strong> release – the most significant LTS since Java 11 and Java 8.</p>
-<p><strong>Why it matters</strong>:</p>
-<ul>
-<li>Oracle provides 8+ years of support</li>
-<li>Most enterprises use LTS releases in production</li>
-<li>Spring Boot 3+ requires Java 17 minimum</li>
-<li>Many frameworks aligned to Java 17 as baseline</li>
-</ul>
-<p><strong>New features finalized in Java 17</strong>:</p>
-<ul>
-<li>Sealed classes (Java 15 preview)</li>
-<li>Pattern matching for instanceof (Java 14 preview)</li>
-<li>Records (Java 14 preview)</li>
-<li>Switch expressions (Java 14)</li>
-<li>Text blocks (Java 13 preview)</li>
-</ul>
-<p><strong>Deprecations/Removals</strong>:</p>
-<ul>
-<li>Applet API deprecated for removal</li>
-<li>Security Manager deprecated</li>
-<li>RMI Activation removed</li>
-<li>Strong encapsulation of JDK internals (Unsafe-like access restricted)</li>
-</ul>
+        <div class="card" id="q67">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">67</span>
+            <span class="q-title">Java 17 LTS significance?</span>
+            <span class="difficulty diff-mid">MID</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <p>
+                  Java 17 (September 2021) is an
+                  <strong>LTS (Long-Term Support)</strong> release – the most
+                  significant LTS since Java 11 and Java 8.
+                </p>
+                <p><strong>Why it matters</strong>:</p>
+                <ul>
+                  <li>Oracle provides 8+ years of support</li>
+                  <li>Most enterprises use LTS releases in production</li>
+                  <li>Spring Boot 3+ requires Java 17 minimum</li>
+                  <li>Many frameworks aligned to Java 17 as baseline</li>
+                </ul>
+                <p><strong>New features finalized in Java 17</strong>:</p>
+                <ul>
+                  <li>Sealed classes (Java 15 preview)</li>
+                  <li>Pattern matching for instanceof (Java 14 preview)</li>
+                  <li>Records (Java 14 preview)</li>
+                  <li>Switch expressions (Java 14)</li>
+                  <li>Text blocks (Java 13 preview)</li>
+                </ul>
+                <p><strong>Deprecations/Removals</strong>:</p>
+                <ul>
+                  <li>Applet API deprecated for removal</li>
+                  <li>Security Manager deprecated</li>
+                  <li>RMI Activation removed</li>
+                  <li>
+                    Strong encapsulation of JDK internals (Unsafe-like access
+                    restricted)
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q68">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">68</span>
-        <span class="q-title">Garbage collection improvements post Java 8?</span>
-        <span class="difficulty diff-adv">ADVANCED</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <table>
-<tr><th>GC</th><th>Introduced</th><th>Characteristics</th></tr>
-<tr><td>G1 (Garbage First)</td><td>Java 7, default from 9</td><td>Region-based, aims for predictable pause times</td></tr>
-<tr><td>ZGC</td><td>Java 11 (experimental), 15 (production)</td><td>Sub-millisecond pauses, scalable to TBs</td></tr>
-<tr><td>Shenandoah</td><td>Java 12 (RedHat), 15 OpenJDK</td><td>Low-pause, concurrent, scale with heap</td></tr>
-<tr><td>Epsilon</td><td>Java 11</td><td>No-op GC, for performance testing</td></tr>
-</table>
-<p>G1 improvements over time:</p>
-<ul>
-<li>Java 10: Parallel Full GC</li>
-<li>Java 12: Promptly return memory to OS</li>
-<li>Java 14: NUMA-aware memory allocation</li>
-</ul>
-<p>ZGC evolution:</p>
-<ul>
-<li>Java 11: 4TB max heap, requires 8-core+</li>
-<li>Java 15: Production-ready</li>
-<li>Java 16: Thread-local handshakes, improved latency</li>
-<li>Java 21: Generational ZGC (default: <code>-XX:+UseZGC</code>)</li>
-</ul>
+        <div class="card" id="q68">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">68</span>
+            <span class="q-title"
+              >Garbage collection improvements post Java 8?</span
+            >
+            <span class="difficulty diff-adv">ADVANCED</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <table>
+                  <tr>
+                    <th>GC</th>
+                    <th>Introduced</th>
+                    <th>Characteristics</th>
+                  </tr>
+                  <tr>
+                    <td>G1 (Garbage First)</td>
+                    <td>Java 7, default from 9</td>
+                    <td>Region-based, aims for predictable pause times</td>
+                  </tr>
+                  <tr>
+                    <td>ZGC</td>
+                    <td>Java 11 (experimental), 15 (production)</td>
+                    <td>Sub-millisecond pauses, scalable to TBs</td>
+                  </tr>
+                  <tr>
+                    <td>Shenandoah</td>
+                    <td>Java 12 (RedHat), 15 OpenJDK</td>
+                    <td>Low-pause, concurrent, scale with heap</td>
+                  </tr>
+                  <tr>
+                    <td>Epsilon</td>
+                    <td>Java 11</td>
+                    <td>No-op GC, for performance testing</td>
+                  </tr>
+                </table>
+                <p>G1 improvements over time:</p>
+                <ul>
+                  <li>Java 10: Parallel Full GC</li>
+                  <li>Java 12: Promptly return memory to OS</li>
+                  <li>Java 14: NUMA-aware memory allocation</li>
+                </ul>
+                <p>ZGC evolution:</p>
+                <ul>
+                  <li>Java 11: 4TB max heap, requires 8-core+</li>
+                  <li>Java 15: Production-ready</li>
+                  <li>Java 16: Thread-local handshakes, improved latency</li>
+                  <li>
+                    Java 21: Generational ZGC (default:
+                    <code>-XX:+UseZGC</code>)
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q69">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">69</span>
-        <span class="q-title">What are virtual threads?</span>
-        <span class="difficulty diff-exp">EXPERT</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <p>Virtual threads (Java 21 – Project Loom) are <strong>lightweight threads managed by the JVM</strong>, not the OS.</p>
-<pre>// Platform thread (expensive, OS-backed)
+        <div class="card" id="q69">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">69</span>
+            <span class="q-title">What are virtual threads?</span>
+            <span class="difficulty diff-exp">EXPERT</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <p>
+                  Virtual threads (Java 21 – Project Loom) are
+                  <strong>lightweight threads managed by the JVM</strong>, not
+                  the OS.
+                </p>
+                <pre>
+// Platform thread (expensive, OS-backed)
 Thread.ofPlatform().start(() -&gt; handleRequest());
 
 // Virtual thread (cheap, JVM-managed)
@@ -1107,44 +2199,87 @@ try (var executor = Executors.newVirtualThreadPerTaskExecutor()) {
         executor.submit(() -&gt; handle(req));
     }
 }</pre>
-<p><strong>Why it matters</strong>:</p>
-<ul>
-<li>Platform threads: ~1MB stack, OS-limited (~thousands)</li>
-<li>Virtual threads: ~few KB, JVM-limited (millions possible)</li>
-<li>Virtual threads <strong>block without blocking OS thread</strong> – when a virtual thread blocks (I/O, sleep), the carrier OS thread is freed to run other virtual threads</li>
-</ul>
-<p><strong>One-thread-per-request model</strong> becomes viable again for high-concurrency I/O workloads.</p>
-<p><strong>Not a replacement for async</strong>: Same mental model as blocking code, but with performance of reactive. You write:</p>
-<pre>String response = httpClient.get(url); // looks blocking
+                <p><strong>Why it matters</strong>:</p>
+                <ul>
+                  <li>Platform threads: ~1MB stack, OS-limited (~thousands)</li>
+                  <li>
+                    Virtual threads: ~few KB, JVM-limited (millions possible)
+                  </li>
+                  <li>
+                    Virtual threads
+                    <strong>block without blocking OS thread</strong> – when a
+                    virtual thread blocks (I/O, sleep), the carrier OS thread is
+                    freed to run other virtual threads
+                  </li>
+                </ul>
+                <p>
+                  <strong>One-thread-per-request model</strong> becomes viable
+                  again for high-concurrency I/O workloads.
+                </p>
+                <p>
+                  <strong>Not a replacement for async</strong>: Same mental
+                  model as blocking code, but with performance of reactive. You
+                  write:
+                </p>
+                <pre>
+String response = httpClient.get(url); // looks blocking
 // but virtual thread is suspended, OS thread is freed</pre>
-<p>Considerations:</p>
-<ul>
-<li>Don't use with <code>ThreadLocal</code> that holds expensive resources (use <code>ScopedValue</code> instead)</li>
-<li><code>synchronized</code> blocks still pin virtual thread to carrier (use <code>ReentrantLock</code> for fine-grained locking)</li>
-<li>Not beneficial for CPU-bound tasks (no concurrency gain)</li>
-</ul>
+                <p>Considerations:</p>
+                <ul>
+                  <li>
+                    Don't use with <code>ThreadLocal</code> that holds expensive
+                    resources (use <code>ScopedValue</code> instead)
+                  </li>
+                  <li>
+                    <code>synchronized</code> blocks still pin virtual thread to
+                    carrier (use <code>ReentrantLock</code> for fine-grained
+                    locking)
+                  </li>
+                  <li>
+                    Not beneficial for CPU-bound tasks (no concurrency gain)
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q70">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">70</span>
-        <span class="q-title">Java 19+ Loom overview?</span>
-        <span class="difficulty diff-exp">EXPERT</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <p>Project Loom delivered over multiple releases:</p>
-<ul>
-<li><strong>Java 19</strong>: Virtual threads (preview)</li>
-<li><strong>Java 20</strong>: Virtual threads (second preview), Structured Concurrency (incubator)</li>
-<li><strong>Java 21</strong>: Virtual threads (GA!), Structured Concurrency (preview), Scoped Values (preview)</li>
-</ul>
-<p><strong>Structured Concurrency</strong> (Java 21 preview):</p>
-<pre>try (var scope = new StructuredTaskScope.ShutdownOnFailure()) {
+        <div class="card" id="q70">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">70</span>
+            <span class="q-title">Java 19+ Loom overview?</span>
+            <span class="difficulty diff-exp">EXPERT</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <p>Project Loom delivered over multiple releases:</p>
+                <ul>
+                  <li><strong>Java 19</strong>: Virtual threads (preview)</li>
+                  <li>
+                    <strong>Java 20</strong>: Virtual threads (second preview),
+                    Structured Concurrency (incubator)
+                  </li>
+                  <li>
+                    <strong>Java 21</strong>: Virtual threads (GA!), Structured
+                    Concurrency (preview), Scoped Values (preview)
+                  </li>
+                </ul>
+                <p>
+                  <strong>Structured Concurrency</strong> (Java 21 preview):
+                </p>
+                <pre>
+try (var scope = new StructuredTaskScope.ShutdownOnFailure()) {
     Future&lt;User&gt; user = scope.fork(() -&gt; fetchUser(id));
     Future&lt;Order&gt; order = scope.fork(() -&gt; fetchOrder(id));
     
@@ -1153,173 +2288,367 @@ try (var executor = Executors.newVirtualThreadPerTaskExecutor()) {
     return new Response(user.resultNow(), order.resultNow());
 }
 // scope.close() cancels subtasks if any fail</pre>
-<p>Benefits:</p>
-<ul>
-<li>Subtask lifetimes are bound to parent scope</li>
-<li>Error handling and cancellation are structured</li>
-<li>Easier to reason about than CompletableFuture chains</li>
-</ul>
-<p><strong>Scoped Values</strong>: Thread-local alternative designed for virtual threads.</p>
+                <p>Benefits:</p>
+                <ul>
+                  <li>Subtask lifetimes are bound to parent scope</li>
+                  <li>Error handling and cancellation are structured</li>
+                  <li>Easier to reason about than CompletableFuture chains</li>
+                </ul>
+                <p>
+                  <strong>Scoped Values</strong>: Thread-local alternative
+                  designed for virtual threads.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q71">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">71</span>
-        <span class="q-title">Impact of newer Java versions on Spring Boot?</span>
-        <span class="difficulty diff-adv">ADVANCED</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <ul>
-<li><strong>Spring Boot 3.x</strong> requires <strong>Java 17 minimum</strong> (dropped Java 8/11 support)</li>
-<li>Spring Boot 3.x is based on <strong>Spring Framework 6</strong>, which embraces Java 17 features (records as DTOs, sealed classes, etc.)</li>
-<li><strong>Virtual threads</strong> in Spring Boot 3.2+: <code>spring.threads.virtual.enabled=true</code> enables virtual thread executor</li>
-<li><strong>GraalVM native image</strong> support in Spring Boot 3 (ahead-of-time compilation)</li>
-<li><strong>Jakarta EE 10</strong> (renamed from Java EE): <code>javax.<em></code> → <code>jakarta.</em></code> namespace migration in Spring Boot 3</li>
-<li>Pattern matching, records, text blocks used in Spring source and application code</li>
-</ul>
+        <div class="card" id="q71">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">71</span>
+            <span class="q-title"
+              >Impact of newer Java versions on Spring Boot?</span
+            >
+            <span class="difficulty diff-adv">ADVANCED</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <ul>
+                  <li>
+                    <strong>Spring Boot 3.x</strong> requires
+                    <strong>Java 17 minimum</strong> (dropped Java 8/11 support)
+                  </li>
+                  <li>
+                    Spring Boot 3.x is based on
+                    <strong>Spring Framework 6</strong>, which embraces Java 17
+                    features (records as DTOs, sealed classes, etc.)
+                  </li>
+                  <li>
+                    <strong>Virtual threads</strong> in Spring Boot 3.2+:
+                    <code>spring.threads.virtual.enabled=true</code> enables
+                    virtual thread executor
+                  </li>
+                  <li>
+                    <strong>GraalVM native image</strong> support in Spring Boot
+                    3 (ahead-of-time compilation)
+                  </li>
+                  <li>
+                    <strong>Jakarta EE 10</strong> (renamed from Java EE):
+                    <code><em>javax.*</em></code> →
+                    <code><em>jakarta.*</em></code> namespace migration in
+                    Spring Boot 3
+                  </li>
+                  <li>
+                    Pattern matching, records, text blocks used in Spring source
+                    and application code
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q72">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">72</span>
-        <span class="q-title">Backward compatibility in Java?</span>
-        <span class="difficulty diff-exp">EXPERT</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <p>Java has a strong commitment to <strong>backward compatibility</strong>:</p>
-<ul>
-<li>Programs compiled with Java 5 generally run on Java 21 JVM</li>
-<li><code>--release</code> flag: <code>javac --release 8 Source.java</code> compiles for Java 8 target</li>
-<li><strong>Deprecation process</strong>: Features deprecated before removal (usually multiple versions)</li>
-</ul>
-<p>Breaking changes DO happen:</p>
-<ul>
-<li><strong>Strong encapsulation</strong>: <code>--add-opens</code> needed for deep reflection</li>
-<li><strong>Module system</strong>: Some internal APIs (sun.<em>, com.sun.</em>) no longer accessible</li>
-<li><strong>Removed APIs</strong>: CMS GC removed (Java 14), Nashorn (Java 15), Applet API (Java 17)</li>
-<li><strong>JEE modules removed</strong> in Java 11</li>
-</ul>
-<p><strong>Tooling</strong>:</p>
-<ul>
-<li><code>jdeprscan</code>: Find usage of deprecated APIs</li>
-<li><code>--illegal-access=warn</code>: Identify reflective access that will break in future versions</li>
-<li>Migration guides on OpenJDK site</li>
-</ul>
+        <div class="card" id="q72">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">72</span>
+            <span class="q-title">Backward compatibility in Java?</span>
+            <span class="difficulty diff-exp">EXPERT</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <p>
+                  Java has a strong commitment to
+                  <strong>backward compatibility</strong>:
+                </p>
+                <ul>
+                  <li>
+                    Programs compiled with Java 5 generally run on Java 21 JVM
+                  </li>
+                  <li>
+                    <code>--release</code> flag:
+                    <code>javac --release 8 Source.java</code> compiles for Java
+                    8 target
+                  </li>
+                  <li>
+                    <strong>Deprecation process</strong>: Features deprecated
+                    before removal (usually multiple versions)
+                  </li>
+                </ul>
+                <p>Breaking changes DO happen:</p>
+                <ul>
+                  <li>
+                    <strong>Strong encapsulation</strong>:
+                    <code>--add-opens</code> needed for deep reflection
+                  </li>
+                  <li>
+                    <strong>Module system</strong>: Some internal APIs (sun.<em
+                      >, com.sun.</em
+                    >) no longer accessible
+                  </li>
+                  <li>
+                    <strong>Removed APIs</strong>: CMS GC removed (Java 14),
+                    Nashorn (Java 15), Applet API (Java 17)
+                  </li>
+                  <li><strong>JEE modules removed</strong> in Java 11</li>
+                </ul>
+                <p><strong>Tooling</strong>:</p>
+                <ul>
+                  <li><code>jdeprscan</code>: Find usage of deprecated APIs</li>
+                  <li>
+                    <code>--illegal-access=warn</code>: Identify reflective
+                    access that will break in future versions
+                  </li>
+                  <li>Migration guides on OpenJDK site</li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q73">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">73</span>
-        <span class="q-title">Removed features in newer Java?</span>
-        <span class="difficulty diff-adv">ADVANCED</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <table>
-<tr><th>Feature</th><th>Removed Version</th></tr>
-<tr><td>PermGen</td><td>Java 8 (replaced by Metaspace)</td></tr>
-<tr><td>Java EE/CORBA modules</td><td>Java 11</td></tr>
-<tr><td>Nashorn JS engine</td><td>Java 15</td></tr>
-<tr><td>CMS GC</td><td>Java 14</td></tr>
-<tr><td>RMI Activation</td><td>Java 15</td></tr>
-<tr><td>Applet API</td><td>Java 17 (deprecated), removal pending</td></tr>
-<tr><td>Security Manager</td><td>Java 17 (deprecated), pending</td></tr>
-<tr><td><code>finalize()</code></td><td>Java 18 (deprecated), pending</td></tr>
-</table>
+        <div class="card" id="q73">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">73</span>
+            <span class="q-title">Removed features in newer Java?</span>
+            <span class="difficulty diff-adv">ADVANCED</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <table>
+                  <tr>
+                    <th>Feature</th>
+                    <th>Removed Version</th>
+                  </tr>
+                  <tr>
+                    <td>PermGen</td>
+                    <td>Java 8 (replaced by Metaspace)</td>
+                  </tr>
+                  <tr>
+                    <td>Java EE/CORBA modules</td>
+                    <td>Java 11</td>
+                  </tr>
+                  <tr>
+                    <td>Nashorn JS engine</td>
+                    <td>Java 15</td>
+                  </tr>
+                  <tr>
+                    <td>CMS GC</td>
+                    <td>Java 14</td>
+                  </tr>
+                  <tr>
+                    <td>RMI Activation</td>
+                    <td>Java 15</td>
+                  </tr>
+                  <tr>
+                    <td>Applet API</td>
+                    <td>Java 17 (deprecated), removal pending</td>
+                  </tr>
+                  <tr>
+                    <td>Security Manager</td>
+                    <td>Java 17 (deprecated), pending</td>
+                  </tr>
+                  <tr>
+                    <td><code>finalize()</code></td>
+                    <td>Java 18 (deprecated), pending</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q74">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">74</span>
-        <span class="q-title">How do you choose Java version for production?</span>
-        <span class="difficulty diff-mid">MID</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <p>Decision factors:</p>
-<ol>
-<li><strong>LTS vs non-LTS</strong>: Production → LTS (8, 11, 17, 21). Non-LTS for early adoption.</li>
-<li><strong>Framework support</strong>: Spring Boot 3 → Java 17+. Most modern frameworks: Java 11+</li>
-<li><strong>Vendor support lifecycle</strong>: Oracle, Amazon Corretto, Eclipse Temurin differ</li>
-<li><strong>Team readiness</strong>: Training, code review awareness of new features</li>
-<li><strong>Library compatibility</strong>: Third-party JARs may not support newer Java</li>
-<li><strong>GC requirements</strong>: If you need ZGC/Shenandoah, Java 15+</li>
-<li><strong>Virtual threads</strong>: Need Java 21</li>
-<li><strong>Security patches</strong>: Older versions may lack backports</li>
-</ol>
-<p><strong>Current recommendation (2024)</strong>: Java 21 for new projects (LTS, virtual threads, records, sealed classes, pattern matching all stable). Java 17 for projects on Spring Boot 3. Java 11 only if library constraints exist. Java 8 only if legacy systems force it.</p>
+        <div class="card" id="q74">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">74</span>
+            <span class="q-title"
+              >How do you choose Java version for production?</span
+            >
+            <span class="difficulty diff-mid">MID</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <p>Decision factors:</p>
+                <ol>
+                  <li>
+                    <strong>LTS vs non-LTS</strong>: Production → LTS (8, 11,
+                    17, 21). Non-LTS for early adoption.
+                  </li>
+                  <li>
+                    <strong>Framework support</strong>: Spring Boot 3 → Java
+                    17+. Most modern frameworks: Java 11+
+                  </li>
+                  <li>
+                    <strong>Vendor support lifecycle</strong>: Oracle, Amazon
+                    Corretto, Eclipse Temurin differ
+                  </li>
+                  <li>
+                    <strong>Team readiness</strong>: Training, code review
+                    awareness of new features
+                  </li>
+                  <li>
+                    <strong>Library compatibility</strong>: Third-party JARs may
+                    not support newer Java
+                  </li>
+                  <li>
+                    <strong>GC requirements</strong>: If you need
+                    ZGC/Shenandoah, Java 15+
+                  </li>
+                  <li><strong>Virtual threads</strong>: Need Java 21</li>
+                  <li>
+                    <strong>Security patches</strong>: Older versions may lack
+                    backports
+                  </li>
+                </ol>
+                <p>
+                  <strong>Current recommendation (2024)</strong>: Java 21 for
+                  new projects (LTS, virtual threads, records, sealed classes,
+                  pattern matching all stable). Java 17 for projects on Spring
+                  Boot 3. Java 11 only if library constraints exist. Java 8 only
+                  if legacy systems force it.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card" id="q75">
-      <div class="card-header" onclick="toggle(this)">
-        <span class="q-num">75</span>
-        <span class="q-title">How to migrate legacy Java apps?</span>
-        <span class="difficulty diff-adv">ADVANCED</span>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="card-body">
-        <div class="card-inner">
-          <div class="answer">
-            <p><strong>Step-by-step migration approach</strong>:</p>
-<ol>
-<li><strong>Assess</strong>: Run <code>jdeprscan</code> and <code>jlink --list-modules</code>. Identify deprecated API usage, illegal reflective access.</li>
-</ol>
-<ol>
-<li><strong>Update dependencies</strong>: Upgrade all third-party libraries to versions compatible with target Java. Add <code>javax.<em></code> → <code>jakarta.</em></code> if going to 11+ with Spring Boot 3.</li>
-</ol>
-<ol>
-<li><strong>Fix compilation</strong>: Compile with <code>--release &lt;target&gt;</code>. Fix compiler errors.</li>
-</ol>
-<ol>
-<li><strong>Handle module encapsulation</strong>: Add <code>--add-opens</code> JVM flags for necessary reflective access (temporary). Work to remove them over time.</li>
-</ol>
-<ol>
-<li><strong>Update build tool</strong>: Maven/Gradle plugins must support target Java.</li>
-</ol>
-<ol>
-<li><strong>Test thoroughly</strong>: Behavioral differences can be subtle. Especially concurrency, GC behavior.</li>
-</ol>
-<ol>
-<li><strong>Incremental</strong>: Go 8 → 11 → 17 → 21 stepwise rather than jumping.</li>
-</ol>
-<ol>
-<li><strong>JVM flags audit</strong>: Some old GC flags may be unrecognized (CMS flags removed). Use <code>-XX:+PrintFlagsFinal</code> to validate.</li>
-</ol>
-<ol>
-<li><strong>Docker base image</strong>: Update to Java 17/21 base images.</li>
-</ol>
-<ol>
-<li><strong>Feature adoption</strong>: After migration, gradually adopt new features (records, var, etc.) during refactoring.</li>
-</ol>
+        <div class="card" id="q75">
+          <div class="card-header" onclick="toggle(this)">
+            <span class="q-num">75</span>
+            <span class="q-title">How to migrate legacy Java apps?</span>
+            <span class="difficulty diff-adv">ADVANCED</span>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <div class="answer">
+                <p><strong>Step-by-step migration approach</strong>:</p>
+                <ol>
+                  <li>
+                    <strong>Assess</strong>: Run <code>jdeprscan</code> and
+                    <code>jlink --list-modules</code>. Identify deprecated API
+                    usage, illegal reflective access.
+                  </li>
+                </ol>
+                <ol>
+                  <li>
+                    <strong>Update dependencies</strong>: Upgrade all
+                    third-party libraries to versions compatible with target
+                    Java. Add <code><em>javax.*</em></code> →
+                    <code><em>jakarta.*</em></code> if going to 11+ with Spring
+                    Boot 3.
+                  </li>
+                </ol>
+                <ol>
+                  <li>
+                    <strong>Fix compilation</strong>: Compile with
+                    <code>--release &lt;target&gt;</code>. Fix compiler errors.
+                  </li>
+                </ol>
+                <ol>
+                  <li>
+                    <strong>Handle module encapsulation</strong>: Add
+                    <code>--add-opens</code> JVM flags for necessary reflective
+                    access (temporary). Work to remove them over time.
+                  </li>
+                </ol>
+                <ol>
+                  <li>
+                    <strong>Update build tool</strong>: Maven/Gradle plugins
+                    must support target Java.
+                  </li>
+                </ol>
+                <ol>
+                  <li>
+                    <strong>Test thoroughly</strong>: Behavioral differences can
+                    be subtle. Especially concurrency, GC behavior.
+                  </li>
+                </ol>
+                <ol>
+                  <li>
+                    <strong>Incremental</strong>: Go 8 → 11 → 17 → 21 stepwise
+                    rather than jumping.
+                  </li>
+                </ol>
+                <ol>
+                  <li>
+                    <strong>JVM flags audit</strong>: Some old GC flags may be
+                    unrecognized (CMS flags removed). Use
+                    <code>-XX:+PrintFlagsFinal</code> to validate.
+                  </li>
+                </ol>
+                <ol>
+                  <li>
+                    <strong>Docker base image</strong>: Update to Java 17/21
+                    base images.
+                  </li>
+                </ol>
+                <ol>
+                  <li>
+                    <strong>Feature adoption</strong>: After migration,
+                    gradually adopt new features (records, var, etc.) during
+                    refactoring.
+                  </li>
+                </ol>
+              </div>
+            </div>
           </div>
         </div>
+        <div style="height: 60px"></div>
       </div>
     </div>
-    <div style="height:60px"></div>
-  </div>
-</div>
 
-<script src="assets/main.js" defer></script>
-
-</body>
+    <script src="assets/main.js" defer></script>
+  </body>
 </html>
