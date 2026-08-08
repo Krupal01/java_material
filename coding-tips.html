@@ -1,0 +1,690 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Coding Tips — Java Interview</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Syne:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/theme.css" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem("java-theme") || "light";
+          document.documentElement.setAttribute("data-theme", t);
+        } catch (e) {}
+      })();
+    </script>
+    <style>
+      /* ── Coding Tips page — extra styles ── */
+
+      /* Topic tab bar */
+      .ct-tab-bar {
+        display: flex;
+        gap: 6px;
+        overflow-x: auto;
+        padding: 16px 24px 0;
+        background: var(--surface);
+        border-bottom: 1px solid var(--border);
+        scrollbar-width: none;
+        position: sticky;
+        top: 52px;
+        z-index: 100;
+      }
+      .ct-tab-bar::-webkit-scrollbar {
+        display: none;
+      }
+
+      .ct-tab {
+        flex-shrink: 0;
+        padding: 8px 16px;
+        border: 1px solid var(--border);
+        border-bottom: none;
+        border-radius: 8px 8px 0 0;
+        background: var(--surface2);
+        color: var(--muted);
+        font-family: "Syne", sans-serif;
+        font-size: 0.78rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition:
+          background 0.15s,
+          color 0.15s,
+          border-color 0.15s;
+        white-space: nowrap;
+      }
+      .ct-tab:hover {
+        background: var(--surface);
+        color: var(--text);
+      }
+      .ct-tab.active {
+        background: var(--surface);
+        color: var(--accent);
+        border-color: var(--border);
+        border-bottom-color: var(--surface);
+        margin-bottom: -1px;
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Approach sub-tabs inside each card */
+      .approach-tabs {
+        display: flex;
+        gap: 6px;
+        margin: 12px 0 10px;
+      }
+      .approach-tab {
+        padding: 5px 14px;
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        background: var(--surface2);
+        color: var(--muted);
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.72rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.15s;
+      }
+      .approach-tab:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+      .approach-tab.active {
+        background: var(--accent);
+        color: #000;
+        border-color: var(--accent);
+      }
+
+      /* Approach panel (code + hint) */
+      .approach-panel {
+        display: none;
+      }
+      .approach-panel.active {
+        display: block;
+      }
+
+      .approach-hint {
+        font-size: 0.82rem;
+        color: var(--muted);
+        margin-bottom: 8px;
+        line-height: 1.5;
+        font-style: italic;
+      }
+
+      /* Tip summary box */
+      .tip-summary {
+        background: var(--tip-bg);
+        border-left: 3px solid var(--green);
+        padding: 8px 14px;
+        border-radius: 0 6px 6px 0;
+        font-size: 0.83rem;
+        color: var(--text);
+        margin-bottom: 12px;
+        line-height: 1.5;
+      }
+      .tip-summary strong {
+        color: var(--green);
+      }
+
+      /* Question number badge */
+      .q-num-badge {
+        display: inline-block;
+        background: var(--accent);
+        color: #000;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.68rem;
+        font-weight: 700;
+        padding: 2px 7px;
+        border-radius: 4px;
+        margin-right: 8px;
+        flex-shrink: 0;
+      }
+
+      /* Topic header row inside content area */
+      .ct-topic-header {
+        padding: 8px 0 16px;
+        border-bottom: 1px solid var(--border);
+        margin-bottom: 16px;
+      }
+      .ct-topic-header h2 {
+        font-size: 1.2rem;
+        color: var(--text-strong);
+      }
+      .ct-topic-header .ct-range {
+        font-size: 0.78rem;
+        color: var(--muted);
+        font-family: "JetBrains Mono", monospace;
+        margin-top: 2px;
+      }
+
+      /* No results state */
+      .ct-no-results {
+        padding: 40px;
+        text-align: center;
+        color: var(--muted);
+        font-size: 0.9rem;
+        display: none;
+      }
+
+      /* Search controls for coding tips */
+      .ct-controls {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 24px;
+        background: var(--surface);
+        border-bottom: 1px solid var(--border);
+        position: sticky;
+        top: 104px;
+        z-index: 99;
+      }
+      .ct-search-wrap {
+        flex: 1;
+        max-width: 400px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 6px 12px;
+      }
+      .ct-search-wrap svg {
+        color: var(--muted);
+        flex-shrink: 0;
+      }
+      .ct-search-wrap input {
+        border: none;
+        background: transparent;
+        color: var(--text);
+        font-family: "Syne", sans-serif;
+        font-size: 0.83rem;
+        width: 100%;
+        outline: none;
+      }
+      .ct-search-wrap input::placeholder {
+        color: var(--muted);
+      }
+      .ct-count-badge {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.75rem;
+        color: var(--muted);
+        white-space: nowrap;
+      }
+    </style>
+  </head>
+  <body class="mastery-page">
+    <!-- ── NAV ── -->
+    <nav class="topnav">
+      <span class="nav-logo">// Java Interview</span>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link">🏠 Home</a
+        ><a href="oop.html" class="nav-link">🧩 OOPS</a
+        ><a href="dsa.html" class="nav-link">🧮 DSA</a
+        ><a href="basics.html" class="nav-link">☕ Basic</a
+        ><a href="versions.html" class="nav-link">🚀 Version</a
+        ><a href="collections.html" class="nav-link">📦 Collection</a
+        ><a href="exceptions.html" class="nav-link">⚠️ Exception</a
+        ><a href="concurrency.html" class="nav-link">⚡ Concurrency + Advance</a
+        ><a href="methods.html" class="nav-link">🛠️ Methods</a
+        ><a href="mastery.html" class="nav-link">🧠 Mastry</a
+        ><a href="quiz.html" class="nav-link">🎯 Quiz</a
+        ><a href="springboot.html" class="nav-link">🍃 Spring</a
+        ><a href="backend-track.html" class="nav-link">🧱 Backend</a
+        ><a href="coding-tips.html" class="nav-link active">💡 Code Tips</a>
+      </div>
+      <button
+        class="theme-toggle"
+        id="themeToggle"
+        aria-label="Toggle light/dark theme"
+        onclick="toggleTheme()"
+        type="button"
+      >
+        <svg
+          class="icon-sun"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <circle cx="12" cy="12" r="4" />
+          <path
+            d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"
+          /></svg
+        ><svg
+          class="icon-moon"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+        </svg>
+      </button>
+    </nav>
+
+    <div class="breadcrumb"><a href="index.html">Home</a> › Coding Tips</div>
+
+    <header>
+      <div class="header-tag">// Interview Prep</div>
+      <h1>💡 Coding Tips — 396 Questions</h1>
+      <p class="subtitle">
+        Each question comes with a key insight tip plus three Java solution
+        approaches: Iteration, Recursion, and Stream/Functional — designed for
+        fast interview review.
+      </p>
+      <div class="stats-row">
+        <div class="stat"><span class="stat-num">396</span> Questions</div>
+        <div class="stat"><span class="stat-num">8</span> Topics</div>
+        <div class="stat"><span class="stat-num">3</span> Approaches Each</div>
+        <div class="stat"><span class="stat-num">Java</span> Snippets</div>
+      </div>
+    </header>
+
+    <!-- ── Topic Tab Bar ── -->
+    <div class="ct-tab-bar" id="ctTabBar">
+      <button class="ct-tab active" data-idx="0">
+        🔤 Strings <span style="font-weight: 400; opacity: 0.7">(1–55)</span>
+      </button>
+      <button class="ct-tab" data-idx="1">
+        📊 Arrays <span style="font-weight: 400; opacity: 0.7">(56–130)</span>
+      </button>
+      <button class="ct-tab" data-idx="2">
+        🔗 Linked List
+        <span style="font-weight: 400; opacity: 0.7">(131–170)</span>
+      </button>
+      <button class="ct-tab" data-idx="3">
+        📚 Stack &amp; Queue
+        <span style="font-weight: 400; opacity: 0.7">(171–210)</span>
+      </button>
+      <button class="ct-tab" data-idx="4">
+        🌳 Trees &amp; Trie
+        <span style="font-weight: 400; opacity: 0.7">(211–271)</span>
+      </button>
+      <button class="ct-tab" data-idx="5">
+        🕸️ Graphs <span style="font-weight: 400; opacity: 0.7">(272–316)</span>
+      </button>
+      <button class="ct-tab" data-idx="6">
+        🧩 Dynamic Programming
+        <span style="font-weight: 400; opacity: 0.7">(317–366)</span>
+      </button>
+      <button class="ct-tab" data-idx="7">
+        ☕ Java &amp; Design
+        <span style="font-weight: 400; opacity: 0.7">(367–396)</span>
+      </button>
+    </div>
+
+    <!-- ── Search Controls ── -->
+    <div class="ct-controls">
+      <div class="ct-search-wrap">
+        <svg
+          width="14"
+          height="14"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <circle cx="11" cy="11" r="8" />
+          <line x1="21" y1="21" x2="16.65" y2="16.65" />
+        </svg>
+        <input
+          type="text"
+          id="ctSearch"
+          placeholder="Search questions in current topic..."
+          oninput="ctFilter()"
+        />
+      </div>
+      <span class="ct-count-badge" id="ctCountBadge"></span>
+    </div>
+
+    <!-- ── Main Layout ── -->
+    <div class="main">
+      <aside class="sidebar" id="ctSidebar"></aside>
+      <div class="content" id="ctContent">
+        <div class="ct-no-results" id="ctNoResults">
+          No questions match your search.
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Data Sources ── -->
+    <script src="assets/coding-tips-strings-data.js"></script>
+    <script src="assets/coding-tips-linkedlist-data.js"></script>
+    <script src="assets/coding-tips-stackqueue-data.js"></script>
+    <script src="assets/coding-tips-arrays-a-data.js"></script>
+    <script src="assets/coding-tips-arrays-b-data.js"></script>
+    <script>
+      window.CT_ARRAYS = {
+        topic: "Arrays",
+        icon: "📊",
+        range: "56–130",
+        questions: (window.CT_ARRAYS_A || []).concat(window.CT_ARRAYS_B || []),
+      };
+    </script>
+    <script src="assets/coding-tips-trees-data.js"></script>
+    <script src="assets/coding-tips-graphs-data.js"></script>
+    <script src="assets/coding-tips-dp-data.js"></script>
+    <script src="assets/coding-tips-java-design-data.js"></script>
+
+    <script>
+      (function () {
+        var TOPICS = [
+          {
+            key: "strings",
+            data: function () {
+              return window.CT_STRINGS;
+            },
+          },
+          {
+            key: "arrays",
+            data: function () {
+              return window.CT_ARRAYS;
+            },
+          },
+          {
+            key: "linkedlist",
+            data: function () {
+              return window.CT_LINKEDLIST;
+            },
+          },
+          {
+            key: "stackqueue",
+            data: function () {
+              return window.CT_STACKQUEUE;
+            },
+          },
+          {
+            key: "trees",
+            data: function () {
+              return window.CT_TREES;
+            },
+          },
+          {
+            key: "graphs",
+            data: function () {
+              return window.CT_GRAPHS;
+            },
+          },
+          {
+            key: "dp",
+            data: function () {
+              return window.CT_DP;
+            },
+          },
+          {
+            key: "javadesign",
+            data: function () {
+              return window.CT_JAVA_DESIGN;
+            },
+          },
+        ];
+
+        var activeIdx = 0;
+        var rendered = {}; // cache rendered topics
+
+        var CHEVRON =
+          '<svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>';
+
+        function escHtml(s) {
+          return (s || "")
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;");
+        }
+
+        function buildCard(q) {
+          var tipHtml =
+            '<div class="tip-summary"><strong>💡 Tip:</strong> ' +
+            escHtml(q.tip) +
+            "</div>";
+
+          function approach(tab) {
+            var obj = q[tab];
+            if (!obj) return "";
+            var hintHtml = obj.hint
+              ? '<p class="approach-hint">' + escHtml(obj.hint) + "</p>"
+              : "";
+            var code = obj.snippet || "";
+            return hintHtml + "<pre><code>" + escHtml(code) + "</code></pre>";
+          }
+
+          var label0 = "🔄 Iteration",
+            label1 = "🔁 Recursion",
+            label2 = "🌊 Stream";
+
+          var html =
+            '<div class="card" id="ct-q-' +
+            q.id +
+            '" data-title="' +
+            escHtml((q.title || "").toLowerCase()) +
+            '">' +
+            '<div class="card-header" onclick="toggle(this)">' +
+            '<span class="q-num-badge">Q' +
+            q.id +
+            "</span>" +
+            '<span class="q-title" style="flex:1">' +
+            escHtml(q.title) +
+            "</span>" +
+            CHEVRON +
+            "</div>" +
+            '<div class="card-body">' +
+            '<div class="card-inner">' +
+            tipHtml +
+            '<div class="approach-tabs">' +
+            '<button class="approach-tab active" onclick="switchApproach(this,\'iter\')">' +
+            label0 +
+            "</button>" +
+            '<button class="approach-tab" onclick="switchApproach(this,\'recur\')">' +
+            label1 +
+            "</button>" +
+            '<button class="approach-tab" onclick="switchApproach(this,\'stream\')">' +
+            label2 +
+            "</button>" +
+            "</div>" +
+            '<div class="approach-panel active" data-panel="iter">' +
+            approach("iteration") +
+            "</div>" +
+            '<div class="approach-panel" data-panel="recur">' +
+            approach("recursion") +
+            "</div>" +
+            '<div class="approach-panel" data-panel="stream">' +
+            approach("stream") +
+            "</div>" +
+            "</div>" +
+            "</div>" +
+            "</div>";
+          return html;
+        }
+
+        function renderTopic(idx) {
+          if (rendered[idx]) return; // already rendered
+          var topic = TOPICS[idx];
+          var d = topic.data();
+          if (!d) {
+            document.getElementById("ctContent").innerHTML =
+              '<p style="padding:40px;color:var(--muted)">Data not loaded yet. Please refresh.</p>';
+            return;
+          }
+          var content = document.getElementById("ctContent");
+          var sidebar = document.getElementById("ctSidebar");
+
+          // Create section element for this topic
+          var sec = document.createElement("div");
+          sec.id = "ct-topic-" + idx;
+          sec.className = "ct-topic-section";
+          sec.style.display = "none";
+
+          var hdr =
+            '<div class="ct-topic-header">' +
+            "<h2>" +
+            d.icon +
+            " " +
+            escHtml(d.topic) +
+            "</h2>" +
+            '<div class="ct-range">Questions ' +
+            escHtml(d.range) +
+            "</div>" +
+            "</div>";
+
+          var cards = "";
+          d.questions.forEach(function (q) {
+            cards += buildCard(q);
+          });
+          sec.innerHTML = hdr + cards;
+          content.appendChild(sec);
+
+          // Sidebar links for this topic
+          var catHdr = document.createElement("div");
+          catHdr.className = "cat-header";
+          catHdr.id = "ct-sidebar-cat-" + idx;
+          catHdr.style.display = "none";
+          catHdr.textContent = d.icon + " " + d.topic;
+          sidebar.appendChild(catHdr);
+
+          d.questions.forEach(function (q) {
+            var link = document.createElement("div");
+            link.className = "sidebar-link";
+            link.id = "ct-sidebar-link-" + idx + "-" + q.id;
+            link.style.display = "none";
+            link.dataset.qid = "ct-q-" + q.id;
+            link.textContent =
+              "Q" +
+              q.id +
+              " " +
+              (q.title || "").substring(0, 30) +
+              (q.title && q.title.length > 30 ? "…" : "");
+            link.addEventListener("click", function () {
+              var el = document.getElementById(this.dataset.qid);
+              if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+            });
+            sidebar.appendChild(link);
+          });
+
+          rendered[idx] = true;
+        }
+
+        function showTopic(idx) {
+          // Render if needed
+          renderTopic(idx);
+
+          // Hide all sections, show active
+          var sections = document.querySelectorAll(".ct-topic-section");
+          sections.forEach(function (s) {
+            s.style.display = "none";
+          });
+          var active = document.getElementById("ct-topic-" + idx);
+          if (active) active.style.display = "";
+
+          // Hide all sidebar items, show active
+          var catHdrs = document.querySelectorAll('[id^="ct-sidebar-cat-"]');
+          catHdrs.forEach(function (el) {
+            el.style.display = "none";
+          });
+          var activeHdr = document.getElementById("ct-sidebar-cat-" + idx);
+          if (activeHdr) activeHdr.style.display = "";
+
+          var allLinks = document.querySelectorAll('[id^="ct-sidebar-link-"]');
+          allLinks.forEach(function (el) {
+            el.style.display = "none";
+          });
+          var topicLinks = document.querySelectorAll(
+            '[id^="ct-sidebar-link-' + idx + '-"]',
+          );
+          topicLinks.forEach(function (el) {
+            el.style.display = "";
+          });
+
+          // Update count badge
+          updateCountBadge(idx);
+
+          // Clear search
+          document.getElementById("ctSearch").value = "";
+          if (active) {
+            active.querySelectorAll(".card").forEach(function (c) {
+              c.style.display = "";
+            });
+          }
+          document.getElementById("ctNoResults").style.display = "none";
+        }
+
+        function updateCountBadge(idx) {
+          var d = TOPICS[idx].data();
+          if (d && d.questions) {
+            document.getElementById("ctCountBadge").textContent =
+              d.questions.length + " questions";
+          }
+        }
+
+        // Tab click handler
+        document
+          .getElementById("ctTabBar")
+          .addEventListener("click", function (e) {
+            var btn = e.target.closest(".ct-tab");
+            if (!btn) return;
+            var idx = parseInt(btn.dataset.idx, 10);
+            if (idx === activeIdx) return;
+
+            document.querySelectorAll(".ct-tab").forEach(function (t) {
+              t.classList.remove("active");
+            });
+            btn.classList.add("active");
+            activeIdx = idx;
+            showTopic(idx);
+          });
+
+        // Filter/search within current topic
+        window.ctFilter = function () {
+          var q = document
+            .getElementById("ctSearch")
+            .value.toLowerCase()
+            .trim();
+          var sec = document.getElementById("ct-topic-" + activeIdx);
+          if (!sec) return;
+          var cards = sec.querySelectorAll(".card");
+          var visible = 0;
+          cards.forEach(function (c) {
+            var title = c.dataset.title || "";
+            var show = !q || title.indexOf(q) !== -1;
+            c.style.display = show ? "" : "none";
+            if (show) visible++;
+          });
+          document.getElementById("ctNoResults").style.display =
+            visible === 0 ? "block" : "none";
+          document.getElementById("ctCountBadge").textContent =
+            visible + " questions";
+        };
+
+        // Approach sub-tab switcher
+        window.switchApproach = function (btn, panel) {
+          var card = btn.closest(".card-inner");
+          if (!card) return;
+          card.querySelectorAll(".approach-tab").forEach(function (t) {
+            t.classList.remove("active");
+          });
+          card.querySelectorAll(".approach-panel").forEach(function (p) {
+            p.classList.remove("active");
+          });
+          btn.classList.add("active");
+          var target = card.querySelector('[data-panel="' + panel + '"]');
+          if (target) target.classList.add("active");
+        };
+
+        // Initial render
+        renderTopic(0);
+        showTopic(0);
+      })();
+    </script>
+    <script src="assets/main.js" defer></script>
+  </body>
+</html>
