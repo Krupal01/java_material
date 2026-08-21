@@ -2,6 +2,12 @@ window.CT_ARRAYS_B = [
   {
     id: 93,
     title: "Subarray divisible by K",
+    problem:
+      "Given an integer array nums and an integer k, return the number of contiguous subarrays whose sum is divisible by k.",
+    examples: [
+      { input: "nums = [4,5,0,-2,-3,1], k = 5", output: "7" },
+      { input: "nums = [5], k = 9", output: "0" },
+    ],
     tip: "Prefix sum modulo K: if (prefixSum % K) repeats, the subarray between those indices is divisible by K",
     iteration: {
       hint: "Track prefix sum mod K in a map; count matches",
@@ -32,6 +38,12 @@ for (int n : nums) {
   {
     id: 94,
     title: "Continuous subarray sum (multiple of K)",
+    problem:
+      "Given an integer array nums and integer k, return true if nums has a continuous subarray of length at least two whose sum is a multiple of k.",
+    examples: [
+      { input: "nums = [23,2,4,6,7], k = 6", output: "true" },
+      { input: "nums = [23,2,6,4,7], k = 13", output: "false" },
+    ],
     tip: "Prefix sum mod K: if same remainder seen before with gap >= 2, a valid subarray exists",
     iteration: {
       hint: "Store (mod -> first index) in map; check gap >= 2",
@@ -62,6 +74,12 @@ for (int i = 0; i < nums.length; i++) {
   {
     id: 95,
     title: "Maximum sum circular subarray",
+    problem:
+      "Given a circular integer array nums, return the maximum possible sum of a non-empty subarray that may wrap around the end.",
+    examples: [
+      { input: "nums = [1,-2,3,-2]", output: "3" },
+      { input: "nums = [5,-3,5]", output: "10" },
+    ],
     tip: "Answer is max(Kadane normal, total sum - Kadane on negated array); handle all-negative edge case",
     iteration: {
       hint: "Run Kadane normally and on negated values; compare vs total",
@@ -89,6 +107,12 @@ return (maxCircular == 0) ? maxNormal : Math.max(maxNormal, maxCircular);`,
   {
     id: 96,
     title: "Duplicate zeros in place",
+    problem:
+      "Given a fixed-length integer array arr, duplicate each zero in-place and shift remaining elements right, dropping values beyond the length.",
+    examples: [
+      { input: "arr = [1,0,2,3,0,4,5,0]", output: "[1,0,0,2,3,0,0,4]" },
+      { input: "arr = [1,2,3]", output: "[1,2,3]" },
+    ],
     tip: "Count zeros to find shift amount, then copy from back to avoid overwriting unprocessed elements",
     iteration: {
       hint: "Count zeros, then iterate from end placing each element at shifted position",
@@ -119,6 +143,12 @@ System.arraycopy(res, 0, arr, 0, arr.length);`,
   {
     id: 97,
     title: "Minimum operations to make array elements equal",
+    problem:
+      "Given an integer array nums, return the minimum total operations needed to make all elements equal when one operation changes an element by 1.",
+    examples: [
+      { input: "nums = [1,2,3]", output: "2" },
+      { input: "nums = [1,10,2,9]", output: "16" },
+    ],
     tip: "Sort + prefix sums: cost to make all elements equal to median is minimized; compute with prefix sums",
     iteration: {
       hint: "Sort, compute prefix sums, query each element as target",
@@ -146,6 +176,12 @@ long ops = IntStream.of(nums).mapToLong(x -> Math.abs(x - median)).sum();`,
   {
     id: 98,
     title: "Array partition to maximize sum of mins",
+    problem:
+      "Given 2n integers, pair them to maximize the sum of the smaller value in each pair.",
+    examples: [
+      { input: "nums = [1,4,3,2]", output: "4" },
+      { input: "nums = [6,2,6,5,1,2]", output: "9" },
+    ],
     tip: "Sort the array; pick every other element starting at index 0 — those are the mins of each pair",
     iteration: {
       hint: "Sort, then sum elements at even indices",
@@ -171,6 +207,12 @@ return IntStream.range(0, nums.length / 2).map(i -> nums[i * 2]).sum();`,
   {
     id: 99,
     title: "Largest rectangle in histogram",
+    problem:
+      "Given histogram bar heights, return the area of the largest rectangle that can be formed using contiguous bars.",
+    examples: [
+      { input: "heights = [2,1,5,6,2,3]", output: "10" },
+      { input: "heights = [2,4]", output: "4" },
+    ],
     tip: "Monotonic stack: maintain increasing heights; pop when a shorter bar is found and calculate area",
     iteration: {
       hint: "Push indices onto stack; pop and compute area when height decreases",
@@ -203,6 +245,14 @@ for (int i = 0; i <= h.length; i++) {
   {
     id: 100,
     title: "Matrix rotation (90 degrees in place)",
+    problem: "Given an n x n matrix, rotate it 90 degrees clockwise in-place.",
+    examples: [
+      {
+        input: "matrix = [[1,2,3],[4,5,6],[7,8,9]]",
+        output: "[[7,4,1],[8,5,2],[9,6,3]]",
+      },
+      { input: "matrix = [[1,2],[3,4]]", output: "[[3,1],[4,2]]" },
+    ],
     tip: "Transpose the matrix, then reverse each row — two steps give 90-degree clockwise rotation",
     iteration: {
       hint: "Transpose then reverse each row in place",
@@ -230,6 +280,15 @@ for (int[] row : m) { int l=0,r=n-1; while(l<r){int t=row[l];row[l++]=row[r];row
   {
     id: 101,
     title: "Diagonal traversal of a matrix",
+    problem:
+      "Given an m x n matrix, return its elements in diagonal order, alternating upward and downward traversal.",
+    examples: [
+      {
+        input: "mat = [[1,2,3],[4,5,6],[7,8,9]]",
+        output: "[1,2,4,7,5,3,6,8,9]",
+      },
+      { input: "mat = [[1,2],[3,4]]", output: "[1,2,3,4]" },
+    ],
     tip: "Direction alternates each diagonal; use d flag for up/down; total diagonals = m+n-1",
     iteration: {
       hint: "Iterate diagonals, alternate direction, collect elements",
@@ -259,6 +318,14 @@ for (int d=0; d<m+n-1; d++) {
   {
     id: 102,
     title: "Pascal's triangle",
+    problem: "Given numRows, generate the first numRows of Pascal's triangle.",
+    examples: [
+      {
+        input: "numRows = 5",
+        output: "[[1],[1,1],[1,2,1],[1,3,3,1],[1,4,6,4,1]]",
+      },
+      { input: "numRows = 1", output: "[[1]]" },
+    ],
     tip: "Each element is sum of two elements above it; build row by row using previous row",
     iteration: {
       hint: "Iteratively build each row from the previous",
@@ -291,6 +358,12 @@ for (int i = 0; i < numRows; i++) {
   {
     id: 103,
     title: "Pascal's triangle — single row",
+    problem:
+      "Given rowIndex, return the rowIndex-th row of Pascal's triangle using zero-based indexing.",
+    examples: [
+      { input: "rowIndex = 3", output: "[1,3,3,1]" },
+      { input: "rowIndex = 0", output: "[1]" },
+    ],
     tip: "Use C(n,k) = C(n,k-1) * (n-k+1) / k to build one row in O(n) time without full triangle",
     iteration: {
       hint: "Compute binomial coefficients iteratively using the recurrence",
@@ -321,6 +394,12 @@ return IntStream.rangeClosed(0, rowIndex).mapToObj(k -> {
   {
     id: 104,
     title: "Shuffle an array (Fisher-Yates)",
+    problem:
+      "Given an integer array nums, return a uniformly random permutation of the array.",
+    examples: [
+      { input: "nums = [1,2,3]", output: "[2,1,3] (one possible shuffle)" },
+      { input: "nums = [1]", output: "[1]" },
+    ],
     tip: "From end to start, swap each element with a random element at or before it — gives unbiased shuffle",
     iteration: {
       hint: "Loop from last index down; swap with random index 0..i",
@@ -350,6 +429,12 @@ return list.stream().mapToInt(Integer::intValue).toArray();`,
   {
     id: 105,
     title: "Wiggle sort",
+    problem:
+      "Given an unsorted array nums, reorder it so nums[0] <= nums[1] >= nums[2] <= nums[3] and so on.",
+    examples: [
+      { input: "nums = [3,5,2,1,6,4]", output: "[3,5,1,6,2,4]" },
+      { input: "nums = [1,2,3,4]", output: "[1,3,2,4]" },
+    ],
     tip: "One pass: if index is odd and nums[i] < nums[i-1], swap; if even and nums[i] > nums[i-1], swap",
     iteration: {
       hint: "Traverse with swap condition alternating at each index",
@@ -382,6 +467,18 @@ return list.stream().mapToInt(Integer::intValue).toArray();`,
   {
     id: 106,
     title: "Relative sort array",
+    problem:
+      "Given arrays arr1 and arr2 where arr2 has distinct values from arr1, sort arr1 so arr2 values appear first in arr2 order and remaining values ascend.",
+    examples: [
+      {
+        input: "arr1 = [2,3,1,3,2,4,6,7,9,2,19], arr2 = [2,1,4,3,9,6]",
+        output: "[2,2,2,1,4,3,3,9,6,7,19]",
+      },
+      {
+        input: "arr1 = [28,6,22,8,44,17], arr2 = [22,28,8,6]",
+        output: "[22,28,8,6,17,44]",
+      },
+    ],
     tip: "Use a custom comparator: elements in arr2 come first in order; remaining elements sorted numerically",
     iteration: {
       hint: "Map arr2 elements to their rank; sort with custom comparator",
@@ -410,6 +507,12 @@ return Arrays.stream(arr1).boxed()
   {
     id: 107,
     title: "Sorted squares of a sorted array",
+    problem:
+      "Given a non-decreasing sorted integer array nums, return a sorted array of the squares of each number.",
+    examples: [
+      { input: "nums = [-4,-1,0,3,10]", output: "[0,1,9,16,100]" },
+      { input: "nums = [-7,-3,2,3,11]", output: "[4,9,9,49,121]" },
+    ],
     tip: "Two pointers from both ends: largest square comes from either end; fill result array from back",
     iteration: {
       hint: "Two pointers l and r; compare squares, insert from right of result",
@@ -436,6 +539,18 @@ for (int i = n - 1; i >= 0; i--) {
   {
     id: 108,
     title: "Number of islands (grid)",
+    problem:
+      "Given a grid of '1' land and '0' water, return the number of islands connected horizontally or vertically.",
+    examples: [
+      {
+        input: "grid = [[1,1,1,1,0],[1,1,0,1,0],[1,1,0,0,0],[0,0,0,0,0]]",
+        output: "1",
+      },
+      {
+        input: "grid = [[1,1,0,0,0],[1,1,0,0,0],[0,0,1,0,0],[0,0,0,1,1]]",
+        output: "3",
+      },
+    ],
     tip: "DFS/BFS from each unvisited '1'; mark visited cells as '0' (sink them); count DFS calls",
     iteration: {
       hint: "BFS with queue: enqueue '1' cell, flood-fill neighbors",
@@ -465,6 +580,18 @@ for (int i=0;i<grid.length;i++) for (int j=0;j<grid[0].length;j++)
   {
     id: 109,
     title: "Word search (grid)",
+    problem:
+      "Given a character grid and a word, return true if the word can be formed by adjacent horizontal or vertical cells without reusing a cell.",
+    examples: [
+      {
+        input: 'board = [[A,B,C,E],[S,F,C,S],[A,D,E,E]], word = "ABCCED"',
+        output: "true",
+      },
+      {
+        input: 'board = [[A,B,C,E],[S,F,C,S],[A,D,E,E]], word = "ABCB"',
+        output: "false",
+      },
+    ],
     tip: "DFS with backtracking: mark cell visited, try all 4 directions, unmark on backtrack",
     iteration: {
       hint: "Iterative DFS with explicit stack tracking position and word index",
@@ -491,6 +618,12 @@ for (int i=0;i<grid.length;i++) for (int j=0;j<grid[0].length;j++)
   {
     id: 110,
     title: "Max area of island",
+    problem:
+      "Given a binary grid, return the maximum area of an island of 1s connected horizontally or vertically.",
+    examples: [
+      { input: "grid = [[0,0,1,0],[1,1,1,0],[0,0,0,1]]", output: "4" },
+      { input: "grid = [[0,0,0],[0,0,0]]", output: "0" },
+    ],
     tip: "DFS from each '1' cell; count cells in each island; return the maximum count seen",
     iteration: {
       hint: "BFS from each land cell; count cells per island, track max",
@@ -520,6 +653,18 @@ for (int i=0;i<grid.length;i++) for (int j=0;j<grid[0].length;j++)
   {
     id: 111,
     title: "Flood fill",
+    problem:
+      "Given an image matrix, starting pixel sr, sc, and a new color, recolor the connected region with the same original color.",
+    examples: [
+      {
+        input: "image = [[1,1,1],[1,1,0],[1,0,1]], sr = 1, sc = 1, color = 2",
+        output: "[[2,2,2],[2,2,0],[2,0,1]]",
+      },
+      {
+        input: "image = [[0,0,0],[0,0,0]], sr = 0, sc = 0, color = 0",
+        output: "[[0,0,0],[0,0,0]]",
+      },
+    ],
     tip: "DFS/BFS from source pixel; replace old color with new color; don't revisit already-new-color cells",
     iteration: {
       hint: "BFS queue flood fill; skip if old color equals new color",
@@ -550,6 +695,15 @@ return image;`,
   {
     id: 112,
     title: "Game of life",
+    problem:
+      "Given a Game of Life board, update it in-place to the next state using the standard live-neighbor rules.",
+    examples: [
+      {
+        input: "board = [[0,1,0],[0,0,1],[1,1,1],[0,0,0]]",
+        output: "[[0,0,0],[1,0,1],[0,1,1],[0,1,0]]",
+      },
+      { input: "board = [[1,1],[1,0]]", output: "[[1,1],[1,1]]" },
+    ],
     tip: "Use encoded states (2=was dead now alive, -1=was alive now dead) to update in-place without extra space",
     iteration: {
       hint: "Two passes: encode transitions, then decode final state",
@@ -575,6 +729,12 @@ for(int[]row:board) for(int j=0;j<row.length;j++) row[j]=row[j]>0?1:0;`,
   {
     id: 113,
     title: "Matrix reshape",
+    problem:
+      "Given a matrix nums and dimensions r and c, reshape the matrix to r x c preserving row-major order, or return the original if impossible.",
+    examples: [
+      { input: "nums = [[1,2],[3,4]], r = 1, c = 4", output: "[[1,2,3,4]]" },
+      { input: "nums = [[1,2],[3,4]], r = 2, c = 4", output: "[[1,2],[3,4]]" },
+    ],
     tip: "Map flat index i = r*c + col to new (i/c2, i%c2); only possible if total elements match",
     iteration: {
       hint: "Flatten matrix then fill new shape using index arithmetic",
@@ -600,6 +760,12 @@ return IntStream.range(0,r).mapToObj(i->Arrays.copyOfRange(flat,i*c,(i+1)*c)).to
   {
     id: 114,
     title: "Toeplitz matrix check",
+    problem:
+      "Given a matrix, return true if every diagonal from top-left to bottom-right contains the same value.",
+    examples: [
+      { input: "matrix = [[1,2,3,4],[5,1,2,3],[9,5,1,2]]", output: "true" },
+      { input: "matrix = [[1,2],[2,2]]", output: "false" },
+    ],
     tip: "Every element (except first row/col) must equal the element one step up-left: matrix[i][j] == matrix[i-1][j-1]",
     iteration: {
       hint: "Iterate from (1,1) checking each element against its upper-left neighbor",
@@ -626,6 +792,12 @@ return true;`,
   {
     id: 115,
     title: "Transpose matrix",
+    problem:
+      "Given a matrix, return its transpose where rows become columns and columns become rows.",
+    examples: [
+      { input: "matrix = [[1,2,3],[4,5,6]]", output: "[[1,4],[2,5],[3,6]]" },
+      { input: "matrix = [[1,2],[3,4]]", output: "[[1,3],[2,4]]" },
+    ],
     tip: "Swap matrix[i][j] with matrix[j][i] for all i < j (square); for rectangular, create new matrix with swapped dims",
     iteration: {
       hint: "For rectangular: create new int[cols][rows] and copy with swapped indices",
@@ -652,6 +824,12 @@ return res;`,
   {
     id: 116,
     title: "Find the equilibrium index of an array",
+    problem:
+      "Given an integer array arr, return an index where the sum of elements to the left equals the sum of elements to the right, or -1 if none exists.",
+    examples: [
+      { input: "arr = [-7,1,5,2,-4,3,0]", output: "3" },
+      { input: "arr = [1,2,3]", output: "-1" },
+    ],
     tip: "Total sum minus prefix sum at each index: if leftSum == rightSum (total - leftSum - arr[i]), it's equilibrium",
     iteration: {
       hint: "Compute total sum; scan left accumulating prefix; check balance",
@@ -683,6 +861,15 @@ return IntStream.range(0,arr.length).filter(i -> {
   {
     id: 117,
     title: "Merge two sorted arrays in-place (no extra space)",
+    problem:
+      "Given sorted arrays nums1 and nums2 with enough trailing space in nums1, merge nums2 into nums1 in sorted order in-place.",
+    examples: [
+      {
+        input: "nums1 = [1,2,3,0,0,0], m = 3, nums2 = [2,5,6], n = 3",
+        output: "[1,2,2,3,5,6]",
+      },
+      { input: "nums1 = [1], m = 1, nums2 = [], n = 0", output: "[1]" },
+    ],
     tip: "Start filling from the end of the combined length; use two pointers from the ends of each array",
     iteration: {
       hint: "Pointer from end of nums1 content and end of nums2; fill from back of nums1",
@@ -708,6 +895,15 @@ while (j>=0) nums1[k--]=nums2[j--];`,
   {
     id: 118,
     title: "Find all pairs with a given difference",
+    problem:
+      "Given an array arr and a difference diff, return all pairs (x, y) such that y - x equals diff.",
+    examples: [
+      { input: "arr = [1,5,3,4,2], diff = 2", output: "[(1,3),(3,5),(2,4)]" },
+      {
+        input: "arr = [8,12,16,4,0,20], diff = 4",
+        output: "[(8,12),(12,16),(4,8),(0,4),(16,20)]",
+      },
+    ],
     tip: "Sort + two pointers, or use a HashSet: for each element check if (element + diff) exists in the set",
     iteration: {
       hint: "Add all to set; for each x check if x+diff is in set",
@@ -737,6 +933,12 @@ return IntStream.of(arr).filter(x->s.contains(x+diff))
   {
     id: 119,
     title: "Maximum subarray sum with at most K elements removed",
+    problem:
+      "Given an integer array nums and integer k, return the maximum subarray sum after removing at most k elements from that subarray.",
+    examples: [
+      { input: "nums = [1,-2,0,3], k = 1", output: "4" },
+      { input: "nums = [1,-2,-2,3], k = 1", output: "3" },
+    ],
     tip: "DP with state (index, removals left): max sum ending here with j removals used; use memoization",
     iteration: {
       hint: "DP table dp[i][j] = max sum of subarray ending at i with j removals",
@@ -767,6 +969,12 @@ for (int i=0;i<n;i++) for (int j=0;j<=k;j++) {
   {
     id: 120,
     title: "Find the smallest positive number missing from an unsorted array",
+    problem:
+      "Given an unsorted integer array nums, return the smallest positive integer missing from it.",
+    examples: [
+      { input: "nums = [1,2,0]", output: "3" },
+      { input: "nums = [7,8,9,11,12]", output: "1" },
+    ],
     tip: "Place each number x in index x-1 if 1 <= x <= n; then scan for first position where arr[i] != i+1",
     iteration: {
       hint: "Cycle-sort-like swap to place values in correct positions, then scan",
@@ -796,6 +1004,15 @@ return IntStream.range(0,nums.length)
   {
     id: 121,
     title: "Rearrange array in alternating positive/negative order",
+    problem:
+      "Given an array with positive and negative numbers, rearrange it in alternating positive and negative order while preserving each group's relative order as much as possible.",
+    examples: [
+      { input: "arr = [1,2,3,-4,-1,4]", output: "[1,-4,2,-1,3,4]" },
+      {
+        input: "arr = [-5,-2,5,2,4,7,1,8,0,-8]",
+        output: "[5,-5,2,-2,4,-8,7,1,8,0]",
+      },
+    ],
     tip: "Separate positives and negatives, then interleave starting with positive (or use 2-pointer with extra array)",
     iteration: {
       hint: "Collect positives and negatives; merge alternately into result",
@@ -826,6 +1043,12 @@ return res;`,
   {
     id: 122,
     title: "Find the leaders in an array",
+    problem:
+      "Given an array arr, return all leaders: elements greater than or equal to every element to their right.",
+    examples: [
+      { input: "arr = [16,17,4,3,5,2]", output: "[17,5,2]" },
+      { input: "arr = [1,2,3,4,0]", output: "[4,0]" },
+    ],
     tip: "Scan from right to left: track running max from right; any element >= that max is a leader",
     iteration: {
       hint: "Traverse from right, update max; collect elements >= current right max",
@@ -855,6 +1078,16 @@ return IntStream.range(0,arr.length).filter(i->arr[i]>=suf[i]).mapToObj(i->arr[i
   {
     id: 123,
     title: "Minimum number of platforms needed (interval scheduling)",
+    problem:
+      "Given train arrival and departure times, return the minimum number of platforms needed so no train waits.",
+    examples: [
+      {
+        input:
+          "arr = [900,940,950,1100,1500,1800], dep = [910,1200,1120,1130,1900,2000]",
+        output: "3",
+      },
+      { input: "arr = [900,940], dep = [910,1200]", output: "1" },
+    ],
     tip: "Sort arrivals and departures separately; two-pointer scan to count overlapping intervals",
     iteration: {
       hint: "Sort both arrays; advance departure pointer when train departs before next arrives",
@@ -883,6 +1116,12 @@ while (i<arr.length && j<arr.length) {
   {
     id: 124,
     title: "Maximum sum of non-adjacent elements (House Robber)",
+    problem:
+      "Given an array nums, return the maximum sum of elements you can choose with no two chosen elements adjacent.",
+    examples: [
+      { input: "nums = [2,7,9,3,1]", output: "12" },
+      { input: "nums = [5,5,10,100,10,5]", output: "110" },
+    ],
     tip: "DP: at each house choose max(include current + dp[i-2], skip and take dp[i-1])",
     iteration: {
       hint: "Track two previous dp values; roll forward without full array",
@@ -912,6 +1151,12 @@ return dp[1];`,
     id: 125,
     title:
       "Majority element appearing more than N/3 times (Boyer-Moore variant)",
+    problem:
+      "Given an integer array nums, return all elements that appear more than n / 3 times.",
+    examples: [
+      { input: "nums = [3,2,3]", output: "[3]" },
+      { input: "nums = [1,1,1,3,3,2,2,2]", output: "[1,2]" },
+    ],
     tip: "At most 2 candidates can appear > n/3 times; maintain two candidate/count pairs, then verify both",
     iteration: {
       hint: "Two-pass Boyer-Moore: find two candidates, then count their occurrences",
@@ -949,6 +1194,12 @@ return Arrays.stream(nums).boxed()
   {
     id: 126,
     title: "Chocolate distribution problem",
+    problem:
+      "Given packet sizes and m students, distribute one packet to each student so the difference between maximum and minimum chosen packets is minimized.",
+    examples: [
+      { input: "arr = [7,3,2,4,9,12,56], m = 3", output: "2" },
+      { input: "arr = [3,4,1,9,56,7,9,12], m = 5", output: "6" },
+    ],
     tip: "Sort chocolates; sliding window of size m — minimum difference is min(arr[i+m-1] - arr[i]) over all windows",
     iteration: {
       hint: "Sort, then scan window of size m finding minimum range",
@@ -976,6 +1227,12 @@ return IntStream.range(0, arr.length - m + 1)
   {
     id: 127,
     title: "Find the smallest subarray with sum greater than a given value",
+    problem:
+      "Given an array of positive integers arr and a value x, return the length of the smallest contiguous subarray with sum greater than x, or 0 if none exists.",
+    examples: [
+      { input: "arr = [1,4,45,6,10,19], x = 51", output: "3" },
+      { input: "arr = [1,10,5,2,7], x = 9", output: "1" },
+    ],
     tip: "Sliding window: expand right until sum > target, then shrink from left and track min length",
     iteration: {
       hint: "Two pointer window: grow right, shrink left when sum > target",
@@ -1006,6 +1263,12 @@ for (int r=0; r<arr.length; r++) {
   {
     id: 128,
     title: "Count inversions in an array (merge-sort based)",
+    problem:
+      "Given an array arr, count inversions: pairs (i, j) where i < j and arr[i] > arr[j].",
+    examples: [
+      { input: "arr = [8,4,2,1]", output: "6" },
+      { input: "arr = [1,20,6,4,5]", output: "5" },
+    ],
     tip: "During merge sort, when right element < left element, all remaining left elements form inversions",
     iteration: {
       hint: "Merge sort counting: add (mid - l + 1) inversions for each right-before-left placement",
@@ -1033,6 +1296,12 @@ long inv=IntStream.range(0,a.length).asLongStream().flatMap(i->
   {
     id: 129,
     title: "Find the pair with the maximum product in an array",
+    problem:
+      "Given an integer array arr, return the pair of numbers whose product is maximum.",
+    examples: [
+      { input: "arr = [1,4,3,6,7,0]", output: "[6,7]" },
+      { input: "arr = [-10,-3,5,6,-2]", output: "[-10,-3]" },
+    ],
     tip: "Sort the array — max product is either last two (largest positives) or first two (most negative × most negative)",
     iteration: {
       hint: "Sort, then compare product of first two vs product of last two",
@@ -1064,6 +1333,18 @@ return Math.max((long)s[n-1]*s[n-2], (long)s[0]*s[1]) == (long)s[n-1]*s[n-2]
     id: 130,
     title:
       "Rotate a matrix 90 degrees without extra space (in-place, layer by layer)",
+    problem:
+      "Given an n x n matrix, rotate it 90 degrees clockwise in-place using layer-by-layer swaps without extra matrix space.",
+    examples: [
+      {
+        input: "matrix = [[1,2,3],[4,5,6],[7,8,9]]",
+        output: "[[7,4,1],[8,5,2],[9,6,3]]",
+      },
+      {
+        input: "matrix = [[5,1,9,11],[2,4,8,10],[13,3,6,7],[15,14,12,16]]",
+        output: "[[15,13,2,5],[14,3,4,1],[12,6,8,9],[16,7,10,11]]",
+      },
+    ],
     tip: "Process each layer from outside in; four-way swap of top/right/bottom/left positions simultaneously",
     iteration: {
       hint: "For each layer, rotate four elements at a time using temp variable",

@@ -6,6 +6,18 @@ window.CT_JAVA_DESIGN = {
     {
       id: 367,
       title: "Thread-safe Singleton (double-checked locking with volatile)",
+      problem:
+        "Design a Singleton class that is lazily initialized and safe when accessed by multiple threads.",
+      examples: [
+        {
+          input: "Thread A and B call get() at same time",
+          output: "same Singleton instance",
+        },
+        {
+          input: "serialize or repeatedly call get()",
+          output: "no duplicate instance created",
+        },
+      ],
       tip: "Use volatile + double-checked locking; prefer inner static holder class — simpler and lazily initialized",
       iteration: {
         hint: "Double-checked locking: check null twice, synchronized block in between, volatile field",
@@ -23,6 +35,18 @@ window.CT_JAVA_DESIGN = {
     {
       id: 368,
       title: "Producer-consumer (wait/notifyAll then BlockingQueue)",
+      problem:
+        "Implement producer-consumer coordination so producers wait when the buffer is full and consumers wait when it is empty.",
+      examples: [
+        {
+          input: "capacity = 2, produce 1, produce 2, consume",
+          output: "consumer gets 1",
+        },
+        {
+          input: "empty queue, consume()",
+          output: "consumer waits until producer adds item",
+        },
+      ],
       tip: "Use BlockingQueue in production; raw wait/notifyAll is educational but error-prone",
       iteration: {
         hint: "Synchronized queue with wait/notifyAll: producer waits when full, consumer waits when empty",
@@ -40,6 +64,15 @@ window.CT_JAVA_DESIGN = {
     {
       id: 369,
       title: "Read-write lock (ReentrantReadWriteLock)",
+      problem:
+        "Protect shared data so many readers can read concurrently but writers get exclusive access.",
+      examples: [
+        { input: "read(), read() in parallel", output: "both may proceed" },
+        {
+          input: "write() while read active",
+          output: "write waits or blocks readers depending on lock",
+        },
+      ],
       tip: "ReadWriteLock allows concurrent reads but exclusive writes; use tryLock with timeout to avoid starvation",
       iteration: {
         hint: "Acquire readLock for reads and writeLock for writes; always unlock in finally block",
@@ -57,6 +90,18 @@ window.CT_JAVA_DESIGN = {
     {
       id: 370,
       title: "Deadlock detection and resolution via lock ordering",
+      problem:
+        "Show how to prevent or detect deadlock when multiple threads need multiple locks.",
+      examples: [
+        {
+          input: "transfer(A,B) and transfer(B,A)",
+          output: "both acquire locks in same order",
+        },
+        {
+          input: "tryLock times out on second lock",
+          output: "release first lock and retry",
+        },
+      ],
       tip: "Prevent deadlock by always acquiring locks in a consistent global order; use tryLock for detection",
       iteration: {
         hint: "Order locks by System.identityHashCode so every thread acquires in the same sequence",
@@ -74,6 +119,18 @@ window.CT_JAVA_DESIGN = {
     {
       id: 371,
       title: "Rate limiter (token bucket / sliding window)",
+      problem:
+        "Design a rate limiter that decides whether each request should be allowed under a fixed traffic policy.",
+      examples: [
+        {
+          input: "limit = 2/sec, requests at t=0,0.1,0.2",
+          output: "allow, allow, reject",
+        },
+        {
+          input: "token bucket refills after 1 second",
+          output: "later request allowed",
+        },
+      ],
       tip: "Token bucket smooths bursts; sliding window log gives precise per-window counts; use Semaphore for simple cases",
       iteration: {
         hint: "Token bucket: refill tokens on each call based on elapsed time, deny if no tokens available",
@@ -92,6 +149,18 @@ window.CT_JAVA_DESIGN = {
       id: 372,
       title:
         "Custom thread pool (ThreadPoolExecutor with custom RejectedExecutionHandler)",
+      problem:
+        "Design a small thread pool that accepts tasks, runs them on worker threads, and handles overload.",
+      examples: [
+        {
+          input: "pool size = 2, submit 5 tasks",
+          output: "2 run, remaining queue",
+        },
+        {
+          input: "queue full, submit task",
+          output: "rejection handler decides outcome",
+        },
+      ],
       tip: "Size core/max pool and queue carefully; custom RejectedExecutionHandler decides what to do when queue is full",
       iteration: {
         hint: "Build ThreadPoolExecutor directly: set coreSize, maxSize, keepAlive, queue, and rejection policy",
@@ -109,6 +178,18 @@ window.CT_JAVA_DESIGN = {
     {
       id: 373,
       title: "Immutable class design (all fields final, defensive copying)",
+      problem:
+        "Design an immutable Java class whose state cannot be changed after construction.",
+      examples: [
+        {
+          input: "constructor receives mutable Date",
+          output: "class stores defensive copy",
+        },
+        {
+          input: "getter returns list field",
+          output: "returns unmodifiable or copied list",
+        },
+      ],
       tip: "Declare final class, final fields, no setters; defensively copy mutable inputs and outputs",
       iteration: {
         hint: "Copy mutable fields in constructor (in) and in getters (out) to prevent external mutation",
@@ -126,6 +207,15 @@ window.CT_JAVA_DESIGN = {
     {
       id: 374,
       title: "Parking lot system design",
+      problem:
+        "Design a parking lot system that assigns vehicles to suitable spots and frees spots when vehicles leave.",
+      examples: [
+        {
+          input: "park car when compact spot free",
+          output: "ticket with assigned spot",
+        },
+        { input: "leave(ticket)", output: "spot becomes available" },
+      ],
       tip: "Model ParkingLot → Floor → Spot; use strategy for spot-selection; track availability with a priority queue",
       iteration: {
         hint: "Array of spots per floor; linear scan to find first free spot of matching type",
@@ -143,6 +233,15 @@ window.CT_JAVA_DESIGN = {
     {
       id: 375,
       title: "URL shortener design",
+      problem:
+        "Design a URL shortener that creates short aliases and redirects them to long URLs.",
+      examples: [
+        {
+          input: 'shorten("https://example.com/a")',
+          output: 'short code like "abc123"',
+        },
+        { input: 'resolve("abc123")', output: '"https://example.com/a"' },
+      ],
       tip: "Base62-encode an auto-increment ID for uniqueness; cache hot URLs in Redis; store original in DB",
       iteration: {
         hint: "Encode a long ID to base-62 string; decode by reversing the digit-extraction process",
@@ -160,6 +259,15 @@ window.CT_JAVA_DESIGN = {
     {
       id: 376,
       title: "Cache system design (LRU/LFU from scratch)",
+      problem:
+        "Design an in-memory cache with limited capacity and a clear eviction policy such as LRU or LFU.",
+      examples: [
+        {
+          input: "capacity=2, put(1), put(2), get(1), put(3)",
+          output: "evicts key 2 for LRU",
+        },
+        { input: "get(missingKey)", output: "-1 or null" },
+      ],
       tip: "LRU: LinkedHashMap with removeEldestEntry; LFU needs freq map + doubly-linked freq buckets for O(1)",
       iteration: {
         hint: "LinkedHashMap with access-order=true and removeEldestEntry evicts LRU automatically",
@@ -177,6 +285,15 @@ window.CT_JAVA_DESIGN = {
     {
       id: 377,
       title: "Message queue simulation (in-memory)",
+      problem:
+        "Design an in-memory message queue where producers publish messages and consumers receive them in order.",
+      examples: [
+        { input: "publish A, publish B, consume twice", output: "A then B" },
+        {
+          input: "consumer waits on empty queue",
+          output: "unblocks when message arrives",
+        },
+      ],
       tip: "LinkedBlockingQueue per topic; support publish/subscribe with consumer group offset tracking",
       iteration: {
         hint: "Map of topic → LinkedBlockingQueue; producers offer, consumers poll or take",
@@ -194,6 +311,12 @@ window.CT_JAVA_DESIGN = {
     {
       id: 378,
       title: "File system design (in-memory, mkdir/ls/addFile)",
+      problem:
+        "Design an in-memory file system supporting directory creation, listing, adding file content, and reading file content.",
+      examples: [
+        { input: 'mkdir("/a/b"), ls("/a")', output: '["b"]' },
+        { input: 'addFile("/a/x.txt","hi"), read("/a/x.txt")', output: '"hi"' },
+      ],
       tip: "Model Dir node with children map and File node; recursive path resolution mirrors real FS",
       iteration: {
         hint: "Split path on '/', walk the tree iteratively, create missing nodes for mkdir",
@@ -211,6 +334,18 @@ window.CT_JAVA_DESIGN = {
     {
       id: 379,
       title: "Elevator system design",
+      problem:
+        "Design an elevator controller that accepts pickup/drop requests and moves elevators efficiently.",
+      examples: [
+        {
+          input: "request floor 5 going up",
+          output: "assign suitable elevator",
+        },
+        {
+          input: "elevator reaches requested floor",
+          output: "opens door and updates direction",
+        },
+      ],
       tip: "SCAN/LOOK algorithm minimizes travel; state machine per elevator: IDLE, MOVING_UP, MOVING_DOWN",
       iteration: {
         hint: "Min-heap of pending floors; always serve floors in direction of travel before reversing",
@@ -228,6 +363,15 @@ window.CT_JAVA_DESIGN = {
     {
       id: 380,
       title: "Splitwise (expense-sharing) system design",
+      problem:
+        "Design an expense-sharing system that records expenses and computes who owes whom.",
+      examples: [
+        {
+          input: "A pays 300 for A,B,C equally",
+          output: "B owes A 100, C owes A 100",
+        },
+        { input: "settle B->A 100", output: "B balance becomes 0" },
+      ],
       tip: "Build a net-balance map per user; simplify debts with a min-heap/max-heap greedy approach",
       iteration: {
         hint: "For each expense, split amount among participants and update net-balance map",
@@ -245,6 +389,15 @@ window.CT_JAVA_DESIGN = {
     {
       id: 381,
       title: "Online shopping cart design",
+      problem:
+        "Design a shopping cart that lets users add, remove, price, and checkout items.",
+      examples: [
+        { input: "add item price 50 qty 2", output: "cart total 100" },
+        {
+          input: "remove item then checkout",
+          output: "order created from remaining items",
+        },
+      ],
       tip: "Cart holds items + quantities; apply discount strategies at checkout; use Command pattern for undo",
       iteration: {
         hint: "HashMap of product → quantity; compute total by iterating all entries",
@@ -262,6 +415,18 @@ window.CT_JAVA_DESIGN = {
     {
       id: 382,
       title: "Thread-safe bounded blocking queue from scratch",
+      problem:
+        "Implement a bounded blocking queue from scratch with thread-safe enqueue and dequeue operations.",
+      examples: [
+        {
+          input: "capacity=1, enqueue A, enqueue B",
+          output: "second enqueue blocks",
+        },
+        {
+          input: "empty queue, dequeue",
+          output: "dequeue blocks until item exists",
+        },
+      ],
       tip: "Use ReentrantLock + two Conditions (notFull/notEmpty); circular array avoids linked-list overhead",
       iteration: {
         hint: "Circular array with head/tail pointers; lock on enqueue/dequeue, await conditions when full/empty",
@@ -279,6 +444,18 @@ window.CT_JAVA_DESIGN = {
     {
       id: 383,
       title: "Observer pattern for stock price notification",
+      problem:
+        "Implement observer pattern so subscribers are notified when a stock price changes.",
+      examples: [
+        {
+          input: "subscribe user1, price changes to 100",
+          output: "user1 notified",
+        },
+        {
+          input: "unsubscribe user1, price changes",
+          output: "user1 not notified",
+        },
+      ],
       tip: "Subject holds list of observers; push the new value on notify; use weak references to avoid leaks",
       iteration: {
         hint: "StockMarket maintains list of StockObserver; notifyAll iterates and calls each update()",
@@ -296,6 +473,15 @@ window.CT_JAVA_DESIGN = {
     {
       id: 384,
       title: "Builder pattern for complex immutable object",
+      problem:
+        "Use the Builder pattern to create a complex immutable object with readable optional fields.",
+      examples: [
+        {
+          input: 'User.builder().name("A").age(30).build()',
+          output: "immutable User",
+        },
+        { input: "missing required name", output: "validation error" },
+      ],
       tip: "Inner static Builder collects params; build() validates and constructs the immutable outer class",
       iteration: {
         hint: "Builder has same fields as target; each setter returns 'this' for chaining; build() calls private constructor",
@@ -313,6 +499,15 @@ window.CT_JAVA_DESIGN = {
     {
       id: 385,
       title: "Factory and Abstract Factory patterns for payment gateway",
+      problem:
+        "Use Factory or Abstract Factory to create payment gateway implementations without coupling callers to concrete classes.",
+      examples: [
+        { input: 'type = "CARD"', output: "CardPaymentGateway" },
+        {
+          input: 'region = "IN", method = "UPI"',
+          output: "India payment factory creates UPI gateway",
+        },
+      ],
       tip: "Factory creates one product family member; Abstract Factory creates related families (PayPal, Stripe)",
       iteration: {
         hint: "Static factory method returns correct PaymentProcessor subclass based on provider string",
@@ -330,6 +525,18 @@ window.CT_JAVA_DESIGN = {
     {
       id: 386,
       title: "Connection pool (fixed size, blocking checkout/checkin)",
+      problem:
+        "Design a fixed-size connection pool where clients checkout and checkin reusable connections safely.",
+      examples: [
+        {
+          input: "pool size=2, checkout twice",
+          output: "two connections borrowed",
+        },
+        {
+          input: "third checkout while none free",
+          output: "waits or times out",
+        },
+      ],
       tip: "Pre-create N connections; Semaphore controls access; queue holds idle connections",
       iteration: {
         hint: "Semaphore(N) limits concurrent borrows; LinkedBlockingQueue stores idle connections",
@@ -347,6 +554,18 @@ window.CT_JAVA_DESIGN = {
     {
       id: 387,
       title: "Distributed ID generator (Snowflake-style)",
+      problem:
+        "Design a distributed ID generator that returns unique, roughly sortable IDs across machines.",
+      examples: [
+        {
+          input: "machineId=3, timestamp=t, sequence=1",
+          output: "unique 64-bit id",
+        },
+        {
+          input: "two calls same millisecond",
+          output: "different sequence bits",
+        },
+      ],
       tip: "Combine timestamp + machine ID + sequence into a 64-bit long for globally unique, time-sortable IDs",
       iteration: {
         hint: "Bit-shift timestamp (41 bits), machine ID (10 bits), sequence (12 bits) into one long",
@@ -364,6 +583,15 @@ window.CT_JAVA_DESIGN = {
     {
       id: 388,
       title: "Vending machine (state pattern)",
+      problem:
+        "Design a vending machine using states for selecting item, accepting money, dispensing, and refunding.",
+      examples: [
+        { input: "select chips, insert exact money", output: "dispense chips" },
+        {
+          input: "insert less than price, cancel",
+          output: "refund inserted money",
+        },
+      ],
       tip: "State pattern: machine delegates to current state object; transition table replaces giant if/else",
       iteration: {
         hint: "Enum states with transition logic; machine holds currentState and switches on events",
@@ -381,6 +609,12 @@ window.CT_JAVA_DESIGN = {
     {
       id: 389,
       title: "Tic-tac-toe game with clean board abstraction",
+      problem:
+        "Design a tic-tac-toe game that supports moves, validates winners, and rejects invalid moves.",
+      examples: [
+        { input: "X completes first row", output: "X wins" },
+        { input: "move on occupied cell", output: "invalid move" },
+      ],
       tip: "Separate Board (data), Player, and GameEngine (logic); check win via rows, cols, and two diagonals",
       iteration: {
         hint: "3×3 char array; after each move check row, column, and both diagonals for the mover's symbol",
@@ -398,6 +632,15 @@ window.CT_JAVA_DESIGN = {
     {
       id: 390,
       title: "Decorator pattern for coffee-order pricing",
+      problem:
+        "Use Decorator pattern to add coffee toppings dynamically and calculate final description and price.",
+      examples: [
+        {
+          input: "Coffee + Milk + Sugar",
+          output: "description includes toppings, price adds all costs",
+        },
+        { input: "Plain coffee", output: "base description and base price" },
+      ],
       tip: "Wrap a base Beverage with decorators (Milk, Sugar, Syrup); each adds cost/description without subclassing",
       iteration: {
         hint: "Abstract Decorator holds a Beverage reference; cost() delegates to wrapped beverage plus its own cost",
@@ -415,6 +658,18 @@ window.CT_JAVA_DESIGN = {
     {
       id: 391,
       title: "In-memory pub/sub event bus",
+      problem:
+        "Design an in-memory pub/sub event bus where publishers emit topics and subscribers receive matching events.",
+      examples: [
+        {
+          input: 'subscribe("orders"), publish("orders", event)',
+          output: "subscriber receives event",
+        },
+        {
+          input: "publish topic with no subscribers",
+          output: "event ignored or stored by policy",
+        },
+      ],
       tip: "Map topic → list of subscribers; publish dispatches asynchronously via ExecutorService to avoid blocking publishers",
       iteration: {
         hint: "ConcurrentHashMap of topic → List of Consumer handlers; publish iterates and calls each",
@@ -432,6 +687,18 @@ window.CT_JAVA_DESIGN = {
     {
       id: 392,
       title: "Debounce/throttle utility for rate-limiting method calls",
+      problem:
+        "Implement debounce and throttle utilities to control how often a function is executed.",
+      examples: [
+        {
+          input: "debounce 300ms, calls at 0,100,200",
+          output: "runs once after quiet period",
+        },
+        {
+          input: "throttle 1s, calls every 100ms",
+          output: "runs at most once per second",
+        },
+      ],
       tip: "Debounce delays execution until quiet period; throttle guarantees minimum gap between executions",
       iteration: {
         hint: "Debounce: cancel pending ScheduledFuture and reschedule on each call",
@@ -449,6 +716,14 @@ window.CT_JAVA_DESIGN = {
     {
       id: 393,
       title: "Job scheduler (one-time and recurring, in-memory)",
+      problem: "Design an in-memory scheduler for one-time and recurring jobs.",
+      examples: [
+        { input: "schedule job at 10:00", output: "job runs at 10:00" },
+        {
+          input: "schedule every 5 minutes",
+          output: "job repeats until cancelled",
+        },
+      ],
       tip: "PriorityQueue of jobs by next-run time; ScheduledExecutorService handles recurring jobs natively",
       iteration: {
         hint: "Min-heap by nextRunTime; background thread polls, runs due jobs, re-queues recurring ones",
@@ -466,6 +741,15 @@ window.CT_JAVA_DESIGN = {
     {
       id: 394,
       title: "Strategy pattern to select sorting algorithm at runtime",
+      problem:
+        "Use Strategy pattern to choose a sorting algorithm at runtime without changing caller code.",
+      examples: [
+        { input: "strategy = QUICK_SORT, data = [3,1,2]", output: "[1,2,3]" },
+        {
+          input: "strategy = MERGE_SORT",
+          output: "same sorted result via different implementation",
+        },
+      ],
       tip: "Inject a Sorter strategy; swap BubbleSort/MergeSort/TimSort without changing the client code",
       iteration: {
         hint: "Strategy interface with sort(int[]); client holds a reference and delegates sorting",
@@ -483,6 +767,15 @@ window.CT_JAVA_DESIGN = {
     {
       id: 395,
       title: "Notification system (Email/SMS/Push via Chain of Responsibility)",
+      problem:
+        "Design a notification system where Email, SMS, and Push handlers process or pass requests using Chain of Responsibility.",
+      examples: [
+        {
+          input: "notification type = SMS",
+          output: "SMS handler sends message",
+        },
+        { input: "unsupported type", output: "falls through or returns error" },
+      ],
       tip: "Each handler in the chain decides to handle and/or pass along; user preference determines which fire",
       iteration: {
         hint: "Linked list of NotificationHandler; each checks user preference, sends if match, calls next",
@@ -500,6 +793,12 @@ window.CT_JAVA_DESIGN = {
     {
       id: 396,
       title: "In-memory key-value store with TTL-based expiry",
+      problem:
+        "Design an in-memory key-value store supporting put, get, delete, and TTL expiry.",
+      examples: [
+        { input: 'put("a",1,ttl=1s), get("a") immediately', output: "1" },
+        { input: 'get("a") after ttl expires', output: "null" },
+      ],
       tip: "Store value + expiry timestamp; lazy expiry on get; background sweeper for proactive cleanup",
       iteration: {
         hint: "HashMap stores Entry(value, expiryMs); get checks System.currentTimeMillis() and returns null if expired",

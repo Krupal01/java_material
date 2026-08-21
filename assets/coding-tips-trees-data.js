@@ -6,6 +6,12 @@ window.CT_TREES = {
     {
       id: 211,
       title: "Inorder traversal",
+      problem:
+        "Given the root of a binary tree, return its inorder traversal as a list of node values.",
+      examples: [
+        { input: "root = [1,null,2,3]", output: "[1,3,2]" },
+        { input: "root = [4,2,5,1,3]", output: "[1,2,3,4,5]" },
+      ],
       tip: "Left→Root→Right; iterative uses an explicit stack to simulate the call stack",
       iteration: {
         hint: "Push left children, pop and visit, then go right",
@@ -23,6 +29,12 @@ window.CT_TREES = {
     {
       id: 212,
       title: "Preorder traversal",
+      problem:
+        "Given the root of a binary tree, return its preorder traversal as a list of node values.",
+      examples: [
+        { input: "root = [1,null,2,3]", output: "[1,2,3]" },
+        { input: "root = [4,2,5,1,3]", output: "[4,2,1,3,5]" },
+      ],
       tip: "Root→Left→Right; iterative pushes right then left so left is processed first",
       iteration: {
         hint: "Push root, pop and visit, push right then left child",
@@ -40,6 +52,12 @@ window.CT_TREES = {
     {
       id: 213,
       title: "Postorder traversal",
+      problem:
+        "Given the root of a binary tree, return its postorder traversal as a list of node values.",
+      examples: [
+        { input: "root = [1,null,2,3]", output: "[3,2,1]" },
+        { input: "root = [4,2,5,1,3]", output: "[1,3,2,5,4]" },
+      ],
       tip: "Left→Right→Root; iterative trick: do reverse-preorder (Root→Right→Left) then reverse the list",
       iteration: {
         hint: "Collect root-right-left into a deque addFirst to reverse output",
@@ -57,6 +75,15 @@ window.CT_TREES = {
     {
       id: 214,
       title: "Level order traversal",
+      problem:
+        "Given the root of a binary tree, return the level order traversal of its node values.",
+      examples: [
+        {
+          input: "root = [3,9,20,null,null,15,7]",
+          output: "[[3],[9,20],[15,7]]",
+        },
+        { input: "root = [1]", output: "[[1]]" },
+      ],
       tip: "BFS with a queue; capture queue size at the start of each level to process level by level",
       iteration: {
         hint: "Poll each level's nodes by snapshotting queue size, then enqueue children",
@@ -74,6 +101,15 @@ window.CT_TREES = {
     {
       id: 215,
       title: "Zigzag level order traversal",
+      problem:
+        "Given the root of a binary tree, return its zigzag level order traversal, alternating direction each level.",
+      examples: [
+        {
+          input: "root = [3,9,20,null,null,15,7]",
+          output: "[[3],[20,9],[15,7]]",
+        },
+        { input: "root = [1,2,3,4,null,null,5]", output: "[[1],[3,2],[4,5]]" },
+      ],
       tip: "BFS level order but alternate insertion direction using a flag per level",
       iteration: {
         hint: "Use a deque per level; add to front or back based on level parity",
@@ -91,6 +127,11 @@ window.CT_TREES = {
     {
       id: 216,
       title: "Maximum depth of a binary tree",
+      problem: "Given the root of a binary tree, return its maximum depth.",
+      examples: [
+        { input: "root = [3,9,20,null,null,15,7]", output: "3" },
+        { input: "root = [1,null,2]", output: "2" },
+      ],
       tip: "Max depth = 1 + max(leftDepth, rightDepth); BFS counts levels",
       iteration: {
         hint: "BFS level by level, increment depth counter each time queue-level is exhausted",
@@ -108,6 +149,12 @@ window.CT_TREES = {
     {
       id: 217,
       title: "Minimum depth of a binary tree",
+      problem:
+        "Given the root of a binary tree, return the minimum depth from the root to any leaf.",
+      examples: [
+        { input: "root = [3,9,20,null,null,15,7]", output: "2" },
+        { input: "root = [2,null,3,null,4]", output: "3" },
+      ],
       tip: "Minimum depth is to the nearest leaf; BFS is optimal since it finds the first leaf soonest",
       iteration: {
         hint: "BFS; return depth when a node with no children is dequeued",
@@ -125,6 +172,12 @@ window.CT_TREES = {
     {
       id: 218,
       title: "Check if a tree is height-balanced",
+      problem:
+        "Given the root of a binary tree, return true if every node has left and right subtree heights differing by at most one.",
+      examples: [
+        { input: "root = [3,9,20,null,null,15,7]", output: "true" },
+        { input: "root = [1,2,2,3,3,null,null,4,4]", output: "false" },
+      ],
       tip: "A tree is balanced if every node's left/right subtree heights differ by at most 1; return -1 as sentinel for unbalanced",
       iteration: {
         hint: "Post-order iterative using two stacks to compute heights bottom-up",
@@ -142,6 +195,12 @@ window.CT_TREES = {
     {
       id: 219,
       title: "Diameter of a binary tree",
+      problem:
+        "Given the root of a binary tree, return the diameter, measured as the number of edges on the longest path between any two nodes.",
+      examples: [
+        { input: "root = [1,2,3,4,5]", output: "3" },
+        { input: "root = [1,2]", output: "1" },
+      ],
       tip: "Diameter through a node = leftHeight + rightHeight; track global max during height DFS",
       iteration: {
         hint: "Post-order iterative; compute height for each node and update diameter",
@@ -159,6 +218,16 @@ window.CT_TREES = {
     {
       id: 220,
       title: "Path sum (root to leaf)",
+      problem:
+        "Given the root of a binary tree and targetSum, return true if any root-to-leaf path has values summing to targetSum.",
+      examples: [
+        {
+          input:
+            "root = [5,4,8,11,null,13,4,7,2,null,null,null,1], targetSum = 22",
+          output: "true",
+        },
+        { input: "root = [1,2,3], targetSum = 5", output: "false" },
+      ],
       tip: "Subtract node value from target as you recurse; return true when leaf is reached and remainder is 0",
       iteration: {
         hint: "DFS with stack of (node, remaining sum) pairs; check leaf condition on pop",
@@ -176,6 +245,16 @@ window.CT_TREES = {
     {
       id: 221,
       title: "Path sum II (return all root-to-leaf paths)",
+      problem:
+        "Given the root of a binary tree and targetSum, return all root-to-leaf paths whose values sum to targetSum.",
+      examples: [
+        {
+          input:
+            "root = [5,4,8,11,null,13,4,7,2,null,null,5,1], targetSum = 22",
+          output: "[[5,4,11,2],[5,8,4,5]]",
+        },
+        { input: "root = [1,2,3], targetSum = 5", output: "[]" },
+      ],
       tip: "Backtracking DFS: add node to path, recurse, remove node after returning (backtrack)",
       iteration: {
         hint: "Iterative DFS with stack storing (node, current path list) snapshots",
@@ -193,6 +272,18 @@ window.CT_TREES = {
     {
       id: 222,
       title: "Lowest common ancestor (LCA)",
+      problem:
+        "Given the root of a binary tree and two nodes p and q, return their lowest common ancestor.",
+      examples: [
+        {
+          input: "root = [3,5,1,6,2,0,8,null,null,7,4], p = 5, q = 1",
+          output: "3",
+        },
+        {
+          input: "root = [3,5,1,6,2,0,8,null,null,7,4], p = 5, q = 4",
+          output: "5",
+        },
+      ],
       tip: "If both targets lie in different subtrees, the current node is the LCA; if one found, bubble it up",
       iteration: {
         hint: "Build a parent map via BFS, then walk ancestors of p and q to find first common",
@@ -210,6 +301,12 @@ window.CT_TREES = {
     {
       id: 223,
       title: "Validate a binary search tree",
+      problem:
+        "Given the root of a binary tree, return true if it is a valid binary search tree.",
+      examples: [
+        { input: "root = [2,1,3]", output: "true" },
+        { input: "root = [5,1,4,null,null,3,6]", output: "false" },
+      ],
       tip: "Pass min/max bounds down the tree; every node must satisfy min < node.val < max",
       iteration: {
         hint: "Iterative inorder traversal; check that each value is strictly greater than previous",
@@ -227,6 +324,12 @@ window.CT_TREES = {
     {
       id: 224,
       title: "Kth smallest element in a BST",
+      problem:
+        "Given the root of a BST and an integer k, return the kth smallest node value.",
+      examples: [
+        { input: "root = [3,1,4,null,2], k = 1", output: "1" },
+        { input: "root = [5,3,6,2,4,null,null,1], k = 3", output: "3" },
+      ],
       tip: "Inorder traversal of BST yields sorted sequence; stop at the kth element",
       iteration: {
         hint: "Inorder iterative; decrement k on each pop and return when k reaches 0",
@@ -244,6 +347,12 @@ window.CT_TREES = {
     {
       id: 225,
       title: "Convert sorted array to a balanced BST",
+      problem:
+        "Given a sorted integer array, convert it into a height-balanced binary search tree.",
+      examples: [
+        { input: "nums = [-10,-3,0,5,9]", output: "[0,-3,9,-10,null,5]" },
+        { input: "nums = [1,3]", output: "[1,null,3]" },
+      ],
       tip: "Always pick the middle element as root to ensure balance; recurse on left and right halves",
       iteration: {
         hint: "Use an explicit stack of (lo, hi, parent, isLeft) tuples to build the tree iteratively",
@@ -261,6 +370,15 @@ window.CT_TREES = {
     {
       id: 226,
       title: "Serialize and deserialize a binary tree",
+      problem:
+        "Design methods to serialize a binary tree into a string and deserialize that string back to the original tree.",
+      examples: [
+        {
+          input: "root = [1,2,3,null,null,4,5]",
+          output: "[1,2,3,null,null,4,5]",
+        },
+        { input: "root = []", output: "[]" },
+      ],
       tip: "Preorder with null markers allows exact reconstruction; use comma-separated tokens",
       iteration: {
         hint: "BFS serialize with null markers; BFS deserialize linking children by queue index",
@@ -278,6 +396,12 @@ window.CT_TREES = {
     {
       id: 227,
       title: "Right side view of a tree",
+      problem:
+        "Given the root of a binary tree, return the values visible from the right side from top to bottom.",
+      examples: [
+        { input: "root = [1,2,3,null,5,null,4]", output: "[1,3,4]" },
+        { input: "root = [1,null,3]", output: "[1,3]" },
+      ],
       tip: "BFS level order; the last node in each level is visible from the right side",
       iteration: {
         hint: "BFS; record the last value dequeued in each level iteration",
@@ -295,6 +419,12 @@ window.CT_TREES = {
     {
       id: 228,
       title: "Left side view of a tree",
+      problem:
+        "Given the root of a binary tree, return the values visible from the left side from top to bottom.",
+      examples: [
+        { input: "root = [1,2,3,null,5,null,4]", output: "[1,2,5]" },
+        { input: "root = [1,null,3]", output: "[1,3]" },
+      ],
       tip: "BFS level order; the first node in each level is visible from the left side",
       iteration: {
         hint: "BFS; record the first value encountered in each level",
@@ -312,6 +442,12 @@ window.CT_TREES = {
     {
       id: 229,
       title: "Boundary traversal of a tree",
+      problem:
+        "Given the root of a binary tree, return its boundary traversal in anti-clockwise order without duplicates.",
+      examples: [
+        { input: "root = [1,2,3,4,5,6,7]", output: "[1,2,4,5,6,7,3]" },
+        { input: "root = [1,null,2,3,4]", output: "[1,3,4,2]" },
+      ],
       tip: "Boundary = left boundary (top-down, no leaves) + all leaves + right boundary (bottom-up, no leaves)",
       iteration: {
         hint: "Iteratively collect left boundary, then leaves via DFS/BFS, then right boundary reversed",
@@ -329,6 +465,18 @@ window.CT_TREES = {
     {
       id: 230,
       title: "Vertical order traversal",
+      problem:
+        "Given the root of a binary tree, return the vertical order traversal grouped by horizontal column from left to right.",
+      examples: [
+        {
+          input: "root = [3,9,20,null,null,15,7]",
+          output: "[[9],[3,15],[20],[7]]",
+        },
+        {
+          input: "root = [1,2,3,4,5,6,7]",
+          output: "[[4],[2],[1,5,6],[3],[7]]",
+        },
+      ],
       tip: "Assign column index (left child = col-1, right child = col+1); group by col then row, sort ties by value",
       iteration: {
         hint: "BFS carrying (node, row, col); store in TreeMap<col, TreeMap<row, PriorityQueue>>",
@@ -346,6 +494,12 @@ window.CT_TREES = {
     {
       id: 231,
       title: "Top view of a binary tree",
+      problem:
+        "Given the root of a binary tree, return the top view of the tree from leftmost column to rightmost column.",
+      examples: [
+        { input: "root = [1,2,3,4,5,6,7]", output: "[4,2,1,3,7]" },
+        { input: "root = [1,2,3,null,4,null,5]", output: "[2,1,3,5]" },
+      ],
       tip: "First node seen at each horizontal distance (column) in BFS level order forms the top view",
       iteration: {
         hint: "BFS with (node, col) pairs; add to result map only if col is first seen",
@@ -363,6 +517,12 @@ window.CT_TREES = {
     {
       id: 232,
       title: "Bottom view of a binary tree",
+      problem:
+        "Given the root of a binary tree, return the bottom view of the tree from leftmost column to rightmost column.",
+      examples: [
+        { input: "root = [1,2,3,4,5,6,7]", output: "[4,2,6,3,7]" },
+        { input: "root = [1,2,3,null,4,null,5]", output: "[2,4,3,5]" },
+      ],
       tip: "Last node seen at each horizontal distance in BFS level order is the bottom view node",
       iteration: {
         hint: "BFS with (node, col); overwrite map entry at each col — last write wins",
@@ -380,6 +540,12 @@ window.CT_TREES = {
     {
       id: 233,
       title: "Check if a tree is symmetric",
+      problem:
+        "Given the root of a binary tree, return true if the tree is symmetric around its center.",
+      examples: [
+        { input: "root = [1,2,2,3,4,4,3]", output: "true" },
+        { input: "root = [1,2,2,null,3,null,3]", output: "false" },
+      ],
       tip: "A tree is symmetric if its left and right subtrees are mirrors; compare left.left with right.right and left.right with right.left",
       iteration: {
         hint: "Use a queue/stack pairing nodes that should be mirror images; check each pair",
@@ -397,6 +563,12 @@ window.CT_TREES = {
     {
       id: 234,
       title: "Mirror/invert a binary tree",
+      problem:
+        "Given the root of a binary tree, invert it by swapping every node's left and right children and return the root.",
+      examples: [
+        { input: "root = [4,2,7,1,3,6,9]", output: "[4,7,2,9,6,3,1]" },
+        { input: "root = [2,1,3]", output: "[2,3,1]" },
+      ],
       tip: "Swap left and right children at every node; works top-down or bottom-up",
       iteration: {
         hint: "BFS or DFS; for each dequeued node swap its left and right children then enqueue both",
@@ -414,6 +586,15 @@ window.CT_TREES = {
     {
       id: 235,
       title: "Flatten a binary tree to a linked list",
+      problem:
+        "Given the root of a binary tree, flatten it in-place into a linked list following preorder traversal.",
+      examples: [
+        {
+          input: "root = [1,2,5,3,4,null,6]",
+          output: "[1,null,2,null,3,null,4,null,5,null,6]",
+        },
+        { input: "root = [0]", output: "[0]" },
+      ],
       tip: "Flatten in preorder (right points to next preorder node, left is null); Morris-like traversal works in O(1) space",
       iteration: {
         hint: "For each node: find rightmost node of left subtree, attach current right there, then move left to right",
@@ -431,6 +612,12 @@ window.CT_TREES = {
     {
       id: 236,
       title: "Sum of root-to-leaf binary numbers",
+      problem:
+        "Given a binary tree where each root-to-leaf path forms a binary number, return the sum of all such numbers.",
+      examples: [
+        { input: "root = [1,0,1,0,1,0,1]", output: "22" },
+        { input: "root = [0]", output: "0" },
+      ],
       tip: "Accumulate binary number by shifting left (×2) and adding current bit; leaf contributes accumulated value to sum",
       iteration: {
         hint: "DFS stack with (node, current number); on leaf add to total sum",
@@ -448,6 +635,12 @@ window.CT_TREES = {
     {
       id: 237,
       title: "Count total nodes in a complete binary tree",
+      problem:
+        "Given the root of a complete binary tree, return the total number of nodes.",
+      examples: [
+        { input: "root = [1,2,3,4,5,6]", output: "6" },
+        { input: "root = []", output: "0" },
+      ],
       tip: "Exploit the complete tree property: if left and right heights are equal, left subtree is perfect (count = 2^h - 1 + 1); else recurse",
       iteration: {
         hint: "Binary search on the last node's index; check existence by following bits of index from root",
@@ -465,6 +658,12 @@ window.CT_TREES = {
     {
       id: 238,
       title: "Check if a binary tree is a complete binary tree",
+      problem:
+        "Given the root of a binary tree, return true if it satisfies the complete binary tree property.",
+      examples: [
+        { input: "root = [1,2,3,4,5,6]", output: "true" },
+        { input: "root = [1,2,3,4,5,null,7]", output: "false" },
+      ],
       tip: "BFS: once a null child is seen, every subsequent node must also be null; any non-null after null means incomplete",
       iteration: {
         hint: "BFS; after dequeuing a null, check that all remaining in queue are null",
@@ -482,6 +681,15 @@ window.CT_TREES = {
     {
       id: 239,
       title: "Build a tree from preorder + inorder traversal",
+      problem:
+        "Given preorder and inorder traversal arrays of a binary tree with unique values, rebuild and return the tree.",
+      examples: [
+        {
+          input: "preorder = [3,9,20,15,7], inorder = [9,3,15,20,7]",
+          output: "[3,9,20,null,null,15,7]",
+        },
+        { input: "preorder = [-1], inorder = [-1]", output: "[-1]" },
+      ],
       tip: "Preorder's first element is always the root; find it in inorder to split left and right subtrees",
       iteration: {
         hint: "Use an explicit stack tracking expected inorder position to build iteratively",
@@ -499,6 +707,15 @@ window.CT_TREES = {
     {
       id: 240,
       title: "Build a tree from inorder + postorder traversal",
+      problem:
+        "Given inorder and postorder traversal arrays of a binary tree with unique values, rebuild and return the tree.",
+      examples: [
+        {
+          input: "inorder = [9,3,15,20,7], postorder = [9,15,7,20,3]",
+          output: "[3,9,20,null,null,15,7]",
+        },
+        { input: "inorder = [-1], postorder = [-1]", output: "[-1]" },
+      ],
       tip: "Postorder's last element is the root; find it in inorder to partition left and right subtrees",
       iteration: {
         hint: "Process postorder from right to left; use stack to track right-then-left building order",
@@ -516,6 +733,12 @@ window.CT_TREES = {
     {
       id: 241,
       title: "Maximum path sum in a binary tree (any node to any node)",
+      problem:
+        "Given the root of a binary tree, return the maximum path sum over any non-empty path.",
+      examples: [
+        { input: "root = [1,2,3]", output: "6" },
+        { input: "root = [-10,9,20,null,null,15,7]", output: "42" },
+      ],
       tip: "For each node, max path through it = node.val + max(0, left gain) + max(0, right gain); track global max",
       iteration: {
         hint: "Post-order iterative; compute gain bottom-up using a map, update global max at each node",
@@ -533,6 +756,12 @@ window.CT_TREES = {
     {
       id: 242,
       title: "Recover a BST where two nodes are swapped",
+      problem:
+        "Given the root of a BST where exactly two nodes were swapped by mistake, recover the tree without changing its structure.",
+      examples: [
+        { input: "root = [1,3,null,null,2]", output: "[3,1,null,null,2]" },
+        { input: "root = [3,1,4,null,null,2]", output: "[2,1,4,null,null,3]" },
+      ],
       tip: "Inorder traversal should be sorted; find the two nodes that violate the sorted order and swap their values",
       iteration: {
         hint: "Iterative inorder; track prev, first-mismatch and second-mismatch nodes",
@@ -550,6 +779,15 @@ window.CT_TREES = {
     {
       id: 243,
       title: "Find all nodes at distance K from a given node",
+      problem:
+        "Given the root of a binary tree, a target node, and integer k, return all node values at distance k from the target.",
+      examples: [
+        {
+          input: "root = [3,5,1,6,2,0,8,null,null,7,4], target = 5, k = 2",
+          output: "[7,4,1]",
+        },
+        { input: "root = [1], target = 1, k = 3", output: "[]" },
+      ],
       tip: "Build parent pointers with BFS, then BFS from target node treating parent links as additional edges",
       iteration: {
         hint: "BFS from target node across parent/left/right edges while tracking visited nodes",
@@ -567,6 +805,12 @@ window.CT_TREES = {
     {
       id: 244,
       title: "Burn the tree problem",
+      problem:
+        "Given the root of a binary tree and a target node, return the time needed to burn the entire tree if fire starts at the target.",
+      examples: [
+        { input: "root = [1,2,3,null,null,4,5], target = 3", output: "2" },
+        { input: "root = [1,2,null,3], target = 3", output: "2" },
+      ],
       tip: "Same as nodes at distance K: fire spreads from start node using parent pointers; count levels until all burned",
       iteration: {
         hint: "Build parent map, BFS from fire-start node, count levels (time) until queue empties",
@@ -584,6 +828,12 @@ window.CT_TREES = {
     {
       id: 245,
       title: "Print all nodes at a given level",
+      problem:
+        "Given the root of a binary tree and level k, return all node values at that level, with the root at level 0.",
+      examples: [
+        { input: "root = [1,2,3,4,5], k = 2", output: "[4,5]" },
+        { input: "root = [1], k = 1", output: "[]" },
+      ],
       tip: "Level-order BFS: process exactly the nodes in the queue at the start of each level iteration",
       iteration: {
         hint: "BFS; decrement level counter and collect when level reaches target",
@@ -601,6 +851,12 @@ window.CT_TREES = {
     {
       id: 246,
       title: "Print all ancestors of a given node",
+      problem:
+        "Given the root of a binary tree and a target value, return all ancestors of the target from parent up to root.",
+      examples: [
+        { input: "root = [1,2,3,4,5], target = 5", output: "[2,1]" },
+        { input: "root = [1,2,3], target = 1", output: "[]" },
+      ],
       tip: "DFS returning boolean whether target was found in subtree; add current node to ancestors list on the way back if target found",
       iteration: {
         hint: "Iterative DFS with path stack; when target is found, print all nodes in current stack",
@@ -618,6 +874,12 @@ window.CT_TREES = {
     {
       id: 247,
       title: "Check the children-sum property",
+      problem:
+        "Given the root of a binary tree, return true if every non-leaf node equals the sum of its existing children.",
+      examples: [
+        { input: "root = [10,8,2,3,5,null,2]", output: "true" },
+        { input: "root = [1,2,3]", output: "false" },
+      ],
       tip: "Every non-leaf node's value must equal the sum of its children's values; verify recursively",
       iteration: {
         hint: "Post-order iterative; check each internal node against sum of children values stored in a map",
@@ -635,6 +897,12 @@ window.CT_TREES = {
     {
       id: 248,
       title: "Convert a BST to a sorted doubly linked list",
+      problem:
+        "Given the root of a BST, convert it to a sorted doubly linked list in-place and return the head.",
+      examples: [
+        { input: "root = [4,2,5,1,3]", output: "1 <-> 2 <-> 3 <-> 4 <-> 5" },
+        { input: "root = [2,1,3]", output: "1 <-> 2 <-> 3" },
+      ],
       tip: "Inorder traversal visits BST nodes in sorted order; link each visited node to the previous node in-place",
       iteration: {
         hint: "Iterative inorder; maintain prev pointer, link prev.right = cur and cur.left = prev",
@@ -652,6 +920,12 @@ window.CT_TREES = {
     {
       id: 249,
       title: "Return all root-to-leaf paths as strings",
+      problem:
+        "Given the root of a binary tree, return all root-to-leaf paths formatted as strings joined by arrows.",
+      examples: [
+        { input: "root = [1,2,3,null,5]", output: '["1->2->5","1->3"]' },
+        { input: "root = [1]", output: '["1"]' },
+      ],
       tip: "DFS with running path string; append '->' and node value at each node, record on reaching a leaf",
       iteration: {
         hint: "DFS stack with (node, path string); on leaf add path to result",
@@ -669,6 +943,12 @@ window.CT_TREES = {
     {
       id: 250,
       title: "House robber III (max sum of non-adjacent nodes in a tree)",
+      problem:
+        "Given the root of a binary tree, return the maximum money that can be robbed without robbing directly-linked parent and child nodes.",
+      examples: [
+        { input: "root = [3,2,3,null,3,null,1]", output: "7" },
+        { input: "root = [3,4,5,1,3,null,1]", output: "9" },
+      ],
       tip: "At each node choose rob (node.val + grandchildren sums) or skip (children sums); return both options as a pair",
       iteration: {
         hint: "Post-order iterative; store {rob, skip} pair per node in a map",
@@ -686,6 +966,18 @@ window.CT_TREES = {
     {
       id: 251,
       title: "Implement Trie insert/search",
+      problem:
+        "Design a Trie that supports inserting words, exact word search, and prefix search.",
+      examples: [
+        {
+          input: 'insert("apple"), search("apple"), startsWith("app")',
+          output: "true, true",
+        },
+        {
+          input: 'insert("apple"), search("app"), startsWith("app")',
+          output: "false, true",
+        },
+      ],
       tip: "Each TrieNode has children[26] and isEnd flag; insert creates nodes along path, search traverses without creating",
       iteration: {
         hint: "Loop through each character; create child if absent; mark isEnd on last char",
@@ -703,6 +995,18 @@ window.CT_TREES = {
     {
       id: 252,
       title: "Design a word dictionary supporting wildcard search",
+      problem:
+        "Design a word dictionary that supports adding words and searching where dot matches any single character.",
+      examples: [
+        {
+          input: 'addWord("bad"), addWord("dad"), search(".ad")',
+          output: "true",
+        },
+        {
+          input: 'addWord("bad"), search("b.."), search("pad")',
+          output: "true, false",
+        },
+      ],
       tip: "Store words in a Trie; '.' in search matches any child, requiring DFS branching over all children",
       iteration: {
         hint: "Iterative DFS with a stack of (TrieNode, charIndex) pairs; branch for '.' across all children",
@@ -720,6 +1024,18 @@ window.CT_TREES = {
     {
       id: 253,
       title: "Design an autocomplete system using a Trie",
+      problem:
+        "Design an autocomplete system that returns the top suggestions for the current prefix after each typed character.",
+      examples: [
+        {
+          input: 'sentences = ["i love you","island","iroman"], input = "i"',
+          output: '["i love you","island","iroman"]',
+        },
+        {
+          input: 'sentences = ["abc","abbc","a"], input = "ab"',
+          output: '["abbc","abc"]',
+        },
+      ],
       tip: "Navigate to the prefix node in the Trie, then DFS/BFS collect all words under that node sorted by frequency",
       iteration: {
         hint: "Traverse to prefix node iteratively, then BFS from there collecting all words at isEnd nodes",
@@ -737,6 +1053,19 @@ window.CT_TREES = {
     {
       id: 254,
       title: "Replace words with their shortest root word using a Trie",
+      problem:
+        "Given a dictionary of root words and a sentence, replace each word with the shortest root that is its prefix.",
+      examples: [
+        {
+          input:
+            'dict = ["cat","bat","rat"], sentence = "the cattle was rattled"',
+          output: '"the cat was rat"',
+        },
+        {
+          input: 'dict = ["a","aa","aaa"], sentence = "a aa aaaa"',
+          output: '"a a a"',
+        },
+      ],
       tip: "Build a Trie of all roots; for each word in sentence, walk Trie and return earliest root found",
       iteration: {
         hint: "Insert all roots into Trie; for each sentence word traverse Trie char by char until isEnd (root found)",
@@ -754,6 +1083,12 @@ window.CT_TREES = {
     {
       id: 255,
       title: "Find the longest common prefix using a Trie",
+      problem:
+        "Given an array of strings, return the longest common prefix using a Trie.",
+      examples: [
+        { input: 'words = ["flower","flow","flight"]', output: '"fl"' },
+        { input: 'words = ["dog","racecar","car"]', output: '""' },
+      ],
       tip: "Insert all words into a Trie; walk from root while each node has exactly one child and is not an end",
       iteration: {
         hint: "After building Trie, traverse root downward while node has single child and is not a word end",
@@ -771,6 +1106,12 @@ window.CT_TREES = {
     {
       id: 256,
       title: "Count substrings/words with a given prefix using a Trie",
+      problem:
+        "Given a set of words and a prefix, count how many inserted words start with that prefix.",
+      examples: [
+        { input: 'words = ["apple","app","ape"], prefix = "ap"', output: "3" },
+        { input: 'words = ["dog","deer","deal"], prefix = "de"', output: "2" },
+      ],
       tip: "Store a count in each TrieNode incremented during insert; navigate to prefix node and return its count",
       iteration: {
         hint: "Augment Trie insert to increment prefixCount at every node; query by walking to prefix end",
@@ -788,6 +1129,12 @@ window.CT_TREES = {
     {
       id: 257,
       title: "Design Map Sum Pairs (Trie-based prefix sum)",
+      problem:
+        "Design a MapSum structure that stores string keys with integer values and returns the sum of values for keys with a given prefix.",
+      examples: [
+        { input: 'insert("apple",3), sum("ap")', output: "3" },
+        { input: 'insert("apple",3), insert("app",2), sum("ap")', output: "5" },
+      ],
       tip: "Each TrieNode stores a contribution value; when inserting key with val, store val at the end node and update prefix sums along the path",
       iteration: {
         hint: "On insert walk Trie, store old val at end, update each node's sum by (val - oldVal)",
@@ -805,6 +1152,18 @@ window.CT_TREES = {
     {
       id: 258,
       title: "Word search II (multiple words in a grid, using a Trie)",
+      problem:
+        "Given a character board and a list of words, return all words that can be formed by adjacent cells using a Trie.",
+      examples: [
+        {
+          input: 'board = [["o","a"],["e","t"]], words = ["oat","eat","tea"]',
+          output: '["oat","eat"]',
+        },
+        {
+          input: 'board = [["a","b"],["c","d"]], words = ["abcb"]',
+          output: "[]",
+        },
+      ],
       tip: "Build a Trie of all words; DFS from each cell matching Trie children; prune when Trie node is null",
       iteration: {
         hint: "DFS from every cell using Trie traversal; backtrack by restoring cell, prune dead Trie branches",
@@ -822,6 +1181,19 @@ window.CT_TREES = {
     {
       id: 259,
       title: "Implement Trie deletion",
+      problem:
+        "Implement deletion in a Trie so removed words are no longer found while shared prefixes remain available.",
+      examples: [
+        {
+          input:
+            'insert("app"), insert("apple"), delete("app"), search("apple")',
+          output: "true",
+        },
+        {
+          input: 'insert("car"), delete("car"), search("car")',
+          output: "false",
+        },
+      ],
       tip: "Delete by recursing to the end node, unsetting isEnd, then removing child nodes bottom-up if they have no other children",
       iteration: {
         hint: "Walk to leaf, unset isEnd; backtrack removing nodes that have no remaining children and are not word ends",
@@ -839,6 +1211,18 @@ window.CT_TREES = {
     {
       id: 260,
       title: "Solve prefix-matching using a compressed Trie (radix tree)",
+      problem:
+        "Given a compressed Trie of stored words, return all words matching a prefix efficiently.",
+      examples: [
+        {
+          input: 'words = ["bear","bell","bid"], prefix = "be"',
+          output: '["bear","bell"]',
+        },
+        {
+          input: 'words = ["romane","romanus","rubens"], prefix = "rom"',
+          output: '["romane","romanus"]',
+        },
+      ],
       tip: "Edges store substrings, not single characters; compress chains of single-child nodes into one edge",
       iteration: {
         hint: "Iteratively find longest common prefix between remaining string and edge labels; split or extend",
@@ -856,6 +1240,12 @@ window.CT_TREES = {
     {
       id: 261,
       title: "Check if two binary trees are identical",
+      problem:
+        "Given the roots of two binary trees, return true if they have identical structure and node values.",
+      examples: [
+        { input: "p = [1,2,3], q = [1,2,3]", output: "true" },
+        { input: "p = [1,2], q = [1,null,2]", output: "false" },
+      ],
       tip: "Two trees are identical if their roots are equal and both left and right subtrees are also identical",
       iteration: {
         hint: "Paired BFS/DFS with two queues/stacks; compare corresponding nodes simultaneously",
@@ -873,6 +1263,12 @@ window.CT_TREES = {
     {
       id: 262,
       title: "Find the maximum width of a binary tree",
+      problem:
+        "Given the root of a binary tree, return the maximum width across all levels, counting null positions between end nodes.",
+      examples: [
+        { input: "root = [1,3,2,5,3,null,9]", output: "4" },
+        { input: "root = [1,3,2,5]", output: "2" },
+      ],
       tip: "Assign index positions (left child = 2i, right child = 2i+1) during BFS; width = lastIndex - firstIndex + 1 per level",
       iteration: {
         hint: "BFS with (node, index) pairs; normalize indices each level to prevent overflow",
@@ -890,6 +1286,12 @@ window.CT_TREES = {
     {
       id: 263,
       title: "Convert a binary tree to its sum tree",
+      problem:
+        "Given the root of a binary tree, convert it to a sum tree where each node stores the sum of values in its original left and right subtrees.",
+      examples: [
+        { input: "root = [10,-2,6,8,-4,7,5]", output: "[20,4,12,0,0,0,0]" },
+        { input: "root = [1,2,3]", output: "[5,0,0]" },
+      ],
       tip: "Replace each node's value with the sum of all values in its subtree; use post-order to get children sums first",
       iteration: {
         hint: "Post-order iterative; store original values, compute subtree sums bottom-up",
@@ -907,6 +1309,12 @@ window.CT_TREES = {
     {
       id: 264,
       title: "Find all duplicate subtrees in a binary tree",
+      problem:
+        "Given the root of a binary tree, return one root node for each duplicate subtree structure and value combination.",
+      examples: [
+        { input: "root = [1,2,3,4,null,2,4,null,null,4]", output: "[2,4]" },
+        { input: "root = [2,1,1]", output: "[1]" },
+      ],
       tip: "Serialize each subtree's structure; use a frequency map to find serializations seen more than once",
       iteration: {
         hint: "Post-order iterative serialization; record in frequency map and collect duplicates when count hits 2",
@@ -924,6 +1332,15 @@ window.CT_TREES = {
     {
       id: 265,
       title: "Populate next-right pointers in each node (perfect binary tree)",
+      problem:
+        "Given a perfect binary tree, populate each node's next pointer to its adjacent node on the right at the same level.",
+      examples: [
+        {
+          input: "root = [1,2,3,4,5,6,7]",
+          output: "next levels: [1,#],[2,3,#],[4,5,6,7,#]",
+        },
+        { input: "root = []", output: "[]" },
+      ],
       tip: "Use the already-populated next pointers of the current level to link the next level in O(1) space",
       iteration: {
         hint: "Traverse each level using next pointers; link children of adjacent nodes across",
@@ -942,6 +1359,12 @@ window.CT_TREES = {
       id: 266,
       title:
         "Construct a binary tree from a string with bracket representation",
+      problem:
+        "Given a string using bracket notation for a binary tree, construct and return the represented tree.",
+      examples: [
+        { input: 's = "4(2(3)(1))(6(5))"', output: "[4,2,6,3,1,5]" },
+        { input: 's = "1(2)(3)"', output: "[1,2,3]" },
+      ],
       tip: "Recursively parse: read root value, then content inside first parentheses = left subtree, second = right subtree",
       iteration: {
         hint: "Use a stack; create nodes from numbers, push on '(', link and pop on ')'",
@@ -959,6 +1382,12 @@ window.CT_TREES = {
     {
       id: 267,
       title: "Find the diameter of an N-ary tree",
+      problem:
+        "Given the root of an N-ary tree, return its diameter measured as the number of edges in the longest path.",
+      examples: [
+        { input: "root = [1,[3,2,4],[5,6]]", output: "3" },
+        { input: "root = [1,[2],[3],[4,[5]]]", output: "3" },
+      ],
       tip: "For each node, diameter through it = sum of two longest child heights; track global max",
       iteration: {
         hint: "Post-order iterative on N-ary tree; track top-2 child heights per node",
@@ -976,6 +1405,15 @@ window.CT_TREES = {
     {
       id: 268,
       title: "Count leaf nodes, and count nodes with exactly one child",
+      problem:
+        "Given the root of a binary tree, count how many nodes are leaves and how many nodes have exactly one child.",
+      examples: [
+        {
+          input: "root = [1,2,3,4,null,null,5]",
+          output: "leaves = 2, oneChild = 2",
+        },
+        { input: "root = [1,2,3]", output: "leaves = 2, oneChild = 0" },
+      ],
       tip: "Leaf: both children null. One-child: exactly one child is non-null; iterate/recurse over all nodes",
       iteration: {
         hint: "BFS or DFS; classify each dequeued/popped node as leaf, one-child, or two-child",
@@ -993,6 +1431,12 @@ window.CT_TREES = {
     {
       id: 269,
       title: "Find the closest leaf node to a given node",
+      problem:
+        "Given the root of a binary tree and a target node, return the value of the closest leaf to that target.",
+      examples: [
+        { input: "root = [1,2,3,null,null,4,5], target = 3", output: "4 or 5" },
+        { input: "root = [1,2,null,3], target = 2", output: "3" },
+      ],
       tip: "Convert tree to graph with parent links, then BFS from the target node; first leaf reached is the answer",
       iteration: {
         hint: "Build parent map, then BFS from target; return val of first leaf encountered",
@@ -1011,6 +1455,18 @@ window.CT_TREES = {
       id: 270,
       title:
         "Implement a segment tree for range sum queries with point updates",
+      problem:
+        "Design a segment tree that supports range sum queries and point updates on an integer array.",
+      examples: [
+        {
+          input: "nums = [1,3,5], sumRange(0,2), update(1,2), sumRange(0,2)",
+          output: "9, 8",
+        },
+        {
+          input: "nums = [2,4,6], sumRange(1,2), update(2,1), sumRange(0,2)",
+          output: "10, 7",
+        },
+      ],
       tip: "Build segment tree bottom-up; query splits range across nodes; point update propagates from leaf to root",
       iteration: {
         hint: "Store tree in array of size 4*n; build bottom-up, then query and update iteratively",
@@ -1028,6 +1484,18 @@ window.CT_TREES = {
     {
       id: 271,
       title: "Implement a Fenwick tree (BIT) for prefix sum queries",
+      problem:
+        "Design a Fenwick tree that supports point updates and prefix or range sum queries on an integer array.",
+      examples: [
+        {
+          input: "nums = [1,2,3,4], prefixSum(3), update(2,+2), rangeSum(2,4)",
+          output: "6, 11",
+        },
+        {
+          input: "nums = [5,1,7], rangeSum(1,3), update(1,-2), prefixSum(2)",
+          output: "13, 4",
+        },
+      ],
       tip: "BIT stores partial sums; update propagates by adding least significant bit (i += i & -i); query sums by removing it (i -= i & -i)",
       iteration: {
         hint: "Update: loop adding LSB to index; query: loop subtracting LSB accumulating sum",

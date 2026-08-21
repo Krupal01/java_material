@@ -2,6 +2,12 @@ window.CT_ARRAYS_A = [
   {
     id: 56,
     title: "Two Sum",
+    problem:
+      "Given an integer array nums and an integer target, return indices of the two numbers that add up to target. Assume exactly one valid pair exists.",
+    examples: [
+      { input: "nums = [2,7,11,15], target = 9", output: "[0,1]" },
+      { input: "nums = [3,2,4], target = 6", output: "[1,2]" },
+    ],
     tip: "HashMap stores seen values; check if complement (target - num) exists — O(n)",
     iteration: {
       hint: "One pass: store index in map, check for complement before inserting",
@@ -31,6 +37,12 @@ for (int i = 0; i < nums.length; i++) {
   {
     id: 57,
     title: "Three Sum",
+    problem:
+      "Given an integer array nums, return all unique triplets [a,b,c] such that a + b + c = 0.",
+    examples: [
+      { input: "nums = [-1,0,1,2,-1,-4]", output: "[[-1,-1,2],[-1,0,1]]" },
+      { input: "nums = [0,0,0]", output: "[[0,0,0]]" },
+    ],
     tip: "Sort first, then fix one element and use two pointers on the rest — O(n²)",
     iteration: {
       hint: "Sort, outer loop fixes nums[i], inner two pointers find pairs summing to -nums[i]",
@@ -63,6 +75,15 @@ IntStream.range(0, nums.length-2)
   {
     id: 58,
     title: "Four Sum",
+    problem:
+      "Given an integer array nums and an integer target, return all unique quadruplets whose sum equals target.",
+    examples: [
+      {
+        input: "nums = [1,0,-1,0,-2,2], target = 0",
+        output: "[[-2,-1,1,2],[-2,0,0,2],[-1,0,0,1]]",
+      },
+      { input: "nums = [2,2,2,2,2], target = 8", output: "[[2,2,2,2]]" },
+    ],
     tip: "Sort + two nested loops fixing pairs, then two pointers — O(n³)",
     iteration: {
       hint: "Sort, two outer loops fix nums[i]+nums[j], inner two pointers find the remaining pair",
@@ -96,6 +117,12 @@ IntStream.range(0, n-3).boxed().flatMap(i ->
   {
     id: 59,
     title: "Maximum Subarray (Kadane's Algorithm)",
+    problem:
+      "Given an integer array nums, find the maximum possible sum of a non-empty contiguous subarray.",
+    examples: [
+      { input: "nums = [-2,1,-3,4,-1,2,1,-5,4]", output: "6" },
+      { input: "nums = [5,4,-1,7,8]", output: "23" },
+    ],
     tip: "Extend or restart subarray at each element; track running max — O(n)",
     iteration: {
       hint: "Keep curSum = max(num, curSum+num); update maxSum each step",
@@ -127,6 +154,12 @@ return res[1];`,
   {
     id: 60,
     title: "Best Time to Buy and Sell Stock",
+    problem:
+      "Given daily stock prices, return the maximum profit from one buy and one later sell. Return 0 if no profit is possible.",
+    examples: [
+      { input: "prices = [7,1,5,3,6,4]", output: "5" },
+      { input: "prices = [7,6,4,3,1]", output: "0" },
+    ],
     tip: "Track minimum price seen so far; profit at each step is price - minPrice — O(n)",
     iteration: {
       hint: "Single pass: update minPrice each step, compare price - minPrice with maxProfit",
@@ -157,6 +190,12 @@ return r[1];`,
   {
     id: 61,
     title: "Stock II (Multiple Transactions Allowed)",
+    problem:
+      "Given daily stock prices, return the maximum profit when you may complete as many buy-sell transactions as you want, holding at most one share at a time.",
+    examples: [
+      { input: "prices = [7,1,5,3,6,4]", output: "7" },
+      { input: "prices = [1,2,3,4,5]", output: "4" },
+    ],
     tip: "Capture every upward price movement; sum all positive consecutive differences — O(n)",
     iteration: {
       hint: "Whenever prices[i] > prices[i-1], add the difference to profit",
@@ -185,6 +224,12 @@ return profit;`,
   {
     id: 62,
     title: "Missing Number",
+    problem:
+      "Given an array nums containing n distinct numbers from the range 0 to n, return the one number missing from the array.",
+    examples: [
+      { input: "nums = [3,0,1]", output: "2" },
+      { input: "nums = [0,1]", output: "2" },
+    ],
     tip: "XOR all indices and values — missing number is the survivor — O(n) time, O(1) space",
     iteration: {
       hint: "XOR 0..n with each element; duplicate XORs cancel, leaving the missing number",
@@ -210,6 +255,12 @@ return expected - Arrays.stream(nums).sum();`,
   {
     id: 63,
     title: "Find Duplicate",
+    problem:
+      "Given an array nums containing n + 1 integers where each integer is in the range 1 to n, return the repeated number.",
+    examples: [
+      { input: "nums = [1,3,4,2,2]", output: "2" },
+      { input: "nums = [3,1,3,4,2]", output: "3" },
+    ],
     tip: "Floyd's cycle detection treats array values as next-pointers — O(n) time, O(1) space",
     iteration: {
       hint: "Phase 1: slow/fast meet inside cycle. Phase 2: reset slow to 0 to find cycle entry",
@@ -238,6 +289,12 @@ return Arrays.stream(nums)
   {
     id: 64,
     title: "Remove Duplicates from Sorted Array",
+    problem:
+      "Given a sorted integer array nums, remove duplicates in-place so each unique value appears once and return the number of unique values.",
+    examples: [
+      { input: "nums = [1,1,2]", output: "2, nums starts [1,2]" },
+      { input: "nums = [0,0,1,1,1,2]", output: "3, nums starts [0,1,2]" },
+    ],
     tip: "Two-pointer: slow tracks unique position, fast scans ahead — in-place O(n)",
     iteration: {
       hint: "k points to next write slot; advance only when nums[i] != nums[k-1]",
@@ -265,21 +322,29 @@ return unique.length;`,
   {
     id: 65,
     title: "Rotate Array",
-    tip: "Reverse entire array, then reverse first k, then reverse rest — O(n) in-place",
+    problem:
+      "Given an integer array nums and a non-negative integer k, rotate the array to the right by k positions. Elements that move past the end wrap back to the front. For example, nums = [1,2,3,4,5,6,7] and k = 3 becomes [5,6,7,1,2,3,4]. Normalize k with k % n because rotating by the array length gives the same array.",
+    examples: [
+      { input: "nums = [1,2,3,4,5,6,7], k = 3", output: "[5,6,7,1,2,3,4]" },
+      { input: "nums = [-1,-100,3,99], k = 2", output: "[3,99,-1,-100]" },
+    ],
+    tip: "Use the destination formula newIndex = (i + k) % n for an easy O(n) solution; use three reverses only when the problem requires O(1) extra space",
     iteration: {
-      hint: "Three reverses: whole array, [0,k-1], [k,n-1]",
-      snippet: `k %= nums.length;
-reverse(nums, 0, nums.length-1);
-reverse(nums, 0, k-1);
-reverse(nums, k, nums.length-1);
-// helper: swap from both ends toward center`,
+      hint: "Create a copy and place each nums[i] at (i + k) % n; this is the most readable formula-based approach",
+      snippet: `int n = nums.length;
+k %= n;
+int[] rotated = new int[n];
+for (int i = 0; i < n; i++) {
+    rotated[(i + k) % n] = nums[i];
+}
+System.arraycopy(rotated, 0, nums, 0, n);`,
     },
     recursion: {
-      hint: "Recursive reverse helper swaps head and tail then recurses on the middle segment",
-      snippet: `void rev(int[] a, int l, int r) {
-    if (l >= r) return;
-    int t = a[l]; a[l] = a[r]; a[r] = t;
-    rev(a, l+1, r-1);
+      hint: "Recursive version applies the same destination formula, advancing one source index per call",
+      snippet: `void fill(int[] nums, int[] rotated, int i, int k) {
+    if (i == nums.length) return;
+    rotated[(i + k) % nums.length] = nums[i];
+    fill(nums, rotated, i + 1, k);
 }`,
     },
     stream: {
@@ -294,6 +359,12 @@ System.arraycopy(rot, 0, nums, 0, n);`,
   {
     id: 66,
     title: "Product of Array Except Self",
+    problem:
+      "Given an integer array nums, return an array answer where answer[i] is the product of every element except nums[i], without using division.",
+    examples: [
+      { input: "nums = [1,2,3,4]", output: "[24,12,8,6]" },
+      { input: "nums = [-1,1,0,-3,3]", output: "[0,0,9,0,0]" },
+    ],
     tip: "Two-pass prefix/suffix product arrays avoid division — O(n) time, O(1) extra space",
     iteration: {
       hint: "Left pass builds prefix products; right pass multiplies in suffix products in-place",
@@ -323,6 +394,12 @@ return Arrays.stream(nums)
   {
     id: 67,
     title: "Majority Element",
+    problem:
+      "Given an array nums, return the element that appears more than n / 2 times. You may assume such an element exists.",
+    examples: [
+      { input: "nums = [3,2,3]", output: "3" },
+      { input: "nums = [2,2,1,1,1,2,2]", output: "2" },
+    ],
     tip: "Boyer-Moore voting: cancel out non-majority votes; survivor is the majority — O(n)",
     iteration: {
       hint: "candidate and count: increment when equal, decrement otherwise; reset count to 1 at 0",
@@ -353,6 +430,12 @@ return candidate;`,
   {
     id: 68,
     title: "Intersection of Arrays",
+    problem:
+      "Given two integer arrays nums1 and nums2, return their unique intersection values in any order.",
+    examples: [
+      { input: "nums1 = [1,2,2,1], nums2 = [2,2]", output: "[2]" },
+      { input: "nums1 = [4,9,5], nums2 = [9,4,9,8,4]", output: "[4,9]" },
+    ],
     tip: "HashSet for O(1) lookup; retain only elements present in both arrays — O(n+m)",
     iteration: {
       hint: "Put nums1 into a set; iterate nums2 adding to result set only if present",
@@ -379,6 +462,15 @@ return Arrays.stream(nums2).filter(s::contains).distinct().toArray();`,
   {
     id: 69,
     title: "Merge Intervals",
+    problem:
+      "Given an array of intervals, merge all overlapping intervals and return the non-overlapping result sorted by start time.",
+    examples: [
+      {
+        input: "intervals = [[1,3],[2,6],[8,10],[15,18]]",
+        output: "[[1,6],[8,10],[15,18]]",
+      },
+      { input: "intervals = [[1,4],[4,5]]", output: "[[1,5]]" },
+    ],
     tip: "Sort by start time; greedily merge overlapping intervals — O(n log n)",
     iteration: {
       hint: "Sort by start; compare each interval's start with last merged interval's end",
@@ -410,6 +502,19 @@ return Arrays.stream(intervals)
   {
     id: 70,
     title: "Insert Interval",
+    problem:
+      "Given sorted non-overlapping intervals and a new interval, insert the new interval and merge if necessary.",
+    examples: [
+      {
+        input: "intervals = [[1,3],[6,9]], newInterval = [2,5]",
+        output: "[[1,5],[6,9]]",
+      },
+      {
+        input:
+          "intervals = [[1,2],[3,5],[6,7],[8,10],[12,16]], newInterval = [4,8]",
+        output: "[[1,2],[3,10],[12,16]]",
+      },
+    ],
     tip: "Add all non-overlapping before, merge overlapping, add all after — O(n)",
     iteration: {
       hint: "Three phases: append intervals ending before newInterval starts; merge overlapping; append rest",
@@ -441,6 +546,12 @@ while (i < n) res.add(intervals[i++]);`,
   {
     id: 71,
     title: "Sort Colors (Dutch National Flag)",
+    problem:
+      "Given an array nums containing only 0, 1, and 2, sort it in-place so equal colors are adjacent in the order 0, 1, 2.",
+    examples: [
+      { input: "nums = [2,0,2,1,1,0]", output: "[0,0,1,1,2,2]" },
+      { input: "nums = [2,0,1]", output: "[0,1,2]" },
+    ],
     tip: "Three pointers: low, mid, high partition 0s, 1s, 2s in a single pass — O(n)",
     iteration: {
       hint: "low=0,mid=0,high=n-1; swap based on nums[mid]: 0→swap with low, 2→swap with high",
@@ -472,6 +583,12 @@ for (int v = 0; v < 3; v++)
   {
     id: 72,
     title: "Move Zeroes",
+    problem:
+      "Given an integer array nums, move all zeroes to the end while preserving the relative order of non-zero elements.",
+    examples: [
+      { input: "nums = [0,1,0,3,12]", output: "[1,3,12,0,0]" },
+      { input: "nums = [0]", output: "[0]" },
+    ],
     tip: "Two-pointer: copy non-zero values forward, then fill remainder with zeros — O(n)",
     iteration: {
       hint: "k tracks next write position; copy non-zeros, then fill tail with zeros",
@@ -498,6 +615,12 @@ System.arraycopy(res, 0, nums, 0, nums.length);`,
   {
     id: 73,
     title: "Subarray Sum Equals K",
+    problem:
+      "Given an integer array nums and an integer k, return the number of contiguous subarrays whose sum equals k.",
+    examples: [
+      { input: "nums = [1,1,1], k = 2", output: "2" },
+      { input: "nums = [1,2,3], k = 3", output: "2" },
+    ],
     tip: "Prefix sum + HashMap: count subarrays where prefixSum - k appeared before — O(n)",
     iteration: {
       hint: "Track running prefix sum; map stores frequency of each prefix sum seen",
@@ -532,6 +655,12 @@ return (int) IntStream.range(0, pre.length).boxed()
   {
     id: 74,
     title: "Longest Consecutive Sequence",
+    problem:
+      "Given an unsorted integer array nums, return the length of the longest consecutive elements sequence.",
+    examples: [
+      { input: "nums = [100,4,200,1,3,2]", output: "4" },
+      { input: "nums = [0,3,7,2,5,8,4,6,0,1]", output: "9" },
+    ],
     tip: "HashSet: only start counting from sequence beginnings (no n-1 in set) — O(n)",
     iteration: {
       hint: "For each num where num-1 is not in set, count streak forward",
@@ -564,6 +693,12 @@ return set.stream().filter(n -> !set.contains(n-1))
   {
     id: 75,
     title: "Container with Most Water",
+    problem:
+      "Given an array height where each value is a vertical line height, return the maximum water area formed by choosing two lines.",
+    examples: [
+      { input: "height = [1,8,6,2,5,4,8,3,7]", output: "49" },
+      { input: "height = [1,1]", output: "1" },
+    ],
     tip: "Two pointers from both ends; always move the shorter side inward — O(n)",
     iteration: {
       hint: "l=0, r=n-1; area = min(h[l],h[r])*(r-l); move the shorter pointer",
@@ -593,6 +728,12 @@ return max;`,
   {
     id: 76,
     title: "Sliding Window Maximum",
+    problem:
+      "Given an integer array nums and window size k, return the maximum value in each sliding window of size k.",
+    examples: [
+      { input: "nums = [1,3,-1,-3,5,3,6,7], k = 3", output: "[3,3,5,5,6,7]" },
+      { input: "nums = [1], k = 1", output: "[1]" },
+    ],
     tip: "Monotonic deque stores indices in decreasing order; front is always the current max — O(n)",
     iteration: {
       hint: "Deque front = max index; remove out-of-window indices; remove smaller rear indices",
@@ -623,6 +764,12 @@ for (int i = 0; i < nums.length; i++) {
   {
     id: 77,
     title: "Kth Largest Element",
+    problem:
+      "Given an integer array nums and an integer k, return the kth largest element in the array.",
+    examples: [
+      { input: "nums = [3,2,1,5,6,4], k = 2", output: "5" },
+      { input: "nums = [3,2,3,1,2,4,5,5,6], k = 4", output: "4" },
+    ],
     tip: "Min-heap of size k: keep only k largest; root is the answer — O(n log k)",
     iteration: {
       hint: "PriorityQueue (min-heap) size k; poll when size > k; top is kth largest",
@@ -652,6 +799,12 @@ return pq.peek();`,
   {
     id: 78,
     title: "Top K Frequent Elements",
+    problem:
+      "Given an integer array nums and an integer k, return the k most frequent elements in any order.",
+    examples: [
+      { input: "nums = [1,1,1,2,2,3], k = 2", output: "[1,2]" },
+      { input: "nums = [1], k = 1", output: "[1]" },
+    ],
     tip: "Frequency map + min-heap of size k; or bucket sort on frequency — O(n log k)",
     iteration: {
       hint: "Count frequencies, then use min-heap keyed by frequency to keep top k",
@@ -681,6 +834,12 @@ return pq.stream().mapToInt(Integer::intValue).toArray();`,
   {
     id: 79,
     title: "Median of Two Sorted Arrays",
+    problem:
+      "Given two sorted arrays nums1 and nums2, return the median of the combined sorted values.",
+    examples: [
+      { input: "nums1 = [1,3], nums2 = [2]", output: "2.0" },
+      { input: "nums1 = [1,2], nums2 = [3,4]", output: "2.5" },
+    ],
     tip: "Binary search on the smaller array to find the correct partition — O(log(min(m,n)))",
     iteration: {
       hint: "Partition both arrays so left halves combined have (m+n)/2 elements; adjust with binary search",
@@ -713,6 +872,18 @@ return n%2==1 ? merged[n/2] : (merged[n/2-1]+merged[n/2])/2.0;`,
   {
     id: 80,
     title: "Spiral Matrix Traversal",
+    problem:
+      "Given an m x n matrix, return all elements in spiral order starting from the top-left corner.",
+    examples: [
+      {
+        input: "matrix = [[1,2,3],[4,5,6],[7,8,9]]",
+        output: "[1,2,3,6,9,8,7,4,5]",
+      },
+      {
+        input: "matrix = [[1,2,3,4],[5,6,7,8],[9,10,11,12]]",
+        output: "[1,2,3,4,8,12,11,10,9,5,6,7]",
+      },
+    ],
     tip: "Track four boundaries (top, bottom, left, right) and shrink after each direction — O(m*n)",
     iteration: {
       hint: "Loop: go right, go down, go left, go up; increment/decrement boundaries after each sweep",
@@ -746,6 +917,18 @@ IntStream.range(0, Math.min(m,n+1)/2).forEach(layer -> { /* add 4 sides */ });`,
   {
     id: 81,
     title: "Set Matrix Zeroes",
+    problem:
+      "Given a matrix, if an element is 0, set its entire row and column to 0 in-place.",
+    examples: [
+      {
+        input: "matrix = [[1,1,1],[1,0,1],[1,1,1]]",
+        output: "[[1,0,1],[0,0,0],[1,0,1]]",
+      },
+      {
+        input: "matrix = [[0,1,2,0],[3,4,5,2],[1,3,1,5]]",
+        output: "[[0,0,0,0],[0,4,5,0],[0,3,1,0]]",
+      },
+    ],
     tip: "Record zero positions first using first row/col as markers, then zero out — O(m*n) space O(1)",
     iteration: {
       hint: "Use first row and col as flag arrays; separate bool for first-row and first-col zero status",
@@ -776,6 +959,12 @@ zeros.forEach(p->{ Arrays.fill(matrix[p[0]],0); for(int i=0;i<matrix.length;i++)
   {
     id: 82,
     title: "Search in Rotated Sorted Array",
+    problem:
+      "Given a sorted array rotated at an unknown pivot and an integer target, return target's index or -1 if absent.",
+    examples: [
+      { input: "nums = [4,5,6,7,0,1,2], target = 0", output: "4" },
+      { input: "nums = [4,5,6,7,0,1,2], target = 3", output: "-1" },
+    ],
     tip: "Modified binary search: determine which half is sorted, check if target falls in it — O(log n)",
     iteration: {
       hint: "Binary search: check if left half sorted; target in sorted half → search there, else other side",
@@ -807,6 +996,12 @@ while (lo<=hi) { int mid=(lo+hi)/2;
   {
     id: 83,
     title: "Find Peak Element",
+    problem:
+      "Given an array nums where adjacent values are different, return the index of any peak element greater than its neighbors.",
+    examples: [
+      { input: "nums = [1,2,3,1]", output: "2" },
+      { input: "nums = [1,2,1,3,5,6,4]", output: "1 or 5" },
+    ],
     tip: "Binary search: if mid < mid+1, peak is to the right; else to the left or at mid — O(log n)",
     iteration: {
       hint: "Binary search: move toward the larger neighbor to guarantee finding a peak",
@@ -836,6 +1031,12 @@ return lo;`,
   {
     id: 84,
     title: "Gas Station",
+    problem:
+      "Given gas and cost arrays for circular stations, return the starting station index that can complete the circuit, or -1 if impossible.",
+    examples: [
+      { input: "gas = [1,2,3,4,5], cost = [3,4,5,1,2]", output: "3" },
+      { input: "gas = [2,3,4], cost = [3,4,3]", output: "-1" },
+    ],
     tip: "If total gas >= total cost, a solution exists; greedy finds start by resetting when tank < 0 — O(n)",
     iteration: {
       hint: "Track total tank and current tank; reset start index when current tank goes negative",
@@ -868,6 +1069,12 @@ if (total < 0) return -1;
   {
     id: 85,
     title: "Candy Distribution",
+    problem:
+      "Given children's ratings, return the minimum candies needed so each child has at least one candy and higher-rated neighbors get more.",
+    examples: [
+      { input: "ratings = [1,0,2]", output: "5" },
+      { input: "ratings = [1,2,2]", output: "4" },
+    ],
     tip: "Two passes: left-to-right for ascending, right-to-left for descending — O(n)",
     iteration: {
       hint: "Initialize all to 1; pass left→right boost ascending neighbors; pass right→left boost descending",
@@ -896,6 +1103,12 @@ return IntStream.range(0,n).map(i->Math.max(l[i],r[i])).sum();`,
   {
     id: 86,
     title: "Trapping Rain Water",
+    problem:
+      "Given bar heights, return how much rain water can be trapped between the bars after raining.",
+    examples: [
+      { input: "height = [0,1,0,2,1,0,1,3,2,1,2,1]", output: "6" },
+      { input: "height = [4,2,0,3,2,5]", output: "9" },
+    ],
     tip: "Two-pointer with running maxLeft and maxRight — trapped water at i = min(maxL,maxR) - h[i] — O(n)",
     iteration: {
       hint: "l=0,r=n-1; whichever side has smaller max, compute water and advance that pointer",
@@ -926,6 +1139,12 @@ return IntStream.range(0,n).map(i->Math.max(0,Math.min(lMax[i],rMax[i])-height[i
   {
     id: 87,
     title: "Next Permutation",
+    problem:
+      "Given an integer array representing a permutation, rearrange it into the next lexicographically greater permutation, or the lowest order if none exists.",
+    examples: [
+      { input: "nums = [1,2,3]", output: "[1,3,2]" },
+      { input: "nums = [3,2,1]", output: "[1,2,3]" },
+    ],
     tip: "Find rightmost ascent, swap with next larger from right, reverse the suffix — O(n)",
     iteration: {
       hint: "Step 1: find i where nums[i]<nums[i+1] from right. Step 2: swap with smallest nums[j]>nums[i] from right. Step 3: reverse from i+1",
@@ -953,6 +1172,12 @@ int i=IntStream.iterate(n-2,x->x-1).limit(n-1).filter(x->nums[x]<nums[x+1]).find
   {
     id: 88,
     title: "First Missing Positive",
+    problem:
+      "Given an unsorted integer array nums, return the smallest missing positive integer.",
+    examples: [
+      { input: "nums = [1,2,0]", output: "3" },
+      { input: "nums = [3,4,-1,1]", output: "2" },
+    ],
     tip: "Place each number at its correct index (nums[i]-1); then scan for first index where nums[i]!=i+1 — O(n)",
     iteration: {
       hint: "Cycle sort: while nums[i] in [1,n] and not at correct position, swap to place",
@@ -981,6 +1206,12 @@ return IntStream.rangeClosed(1,nums.length+1).filter(x->!s.contains(x)).findFirs
   {
     id: 89,
     title: "Jump Game",
+    problem:
+      "Given nums where nums[i] is the maximum jump length from index i, return true if you can reach the last index.",
+    examples: [
+      { input: "nums = [2,3,1,1,4]", output: "true" },
+      { input: "nums = [3,2,1,0,4]", output: "false" },
+    ],
     tip: "Track the farthest index reachable; if current index exceeds it, return false — O(n)",
     iteration: {
       hint: "maxReach = max(maxReach, i + nums[i]); return false if i > maxReach before end",
@@ -1013,6 +1244,12 @@ return IntStream.range(0,n).allMatch(i -> {
   {
     id: 90,
     title: "Jump Game II",
+    problem:
+      "Given nums where nums[i] is the maximum jump length from index i, return the minimum number of jumps needed to reach the last index.",
+    examples: [
+      { input: "nums = [2,3,1,1,4]", output: "2" },
+      { input: "nums = [2,3,0,1,4]", output: "2" },
+    ],
     tip: "Greedy: at each step extend currentEnd to farthest reachable; increment jumps when reaching currentEnd — O(n)",
     iteration: {
       hint: "Track farthest and currentEnd; jump count increments when i reaches currentEnd",
@@ -1044,6 +1281,12 @@ return state[0];`,
   {
     id: 91,
     title: "Split Array Largest Sum",
+    problem:
+      "Given nums and an integer k, split nums into k non-empty contiguous subarrays minimizing the largest subarray sum.",
+    examples: [
+      { input: "nums = [7,2,5,10,8], k = 2", output: "18" },
+      { input: "nums = [1,2,3,4,5], k = 2", output: "9" },
+    ],
     tip: "Binary search on the answer (max subarray sum); validate split count greedily — O(n log S)",
     iteration: {
       hint: "lo=max(nums), hi=sum(nums); binary search mid; check if mid allows <= m subarrays",
@@ -1077,6 +1320,12 @@ int lo=Arrays.stream(nums).max().getAsInt(), hi=pre[nums.length];
   {
     id: 92,
     title: "Maximum Product Subarray",
+    problem:
+      "Given an integer array nums, return the maximum product of a non-empty contiguous subarray.",
+    examples: [
+      { input: "nums = [2,3,-2,4]", output: "6" },
+      { input: "nums = [-2,0,-1]", output: "0" },
+    ],
     tip: "Track both max and min products (negatives can flip); update global max each step — O(n)",
     iteration: {
       hint: "curMax and curMin reset at each element; negative multiplied by min can become new max",

@@ -6,6 +6,12 @@ window.CT_STRINGS = {
     {
       id: 1,
       title: "Reverse a string",
+      problem:
+        "Given a string s, return a new string with the characters in reverse order.",
+      examples: [
+        { input: 's = "hello"', output: '"olleh"' },
+        { input: 's = "Java"', output: '"avaJ"' },
+      ],
       tip: "Two-pointer swap from both ends in O(n), or StringBuilder.reverse()",
       iteration: {
         hint: "Swap chars from both ends moving inward until pointers meet",
@@ -33,6 +39,12 @@ return new String(c);`,
     {
       id: 2,
       title: "Palindrome check",
+      problem:
+        "Given a string s, return true if it reads the same forward and backward; otherwise return false.",
+      examples: [
+        { input: 's = "madam"', output: "true" },
+        { input: 's = "hello"', output: "false" },
+      ],
       tip: "Two pointers from both ends; skip non-alphanumerics for real-world input",
       iteration: {
         hint: "Compare chars at l and r, advance inward; stop if mismatch",
@@ -59,6 +71,12 @@ return s.equals(rev);`,
     {
       id: 3,
       title: "First non-repeating character",
+      problem:
+        "Given a string s, return the index of the first character that appears exactly once. Return -1 if every character repeats.",
+      examples: [
+        { input: 's = "leetcode"', output: "0" },
+        { input: 's = "aabb"', output: "-1" },
+      ],
       tip: "Single pass builds frequency map; second pass finds first count-1 char",
       iteration: {
         hint: "Count frequencies, then scan again to find first char with count 1",
@@ -90,6 +108,12 @@ return -1;`,
     {
       id: 4,
       title: "Check anagram",
+      problem:
+        "Given two strings s1 and s2, return true if they contain the same characters with the same frequencies; otherwise return false.",
+      examples: [
+        { input: 's1 = "listen", s2 = "silent"', output: "true" },
+        { input: 's1 = "rat", s2 = "car"', output: "false" },
+      ],
       tip: "Sort both strings and compare, or count char frequencies and diff",
       iteration: {
         hint: "Increment freq for s1, decrement for s2; any non-zero means not anagram",
@@ -123,6 +147,12 @@ return sorted1.equals(sorted2);`,
     {
       id: 5,
       title: "Count characters",
+      problem:
+        "Given a string s, count how many times each character appears and return the frequency mapping.",
+      examples: [
+        { input: 's = "banana"', output: "{b=1, a=3, n=2}" },
+        { input: 's = "abca"', output: "{a=2, b=1, c=1}" },
+      ],
       tip: "Use a frequency array of size 256 (ASCII) or a HashMap for Unicode",
       iteration: {
         hint: "Traverse each char and increment its count in a map or array",
@@ -149,6 +179,12 @@ return freq;`,
     {
       id: 6,
       title: "Remove duplicate characters",
+      problem:
+        "Given a string s, remove duplicate characters while keeping the first occurrence order.",
+      examples: [
+        { input: 's = "programming"', output: '"progamin"' },
+        { input: 's = "aabbcc"', output: '"abc"' },
+      ],
       tip: "Track seen chars in a boolean array; append only first occurrences",
       iteration: {
         hint: "Use a visited boolean array; only append char if not seen before",
@@ -181,6 +217,12 @@ return sb.toString();`,
     {
       id: 7,
       title: "Longest substring without repeating characters",
+      problem:
+        "Given a string s, return the length of the longest substring that contains no repeated characters.",
+      examples: [
+        { input: 's = "abcabcbb"', output: "3" },
+        { input: 's = "bbbbb"', output: "1" },
+      ],
       tip: "Sliding window with a HashSet: expand right, shrink left on duplicate",
       iteration: {
         hint: "Expand right pointer; when duplicate found shrink left until clear",
@@ -219,6 +261,12 @@ return max;`,
     {
       id: 8,
       title: "Longest palindrome substring",
+      problem:
+        "Given a string s, return the longest contiguous substring that is a palindrome.",
+      examples: [
+        { input: 's = "babad"', output: '"bab" or "aba"' },
+        { input: 's = "cbbd"', output: '"bb"' },
+      ],
       tip: "Expand around each center (2n-1 centers) in O(n^2); Manacher's is O(n)",
       iteration: {
         hint: "For each index expand outward for odd and even length palindromes",
@@ -252,6 +300,12 @@ return s.substring(start, start + maxLen);`,
     {
       id: 9,
       title: "String compression",
+      problem:
+        "Given a string s, compress each run of repeated characters as character plus count, omitting the count for single characters.",
+      examples: [
+        { input: 's = "aaabbc"', output: '"a3b2c"' },
+        { input: 's = "abcd"', output: '"abcd"' },
+      ],
       tip: "Count consecutive identical chars; append char and count only if count>1",
       iteration: {
         hint: "Track count of consecutive chars; flush char+count when char changes",
@@ -288,6 +342,12 @@ return sb.toString();`,
     {
       id: 10,
       title: "Check if one string is a rotation of another",
+      problem:
+        "Given two strings s1 and s2, return true if s2 can be obtained by rotating s1; otherwise return false.",
+      examples: [
+        { input: 's1 = "abcde", s2 = "cdeab"', output: "true" },
+        { input: 's1 = "abcde", s2 = "abced"', output: "false" },
+      ],
       tip: "Concatenate s1+s1 and check if s2 is a substring — elegant O(n) trick",
       iteration: {
         hint: "If lengths match, check if s2 appears in s1+s1 using contains",
@@ -313,6 +373,12 @@ return IntStream.range(0, s1.length())
     {
       id: 11,
       title: "Convert Roman to Integer",
+      problem:
+        "Given a Roman numeral string s, convert it to its integer value.",
+      examples: [
+        { input: 's = "III"', output: "3" },
+        { input: 's = "MCMXCIV"', output: "1994" },
+      ],
       tip: "If current value < next value, subtract it; otherwise add it",
       iteration: {
         hint: "Scan left to right; subtract when smaller numeral precedes larger",
@@ -346,6 +412,12 @@ return IntStream.range(0, s.length())
     {
       id: 12,
       title: "Integer to Roman",
+      problem:
+        "Given an integer num, convert it to a valid Roman numeral string.",
+      examples: [
+        { input: "num = 58", output: '"LVIII"' },
+        { input: "num = 1994", output: '"MCMXCIV"' },
+      ],
       tip: "Greedily subtract largest roman numeral values using a value-symbol table",
       iteration: {
         hint: "Keep subtracting the largest fitting value and appending its symbol",
@@ -375,6 +447,12 @@ String[] syms = {"M","CM","D","CD","C","XC","L","XL","X","IX","V","IV","I"};
     {
       id: 13,
       title: "Implement strstr() (find needle in haystack)",
+      problem:
+        "Given strings haystack and needle, return the first index where needle occurs in haystack. Return -1 if it does not occur.",
+      examples: [
+        { input: 'haystack = "sadbutsad", needle = "sad"', output: "0" },
+        { input: 'haystack = "leetcode", needle = "leeto"', output: "-1" },
+      ],
       tip: "KMP achieves O(n+m) by using a failure/prefix function to avoid backtracking",
       iteration: {
         hint: "Slide a window of needle length across haystack; compare at each position",
@@ -402,6 +480,15 @@ return -1;`,
     {
       id: 14,
       title: "Group anagrams",
+      problem:
+        "Given an array of words, group words that are anagrams of each other and return the groups.",
+      examples: [
+        {
+          input: 'words = ["eat","tea","tan","ate","nat","bat"]',
+          output: '[["eat","tea","ate"],["tan","nat"],["bat"]]',
+        },
+        { input: 'words = [""]', output: '[[""]]' },
+      ],
       tip: "Sort each string as a canonical key; group all strings sharing that key",
       iteration: {
         hint: "For each word, sort its chars as key; accumulate words by key in map",
@@ -433,6 +520,12 @@ return new ArrayList<>(map.values());`,
     {
       id: 15,
       title: "Minimum window substring",
+      problem:
+        "Given strings s and t, return the smallest substring of s that contains every character of t with required frequency. Return an empty string if no such window exists.",
+      examples: [
+        { input: 's = "ADOBECODEBANC", t = "ABC"', output: '"BANC"' },
+        { input: 's = "a", t = "aa"', output: '""' },
+      ],
       tip: "Sliding window with two frequency maps; shrink left when all chars covered",
       iteration: {
         hint: "Expand right until window covers t; shrink left to minimize, record min",
@@ -461,6 +554,15 @@ return minLen==Integer.MAX_VALUE?"":s.substring(start,start+minLen);`,
     {
       id: 16,
       title: "Zigzag conversion",
+      problem:
+        "Given a string s and numRows, write characters in a zigzag pattern and then read row by row.",
+      examples: [
+        {
+          input: 's = "PAYPALISHIRING", numRows = 3',
+          output: '"PAHNAPLSIIGYIR"',
+        },
+        { input: 's = "ABCD", numRows = 2', output: '"ACBD"' },
+      ],
       tip: "Simulate rows with a direction flag; flip direction at top and bottom rows",
       iteration: {
         hint: "Place each char in current row, flip direction at row 0 or numRows-1",
@@ -494,6 +596,12 @@ return Arrays.stream(rows).map(StringBuilder::toString).collect(Collectors.joini
     {
       id: 17,
       title: "Valid palindrome with at most 1 deletion",
+      problem:
+        "Given a string s, return true if it is already a palindrome or can become one by deleting at most one character.",
+      examples: [
+        { input: 's = "aba"', output: "true" },
+        { input: 's = "abca"', output: "true" },
+      ],
       tip: "Two pointers; on mismatch, try skipping either left or right char",
       iteration: {
         hint: "On first mismatch try isPalin(l+1,r) or isPalin(l,r-1); either true => valid",
@@ -526,6 +634,12 @@ return IntStream.range(0,1).anyMatch(x ->
     {
       id: 18,
       title: "Reverse words in a sentence",
+      problem:
+        "Given a sentence, reverse the order of words while removing extra spaces between words.",
+      examples: [
+        { input: 's = "the sky is blue"', output: '"blue is sky the"' },
+        { input: 's = "  hello   world  "', output: '"world hello"' },
+      ],
       tip: "Split on whitespace, reverse the array, rejoin — handles multiple spaces",
       iteration: {
         hint: "Split by spaces, collect non-empty tokens, reverse list, join with space",
@@ -553,6 +667,12 @@ return IntStream.iterate(words.length-1, i->i-1).limit(words.length)
     {
       id: 19,
       title: "Multiply strings",
+      problem:
+        "Given two non-negative integers num1 and num2 as strings, return their product as a string without converting the whole input to a built-in numeric type.",
+      examples: [
+        { input: 'num1 = "2", num2 = "3"', output: '"6"' },
+        { input: 'num1 = "123", num2 = "456"', output: '"56088"' },
+      ],
       tip: "Simulate grade-school multiplication digit-by-digit into a result array",
       iteration: {
         hint: "For each pair (i,j), product goes to positions i+j and i+j+1 in result",
@@ -584,6 +704,12 @@ return new java.math.BigInteger(num1).multiply(new java.math.BigInteger(num2)).t
     {
       id: 20,
       title: "Add binary strings",
+      problem:
+        "Given two binary strings a and b, return their sum as a binary string.",
+      examples: [
+        { input: 'a = "11", b = "1"', output: '"100"' },
+        { input: 'a = "1010", b = "1011"', output: '"10101"' },
+      ],
       tip: "Process from right to left, track carry; prepend each sum bit",
       iteration: {
         hint: "Two pointers from end, sum bits + carry, prepend result bit",
@@ -615,6 +741,12 @@ return sb.reverse().toString();`,
     {
       id: 21,
       title: "Remove adjacent duplicates",
+      problem:
+        "Given a string s, repeatedly remove adjacent equal character pairs until no such pair remains, then return the final string.",
+      examples: [
+        { input: 's = "abbaca"', output: '"ca"' },
+        { input: 's = "azxxzy"', output: '"ay"' },
+      ],
       tip: "Use a stack: push char if top differs, else pop (they cancel each other)",
       iteration: {
         hint: "Stack-based: push if top != current, else pop to remove pair",
@@ -647,6 +779,12 @@ return sb.reverse().toString();`,
     {
       id: 22,
       title: "Check isomorphic strings",
+      problem:
+        "Given strings s and t, return true if characters in s can be replaced one-to-one to form t, preserving order.",
+      examples: [
+        { input: 's = "egg", t = "add"', output: "true" },
+        { input: 's = "foo", t = "bar"', output: "false" },
+      ],
       tip: "Map each char in s to corresponding char in t, and verify no conflicts",
       iteration: {
         hint: "Maintain two maps s->t and t->s; any conflicting mapping returns false",
@@ -679,6 +817,12 @@ IntStream.range(0,s.length()).allMatch(i ->
     {
       id: 23,
       title: 'Decode string (e.g. "3[a2[b]]" => "abbabbabb")',
+      problem:
+        "Given an encoded string with patterns like k[encoded_string], decode it so the bracketed part repeats k times.",
+      examples: [
+        { input: 's = "3[a]2[bc]"', output: '"aaabcbc"' },
+        { input: 's = "3[a2[c]]"', output: '"accaccacc"' },
+      ],
       tip: "Use two stacks (count stack, string stack); unwind on ']'",
       iteration: {
         hint: "Push current string and count on '['; on ']' pop and repeat k times",
@@ -717,6 +861,12 @@ return s;`,
     {
       id: 24,
       title: "Wildcard matching (* matches any sequence, ? matches one char)",
+      problem:
+        "Given a text string and a wildcard pattern, return true if the whole text matches the pattern where ? matches one character and * matches any sequence.",
+      examples: [
+        { input: 's = "aa", p = "a"', output: "false" },
+        { input: 's = "adceb", p = "*a*b"', output: "true" },
+      ],
       tip: "DP table dp[i][j] = true if pattern[0..j-1] matches string[0..i-1]",
       iteration: {
         hint: "Build DP; '*' uses dp[i-1][j] (match more) or dp[i][j-1] (match empty)",
@@ -749,6 +899,12 @@ return dp[s.length()][p.length()];`,
       id: 25,
       title:
         "Regex matching (. matches one char, * matches zero or more of preceding)",
+      problem:
+        "Given a text string and regex pattern, return true if the entire string matches where . matches one character and * means zero or more of the previous element.",
+      examples: [
+        { input: 's = "aa", p = "a*"', output: "true" },
+        { input: 's = "mississippi", p = "mis*is*p*."', output: "false" },
+      ],
       tip: "DP: '.*' can match empty; check both consuming and not consuming with '*'",
       iteration: {
         hint: "dp[i][j]: s[0..i-1] matches p[0..j-1]; handle '.*' carefully",
@@ -780,6 +936,12 @@ return dp[s.length()][p.length()];`,
     {
       id: 26,
       title: "Longest common prefix",
+      problem:
+        "Given an array of strings, return the longest prefix shared by every string. Return an empty string if there is no common prefix.",
+      examples: [
+        { input: 'strs = ["flower","flow","flight"]', output: '"fl"' },
+        { input: 'strs = ["dog","racecar","car"]', output: '""' },
+      ],
       tip: "Take first string as candidate; shrink it until each word starts with it",
       iteration: {
         hint: "Use first word as prefix; shorten until all strings start with it",
@@ -811,6 +973,12 @@ return prefix;`,
     {
       id: 27,
       title: "Reorganize string (no two adjacent chars same)",
+      problem:
+        "Given a string s, rearrange its characters so no two adjacent characters are the same. Return an empty string if impossible.",
+      examples: [
+        { input: 's = "aab"', output: '"aba"' },
+        { input: 's = "aaab"', output: '""' },
+      ],
       tip: "Max-heap by frequency; always pick most frequent char, then second most",
       iteration: {
         hint: "PriorityQueue by frequency; alternate top two chars, re-enqueue if freq>0",
@@ -839,6 +1007,12 @@ return sb.toString();`,
       id: 28,
       title:
         "Partition labels (partition so each char appears in at most one part)",
+      problem:
+        "Given a string s, split it into as many parts as possible so each character appears in at most one part, and return the part lengths.",
+      examples: [
+        { input: 's = "ababcbacadefegdehijhklij"', output: "[9,7,8]" },
+        { input: 's = "eccbbbbdec"', output: "[10]" },
+      ],
       tip: "Record last index of each char; greedily extend current partition to cover all",
       iteration: {
         hint: "Track last occurrence of each char; close partition when i == end",
@@ -872,6 +1046,12 @@ IntStream.range(0,s.length()).forEach(i->last[s.charAt(i)-'a']=i);
     {
       id: 29,
       title: "Longest repeating character replacement (with at most K swaps)",
+      problem:
+        "Given a string s and integer k, return the longest substring length that can be made of one repeated character by replacing at most k characters.",
+      examples: [
+        { input: 's = "ABAB", k = 2', output: "4" },
+        { input: 's = "AABABBA", k = 1', output: "4" },
+      ],
       tip: "Sliding window: window is valid if (window size - max freq) <= K",
       iteration: {
         hint: "Expand right; track max freq in window; shrink left when invalid",
@@ -899,6 +1079,12 @@ return res;`,
     {
       id: 30,
       title: "Count substrings with exactly K distinct characters",
+      problem:
+        "Given a string s and integer k, count substrings that contain exactly k distinct characters.",
+      examples: [
+        { input: 's = "pqpqs", k = 2', output: "7" },
+        { input: 's = "aabab", k = 3', output: "0" },
+      ],
       tip: "atMost(K) - atMost(K-1) trick converts 'exactly K' to sliding window",
       iteration: {
         hint: "Use atMost helper: count(k)-count(k-1) gives exactly-k substrings",
@@ -932,6 +1118,12 @@ return countAtMost(s,k)-countAtMost(s,k-1);`,
     {
       id: 31,
       title: "Implement atoi() (string to integer)",
+      problem:
+        "Given a string s, parse it like atoi: ignore leading spaces, read optional sign and digits, stop at the first invalid character, and clamp overflow.",
+      examples: [
+        { input: 's = "42"', output: "42" },
+        { input: 's = "   -42"', output: "-42" },
+      ],
       tip: "Handle leading spaces, sign, digit accumulation, and int overflow carefully",
       iteration: {
         hint: "Skip spaces, read sign, accumulate digits, clamp to INT_MIN/MAX",
@@ -966,6 +1158,12 @@ return (int)Math.min(Math.max(v, Integer.MIN_VALUE), Integer.MAX_VALUE);`,
     {
       id: 32,
       title: "Repeated substring pattern",
+      problem:
+        "Given a string s, return true if it can be built by repeating one of its non-empty substrings.",
+      examples: [
+        { input: 's = "abab"', output: "true" },
+        { input: 's = "aba"', output: "false" },
+      ],
       tip: "If s is built from repeated pattern p, then (s+s) without first/last char contains s",
       iteration: {
         hint: "Check if s appears in (s+s) after removing first and last character",
@@ -991,6 +1189,12 @@ return (int)Math.min(Math.max(v, Integer.MIN_VALUE), Integer.MAX_VALUE);`,
     {
       id: 33,
       title: "Find all permutations of a string",
+      problem:
+        "Given a string s, return all possible permutations of its characters.",
+      examples: [
+        { input: 's = "abc"', output: '["abc","acb","bac","bca","cab","cba"]' },
+        { input: 's = "ab"', output: '["ab","ba"]' },
+      ],
       tip: "Backtrack: swap current index with each subsequent index, recurse, then swap back",
       iteration: {
         hint: "Iteratively generate permutations by inserting char at every position",
@@ -1026,6 +1230,12 @@ return res;`,
       id: 34,
       title:
         "Case-specific sort (uppercase before lowercase, relative order preserved)",
+      problem:
+        "Given a mixed-case string, return a string where uppercase letters appear before lowercase letters while preserving relative order inside each group.",
+      examples: [
+        { input: 's = "aBcDeF"', output: '"BDFace"' },
+        { input: 's = "Java"', output: '"Java"' },
+      ],
       tip: "Separate uppercase and lowercase, then interleave back in original positions",
       iteration: {
         hint: "Collect upper and lower chars separately; refill positions by original case",
@@ -1055,6 +1265,12 @@ return sb.toString();`,
     {
       id: 35,
       title: "Check pangram (contains every letter of the alphabet)",
+      problem:
+        "Given a sentence, return true if it contains every English alphabet letter at least once.",
+      examples: [
+        { input: 's = "thequickbrownfoxjumpsoverthelazydog"', output: "true" },
+        { input: 's = "leetcode"', output: "false" },
+      ],
       tip: "Use a boolean[26] or Set; mark each letter present; verify all 26 are marked",
       iteration: {
         hint: "Mark each lowercase letter in a boolean array; check all 26 are true",
@@ -1084,6 +1300,12 @@ return true;`,
     {
       id: 36,
       title: "Reverse only vowels in a string",
+      problem:
+        "Given a string s, reverse only the vowels and keep all consonants in their original positions.",
+      examples: [
+        { input: 's = "hello"', output: '"holle"' },
+        { input: 's = "leetcode"', output: '"leotcede"' },
+      ],
       tip: "Two pointers: advance each until both point at vowels, then swap",
       iteration: {
         hint: "Move l forward and r backward skipping consonants, then swap vowels",
@@ -1120,6 +1342,12 @@ return new String(c);`,
     {
       id: 37,
       title: "Valid parentheses string (with wildcards *)",
+      problem:
+        "Given a string containing (, ), and *, return true if * can be treated as (, ), or empty so the string is valid.",
+      examples: [
+        { input: 's = "(*)"', output: "true" },
+        { input: 's = "(*))"', output: "true" },
+      ],
       tip: "Track min and max possible open counts; '*' can be '(', ')' or ''",
       iteration: {
         hint: "Track lo/hi range of possible open counts; invalid if hi < 0",
@@ -1154,6 +1382,12 @@ return lo==0;`,
     {
       id: 38,
       title: "Remove minimum invalid parentheses",
+      problem:
+        "Given a string containing parentheses and letters, remove the minimum number of invalid parentheses to make it valid and return one valid result.",
+      examples: [
+        { input: 's = "lee(t(c)o)de)"', output: '"lee(t(c)o)de"' },
+        { input: 's = "a)b(c)d"', output: '"ab(c)d"' },
+      ],
       tip: "BFS level by level removing one parenthesis at a time; return first valid level",
       iteration: {
         hint: "BFS: try removing each '(' or ')' one at a time; stop at first valid strings",
@@ -1195,6 +1429,12 @@ return res;`,
     {
       id: 39,
       title: "Shortest palindrome (prepend minimum chars to make palindrome)",
+      problem:
+        "Given a string s, add the fewest characters to the front so the whole string becomes a palindrome, and return the result.",
+      examples: [
+        { input: 's = "aacecaaa"', output: '"aaacecaaa"' },
+        { input: 's = "abcd"', output: '"dcbabcd"' },
+      ],
       tip: "Find longest palindromic prefix using KMP on s + '#' + reverse(s)",
       iteration: {
         hint: "KMP failure function on s+'#'+rev gives length of longest palindromic prefix",
@@ -1229,6 +1469,12 @@ return rev.substring(0,s.length()-kmp[t.length()-1])+s;`,
     {
       id: 40,
       title: "String to int with overflow handling",
+      problem:
+        "Given a string representation of an integer, convert it to int while handling optional sign, invalid suffixes, and 32-bit overflow.",
+      examples: [
+        { input: 's = "4193 with words"', output: "4193" },
+        { input: 's = "91283472332"', output: "2147483647" },
+      ],
       tip: "Check overflow BEFORE multiplying: if result > INT_MAX/10, it will overflow",
       iteration: {
         hint: "Build digit by digit; before each step check if result exceeds INT_MAX/10",
@@ -1264,6 +1510,12 @@ return (int)Math.min(Math.max(v,(long)Integer.MIN_VALUE),(long)Integer.MAX_VALUE
     {
       id: 41,
       title: "Longest common subsequence (LCS) between two strings",
+      problem:
+        "Given two strings, return the length of the longest sequence of characters that appears in both strings in the same relative order.",
+      examples: [
+        { input: 'text1 = "abcde", text2 = "ace"', output: "3" },
+        { input: 'text1 = "abc", text2 = "def"', output: "0" },
+      ],
       tip: "DP table: dp[i][j] = LCS of s1[0..i-1] and s2[0..j-1]; match adds 1",
       iteration: {
         hint: "Fill DP bottom-up; on char match: dp[i][j]=dp[i-1][j-1]+1, else max of two",
@@ -1292,6 +1544,15 @@ return dp[m][n];`,
     {
       id: 42,
       title: "Word break (can string be segmented using dictionary words)",
+      problem:
+        "Given a string s and a dictionary of words, return true if s can be segmented into one or more dictionary words.",
+      examples: [
+        { input: 's = "leetcode", dict = ["leet","code"]', output: "true" },
+        {
+          input: 's = "catsandog", dict = ["cats","dog","sand","and","cat"]',
+          output: "false",
+        },
+      ],
       tip: "DP: dp[i] = true if s[0..i-1] can be segmented; check all end positions j<i",
       iteration: {
         hint: "dp[i] = any dp[j] where dp[j] is true and s[j..i] is in dict",
@@ -1325,6 +1586,12 @@ return dp[s.length()];`,
     {
       id: 43,
       title: "Longest palindromic subsequence",
+      problem:
+        "Given a string s, return the length of the longest subsequence that is a palindrome.",
+      examples: [
+        { input: 's = "bbbab"', output: "4" },
+        { input: 's = "cbbd"', output: "2" },
+      ],
       tip: "LPS(s) = LCS(s, reverse(s)); or DP: if ends match, add 2; else max of sides",
       iteration: {
         hint: "dp[i][j] = LPS of s[i..j]; expand from length 1 up to full string",
@@ -1358,6 +1625,12 @@ return dp[0][n-1];`,
     {
       id: 44,
       title: "Check if two strings are k-anagrams",
+      problem:
+        "Given two strings and integer k, return true if they can become anagrams after changing at most k characters.",
+      examples: [
+        { input: 's1 = "anagram", s2 = "grammar", k = 3', output: "true" },
+        { input: 's1 = "geeks", s2 = "eggkf", k = 1', output: "false" },
+      ],
       tip: "Count char frequencies; if total differing chars between both is <= 2*k, they are k-anagrams",
       iteration: {
         hint: "Difference in freq counts; number of chars to change must be <= k",
@@ -1391,6 +1664,12 @@ return IntStream.of(freq).filter(f->f>0).sum()<=k;`,
     {
       id: 45,
       title: "Implement run-length encoding and decoding",
+      problem:
+        "Given a string, encode it using run-length encoding, and decode an encoded string back to the original form.",
+      examples: [
+        { input: 'encode("aaabb")', output: '"a3b2"' },
+        { input: 'decode("a3b2")', output: '"aaabb"' },
+      ],
       tip: "Encoding: count consecutive chars; decoding: parse count + char pairs",
       iteration: {
         hint: "Encode: count runs; Decode: read digit(s) then char, repeat char that many times",
@@ -1429,6 +1708,12 @@ return sb.toString();`,
     {
       id: 46,
       title: "Find smallest window containing all characters of another string",
+      problem:
+        "Given strings s and pattern p, return the smallest substring in s containing all characters of p.",
+      examples: [
+        { input: 's = "timetopractice", p = "toc"', output: '"toprac"' },
+        { input: 's = "zoomlazapzo", p = "oza"', output: '"apzo"' },
+      ],
       tip: "Same as minimum window substring (#15): sliding window with two freq maps",
       iteration: {
         hint: "Identical to Q15; expand right until all chars covered, shrink left to minimize",
@@ -1457,6 +1742,12 @@ return minLen==Integer.MAX_VALUE?"":s.substring(start,start+minLen);`,
     {
       id: 47,
       title: "Count and print all palindromic substrings",
+      problem:
+        "Given a string s, find every contiguous substring that is a palindrome and count them.",
+      examples: [
+        { input: 's = "aaa"', output: "6" },
+        { input: 's = "abc"', output: "3" },
+      ],
       tip: "Expand around each center (odd and even length); count all expansions",
       iteration: {
         hint: "For each center expand while chars match; count each valid expansion",
@@ -1487,6 +1778,12 @@ return count;`,
     {
       id: 48,
       title: "Longest common substring (not subsequence)",
+      problem:
+        "Given two strings, return the length of the longest contiguous substring present in both strings.",
+      examples: [
+        { input: 's1 = "abcdxyz", s2 = "xyzabcd"', output: "4" },
+        { input: 's1 = "abc", s2 = "def"', output: "0" },
+      ],
       tip: "DP: dp[i][j] = length of common substring ending at s1[i-1] and s2[j-1]",
       iteration: {
         hint: "On char match: dp[i][j]=dp[i-1][j-1]+1; track running max",
@@ -1518,6 +1815,12 @@ return max;`,
       id: 49,
       title:
         "Check if string becomes palindrome by removing exactly one character",
+      problem:
+        "Given a string s, return true if removing exactly one character can make it a palindrome.",
+      examples: [
+        { input: 's = "abca"', output: "true" },
+        { input: 's = "abc"', output: "false" },
+      ],
       tip: "Two pointers; on first mismatch check isPalin(l+1,r) OR isPalin(l,r-1)",
       iteration: {
         hint: "Same as Q17: on mismatch, try skipping either left or right char",
@@ -1548,6 +1851,18 @@ return true; // already palindrome, can remove any middle char`,
     {
       id: 50,
       title: "Basic text justification (word-wrap to width W)",
+      problem:
+        "Given words and a maximum width W, pack words into lines so each line has length at most W and is padded or spaced as required.",
+      examples: [
+        {
+          input: 'words = ["This","is","text"], W = 8',
+          output: '["This  is", "text    "]',
+        },
+        {
+          input: 'words = ["hello","world"], W = 5',
+          output: '["hello", "world"]',
+        },
+      ],
       tip: "Greedily fit words per line; distribute spaces evenly, extra spaces go left",
       iteration: {
         hint: "Group words per line greedily; for each line compute space distribution",
@@ -1579,6 +1894,12 @@ return result;`,
     {
       id: 51,
       title: "Minimum insertions to make a string a palindrome",
+      problem:
+        "Given a string s, return the minimum number of insertions needed to make it a palindrome.",
+      examples: [
+        { input: 's = "zzazz"', output: "0" },
+        { input: 's = "mbadm"', output: "2" },
+      ],
       tip: "min insertions = s.length() - LPS(s); or DP on intervals directly",
       iteration: {
         hint: "LPS = LCS(s, reverse(s)); insertions = n - LPS",
@@ -1608,6 +1929,12 @@ return n-dp[n][n]; // n - LPS length`,
     {
       id: 52,
       title: 'Compare version numbers (e.g. "1.01" vs "1.001")',
+      problem:
+        "Given two version strings, compare their numeric revision parts and return -1, 0, or 1.",
+      examples: [
+        { input: 'version1 = "1.01", version2 = "1.001"', output: "0" },
+        { input: 'version1 = "1.0", version2 = "1.0.1"', output: "-1" },
+      ],
       tip: "Split on '.', parse each part as integer (drops leading zeros), compare part by part",
       iteration: {
         hint: "Split both, compare integer-parsed parts; treat missing parts as 0",
@@ -1643,6 +1970,12 @@ return IntStream.range(0,n)
       id: 53,
       title:
         "Find all starting indices of anagram substrings of pattern in string",
+      problem:
+        "Given a string s and pattern p, return all starting indices where an anagram of p appears in s.",
+      examples: [
+        { input: 's = "cbaebabacd", p = "abc"', output: "[0,6]" },
+        { input: 's = "abab", p = "ab"', output: "[0,1,2]" },
+      ],
       tip: "Sliding window with two frequency arrays; add match indices when arrays equal",
       iteration: {
         hint: "Fixed window of size p.length(); maintain freq count; compare to pattern freq",
@@ -1673,6 +2006,12 @@ return IntStream.rangeClosed(0, s.length()-p.length())
     {
       id: 54,
       title: "Convert a sentence to title case (handle multiple spaces)",
+      problem:
+        "Given a sentence, convert each word to title case while handling multiple spaces cleanly.",
+      examples: [
+        { input: 's = "hello world"', output: '"Hello World"' },
+        { input: 's = "  java   interview "', output: '"Java Interview"' },
+      ],
       tip: "Split on whitespace to handle multiple spaces, capitalize first letter of each word",
       iteration: {
         hint: "Split by \\s+ (handles multiple spaces), capitalize each word, rejoin",
@@ -1704,6 +2043,12 @@ return sb.toString();`,
     {
       id: 55,
       title: "Implement Caesar cipher encode/decode",
+      problem:
+        "Given text and a shift value, encode by shifting letters forward in the alphabet and decode by shifting them back.",
+      examples: [
+        { input: 'text = "abc", shift = 2', output: 'encode -> "cde"' },
+        { input: 'text = "cde", shift = 2', output: 'decode -> "abc"' },
+      ],
       tip: "Shift each letter by key; use modulo 26 to wrap; decode by shifting by (26-key)",
       iteration: {
         hint: "For each char, if letter shift by key mod 26; preserve case and non-letters",

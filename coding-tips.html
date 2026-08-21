@@ -114,6 +114,34 @@
       }
 
       /* Tip summary box */
+      .problem-summary {
+        background: var(--surface2);
+        border-left: 3px solid var(--accent);
+        padding: 8px 14px;
+        border-radius: 0 6px 6px 0;
+        font-size: 0.83rem;
+        color: var(--text);
+        margin-bottom: 12px;
+        line-height: 1.5;
+      }
+      .problem-summary strong {
+        color: var(--accent);
+      }
+
+      .problem-examples {
+        display: grid;
+        gap: 6px;
+        margin-top: 8px;
+      }
+      .problem-example {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.76rem;
+        color: var(--muted);
+      }
+      .problem-example strong {
+        color: var(--accent);
+      }
+
       .tip-summary {
         background: var(--tip-bg);
         border-left: 3px solid var(--green);
@@ -277,15 +305,15 @@
 
     <header>
       <div class="header-tag">// Interview Prep</div>
-      <h1>💡 Coding Tips — 396 Questions</h1>
+      <h1>💡 Coding Tips — 456 Questions</h1>
       <p class="subtitle">
-        Each question comes with a key insight tip plus three Java solution
-        approaches: Iteration, Recursion, and Stream/Functional — designed for
-        fast interview review.
+        Each question now starts with a problem description, then gives a key
+        insight tip plus three Java solution approaches: Iteration, Recursion,
+        and Stream/Functional.
       </p>
       <div class="stats-row">
-        <div class="stat"><span class="stat-num">396</span> Questions</div>
-        <div class="stat"><span class="stat-num">8</span> Topics</div>
+        <div class="stat"><span class="stat-num">456</span> Questions</div>
+        <div class="stat"><span class="stat-num">9</span> Topics</div>
         <div class="stat"><span class="stat-num">3</span> Approaches Each</div>
         <div class="stat"><span class="stat-num">Java</span> Snippets</div>
       </div>
@@ -321,6 +349,10 @@
       <button class="ct-tab" data-idx="7">
         ☕ Java &amp; Design
         <span style="font-weight: 400; opacity: 0.7">(367–396)</span>
+      </button>
+      <button class="ct-tab" data-idx="8">
+        📦 Java Collections
+        <span style="font-weight: 400; opacity: 0.7">(397–456)</span>
       </button>
     </div>
 
@@ -376,6 +408,7 @@
     <script src="assets/coding-tips-graphs-data.js"></script>
     <script src="assets/coding-tips-dp-data.js"></script>
     <script src="assets/coding-tips-java-design-data.js"></script>
+    <script src="assets/coding-tips-collections-data.js"></script>
 
     <script>
       (function () {
@@ -428,6 +461,12 @@
               return window.CT_JAVA_DESIGN;
             },
           },
+          {
+            key: "collections",
+            data: function () {
+              return window.CT_COLLECTIONS;
+            },
+          },
         ];
 
         var activeIdx = 0;
@@ -444,6 +483,33 @@
         }
 
         function buildCard(q) {
+          function problemBlock(q) {
+            var text =
+              q.problem ||
+              "Problem statement is being added for this card. Use the tip and examples once available to confirm the expected input and output before coding.";
+            var html =
+              '<div class="problem-summary"><strong>Problem:</strong> ' +
+              escHtml(text);
+            if (q.examples && q.examples.length) {
+              html += '<div class="problem-examples">';
+              q.examples.forEach(function (ex, idx) {
+                html +=
+                  '<div class="problem-example"><strong>Example ' +
+                  (idx + 1) +
+                  ":</strong> Input: " +
+                  escHtml(ex.input) +
+                  " | Output: " +
+                  escHtml(ex.output);
+                if (ex.note) html += " | " + escHtml(ex.note);
+                html += "</div>";
+              });
+              html += "</div>";
+            }
+            html += "</div>";
+            return html;
+          }
+
+          var problemHtml = problemBlock(q);
           var tipHtml =
             '<div class="tip-summary"><strong>💡 Tip:</strong> ' +
             escHtml(q.tip) +
@@ -480,6 +546,7 @@
             "</div>" +
             '<div class="card-body">' +
             '<div class="card-inner">' +
+            problemHtml +
             tipHtml +
             '<div class="approach-tabs">' +
             '<button class="approach-tab active" onclick="switchApproach(this,\'iter\')">' +

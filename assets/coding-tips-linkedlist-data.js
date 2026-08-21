@@ -6,6 +6,12 @@ window.CT_LINKEDLIST = {
     {
       id: 131,
       title: "Reverse a linked list",
+      problem:
+        "Given the head of a singly linked list, reverse the list and return the new head.",
+      examples: [
+        { input: "head = [1,2,3,4]", output: "[4,3,2,1]" },
+        { input: "head = [1]", output: "[1]" },
+      ],
       tip: "Three-pointer technique: prev=null, curr=head, next; reverse links iteratively",
       iteration: {
         hint: "Walk with prev/curr/next pointers, flip each node's next pointer",
@@ -37,6 +43,12 @@ Collections.reverse(vals);
     {
       id: 132,
       title: "Detect a cycle",
+      problem:
+        "Given the head of a linked list, return true if the list contains a cycle; otherwise return false.",
+      examples: [
+        { input: "head = [3,2,0,-4], pos = 1", output: "true" },
+        { input: "head = [1,2], pos = -1", output: "false" },
+      ],
       tip: "Floyd's cycle detection: slow moves 1 step, fast moves 2; they meet iff a cycle exists",
       iteration: {
         hint: "Use slow and fast pointers; if they ever point to the same node, a cycle exists",
@@ -68,6 +80,15 @@ return false;`,
     {
       id: 133,
       title: "Find intersection of two linked lists",
+      problem:
+        "Given heads of two singly linked lists, return the node where they intersect by reference, or null if they do not intersect.",
+      examples: [
+        {
+          input: "A = [4,1,8,4,5], B = [5,6,1,8,4,5], intersect = 8",
+          output: "node with value 8",
+        },
+        { input: "A = [2,6,4], B = [1,5], intersect = none", output: "null" },
+      ],
       tip: "Two-pointer swap: redirect each pointer to the other head on reaching null; they meet at intersection",
       iteration: {
         hint: "pA and pB advance together; when one hits null it switches to the other head, equalizing total path",
@@ -98,6 +119,12 @@ return null;`,
     {
       id: 134,
       title: "Remove Nth node from end",
+      problem:
+        "Given the head of a linked list and integer n, remove the nth node from the end and return the head.",
+      examples: [
+        { input: "head = [1,2,3,4,5], n = 2", output: "[1,2,3,5]" },
+        { input: "head = [1], n = 1", output: "[]" },
+      ],
       tip: "Two-pointer gap trick: advance fast N+1 steps ahead, then move both until fast is null",
       iteration: {
         hint: "Dummy head prevents edge cases; fast is N+1 ahead so slow lands just before the target node",
@@ -128,6 +155,12 @@ nodes.remove(nodes.size() - n);
     {
       id: 135,
       title: "Merge two sorted lists",
+      problem:
+        "Given two sorted linked lists, merge them into one sorted linked list and return its head.",
+      examples: [
+        { input: "l1 = [1,2,4], l2 = [1,3,4]", output: "[1,1,2,3,4,4]" },
+        { input: "l1 = [], l2 = [0]", output: "[0]" },
+      ],
       tip: "Dummy head simplifies edge cases; compare current heads, link the smaller, advance its pointer",
       iteration: {
         hint: "Use a dummy node as the result head; always attach the smaller of the two current nodes",
@@ -161,6 +194,15 @@ Collections.sort(vals);
     {
       id: 136,
       title: "Merge K sorted lists",
+      problem:
+        "Given an array of k sorted linked lists, merge all lists into one sorted linked list.",
+      examples: [
+        {
+          input: "lists = [[1,4,5],[1,3,4],[2,6]]",
+          output: "[1,1,2,3,4,4,5,6]",
+        },
+        { input: "lists = []", output: "[]" },
+      ],
       tip: "Min-heap (PriorityQueue) always yields the global minimum; add each list's head, poll and advance",
       iteration: {
         hint: "Seed the PriorityQueue with all non-null list heads; poll min node, push its next if not null",
@@ -193,6 +235,12 @@ Collections.sort(vals);
     {
       id: 137,
       title: "Swap nodes in pairs",
+      problem:
+        "Given the head of a linked list, swap every two adjacent nodes and return the modified list head.",
+      examples: [
+        { input: "head = [1,2,3,4]", output: "[2,1,4,3]" },
+        { input: "head = [1,2,3]", output: "[2,1,3]" },
+      ],
       tip: "For each pair: wire prev→second, second→first, first→rest; use dummy head to unify edge cases",
       iteration: {
         hint: "Track prev; in each loop iteration swap the next two nodes and advance prev by two",
@@ -227,6 +275,12 @@ for (int i = 0; i+1 < vals.size(); i+=2)
     {
       id: 138,
       title: "Reverse nodes in K-group",
+      problem:
+        "Given the head of a linked list and integer k, reverse nodes in groups of k and leave any short final group unchanged.",
+      examples: [
+        { input: "head = [1,2,3,4,5], k = 2", output: "[2,1,4,3,5]" },
+        { input: "head = [1,2,3,4,5], k = 3", output: "[3,2,1,4,5]" },
+      ],
       tip: "Check that K nodes exist; reverse that group; link to result of recursing on the remainder",
       iteration: {
         hint: "Count K nodes ahead to confirm the group; reverse in-place; repeat for next group",
@@ -267,6 +321,12 @@ for (int i = 0; i + k <= vals.size(); i += k)
     {
       id: 139,
       title: "Reorder list",
+      problem:
+        "Given a linked list L0->L1->...->Ln, reorder it as L0->Ln->L1->Ln-1 and return the head.",
+      examples: [
+        { input: "head = [1,2,3,4]", output: "[1,4,2,3]" },
+        { input: "head = [1,2,3,4,5]", output: "[1,5,2,4,3]" },
+      ],
       tip: "Find mid with slow/fast, reverse the second half, then interleave nodes from both halves",
       iteration: {
         hint: "Three phases: find mid, reverse second half in-place, merge both halves alternately",
@@ -304,6 +364,12 @@ cur.next = null;`,
     {
       id: 140,
       title: "Palindrome linked list check",
+      problem:
+        "Given the head of a linked list, return true if its values form a palindrome; otherwise return false.",
+      examples: [
+        { input: "head = [1,2,2,1]", output: "true" },
+        { input: "head = [1,2]", output: "false" },
+      ],
       tip: "Find mid with slow/fast, reverse the second half, compare both halves node by node",
       iteration: {
         hint: "Find mid, reverse second half in-place, compare from both ends toward center",
@@ -337,6 +403,12 @@ return vals.equals(rev);`,
     {
       id: 141,
       title: "Flatten a multilevel doubly linked list",
+      problem:
+        "Given the head of a multilevel doubly linked list with child pointers, flatten it into a single-level doubly linked list.",
+      examples: [
+        { input: "head = [1,2,3,null,null,7,8]", output: "[1,2,3,7,8]" },
+        { input: "head = [1,null,2]", output: "[1,2]" },
+      ],
       tip: "Use a stack: push deferred next pointers; when a child exists, follow it and push the next",
       iteration: {
         hint: "Traverse with a stack; on child, push curr.next then move into child; pop when next is null",
@@ -384,6 +456,15 @@ while (!stack.isEmpty()) {
     {
       id: 142,
       title: "Copy list with random pointer",
+      problem:
+        "Given a linked list where each node has next and random pointers, return a deep copy of the list.",
+      examples: [
+        {
+          input: "head = [[7,null],[13,0],[11,4]]",
+          output: "deep copy with same values and random links",
+        },
+        { input: "head = []", output: "[]" },
+      ],
       tip: "HashMap old→new: pass 1 creates all clone nodes, pass 2 wires next and random pointers",
       iteration: {
         hint: "Two-pass: first build the map, then assign next/random using the map",
@@ -423,6 +504,12 @@ return clones.get(0);`,
     {
       id: 143,
       title: "Add two numbers represented as linked lists",
+      problem:
+        "Given two non-empty linked lists storing digits in reverse order, add the numbers and return the sum as a linked list.",
+      examples: [
+        { input: "l1 = [2,4,3], l2 = [5,6,4]", output: "[7,0,8]" },
+        { input: "l1 = [9,9], l2 = [1]", output: "[0,0,1]" },
+      ],
       tip: "Simulate grade-school addition: traverse both lists simultaneously, propagate the carry forward",
       iteration: {
         hint: "While either list or carry is non-zero, compute digit sum, create node, advance pointers",
@@ -456,6 +543,15 @@ BigInteger result = numA.add(numB);
     {
       id: 144,
       title: "Split linked list into parts",
+      problem:
+        "Given the head of a linked list and integer k, split the list into k consecutive parts with sizes as equal as possible.",
+      examples: [
+        { input: "head = [1,2,3], k = 5", output: "[[1],[2],[3],[],[]]" },
+        {
+          input: "head = [1,2,3,4,5,6,7,8,9,10], k = 3",
+          output: "[[1,2,3,4],[5,6,7],[8,9,10]]",
+        },
+      ],
       tip: "Compute chunkSize = len/k and extra = len%k; first 'extra' parts each get one additional node",
       iteration: {
         hint: "Walk the list; for each part take chunkSize nodes (plus one extra if extra > 0), then cut",
@@ -495,6 +591,12 @@ for (int i = 0; i < k; i++) {
     {
       id: 145,
       title: "Rotate a linked list",
+      problem:
+        "Given the head of a linked list and integer k, rotate the list to the right by k positions.",
+      examples: [
+        { input: "head = [1,2,3,4,5], k = 2", output: "[4,5,1,2,3]" },
+        { input: "head = [0,1,2], k = 4", output: "[2,0,1]" },
+      ],
       tip: "Find length and tail; make the list circular; break at position (len - k%len) to get new head",
       iteration: {
         hint: "Find tail to get length, form a ring, advance to the new tail, break the circle",
@@ -531,6 +633,12 @@ rotated.addAll(nodes.subList(0, n - rot));
     {
       id: 146,
       title: "Delete duplicates from a sorted list",
+      problem:
+        "Given a sorted linked list, delete duplicate values so each value appears once.",
+      examples: [
+        { input: "head = [1,1,2]", output: "[1,2]" },
+        { input: "head = [1,1,2,3,3]", output: "[1,2,3]" },
+      ],
       tip: "While curr.next has the same value as curr, skip curr.next; keep only the first occurrence",
       iteration: {
         hint: "Compare curr and curr.next values; skip the duplicate by advancing the next pointer",
@@ -562,6 +670,12 @@ for (ListNode n = head; n != null; n = n.next)
     {
       id: 147,
       title: "Remove elements with a given value",
+      problem:
+        "Given a linked list and a value val, remove every node whose value equals val and return the head.",
+      examples: [
+        { input: "head = [1,2,6,3,4,5,6], val = 6", output: "[1,2,3,4,5]" },
+        { input: "head = [7,7,7], val = 7", output: "[]" },
+      ],
       tip: "Dummy head + scan: whenever curr.next.val equals target, wire curr.next = curr.next.next",
       iteration: {
         hint: "Use a dummy head so the real head can also be removed without special-casing",
@@ -592,6 +706,12 @@ for (ListNode n = head; n != null; n = n.next)
     {
       id: 148,
       title: "Reverse a sublist between positions m and n",
+      problem:
+        "Given the head of a linked list and positions m and n, reverse the nodes from m through n in one pass.",
+      examples: [
+        { input: "head = [1,2,3,4,5], m = 2, n = 4", output: "[1,4,3,2,5]" },
+        { input: "head = [5], m = 1, n = 1", output: "[5]" },
+      ],
       tip: "Advance to node m-1 (pre), then reverse n-m+1 nodes; reconnect pre and post-reversal tails",
       iteration: {
         hint: "Find the node just before position m; reverse the m..n range using the insertion technique",
@@ -626,6 +746,12 @@ Collections.reverse(vals.subList(m - 1, n));
     {
       id: 149,
       title: "Odd-even linked list rearrangement",
+      problem:
+        "Given a linked list, group nodes at odd indices followed by nodes at even indices while preserving relative order.",
+      examples: [
+        { input: "head = [1,2,3,4,5]", output: "[1,3,5,2,4]" },
+        { input: "head = [2,1,3,5,6,4,7]", output: "[2,3,6,7,1,5,4]" },
+      ],
       tip: "Separate nodes at odd-index and even-index positions into two chains; join even-tail to odd-head",
       iteration: {
         hint: "Walk with odd and even pointers advancing two steps at a time; join at the end",
@@ -660,6 +786,12 @@ for (int i = 1; i < vals.size(); i += 2) result.add(vals.get(i));
     {
       id: 150,
       title: "Sort a linked list (merge sort on linked list)",
+      problem:
+        "Given the head of a linked list, sort the list in ascending order using linked-list friendly sorting.",
+      examples: [
+        { input: "head = [4,2,1,3]", output: "[1,2,3,4]" },
+        { input: "head = [-1,5,3,4,0]", output: "[-1,0,3,4,5]" },
+      ],
       tip: "Find midpoint with slow/fast, split the list, recursively sort each half, merge sorted halves",
       iteration: {
         hint: "Bottom-up merge sort: merge windows of size 1, 2, 4, ... without recursion",
@@ -696,6 +828,12 @@ return dummy.next;`,
     {
       id: 151,
       title: "Insert into a sorted linked list",
+      problem:
+        "Given the head of a sorted linked list and a value, insert the value so the list remains sorted.",
+      examples: [
+        { input: "head = [1,3,4], val = 2", output: "[1,2,3,4]" },
+        { input: "head = [], val = 5", output: "[5]" },
+      ],
       tip: "Traverse until curr.next.val exceeds the new value; insert the new node between curr and curr.next",
       iteration: {
         hint: "Use a dummy head; advance while next exists and next.val < val; then insert",
@@ -727,6 +865,12 @@ vals.add(val); Collections.sort(vals);
     {
       id: 152,
       title: "Remove a loop in a linked list",
+      problem:
+        "Given the head of a linked list that may contain a loop, remove the loop while preserving all nodes reachable from head.",
+      examples: [
+        { input: "head = [1,2,3,4], pos = 1", output: "[1,2,3,4], no cycle" },
+        { input: "head = [1,2], pos = -1", output: "[1,2], no cycle" },
+      ],
       tip: "Floyd's to detect meeting point; reset one pointer to head, advance both by 1 to find loop entry; break loop",
       iteration: {
         hint: "Phase 1: detect meeting point; Phase 2: find loop start; Phase 3: advance to node before start and break",
@@ -764,6 +908,15 @@ if (cur != null) visited.get(visited.size() - 1).next = null;`,
     {
       id: 153,
       title: "Merge two circular linked lists",
+      problem:
+        "Given two sorted circular linked lists, merge them into one sorted circular linked list.",
+      examples: [
+        {
+          input: "list1 = [1,3,5], list2 = [2,4,6]",
+          output: "[1,2,3,4,5,6] circular",
+        },
+        { input: "list1 = [], list2 = [7,8]", output: "[7,8] circular" },
+      ],
       tip: "Find both circular tails; swap their next pointers so tail1→head2 and tail2→head1",
       iteration: {
         hint: "Traverse each list to find its tail; swap the tail.next connections to join the circles",
@@ -797,6 +950,12 @@ do { vals.add(cur.val); cur = cur.next; } while (cur != head2);
     {
       id: 154,
       title: "Clone a linked list (deep copy without random pointer)",
+      problem:
+        "Given the head of a singly linked list, create a deep copy containing new nodes with the same values and next order.",
+      examples: [
+        { input: "head = [1,2,3]", output: "[1,2,3] as new nodes" },
+        { input: "head = []", output: "[]" },
+      ],
       tip: "Traverse the original list and create new nodes one by one, linking each to the previous clone",
       iteration: {
         hint: "Walk with two pointers: one on original, one building the clone chain node by node",
@@ -829,6 +988,12 @@ return dummy.next;`,
     {
       id: 155,
       title: "Partition list around a value x",
+      problem:
+        "Given a linked list and value x, partition nodes so values less than x come before values greater than or equal to x, preserving order.",
+      examples: [
+        { input: "head = [1,4,3,2,5,2], x = 3", output: "[1,2,2,4,3,5]" },
+        { input: "head = [2,1], x = 2", output: "[1,2]" },
+      ],
       tip: "Two dummy heads 'less' and 'greater'; scan all nodes appending to the right chain; join at end",
       iteration: {
         hint: "All nodes with val < x go to the 'less' chain; others to 'greater'; concatenate less then greater",
@@ -863,6 +1028,12 @@ lo.addAll(hi);
     {
       id: 156,
       title: "Add one to a number represented as a linked list",
+      problem:
+        "Given a linked list representing a non-negative integer with most significant digit first, add one and return the result list.",
+      examples: [
+        { input: "head = [1,2,9]", output: "[1,3,0]" },
+        { input: "head = [9,9,9]", output: "[1,0,0,0]" },
+      ],
       tip: "Reverse the list so LSB is first, add 1 with carry propagation, reverse back; prepend 1 if carry remains",
       iteration: {
         hint: "Reverse, then walk adding carry starting at 1; reverse result, prepend extra node if needed",
@@ -900,6 +1071,12 @@ String result = num.add(BigInteger.ONE).toString();
     {
       id: 157,
       title: "Multiply two numbers represented as linked lists",
+      problem:
+        "Given two linked lists representing non-negative integers, multiply the numbers and return the product as an integer or string.",
+      examples: [
+        { input: "l1 = [1,2,3], l2 = [4,5]", output: "5535" },
+        { input: "l1 = [0], l2 = [9,9]", output: "0" },
+      ],
       tip: "Convert each list to a long by traversing MSB-to-LSB; multiply the two longs; convert product back to list",
       iteration: {
         hint: "Traverse each list accumulating digits (num = num*10 + node.val); multiply; rebuild result list",
@@ -932,6 +1109,12 @@ String prod = Long.toString(n1[0] * n2[0]);
     {
       id: 158,
       title: "Detect the middle of a linked list",
+      problem:
+        "Given the head of a linked list, return the middle node; for even length, return the second middle node.",
+      examples: [
+        { input: "head = [1,2,3,4,5]", output: "node with value 3" },
+        { input: "head = [1,2,3,4,5,6]", output: "node with value 4" },
+      ],
       tip: "Slow/fast pointer: slow advances 1 step, fast advances 2; when fast reaches end, slow is at the middle",
       iteration: {
         hint: "Standard tortoise-and-hare: slow at middle when fast cannot advance two more steps",
@@ -962,6 +1145,12 @@ return nodes.get(nodes.size() / 2);`,
     {
       id: 159,
       title: "Delete a node given only access to that node (no head reference)",
+      problem:
+        "Given only a reference to a non-tail node in a singly linked list, delete that node from the list.",
+      examples: [
+        { input: "list = [4,5,1,9], node = 5", output: "[4,1,9]" },
+        { input: "list = [4,5,1,9], node = 1", output: "[4,5,9]" },
+      ],
       tip: "Copy the next node's value into the current node, then skip the next node entirely",
       iteration: {
         hint: "Overwrite current node's value with next; bypass next by rewiring node.next = node.next.next",
@@ -985,6 +1174,15 @@ node.next = node.next.next;`,
     {
       id: 160,
       title: "Convert a sorted linked list to a balanced BST",
+      problem:
+        "Given the head of a sorted singly linked list, convert it to a height-balanced binary search tree.",
+      examples: [
+        {
+          input: "head = [-10,-3,0,5,9]",
+          output: "balanced BST with inorder [-10,-3,0,5,9]",
+        },
+        { input: "head = [1,3]", output: "balanced BST with inorder [1,3]" },
+      ],
       tip: "Find the middle node as the root; recurse on the left sublist and right sublist for children",
       iteration: {
         hint: "Simulate in-order construction: use a current pointer that advances as nodes are consumed",
@@ -1029,6 +1227,12 @@ return buildBST(0, vals.size() - 1);`,
     {
       id: 161,
       title: "Find the length of a linked list (iterative and recursive)",
+      problem:
+        "Given the head of a linked list, return the number of nodes in the list.",
+      examples: [
+        { input: "head = [10,20,30]", output: "3" },
+        { input: "head = []", output: "0" },
+      ],
       tip: "Iterative: count nodes in a while loop; Recursive: base case null→0, else 1 + length(head.next)",
       iteration: {
         hint: "Simple counter loop: increment for each node until curr is null",
@@ -1055,6 +1259,12 @@ return nodes.size();
     {
       id: 162,
       title: "Check if two linked lists are identical",
+      problem:
+        "Given heads of two linked lists, return true if both lists contain identical values in the same order.",
+      examples: [
+        { input: "a = [1,2,3], b = [1,2,3]", output: "true" },
+        { input: "a = [1,2], b = [1,2,3]", output: "false" },
+      ],
       tip: "Walk both lists in lockstep: any value mismatch or different lengths returns false",
       iteration: {
         hint: "Advance both pointers simultaneously; return false on value mismatch or one null before other",
@@ -1084,6 +1294,12 @@ return a.equals(b);`,
       id: 163,
       title:
         "Find the Nth node from the beginning and end simultaneously (two-pointer)",
+      problem:
+        "Given the head of a linked list and n, return both the nth node from the beginning and the nth node from the end.",
+      examples: [
+        { input: "head = [1,2,3,4,5], n = 2", output: "begin = 2, end = 4" },
+        { input: "head = [10,20,30], n = 1", output: "begin = 10, end = 30" },
+      ],
       tip: "Nth from start: advance N-1 steps from head; Nth from end: two pointers N apart, advance together",
       iteration: {
         hint: "For Nth from end, place fast pointer N steps ahead; when fast hits null, slow is at target",
@@ -1118,6 +1334,12 @@ ListNode nthFromEnd  = nodes.get(nodes.size() - n);`,
       id: 164,
       title:
         "Segregate even and odd nodes in a linked list without changing node values",
+      problem:
+        "Given a linked list, rearrange nodes so all even-valued nodes appear before odd-valued nodes without changing values.",
+      examples: [
+        { input: "head = [17,15,8,12,10,5,4]", output: "[8,12,10,4,17,15,5]" },
+        { input: "head = [1,3,5]", output: "[1,3,5]" },
+      ],
       tip: "Two dummy heads for even-value and odd-value nodes; scan all nodes and append to the right chain",
       iteration: {
         hint: "Partition nodes by val%2 into two chains; join the even chain, then the odd chain",
@@ -1152,6 +1374,15 @@ evens.addAll(odds);
     {
       id: 165,
       title: "Implement a doubly linked list with insert/delete at both ends",
+      problem:
+        "Design a doubly linked list that supports insertion and deletion at both the head and tail.",
+      examples: [
+        {
+          input: "insertFirst(1), insertLast(2), deleteFirst()",
+          output: "[2]",
+        },
+        { input: "insertLast(5), insertFirst(3), deleteLast()", output: "[3]" },
+      ],
       tip: "Maintain head and tail pointers; all four boundary operations are O(1) with proper prev/next wiring",
       iteration: {
         hint: "insertFront: new node's next = head, head.prev = node, update head; deleteBack: tail = tail.prev, tail.next = null",
@@ -1190,6 +1421,18 @@ dll.removeLast();  // deleteBack`,
       id: 166,
       title:
         "Detect and remove a cycle, and return the starting node of the cycle",
+      problem:
+        "Given a linked list that may contain a cycle, return the cycle start node and remove the cycle if it exists.",
+      examples: [
+        {
+          input: "head = [3,2,0,-4], pos = 1",
+          output: "start = node 2, list has no cycle",
+        },
+        {
+          input: "head = [1,2], pos = -1",
+          output: "start = null, list has no cycle",
+        },
+      ],
       tip: "Floyd's phase 1 finds meeting point; phase 2 resets one pointer to head, both advance by 1 to cycle entry",
       iteration: {
         hint: "After finding cycle entry (where slow==fast after reset), walk to the node just before entry to break it",
@@ -1229,6 +1472,15 @@ return cur; // cycle start`,
       id: 167,
       title:
         "Flatten a linked list where each node has a 'child' pointer to another sorted list",
+      problem:
+        "Given a linked list where each node has a child pointer to a sorted list, flatten it into one sorted list.",
+      examples: [
+        {
+          input: "heads = [[5,7,8,30],[10,20],[19,22,50],[28,35,40,45]]",
+          output: "[5,7,8,10,19,20,22,28,30,35,40,45,50]",
+        },
+        { input: "heads = [[1,3],[2,4]]", output: "[1,2,3,4]" },
+      ],
       tip: "Merge each child sorted list into the main list in-place as you traverse; advance past the merged section",
       iteration: {
         hint: "When a child is found, merge child list between curr and curr.next using sorted-merge logic",
@@ -1273,6 +1525,18 @@ dfs(head); Collections.sort(vals);
       id: 168,
       title:
         "Implement an LRU cache using a doubly linked list + hash map (from scratch)",
+      problem:
+        "Design an LRU cache using a hash map and doubly linked list with get and put operations in O(1).",
+      examples: [
+        {
+          input: "capacity = 2, put(1,1), put(2,2), get(1), put(3,3), get(2)",
+          output: "1, -1",
+        },
+        {
+          input: "capacity = 1, put(1,1), put(2,2), get(1), get(2)",
+          output: "-1, 2",
+        },
+      ],
       tip: "HashMap gives O(1) key lookup; DLL gives O(1) move-to-front on get and evict-oldest on put",
       iteration: {
         hint: "get: look up node in map, move to front of DLL, return val; put: insert at front, evict tail if over capacity",
@@ -1307,6 +1571,15 @@ void addToFront(Node n) { n.next = head.next; n.prev = head; head.next.prev = n;
     {
       id: 169,
       title: "Find the point where two linked lists merge (Y-shaped list)",
+      problem:
+        "Given heads of two Y-shaped linked lists, return the merge point node where both lists begin sharing nodes.",
+      examples: [
+        {
+          input: "A = [1,2,3,4], B = [9,3,4], merge = 3",
+          output: "node with value 3",
+        },
+        { input: "A = [1,2], B = [3,4], merge = none", output: "null" },
+      ],
       tip: "Two-pointer swap: each pointer travels both lists' lengths; they meet exactly at the merge node",
       iteration: {
         hint: "pA and pB advance together; on reaching null each is redirected to the other's head",
@@ -1337,6 +1610,15 @@ return null;`,
     {
       id: 170,
       title: "Reverse alternate K nodes in a linked list",
+      problem:
+        "Given the head of a linked list and integer k, reverse each alternate group of k nodes and leave the groups between them unchanged.",
+      examples: [
+        {
+          input: "head = [1,2,3,4,5,6,7,8], k = 2",
+          output: "[2,1,3,4,6,5,7,8]",
+        },
+        { input: "head = [1,2,3,4,5], k = 3", output: "[3,2,1,4,5]" },
+      ],
       tip: "Reverse K nodes, then skip the next K nodes unchanged, then repeat; track connections between groups",
       iteration: {
         hint: "In a loop: reverse K, advance past K, connect the reversed group to the skipped group, repeat",

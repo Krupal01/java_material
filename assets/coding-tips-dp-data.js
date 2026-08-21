@@ -6,6 +6,12 @@ window.CT_DP = {
     {
       id: 317,
       title: "Fibonacci with memoization",
+      problem:
+        "Given n, return the nth Fibonacci number using memoization or tabulation.",
+      examples: [
+        { input: "n = 5", output: "5" },
+        { input: "n = 10", output: "55" },
+      ],
       tip: "Cache results in a map/array; bottom-up tabulation is more space-efficient",
       iteration: {
         hint: "Bottom-up: only keep prev two values for O(1) space",
@@ -33,6 +39,12 @@ int fib(int n) {
     {
       id: 318,
       title: "Climbing stairs",
+      problem:
+        "Given n stairs, return how many distinct ways you can reach the top when each move climbs 1 or 2 stairs.",
+      examples: [
+        { input: "n = 2", output: "2" },
+        { input: "n = 5", output: "8" },
+      ],
       tip: "Same recurrence as Fibonacci: ways(n) = ways(n-1) + ways(n-2); only need last two values",
       iteration: {
         hint: "Rolling variables: a = ways(i-2), b = ways(i-1); update each step",
@@ -61,6 +73,12 @@ int climb(int n) {
     {
       id: 319,
       title: "House robber",
+      problem:
+        "Given money in a row of houses, return the maximum amount you can rob without robbing adjacent houses.",
+      examples: [
+        { input: "nums = [1,2,3,1]", output: "4" },
+        { input: "nums = [2,7,9,3,1]", output: "12" },
+      ],
       tip: "dp[i] = max(dp[i-1], dp[i-2]+nums[i]); reduce to two rolling variables",
       iteration: {
         hint: "Track prev2 and prev1; at each house pick max of skip or rob",
@@ -94,6 +112,12 @@ return res[1];`,
     {
       id: 320,
       title: "House robber II (circular arrangement)",
+      problem:
+        "Given money in circularly arranged houses, return the maximum amount you can rob without robbing adjacent houses.",
+      examples: [
+        { input: "nums = [2,3,2]", output: "3" },
+        { input: "nums = [1,2,3,1]", output: "4" },
+      ],
       tip: "Circular constraint: run linear house robber twice — once skipping first, once skipping last",
       iteration: {
         hint: "Helper runs standard rob on a subarray; call twice and take max",
@@ -134,6 +158,12 @@ return Math.max(robStream(s1), robStream(s2));
     {
       id: 321,
       title: "Coin change (minimum coins)",
+      problem:
+        "Given coin denominations and an amount, return the fewest coins needed to make that amount, or -1 if impossible.",
+      examples: [
+        { input: "coins = [1,2,5], amount = 11", output: "3" },
+        { input: "coins = [2], amount = 3", output: "-1" },
+      ],
       tip: "dp[amount] = min coins needed; for each coin update dp[j] = min(dp[j], dp[j-coin]+1)",
       iteration: {
         hint: "Fill dp[0..amount]; init to amount+1 (infinity); dp[0]=0",
@@ -171,6 +201,12 @@ return dp[amount] > amount ? -1 : dp[amount];`,
     {
       id: 322,
       title: "Coin change 2 (number of ways)",
+      problem:
+        "Given coin denominations and an amount, return the number of combinations that make the amount.",
+      examples: [
+        { input: "amount = 5, coins = [1,2,5]", output: "4" },
+        { input: "amount = 3, coins = [2]", output: "0" },
+      ],
       tip: "Iterate coins in outer loop to avoid counting permutations; dp[j] += dp[j-coin]",
       iteration: {
         hint: "Outer loop over coins, inner loop over amounts — ensures combinations not permutations",
@@ -206,6 +242,12 @@ return dp[amount];`,
     {
       id: 323,
       title: "Longest increasing subsequence",
+      problem:
+        "Given an integer array, return the length of the longest strictly increasing subsequence.",
+      examples: [
+        { input: "nums = [10,9,2,5,3,7,101,18]", output: "4" },
+        { input: "nums = [7,7,7,7]", output: "1" },
+      ],
       tip: "O(n log n) with patience sorting (binary search on tails[]); O(n²) dp also common",
       iteration: {
         hint: "tails[] array: binary search for position to place each element",
@@ -244,6 +286,12 @@ return Arrays.stream(dp).max().getAsInt();`,
     {
       id: 324,
       title: "Longest common subsequence",
+      problem:
+        "Given two strings, return the length of their longest common subsequence.",
+      examples: [
+        { input: 'text1 = "abcde", text2 = "ace"', output: "3" },
+        { input: 'text1 = "abc", text2 = "def"', output: "0" },
+      ],
       tip: "dp[i][j]: LCS of s1[0..i-1] and s2[0..j-1]; match adds 1, else take max of neighbors",
       iteration: {
         hint: "Fill 2D table row by row; can compress to two 1D arrays",
@@ -282,6 +330,12 @@ return prev[n];`,
     {
       id: 325,
       title: "Edit distance",
+      problem:
+        "Given two words, return the minimum insert, delete, or replace operations needed to convert word1 to word2.",
+      examples: [
+        { input: 'word1 = "horse", word2 = "ros"', output: "3" },
+        { input: 'word1 = "intention", word2 = "execution"', output: "5" },
+      ],
       tip: "dp[i][j] = min ops to convert word1[0..i] to word2[0..j]; match=0 cost, else 1+min(insert,delete,replace)",
       iteration: {
         hint: "Standard 2D DP; compress to two rows since only prev row is needed",
@@ -325,6 +379,15 @@ return dp[b.length()];`,
     {
       id: 326,
       title: "0/1 Knapsack",
+      problem:
+        "Given item weights, values, and capacity, return the maximum value when each item may be chosen at most once.",
+      examples: [
+        {
+          input: "weights = [1,3,4], values = [15,20,30], W = 4",
+          output: "35",
+        },
+        { input: "weights = [2,3], values = [4,5], W = 1", output: "0" },
+      ],
       tip: "Traverse capacity in reverse so each item is used at most once; dp[j] = max(dp[j], dp[j-w]+v)",
       iteration: {
         hint: "Single 1D dp array; inner loop goes right-to-left to prevent reuse",
@@ -359,6 +422,12 @@ return dp[W];`,
     {
       id: 327,
       title: "Unbounded knapsack",
+      problem:
+        "Given item weights, values, and capacity, return the maximum value when each item may be chosen unlimited times.",
+      examples: [
+        { input: "weights = [2,3,4], values = [4,5,7], W = 6", output: "12" },
+        { input: "weights = [5], values = [10], W = 3", output: "0" },
+      ],
       tip: "Same as 0/1 knapsack but inner loop goes left-to-right, allowing item reuse",
       iteration: {
         hint: "Forward inner loop: dp[j] = max(dp[j], dp[j-w[i]]+v[i]) with reuse allowed",
@@ -395,6 +464,12 @@ return dp[W];`,
     {
       id: 328,
       title: "Subset sum",
+      problem:
+        "Given an array and target sum, return true if any subset sums exactly to target.",
+      examples: [
+        { input: "nums = [3,34,4,12,5,2], target = 9", output: "true" },
+        { input: "nums = [1,2,3], target = 7", output: "false" },
+      ],
       tip: "Boolean dp[j]: can we reach sum j? Reverse inner loop for 0/1 inclusion",
       iteration: {
         hint: "dp[0]=true; for each num reverse-traverse and set dp[j] |= dp[j-num]",
@@ -430,6 +505,12 @@ boolean can(int[] nums, int i, int rem) {
     {
       id: 329,
       title: "Partition equal subset sum",
+      problem:
+        "Given an array, return true if it can be split into two subsets with equal sum.",
+      examples: [
+        { input: "nums = [1,5,11,5]", output: "true" },
+        { input: "nums = [1,2,3,5]", output: "false" },
+      ],
       tip: "Reduce to subset sum: target = totalSum/2; if odd sum return false immediately",
       iteration: {
         hint: "dp boolean array of size sum/2+1; reverse inner loop",
@@ -469,6 +550,12 @@ return reachable.contains(target);`,
     {
       id: 330,
       title: "Minimum path sum in a grid",
+      problem:
+        "Given a grid of non-negative costs, return the minimum path sum from top-left to bottom-right moving only right or down.",
+      examples: [
+        { input: "grid = [[1,3,1],[1,5,1],[4,2,1]]", output: "7" },
+        { input: "grid = [[1,2,3],[4,5,6]]", output: "12" },
+      ],
       tip: "dp[i][j] = grid[i][j] + min(dp[i-1][j], dp[i][j-1]); can reuse grid in-place",
       iteration: {
         hint: "Update grid in-place: first row/col are prefix sums; then fill rest",
@@ -507,6 +594,12 @@ return dp[g[0].length-1];`,
     {
       id: 331,
       title: "Unique paths",
+      problem:
+        "Given m and n, return how many paths go from top-left to bottom-right moving only right or down.",
+      examples: [
+        { input: "m = 3, n = 7", output: "28" },
+        { input: "m = 3, n = 2", output: "3" },
+      ],
       tip: "dp[j] += dp[j-1] collapses 2D table to 1D; or use combinatorics C(m+n-2, m-1)",
       iteration: {
         hint: "1D dp: init all 1s, then for each row accumulate from left",
@@ -540,6 +633,12 @@ int paths(int i, int j) {
     {
       id: 332,
       title: "Unique paths II (with obstacles)",
+      problem:
+        "Given a grid with obstacles, return how many paths reach bottom-right moving only right or down.",
+      examples: [
+        { input: "grid = [[0,0,0],[0,1,0],[0,0,0]]", output: "2" },
+        { input: "grid = [[0,1],[0,0]]", output: "1" },
+      ],
       tip: "Same as unique paths but set dp[j]=0 when obstacle is encountered",
       iteration: {
         hint: "Skip cell (set dp to 0) if grid has obstacle; else accumulate from left/above",
@@ -579,6 +678,12 @@ return dp[g[0].length-1];`,
     {
       id: 333,
       title: "Palindrome partitioning (minimum cuts)",
+      problem:
+        "Given a string, return the minimum cuts needed so every substring after partitioning is a palindrome.",
+      examples: [
+        { input: 's = "aab"', output: "1" },
+        { input: 's = "a"', output: "0" },
+      ],
       tip: "Precompute isPalin[i][j]; dp[i] = min cuts for s[0..i]; dp[i]=min(dp[j-1]+1) for all j where isPalin[j][i]",
       iteration: {
         hint: "Build isPalin table with expand-around-center, then fill cuts[] array",
@@ -617,6 +722,15 @@ return dp[n-1];`,
     {
       id: 334,
       title: "Word break",
+      problem:
+        "Given a string and dictionary, return true if the string can be segmented into dictionary words.",
+      examples: [
+        { input: 's = "leetcode", dict = ["leet","code"]', output: "true" },
+        {
+          input: 's = "catsandog", dict = ["cats","dog","sand","and","cat"]',
+          output: "false",
+        },
+      ],
       tip: "dp[i]=true if s[0..i-1] can be segmented; check all j where dp[j] && dict contains s[j..i-1]",
       iteration: {
         hint: "Boolean dp[]; for each end i, try all split points j where dp[j] is true",
@@ -653,6 +767,12 @@ return dp[s.length()];`,
     {
       id: 335,
       title: "Decode ways",
+      problem:
+        "Given a digit string, return how many ways it can be decoded where A=1 through Z=26.",
+      examples: [
+        { input: 's = "12"', output: "2" },
+        { input: 's = "06"', output: "0" },
+      ],
       tip: "dp[i] = ways to decode s[0..i-1]; valid single digit or valid two-digit both contribute",
       iteration: {
         hint: "dp[0]=1 (empty), dp[1] depends on s[0] != '0'; add dp[i-1] and dp[i-2] when valid",
@@ -693,6 +813,12 @@ return b;`,
     {
       id: 336,
       title: "Maximal square (largest square of 1s in a matrix)",
+      problem:
+        "Given a binary matrix, return the area of the largest square containing only 1s.",
+      examples: [
+        { input: "matrix = [[1,0,1,0],[1,0,1,1],[1,1,1,1]]", output: "4" },
+        { input: "matrix = [[0,1],[1,0]]", output: "1" },
+      ],
       tip: "dp[i][j] = side of largest square ending at (i,j); = min(left, top, diag) + 1 if cell is '1'",
       iteration: {
         hint: "Reuse matrix or 1D rolling array; track global max side",
@@ -736,6 +862,15 @@ return max[0]*max[0];`,
     {
       id: 337,
       title: "Maximal rectangle",
+      problem:
+        "Given a binary matrix, return the area of the largest rectangle containing only 1s.",
+      examples: [
+        {
+          input: "matrix = [[1,0,1,0,0],[1,0,1,1,1],[1,1,1,1,1]]",
+          output: "6",
+        },
+        { input: "matrix = [[0]]", output: "0" },
+      ],
       tip: "Extend maximal square: build histogram row by row, then apply largest-rectangle-in-histogram using stack",
       iteration: {
         hint: "Heights array updated per row; for each row run largest-rect-in-histogram with stack",
@@ -775,6 +910,12 @@ return Arrays.stream(m).mapToInt(row -> {
     {
       id: 338,
       title: "Burst balloons",
+      problem:
+        "Given balloon values, return the maximum coins from bursting all balloons in the best order.",
+      examples: [
+        { input: "nums = [3,1,5,8]", output: "167" },
+        { input: "nums = [1,5]", output: "10" },
+      ],
       tip: "Interval DP: dp[i][j] = max coins for balloons (i..j); pick k last to burst in interval",
       iteration: {
         hint: "Fill by increasing interval length; add padding 1s at both ends",
@@ -814,6 +955,12 @@ return dp[1][n];`,
     {
       id: 339,
       title: "Matrix chain multiplication",
+      problem:
+        "Given matrix dimensions, return the minimum scalar multiplications needed to multiply the chain.",
+      examples: [
+        { input: "dims = [10,30,5,60]", output: "4500" },
+        { input: "dims = [40,20,30,10,30]", output: "26000" },
+      ],
       tip: "Interval DP: dp[i][j] = min multiplications; try each split k in [i..j-1]",
       iteration: {
         hint: "Fill diagonally by chain length; dp[i][j]=min(dp[i][k]+dp[k+1][j]+p[i-1]*p[k]*p[j])",
@@ -852,6 +999,12 @@ return dp[1][n];`,
     {
       id: 340,
       title: "Rod cutting problem",
+      problem:
+        "Given rod length, prices, and piece lengths, return the maximum obtainable price by cutting the rod.",
+      examples: [
+        { input: "prices = [1,5,8,9], n = 4", output: "10" },
+        { input: "prices = [2,5,7,8], n = 5", output: "12" },
+      ],
       tip: "Unbounded knapsack: dp[j] = max revenue for rod of length j; try all cut lengths",
       iteration: {
         hint: "dp[j] = max over all cut lengths i of (price[i] + dp[j-i])",
@@ -887,6 +1040,12 @@ return dp[n];`,
     {
       id: 341,
       title: "Egg dropping problem",
+      problem:
+        "Given eggs and floors, return the minimum number of attempts needed in the worst case to find the critical floor.",
+      examples: [
+        { input: "eggs = 2, floors = 10", output: "4" },
+        { input: "eggs = 1, floors = 5", output: "5" },
+      ],
       tip: "dp[e][f]=min trials; or reverse: with e eggs and t trials, max floors checkable = dp[t-1][e-1]+dp[t-1][e]+1",
       iteration: {
         hint: "Reverse DP: dp[t][e]=floors checkable with t trials and e eggs; find min t where dp[t][E]>=N",
@@ -927,6 +1086,12 @@ return t;`,
     {
       id: 342,
       title: "Paint house",
+      problem:
+        "Given house painting costs, return the minimum cost so adjacent houses do not share the same color.",
+      examples: [
+        { input: "costs = [[17,2,17],[16,16,5],[14,3,19]]", output: "10" },
+        { input: "costs = [[7,6,2]]", output: "2" },
+      ],
       tip: "dp[i][c] = min cost to paint house i with color c; can't use same color as previous house",
       iteration: {
         hint: "Three colors: for each house, take min of the two other colors from previous house",
@@ -964,6 +1129,12 @@ return Math.min(res[0],Math.min(res[1],res[2]));`,
     {
       id: 343,
       title: "Paint fence",
+      problem:
+        "Given n fence posts and k colors, return how many ways to paint so no more than two adjacent posts share a color.",
+      examples: [
+        { input: "n = 3, k = 2", output: "6" },
+        { input: "n = 1, k = 3", output: "3" },
+      ],
       tip: "Track same=ways ending with two same colors, diff=ways ending with different; update each step",
       iteration: {
         hint: "same = prev_diff; diff = (same+diff)*(k-1) at each post beyond the first",
@@ -999,6 +1170,12 @@ return (int)(res[0]+res[1]);`,
     {
       id: 344,
       title: "Dungeon game",
+      problem:
+        "Given a dungeon grid, return the minimum initial health needed to rescue the princess.",
+      examples: [
+        { input: "dungeon = [[-2,-3,3],[-5,-10,1],[10,30,-5]]", output: "7" },
+        { input: "dungeon = [[0]]", output: "1" },
+      ],
       tip: "Fill dp from bottom-right to top-left; dp[i][j]=health needed entering (i,j) to survive",
       iteration: {
         hint: "dp[i][j]=max(1, min(right,down)-dungeon[i][j]); base case bottom-right",
@@ -1036,6 +1213,12 @@ return dp[0];`,
     {
       id: 345,
       title: "Distinct subsequences",
+      problem:
+        "Given strings s and t, return how many distinct subsequences of s equal t.",
+      examples: [
+        { input: 's = "rabbbit", t = "rabbit"', output: "3" },
+        { input: 's = "babgbag", t = "bag"', output: "5" },
+      ],
       tip: "dp[i][j] = number of ways s[0..i-1] contains t[0..j-1] as subsequence",
       iteration: {
         hint: "If chars match: dp[i][j]=dp[i-1][j-1]+dp[i-1][j]; else dp[i][j]=dp[i-1][j]",
@@ -1073,6 +1256,12 @@ return (int)dp[t.length()];`,
     {
       id: 346,
       title: "Scramble string",
+      problem:
+        "Given two strings, return true if one is a scrambled version of the other.",
+      examples: [
+        { input: 's1 = "great", s2 = "rgeat"', output: "true" },
+        { input: 's1 = "abcde", s2 = "caebd"', output: "false" },
+      ],
       tip: "Memoized recursion with 3D cache on (s1,s2) or (i,j,len); try all split points",
       iteration: {
         hint: "3D DP dp[len][i][j]: can s1[i..i+len-1] be scramble of s2[j..j+len-1]",
@@ -1111,6 +1300,18 @@ boolean scramble(String s1, String s2) {
     {
       id: 347,
       title: "Interleaving string",
+      problem:
+        "Given three strings, return true if s3 is formed by interleaving s1 and s2 while preserving each order.",
+      examples: [
+        {
+          input: 's1 = "aabcc", s2 = "dbbca", s3 = "aadbbcbcac"',
+          output: "true",
+        },
+        {
+          input: 's1 = "aabcc", s2 = "dbbca", s3 = "aadbbbaccc"',
+          output: "false",
+        },
+      ],
       tip: "dp[i][j]=true if s3[0..i+j-1] is interleaving of s1[0..i-1] and s2[0..j-1]",
       iteration: {
         hint: "1D dp array: dp[j] tracks if s3[0..i+j-1] interleaves s1[0..i-1] and s2[0..j-1]",
@@ -1153,6 +1354,12 @@ return dp[n];`,
     {
       id: 348,
       title: "Target sum (assign +/- to reach a target)",
+      problem:
+        "Given nums and target, return the number of ways to assign + or - before each number so the expression equals target.",
+      examples: [
+        { input: "nums = [1,1,1,1,1], target = 3", output: "5" },
+        { input: "nums = [1], target = 1", output: "1" },
+      ],
       tip: "Reduce to subset sum: P - N = target, P + N = sum → P = (sum+target)/2; count subsets with that sum",
       iteration: {
         hint: "dp[j] = count of subsets summing to j; reverse iterate for 0/1 selection",
@@ -1188,6 +1395,12 @@ return ways.getOrDefault(target,0L).intValue();`,
     {
       id: 349,
       title: "Partition into K equal sum subsets",
+      problem:
+        "Given nums and k, return true if nums can be partitioned into k non-empty subsets with equal sum.",
+      examples: [
+        { input: "nums = [4,3,2,3,5,2,1], k = 4", output: "true" },
+        { input: "nums = [1,2,3,4], k = 3", output: "false" },
+      ],
       tip: "Bitmask DP or backtracking; target = totalSum/K; greedily fill each bucket",
       iteration: {
         hint: "Bitmask DP: dp[mask]=remainder in current bucket for each assignment",
@@ -1228,6 +1441,15 @@ return ways.getOrDefault(target,0L).intValue();`,
     {
       id: 350,
       title: "Minimum cost for tickets",
+      problem:
+        "Given travel days and ticket costs, return the minimum cost to cover all travel days.",
+      examples: [
+        { input: "days = [1,4,6,7,8,20], costs = [2,7,15]", output: "11" },
+        {
+          input: "days = [1,2,3,4,5,6,7,8,9,10,30,31], costs = [2,7,15]",
+          output: "17",
+        },
+      ],
       tip: "dp[i] = min cost to travel through day i; only update on travel days",
       iteration: {
         hint: "dp array over 365 days; on non-travel days carry forward; on travel days try 1/7/30-day passes",
@@ -1272,6 +1494,12 @@ return dp[365];`,
     {
       id: 351,
       title: "Regular expression matching (DP version)",
+      problem:
+        "Given string s and regex p, return true if p matches the entire string using . and * rules.",
+      examples: [
+        { input: 's = "aa", p = "a*"', output: "true" },
+        { input: 's = "mississippi", p = "mis*is*p*."', output: "false" },
+      ],
       tip: "dp[i][j]=whether s[0..i-1] matches p[0..j-1]; handle '*' by zero or more of preceding char",
       iteration: {
         hint: "'*' can mean zero (dp[i][j-2]) or one+ match (dp[i-1][j] when chars match)",
@@ -1313,6 +1541,12 @@ return dp[n];`,
     {
       id: 352,
       title: "Wildcard matching (DP version)",
+      problem:
+        "Given string s and wildcard pattern p, return true if p matches the entire string using ? and * rules.",
+      examples: [
+        { input: 's = "adceb", p = "*a*b"', output: "true" },
+        { input: 's = "acdcb", p = "a*c?b"', output: "false" },
+      ],
       tip: "Similar to regex but '*' matches any sequence (including empty); no preceding char constraint",
       iteration: {
         hint: "dp[i][j]: '*' matches empty (dp[i][j-1]) or one+ chars (dp[i-1][j])",
@@ -1350,6 +1584,12 @@ return dp[n];`,
     {
       id: 353,
       title: "Arithmetic slices (count subarrays forming arithmetic sequences)",
+      problem:
+        "Given an array, count contiguous subarrays of length at least 3 that form arithmetic sequences.",
+      examples: [
+        { input: "nums = [1,2,3,4]", output: "3" },
+        { input: "nums = [1]", output: "0" },
+      ],
       tip: "dp[i] = number of arithmetic slices ending at i; if diff matches, dp[i]=dp[i-1]+1",
       iteration: {
         hint: "dp[i]=dp[i-1]+1 when nums[i]-nums[i-1]==nums[i-1]-nums[i-2]; accumulate total",
@@ -1386,6 +1626,12 @@ return state[1];`,
     {
       id: 354,
       title: "Predict the winner (game theory DP)",
+      problem:
+        "Given an array of scores, return true if player 1 can win or tie when both players play optimally from either end.",
+      examples: [
+        { input: "nums = [1,5,2]", output: "false" },
+        { input: "nums = [1,5,233,7]", output: "true" },
+      ],
       tip: "dp[i][j] = max score difference player1 can achieve over player2 on nums[i..j]",
       iteration: {
         hint: "Fill diagonal-by-diagonal; dp[i][j]=max(nums[i]-dp[i+1][j], nums[j]-dp[i][j-1])",
@@ -1422,6 +1668,12 @@ return dp[0]>=0;`,
     {
       id: 355,
       title: "Delete and earn",
+      problem:
+        "Given nums, choose values to earn value times frequency while deleting adjacent values, and return maximum points.",
+      examples: [
+        { input: "nums = [3,4,2]", output: "6" },
+        { input: "nums = [2,2,3,3,3,4]", output: "9" },
+      ],
       tip: "Transform to house robber: buckets[v] = v * count(v); can't take v-1 and v+1",
       iteration: {
         hint: "Build earn[] where earn[v]=v*freq[v]; run house robber on earn[]",
@@ -1458,6 +1710,12 @@ return res[1];`,
     {
       id: 356,
       title: "Best time to buy/sell stock with cooldown",
+      problem:
+        "Given stock prices, return max profit with unlimited transactions but one-day cooldown after each sell.",
+      examples: [
+        { input: "prices = [1,2,3,0,2]", output: "3" },
+        { input: "prices = [1]", output: "0" },
+      ],
       tip: "Three states: held, sold (cooldown), rest; transitions: held=max(held,rest-price), sold=held+price, rest=max(rest,sold)",
       iteration: {
         hint: "Track held, sold, rest states; update each day from previous values",
@@ -1495,6 +1753,12 @@ return Math.max(res[1],res[2]);`,
     {
       id: 357,
       title: "Longest bitonic subsequence",
+      problem:
+        "Given an array, return the length of the longest subsequence that first increases and then decreases.",
+      examples: [
+        { input: "nums = [1,11,2,10,4,5,2,1]", output: "6" },
+        { input: "nums = [12,11,40,5,3,1]", output: "5" },
+      ],
       tip: "Compute LIS from left (inc[]) and LDS from right (dec[]); answer = max(inc[i]+dec[i]-1)",
       iteration: {
         hint: "Two O(n²) passes: LIS forward, LDS backward; combine at each index",
@@ -1527,6 +1791,12 @@ return IntStream.range(0,nums.length)
     {
       id: 358,
       title: "Minimum number of jumps to reach the end",
+      problem:
+        "Given jumps where nums[i] is max jump length from i, return the minimum jumps needed to reach the last index.",
+      examples: [
+        { input: "nums = [2,3,1,1,4]", output: "2" },
+        { input: "nums = [1,1,1,1]", output: "3" },
+      ],
       tip: "Greedy is O(n): track current reach and max reach; increment jumps when boundary crossed",
       iteration: {
         hint: "Greedy: at each step extend farthest; when curr boundary reached, jump++",
@@ -1562,6 +1832,12 @@ return state[0];`,
     {
       id: 359,
       title: "Maximum sum increasing subsequence",
+      problem:
+        "Given an array, return the maximum sum of any increasing subsequence.",
+      examples: [
+        { input: "nums = [1,101,2,3,100,4,5]", output: "106" },
+        { input: "nums = [3,4,5,10]", output: "22" },
+      ],
       tip: "Like LIS but dp[i] = max sum of increasing subseq ending at i; dp[i]=max(dp[j]+nums[i]) where nums[j]<nums[i]",
       iteration: {
         hint: "dp[i] starts as nums[i]; update from all j<i where nums[j]<nums[i]",
@@ -1597,6 +1873,12 @@ return Arrays.stream(dp).max().getAsInt();`,
     {
       id: 360,
       title: "Count number of ways to tile a 2×N board with 1×2 tiles",
+      problem:
+        "Given a 2 x N board, return how many ways it can be tiled using 1 x 2 dominoes.",
+      examples: [
+        { input: "N = 3", output: "3" },
+        { input: "N = 4", output: "5" },
+      ],
       tip: "Fibonacci pattern: dp[n]=dp[n-1]+dp[n-2]; one vertical tile or two horizontal tiles",
       iteration: {
         hint: "Same recurrence as Fibonacci; rolling two variables suffice",
@@ -1625,6 +1907,12 @@ int tile(int n) {
     {
       id: 361,
       title: "Longest palindromic subsequence (DP version)",
+      problem:
+        "Given a string, return the length of its longest palindromic subsequence.",
+      examples: [
+        { input: 's = "bbbab"', output: "4" },
+        { input: 's = "cbbd"', output: "2" },
+      ],
       tip: "dp[i][j]=LPS of s[i..j]; if s[i]==s[j], dp[i][j]=dp[i+1][j-1]+2; else max of neighbors",
       iteration: {
         hint: "Fill by increasing length; use 1D array with careful prev-cell tracking",
@@ -1662,6 +1950,12 @@ return dp[n];`,
     {
       id: 362,
       title: "Boolean parenthesization problem",
+      problem:
+        "Given a boolean expression with T, F, &, |, and ^, return how many parenthesizations evaluate to true.",
+      examples: [
+        { input: 'expr = "T|F&T"', output: "2" },
+        { input: 'expr = "T^F|F"', output: "2" },
+      ],
       tip: "dp[i][j][true/false] = ways to parenthesize expr[i..j] to get true/false; split at each operator",
       iteration: {
         hint: "Fill by length; for each split k compute ways based on operator and subcounts",
@@ -1706,6 +2000,18 @@ int ways(String sym, String ops, int i, int j, boolean isTrue) {
     {
       id: 363,
       title: "Word break II (return all possible sentence segmentations)",
+      problem:
+        "Given a string and dictionary, return all possible sentences formed by inserting spaces so every word is in the dictionary.",
+      examples: [
+        {
+          input: 's = "catsanddog", dict = ["cat","cats","and","sand","dog"]',
+          output: '["cats and dog","cat sand dog"]',
+        },
+        {
+          input: 's = "catsandog", dict = ["cats","dog","sand","and","cat"]',
+          output: "[]",
+        },
+      ],
       tip: "Memoize start index to list of suffix sentences; work backwards or with DFS to build sentences",
       iteration: {
         hint: "Bottom-up: sentences[i] = list of sentences for s[i..end]; combine with word at s[i..j]",
@@ -1747,6 +2053,12 @@ List<String> solve(String s, Set<String> dict, int i) {
     {
       id: 364,
       title: "Minimum insertions/deletions to convert one string to another",
+      problem:
+        "Given two strings, return the minimum insertions and deletions needed to convert the first into the second.",
+      examples: [
+        { input: 's1 = "heap", s2 = "pea"', output: "3" },
+        { input: 's1 = "geeksforgeeks", s2 = "geeks"', output: "8" },
+      ],
       tip: "Find LCS(s1,s2); deletions = len(s1)-LCS, insertions = len(s2)-LCS",
       iteration: {
         hint: "Compute LCS with standard 2D DP; answer is (m-lcs)+(n-lcs)",
@@ -1785,6 +2097,12 @@ return (s1.length()-lcs)+(s2.length()-lcs);`,
     {
       id: 365,
       title: "Maximum profit with at most K stock transactions",
+      problem:
+        "Given stock prices and k, return the maximum profit with at most k buy-sell transactions.",
+      examples: [
+        { input: "k = 2, prices = [2,4,1]", output: "2" },
+        { input: "k = 2, prices = [3,2,6,5,0,3]", output: "7" },
+      ],
       tip: "dp[k][i]=max profit using at most k transactions up to day i; or use space-optimized arrays",
       iteration: {
         hint: "For each transaction count t, maintain maxSoFar=max(dp[t-1][j]-prices[j]); update dp[t][i]",
@@ -1822,6 +2140,12 @@ return dp[n-1];`,
     {
       id: 366,
       title: "Number of distinct islands (DP/backtracking hybrid)",
+      problem:
+        "Given a grid of islands, return the number of distinct island shapes up to translation.",
+      examples: [
+        { input: "grid = [[1,1,0],[1,0,0],[0,0,1]]", output: "2" },
+        { input: "grid = [[1,1],[1,1]]", output: "1" },
+      ],
       tip: "DFS from each '1'; encode path shape as string relative to start; use a Set to count unique shapes",
       iteration: {
         hint: "BFS per island, encode each cell as offset (row-startRow, col-startCol); add to Set",

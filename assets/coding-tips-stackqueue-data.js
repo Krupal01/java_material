@@ -6,6 +6,15 @@ window.CT_STACKQUEUE = {
     {
       id: 171,
       title: "Implement a stack (array/list based)",
+      problem:
+        "Design a stack that supports push, pop, peek, and empty checks using an array or list.",
+      examples: [
+        {
+          input: "push(1), push(2), peek(), pop(), empty()",
+          output: "2, 2, false",
+        },
+        { input: "push(5), pop(), empty()", output: "5, true" },
+      ],
       tip: "Use ArrayDeque as a stack; push=addFirst, pop=removeFirst, peek=peekFirst",
       iteration: {
         hint: "Use int[] with a top pointer; push increments, pop decrements top",
@@ -23,6 +32,12 @@ window.CT_STACKQUEUE = {
     {
       id: 172,
       title: "Implement a queue",
+      problem:
+        "Design a queue that supports enqueue, dequeue, peek, and empty checks in FIFO order.",
+      examples: [
+        { input: "offer(1), offer(2), peek(), poll()", output: "1, 1" },
+        { input: "offer(7), poll(), empty()", output: "7, true" },
+      ],
       tip: "Use ArrayDeque as a queue; offer=addLast, poll=removeFirst, peek=peekFirst",
       iteration: {
         hint: "Use circular array with front/rear pointers to avoid shifting",
@@ -40,6 +55,12 @@ window.CT_STACKQUEUE = {
     {
       id: 173,
       title: "Implement a queue using two stacks",
+      problem:
+        "Implement a FIFO queue using only two stacks and support push, pop, peek, and empty operations.",
+      examples: [
+        { input: "push(1), push(2), peek(), pop()", output: "1, 1" },
+        { input: "push(3), push(4), pop(), pop()", output: "3, 4" },
+      ],
       tip: "Push to stack1; on poll, if stack2 empty, pour all of stack1 into stack2",
       iteration: {
         hint: "Lazy transfer: only move stack1 -> stack2 when stack2 is empty on dequeue",
@@ -57,6 +78,12 @@ window.CT_STACKQUEUE = {
     {
       id: 174,
       title: "Implement a stack using two queues",
+      problem:
+        "Implement a LIFO stack using only two queues and support push, pop, top, and empty operations.",
+      examples: [
+        { input: "push(1), push(2), top(), pop()", output: "2, 2" },
+        { input: "push(5), push(6), pop(), top()", output: "6, 5" },
+      ],
       tip: "On push, enqueue to q2, pour q1 into q2, then swap q1 and q2 — top is always q1.front",
       iteration: {
         hint: "Keep top element always at the front of q1 by rotating after each push",
@@ -74,6 +101,19 @@ window.CT_STACKQUEUE = {
     {
       id: 175,
       title: "Min stack (O(1) getMin)",
+      problem:
+        "Design a stack that supports push, pop, top, and retrieving the minimum element in O(1).",
+      examples: [
+        {
+          input:
+            "push(-2), push(0), push(-3), getMin(), pop(), top(), getMin()",
+          output: "-3, 0, -2",
+        },
+        {
+          input: "push(2), push(1), getMin(), pop(), getMin()",
+          output: "1, 2",
+        },
+      ],
       tip: "Maintain a parallel min-stack that tracks the current minimum at each level",
       iteration: {
         hint: "Push to minStack only when new value <= current min; pop in sync",
@@ -91,6 +131,12 @@ window.CT_STACKQUEUE = {
     {
       id: 176,
       title: "Valid parentheses",
+      problem:
+        "Given a string containing brackets, return true if every opening bracket is closed in the correct order.",
+      examples: [
+        { input: 's = "()[]{}"', output: "true" },
+        { input: 's = "(]"', output: "false" },
+      ],
       tip: "Push opening brackets; on closing bracket, pop and check if it matches",
       iteration: {
         hint: "Use a map for closing->opening matching; stack must be empty at end",
@@ -108,6 +154,12 @@ window.CT_STACKQUEUE = {
     {
       id: 177,
       title: "Largest rectangle in histogram",
+      problem:
+        "Given an array of bar heights, return the area of the largest rectangle that can be formed in the histogram.",
+      examples: [
+        { input: "heights = [2,1,5,6,2,3]", output: "10" },
+        { input: "heights = [2,4]", output: "4" },
+      ],
       tip: "Use a monotonic increasing stack; pop when current bar is shorter and calculate area",
       iteration: {
         hint: "Append 0 sentinel to flush remaining bars; area = height * (right - left - 1)",
@@ -125,6 +177,12 @@ window.CT_STACKQUEUE = {
     {
       id: 178,
       title: "Daily temperatures",
+      problem:
+        "Given daily temperatures, return how many days each day must wait for a warmer temperature, or 0 if none exists.",
+      examples: [
+        { input: "T = [73,74,75,71,69,72,76,73]", output: "[1,1,4,2,1,1,0,0]" },
+        { input: "T = [30,40,50,60]", output: "[1,1,1,0]" },
+      ],
       tip: "Monotonic decreasing stack of indices; pop when a warmer day is found",
       iteration: {
         hint: "Store index in stack; answer[i] = current_index - popped_index",
@@ -142,6 +200,12 @@ window.CT_STACKQUEUE = {
     {
       id: 179,
       title: "Next greater element",
+      problem:
+        "Given an array, return the next greater element to the right for every element, or -1 if none exists.",
+      examples: [
+        { input: "nums = [4,5,2,25]", output: "[5,25,25,-1]" },
+        { input: "nums = [13,7,6,12]", output: "[-1,12,12,-1]" },
+      ],
       tip: "Monotonic decreasing stack; pop and record next greater when a larger element is seen",
       iteration: {
         hint: "Traverse right to left or use stack to find the next greater for each element",
@@ -159,6 +223,12 @@ window.CT_STACKQUEUE = {
     {
       id: 180,
       title: "Next smaller element",
+      problem:
+        "Given an array, return the next smaller element to the right for every element, or -1 if none exists.",
+      examples: [
+        { input: "nums = [4,8,5,2,25]", output: "[2,5,2,-1,-1]" },
+        { input: "nums = [3,2,1]", output: "[2,1,-1]" },
+      ],
       tip: "Monotonic increasing stack; pop and record next smaller when a smaller element is seen",
       iteration: {
         hint: "Push index; pop when current element is smaller — symmetric to next greater",
@@ -176,6 +246,12 @@ window.CT_STACKQUEUE = {
     {
       id: 181,
       title: "Sliding window maximum (deque-based)",
+      problem:
+        "Given an array and window size k, return the maximum value in every contiguous window of size k.",
+      examples: [
+        { input: "nums = [1,3,-1,-3,5,3,6,7], k = 3", output: "[3,3,5,5,6,7]" },
+        { input: "nums = [1], k = 1", output: "[1]" },
+      ],
       tip: "Maintain a monotonic decreasing deque of indices; front is always the window maximum",
       iteration: {
         hint: "Remove indices outside window from front; remove smaller elements from back",
@@ -193,6 +269,12 @@ window.CT_STACKQUEUE = {
     {
       id: 182,
       title: "Evaluate postfix expression",
+      problem:
+        "Given tokens of a postfix expression, evaluate the expression and return its integer result.",
+      examples: [
+        { input: 'tokens = ["2","1","+","3","*"]', output: "9" },
+        { input: 'tokens = ["4","13","5","/","+"]', output: "6" },
+      ],
       tip: "Push operands; on operator pop two operands, apply, push result",
       iteration: {
         hint: "Iterate tokens; push numbers, pop and apply for +,-,*,/",
@@ -210,6 +292,12 @@ window.CT_STACKQUEUE = {
     {
       id: 183,
       title: "Evaluate prefix expression",
+      problem:
+        "Given tokens of a prefix expression, evaluate the expression and return its integer result.",
+      examples: [
+        { input: 'tokens = ["*","+","2","1","3"]', output: "9" },
+        { input: 'tokens = ["+","4","/","13","5"]', output: "6" },
+      ],
       tip: "Traverse prefix from right to left; push operands, on operator pop two and apply",
       iteration: {
         hint: "Iterate from right; when operator, pop two operands (first popped is left operand)",
@@ -227,6 +315,19 @@ window.CT_STACKQUEUE = {
     {
       id: 184,
       title: "Design a circular queue",
+      problem:
+        "Design a circular queue with fixed capacity supporting enQueue, deQueue, Front, Rear, isEmpty, and isFull.",
+      examples: [
+        {
+          input:
+            "k = 3, enQueue(1), enQueue(2), enQueue(3), enQueue(4), Rear(), isFull()",
+          output: "true, true, true, false, 3, true",
+        },
+        {
+          input: "k = 2, enQueue(5), deQueue(), isEmpty()",
+          output: "true, true, true",
+        },
+      ],
       tip: "Use fixed array with head/tail pointers and size counter; full when size==capacity",
       iteration: {
         hint: "tail = (tail+1) % capacity on enqueue; head = (head+1) % capacity on dequeue",
@@ -244,6 +345,18 @@ window.CT_STACKQUEUE = {
     {
       id: 185,
       title: "Design a deque",
+      problem:
+        "Design a deque supporting insertion, deletion, and peek operations at both front and rear.",
+      examples: [
+        {
+          input: "insertFront(1), insertLast(2), getFront(), getRear()",
+          output: "true, true, 1, 2",
+        },
+        {
+          input: "insertLast(3), deleteLast(), isEmpty()",
+          output: "true, true, true",
+        },
+      ],
       tip: "Use ArrayDeque or doubly linked list; support insertFront, insertLast, deleteFront, deleteLast in O(1)",
       iteration: {
         hint: "ArrayDeque already supports all deque ops; for array-based, use circular array with both head/tail",
@@ -261,6 +374,18 @@ window.CT_STACKQUEUE = {
     {
       id: 186,
       title: "LRU cache",
+      problem:
+        "Design an LRU cache with O(1) get and put operations that evicts the least recently used key when full.",
+      examples: [
+        {
+          input: "capacity = 2, put(1,1), put(2,2), get(1), put(3,3), get(2)",
+          output: "1, -1",
+        },
+        {
+          input: "capacity = 1, put(1,10), put(2,20), get(1), get(2)",
+          output: "-1, 20",
+        },
+      ],
       tip: "Use LinkedHashMap with accessOrder=true; override removeEldestEntry to evict on capacity",
       iteration: {
         hint: "LinkedHashMap maintains insertion/access order; set accessOrder=true in constructor",
@@ -278,6 +403,16 @@ window.CT_STACKQUEUE = {
     {
       id: 187,
       title: "LFU cache",
+      problem:
+        "Design an LFU cache with O(1) get and put behavior that evicts the least frequently used key, breaking ties by age.",
+      examples: [
+        {
+          input:
+            "capacity = 2, put(1,1), put(2,2), get(1), put(3,3), get(2), get(3)",
+          output: "1, -1, 3",
+        },
+        { input: "capacity = 0, put(1,1), get(1)", output: "-1" },
+      ],
       tip: "Track frequency per key and a min-frequency; use two maps (key->freq, freq->LinkedHashSet of keys)",
       iteration: {
         hint: "On access, increment frequency, move key to next frequency bucket, update minFreq",
@@ -295,6 +430,15 @@ window.CT_STACKQUEUE = {
     {
       id: 188,
       title: "Stock span problem",
+      problem:
+        "Given daily stock prices, return the span for each day, where span is consecutive previous days with price less than or equal to today.",
+      examples: [
+        {
+          input: "prices = [100,80,60,70,60,75,85]",
+          output: "[1,1,1,2,1,4,6]",
+        },
+        { input: "prices = [10,20,30]", output: "[1,2,3]" },
+      ],
       tip: "Monotonic decreasing stack of (price, span) pairs; pop and accumulate span while price <= current",
       iteration: {
         hint: "Stack stores (price, span); merge spans of all smaller or equal preceding prices",
@@ -312,6 +456,12 @@ window.CT_STACKQUEUE = {
     {
       id: 189,
       title: "Balanced parentheses — variations with multiple bracket types",
+      problem:
+        "Given a string containing multiple bracket types, return true if all brackets are balanced and properly nested.",
+      examples: [
+        { input: 's = "{[()]}"', output: "true" },
+        { input: 's = "{[(])}"', output: "false" },
+      ],
       tip: "Push open brackets; match each closing bracket against stack top; reject on mismatch",
       iteration: {
         hint: "Use a map of closing->opening to support {}, [], () in one loop",
@@ -329,6 +479,12 @@ window.CT_STACKQUEUE = {
     {
       id: 190,
       title: "Reverse a stack (without extra space, using recursion)",
+      problem:
+        "Given a stack, reverse its elements using recursion without using an auxiliary data structure.",
+      examples: [
+        { input: "stack bottom->top = [1,2,3]", output: "[3,2,1]" },
+        { input: "stack bottom->top = [5]", output: "[5]" },
+      ],
       tip: "Recursively pop all elements; insert each at the bottom using a helper that recurses to bottom",
       iteration: {
         hint: "Can't reverse a stack iteratively without extra space; use recursion or a helper stack",
@@ -346,6 +502,12 @@ window.CT_STACKQUEUE = {
     {
       id: 191,
       title: "Sort a stack (using recursion or another stack)",
+      problem:
+        "Given a stack of integers, sort it so the smallest element is on top using recursion or one auxiliary stack.",
+      examples: [
+        { input: "stack top->bottom = [3,1,4,2]", output: "[1,2,3,4]" },
+        { input: "stack top->bottom = [5,5,1]", output: "[1,5,5]" },
+      ],
       tip: "Recursively pop all, sort recursively, insert each back in sorted position",
       iteration: {
         hint: "Use a temp sorted stack; insert each popped element in correct sorted position",
@@ -363,6 +525,12 @@ window.CT_STACKQUEUE = {
     {
       id: 192,
       title: "Celebrity problem",
+      problem:
+        "Given an n by n matrix where mat[a][b] = 1 means a knows b, return the celebrity index or -1 if none exists.",
+      examples: [
+        { input: "mat = [[0,1,0],[0,0,0],[0,1,0]]", output: "1" },
+        { input: "mat = [[0,1],[1,0]]", output: "-1" },
+      ],
       tip: "Use two-pointer on stack: push all, pop two, eliminate non-celebrity, verify the last candidate",
       iteration: {
         hint: "Push all to stack; pop two, eliminate the one who knows the other; validate survivor",
@@ -380,6 +548,12 @@ window.CT_STACKQUEUE = {
     {
       id: 193,
       title: "Rotten oranges (BFS with queue)",
+      problem:
+        "Given a grid of fresh and rotten oranges, return the minimum minutes until all oranges rot, or -1 if impossible.",
+      examples: [
+        { input: "grid = [[2,1,1],[1,1,0],[0,1,1]]", output: "4" },
+        { input: "grid = [[2,1,1],[0,1,1],[1,0,1]]", output: "-1" },
+      ],
       tip: "Multi-source BFS from all initially rotten oranges; count minutes until no fresh orange reachable",
       iteration: {
         hint: "Enqueue all rotten cells at t=0; BFS layer by layer, tracking minutes elapsed",
@@ -397,6 +571,15 @@ window.CT_STACKQUEUE = {
     {
       id: 194,
       title: "First negative number in every window of size K",
+      problem:
+        "Given an array and window size k, return the first negative number in every window, or 0 if a window has none.",
+      examples: [
+        {
+          input: "arr = [12,-1,-7,8,-15,30,16,28], k = 3",
+          output: "[-1,-1,-7,-15,-15,0]",
+        },
+        { input: "arr = [1,2,3], k = 2", output: "[0,0]" },
+      ],
       tip: "Use a deque to store indices of negative numbers; front is always the first negative in current window",
       iteration: {
         hint: "Deque holds indices of negatives; pop front when outside window, append each negative",
@@ -414,6 +597,18 @@ window.CT_STACKQUEUE = {
     {
       id: 195,
       title: "Implement a blocking queue (producer-consumer style)",
+      problem:
+        "Design a bounded blocking queue for producer-consumer use with thread-safe enqueue and dequeue operations.",
+      examples: [
+        {
+          input: "capacity = 2, enqueue(1), enqueue(2), dequeue()",
+          output: "1",
+        },
+        {
+          input: "capacity = 1, enqueue(5), dequeue(), enqueue(6)",
+          output: "5, then queue contains [6]",
+        },
+      ],
       tip: "Use LinkedBlockingQueue or ArrayBlockingQueue; put() blocks when full, take() blocks when empty",
       iteration: {
         hint: "ArrayBlockingQueue is bounded and thread-safe; put/take handle blocking automatically",
@@ -431,6 +626,12 @@ window.CT_STACKQUEUE = {
     {
       id: 196,
       title: "Task scheduler (with cooldown, using a priority queue/heap)",
+      problem:
+        "Given CPU tasks and cooldown n, return the least time units needed to finish all tasks.",
+      examples: [
+        { input: "tasks = [A,A,A,B,B,B], n = 2", output: "8" },
+        { input: "tasks = [A,C,A,B,D,B], n = 1", output: "6" },
+      ],
       tip: "Greedy: always schedule the highest-frequency task; cool down using a counter map and cycle of n+1 slots",
       iteration: {
         hint: "Use max-heap by frequency; each cycle of (n+1) tasks, pick top available tasks",
@@ -448,6 +649,12 @@ window.CT_STACKQUEUE = {
     {
       id: 197,
       title: "Print binary numbers from 1 to N using a queue",
+      problem:
+        "Given integer n, print the binary representations of numbers from 1 through n in order.",
+      examples: [
+        { input: "n = 5", output: '["1","10","11","100","101"]' },
+        { input: "n = 2", output: '["1","10"]' },
+      ],
       tip: "Enqueue '1'; for each dequeued string, print it and enqueue string+'0' and string+'1'",
       iteration: {
         hint: "BFS-style: dequeue, print, enqueue children (+'0' and +'1') until N numbers printed",
@@ -465,6 +672,18 @@ window.CT_STACKQUEUE = {
     {
       id: 198,
       title: "Queue reconstruction by height",
+      problem:
+        "Given people as [height, k], reconstruct the queue so each person has exactly k taller-or-equal people before them.",
+      examples: [
+        {
+          input: "people = [[7,0],[4,4],[7,1],[5,0],[6,1],[5,2]]",
+          output: "[[5,0],[7,0],[5,2],[6,1],[4,4],[7,1]]",
+        },
+        {
+          input: "people = [[6,0],[5,0],[4,0]]",
+          output: "[[4,0],[5,0],[6,0]]",
+        },
+      ],
       tip: "Sort by height descending, then by k ascending; insert each person at index k in result list",
       iteration: {
         hint: "Sort: taller first, same height by k ascending; insert at index k — shorter people don't affect taller",
@@ -482,6 +701,18 @@ window.CT_STACKQUEUE = {
     {
       id: 199,
       title: "Implement K queues in a single array",
+      problem:
+        "Implement k independent queues inside one array while sharing free slots efficiently.",
+      examples: [
+        {
+          input: "k = 2, n = 4, enqueue(10,0), enqueue(20,1), dequeue(0)",
+          output: "10",
+        },
+        {
+          input: "k = 3, n = 3, enqueue(1,0), enqueue(2,1), enqueue(3,2)",
+          output: "all true, array full",
+        },
+      ],
       tip: "Use a free-list with next[] array to track available slots; front[] and rear[] per queue",
       iteration: {
         hint: "Arrays: arr[n] for data, next[n] for chaining free/used slots, front[k] and rear[k] per queue",
@@ -499,6 +730,15 @@ window.CT_STACKQUEUE = {
     {
       id: 200,
       title: "Check stack permutations of a queue",
+      problem:
+        "Given pushed and popped sequences, return true if the popped sequence can result from stack operations on the pushed sequence.",
+      examples: [
+        { input: "pushed = [1,2,3,4,5], popped = [4,5,3,2,1]", output: "true" },
+        {
+          input: "pushed = [1,2,3,4,5], popped = [4,3,5,1,2]",
+          output: "false",
+        },
+      ],
       tip: "Simulate push/pop from queue through stack; check if target permutation is achievable",
       iteration: {
         hint: "Push from queue; when stack top matches next expected output, pop; check all match",
@@ -516,6 +756,15 @@ window.CT_STACKQUEUE = {
     {
       id: 201,
       title: "Implement a max stack (O(1) getMax)",
+      problem:
+        "Design a stack that supports push, pop, top, and retrieving the maximum element in O(1).",
+      examples: [
+        {
+          input: "push(2), push(5), getMax(), pop(), getMax()",
+          output: "5, 5, 2",
+        },
+        { input: "push(1), push(1), pop(), getMax()", output: "1, 1" },
+      ],
       tip: "Mirror the min-stack pattern: maintain a parallel max-stack tracking max at each level",
       iteration: {
         hint: "Push to maxStack only when value >= current max; pop in sync",
@@ -534,6 +783,15 @@ window.CT_STACKQUEUE = {
       id: 202,
       title:
         "Design a stack that supports increment operations on the bottom K elements",
+      problem:
+        "Design a stack with push, pop, top, and increment(k, val), which adds val to the bottom k elements.",
+      examples: [
+        {
+          input: "push(1), push(2), increment(2, 100), pop(), pop()",
+          output: "102, 101",
+        },
+        { input: "push(5), increment(3, 2), top()", output: "7" },
+      ],
       tip: "Use lazy increment: store increments in an inc[] array; propagate only on pop",
       iteration: {
         hint: "inc[i] stores pending increment for elements 0..i; on pop, propagate inc[i] to inc[i-1]",
@@ -551,6 +809,12 @@ window.CT_STACKQUEUE = {
     {
       id: 203,
       title: "Simplify a Unix-style file path using a stack",
+      problem:
+        "Given an absolute Unix path, simplify it to its canonical form.",
+      examples: [
+        { input: 'path = "/home//foo/"', output: '"/home/foo"' },
+        { input: 'path = "/a/./b/../../c/"', output: '"/c"' },
+      ],
       tip: "Split path by '/'; push valid names, pop on '..', skip '.' and empty parts; rejoin with '/'",
       iteration: {
         hint: "Tokenize by '/'; use deque as stack; '..' pops, '.' and '' are ignored",
@@ -569,6 +833,18 @@ window.CT_STACKQUEUE = {
       id: 204,
       title:
         "Implement an expression evaluator (infix to postfix, then evaluate)",
+      problem:
+        "Given an infix arithmetic expression, convert it to postfix respecting precedence and evaluate the final value.",
+      examples: [
+        {
+          input: 'expr = "3 + 4 * 2"',
+          output: 'postfix = "3 4 2 * +", value = 11',
+        },
+        {
+          input: 'expr = "(1 + 2) * 3"',
+          output: 'postfix = "1 2 + 3 *", value = 9',
+        },
+      ],
       tip: "Two-pass: convert infix to postfix using operator-precedence stack, then evaluate postfix",
       iteration: {
         hint: "Shunting-yard for infix->postfix; then evaluate postfix with operand stack",
@@ -586,6 +862,12 @@ window.CT_STACKQUEUE = {
     {
       id: 205,
       title: "Find the maximum of all subarrays of size K using two stacks",
+      problem:
+        "Given an array and window size k, return each sliding window maximum using a queue implemented with two max stacks.",
+      examples: [
+        { input: "nums = [1,3,-1,-3,5,3,6,7], k = 3", output: "[3,3,5,5,6,7]" },
+        { input: "nums = [9,8,7], k = 2", output: "[9,8]" },
+      ],
       tip: "Two-stack queue: one for enqueue (back), one for dequeue (front); each tracks its running max",
       iteration: {
         hint: "Maintain two stacks, each with (value, max) pairs; front max is max of both stack maxes",
@@ -603,6 +885,18 @@ window.CT_STACKQUEUE = {
     {
       id: 206,
       title: "Implement a browser's forward/back navigation using two stacks",
+      problem:
+        "Design browser navigation with visit, back, and forward operations using two stacks.",
+      examples: [
+        {
+          input: "visit(a), visit(b), visit(c), back(1), forward(1)",
+          output: "b, c",
+        },
+        {
+          input: "visit(home), visit(x), back(1), visit(y), forward(1)",
+          output: "home, y",
+        },
+      ],
       tip: "Back stack holds history; forward stack holds pages navigated away from; visit clears forward stack",
       iteration: {
         hint: "visit(): push to back, clear forward; back(): push current to forward, pop from back; forward: reverse",
@@ -620,6 +914,12 @@ window.CT_STACKQUEUE = {
     {
       id: 207,
       title: "Check if a queue can be sorted using an auxiliary stack",
+      problem:
+        "Given a queue containing numbers 1 through n, determine whether it can be sorted using one auxiliary stack.",
+      examples: [
+        { input: "queue = [5,1,2,3,4]", output: "true" },
+        { input: "queue = [2,3,1]", output: "false" },
+      ],
       tip: "Simulate: dequeue from queue; push to stack only if it maintains sorted order; else check queue",
       iteration: {
         hint: "Expected next = 1; pop from queue, push to stack if > stack top; pop from stack to output when equal to expected",
@@ -637,6 +937,12 @@ window.CT_STACKQUEUE = {
     {
       id: 208,
       title: "Asteroid collision problem (stack-based simulation)",
+      problem:
+        "Given moving asteroids represented by signed integers, simulate collisions and return the asteroids that remain.",
+      examples: [
+        { input: "asteroids = [5,10,-5]", output: "[5,10]" },
+        { input: "asteroids = [8,-8]", output: "[]" },
+      ],
       tip: "Push positive asteroids; negative asteroids destroy smaller positives on stack top; equal-size both die",
       iteration: {
         hint: "Positive goes on stack; negative destroys top positive until stack top >= |negative| or stack empty",
@@ -655,6 +961,12 @@ window.CT_STACKQUEUE = {
       id: 209,
       title:
         "Remove K digits to form the smallest possible number (monotonic stack)",
+      problem:
+        "Given a non-negative integer string num and integer k, remove k digits to produce the smallest possible number.",
+      examples: [
+        { input: 'num = "1432219", k = 3', output: '"1219"' },
+        { input: 'num = "10200", k = 1', output: '"200"' },
+      ],
       tip: "Monotonic increasing stack; pop larger digits when smaller digit arrives and k > 0; trim trailing",
       iteration: {
         hint: "Pop stack top when it's larger than current digit and k > 0; handle leading zeros",
@@ -672,6 +984,15 @@ window.CT_STACKQUEUE = {
     {
       id: 210,
       title: "Implement a circular buffer/ring buffer",
+      problem:
+        "Design a fixed-size circular buffer that supports inserting and reading items in FIFO order with wraparound.",
+      examples: [
+        {
+          input: "capacity = 3, put(1), put(2), put(3), get(), put(4)",
+          output: "1, buffer = [2,3,4]",
+        },
+        { input: "capacity = 2, put(5), get(), isEmpty()", output: "5, true" },
+      ],
       tip: "Fixed-size array with read/write pointers; wrap using modulo; full when (write+1)%size==read",
       iteration: {
         hint: "read and write pointers wrap with % capacity; one slot kept empty to distinguish full vs empty",

@@ -7,6 +7,18 @@ window.CT_GRAPHS = {
       id: 272,
       title:
         "Implement graph representation using adjacency list and adjacency matrix",
+      problem:
+        "Given V vertices and a list of edges, build both an adjacency list and an adjacency matrix representation of the graph.",
+      examples: [
+        {
+          input: "V = 3, edges = [[0,1],[1,2]]",
+          output: "list = [[1],[2],[]], matrix[0][1] = 1",
+        },
+        {
+          input: "V = 4, edges = [[0,2],[2,3],[3,0]]",
+          output: "list = [[2],[],[3],[0]], matrix[3][0] = 1",
+        },
+      ],
       tip: "Adjacency list is O(V+E) space and preferred; matrix is O(V²) but O(1) edge lookup",
       iteration: {
         hint: "List: array of ArrayList; Matrix: 2D int array with 1/0 for edges",
@@ -24,6 +36,12 @@ window.CT_GRAPHS = {
     {
       id: 273,
       title: "BFS traversal",
+      problem:
+        "Given a graph adjacency list and a source node, return the BFS traversal order starting from the source.",
+      examples: [
+        { input: "adj = [[1,2],[3],[],[]], src = 0", output: "[0,1,2,3]" },
+        { input: "adj = [[1],[2],[0,3],[]], src = 2", output: "[2,0,3,1]" },
+      ],
       tip: "BFS uses a queue and visits nodes level by level — ideal for shortest path in unweighted graphs",
       iteration: {
         hint: "Use a Queue, mark visited on enqueue, process neighbors level by level",
@@ -41,6 +59,12 @@ window.CT_GRAPHS = {
     {
       id: 274,
       title: "DFS traversal (recursive and iterative)",
+      problem:
+        "Given a graph adjacency list and a source node, return the DFS traversal order starting from the source.",
+      examples: [
+        { input: "adj = [[1,2],[3],[],[]], src = 0", output: "[0,1,3,2]" },
+        { input: "adj = [[1],[2],[0,3],[]], src = 2", output: "[2,0,1,3]" },
+      ],
       tip: "Recursive DFS is clean but risks stack overflow on large graphs; iterative uses an explicit stack",
       iteration: {
         hint: "Use an explicit Stack, push neighbors and mark visited on pop",
@@ -58,6 +82,12 @@ window.CT_GRAPHS = {
     {
       id: 275,
       title: "Detect cycle in undirected graph",
+      problem:
+        "Given an undirected graph, return true if it contains at least one cycle.",
+      examples: [
+        { input: "V = 3, edges = [[0,1],[1,2],[2,0]]", output: "true" },
+        { input: "V = 4, edges = [[0,1],[1,2],[2,3]]", output: "false" },
+      ],
       tip: "In BFS/DFS, a cycle exists if you reach an already-visited node that is not the parent",
       iteration: {
         hint: "BFS with parent tracking — if visited neighbor is not parent, cycle found",
@@ -75,6 +105,12 @@ window.CT_GRAPHS = {
     {
       id: 276,
       title: "Detect cycle in directed graph",
+      problem:
+        "Given a directed graph, return true if it contains at least one directed cycle.",
+      examples: [
+        { input: "V = 3, edges = [[0,1],[1,2],[2,0]]", output: "true" },
+        { input: "V = 4, edges = [[0,1],[1,2],[2,3]]", output: "false" },
+      ],
       tip: "Use DFS with a recursion stack — a back edge (visiting a node in the current stack) means a cycle",
       iteration: {
         hint: "Kahn's topological sort: if all nodes not processed, a cycle exists",
@@ -92,6 +128,15 @@ window.CT_GRAPHS = {
     {
       id: 277,
       title: "Topological sort — Kahn's BFS",
+      problem:
+        "Given a directed acyclic graph, return one topological ordering using Kahn's BFS algorithm.",
+      examples: [
+        {
+          input: "V = 4, edges = [[0,1],[0,2],[1,3],[2,3]]",
+          output: "[0,1,2,3]",
+        },
+        { input: "V = 3, edges = [[1,0],[2,0]]", output: "[1,2,0]" },
+      ],
       tip: "Kahn's BFS processes zero-indegree nodes first — also detects cycles if not all nodes are processed",
       iteration: {
         hint: "Compute indegrees, enqueue all zero-indegree nodes, reduce neighbors on each dequeue",
@@ -109,6 +154,15 @@ window.CT_GRAPHS = {
     {
       id: 278,
       title: "Topological sort — DFS",
+      problem:
+        "Given a directed acyclic graph, return one topological ordering using DFS postorder.",
+      examples: [
+        {
+          input: "V = 4, edges = [[0,1],[0,2],[1,3],[2,3]]",
+          output: "[0,2,1,3]",
+        },
+        { input: "V = 3, edges = [[1,0],[2,0]]", output: "[2,1,0]" },
+      ],
       tip: "DFS topological sort: push node to stack after all its neighbors are processed (post-order)",
       iteration: {
         hint: "Use iterative DFS with a post-order stack to simulate recursive topo sort",
@@ -126,6 +180,12 @@ window.CT_GRAPHS = {
     {
       id: 279,
       title: "Number of connected components",
+      problem:
+        "Given an undirected graph with V nodes, return the number of connected components.",
+      examples: [
+        { input: "V = 5, edges = [[0,1],[1,2],[3,4]]", output: "2" },
+        { input: "V = 4, edges = []", output: "4" },
+      ],
       tip: "Each unvisited node starts a new component — count DFS/BFS starts or union-find roots",
       iteration: {
         hint: "BFS from each unvisited node, increment component counter each time",
@@ -143,6 +203,12 @@ window.CT_GRAPHS = {
     {
       id: 280,
       title: "Check if graph is bipartite",
+      problem:
+        "Given an undirected graph, return true if its nodes can be colored with two colors so no edge connects equal colors.",
+      examples: [
+        { input: "graph = [[1,3],[0,2],[1,3],[0,2]]", output: "true" },
+        { input: "graph = [[1,2,3],[0,2],[0,1,3],[0,2]]", output: "false" },
+      ],
       tip: "A graph is bipartite if it can be 2-colored — BFS/DFS coloring fails if adjacent nodes share color",
       iteration: {
         hint: "BFS with two colors (0/1): if a neighbor has the same color, not bipartite",
@@ -160,6 +226,15 @@ window.CT_GRAPHS = {
     {
       id: 281,
       title: "Shortest path in unweighted graph (BFS)",
+      problem:
+        "Given an unweighted graph and a source, return the shortest distance from the source to every node.",
+      examples: [
+        {
+          input: "V = 4, edges = [[0,1],[0,2],[1,3]], src = 0",
+          output: "[0,1,1,2]",
+        },
+        { input: "V = 3, edges = [[0,1]], src = 0", output: "[0,1,-1]" },
+      ],
       tip: "BFS guarantees shortest path in unweighted graphs — distance increments by 1 each level",
       iteration: {
         hint: "BFS with a distance array — update dist[v] = dist[u] + 1 when enqueuing neighbor",
@@ -177,6 +252,18 @@ window.CT_GRAPHS = {
     {
       id: 282,
       title: "Dijkstra's algorithm",
+      problem:
+        "Given a weighted graph with non-negative edge weights and a source, return shortest distances from the source using Dijkstra's algorithm.",
+      examples: [
+        {
+          input: "V = 3, edges = [[0,1,4],[0,2,1],[2,1,2]], src = 0",
+          output: "[0,3,1]",
+        },
+        {
+          input: "V = 4, edges = [[0,1,5],[1,2,1]], src = 0",
+          output: "[0,5,6,INF]",
+        },
+      ],
       tip: "Dijkstra uses a min-heap (priority queue) to greedily pick the nearest unvisited node — O((V+E) log V)",
       iteration: {
         hint: "PriorityQueue of {dist, node}, relax edges whenever shorter path is found",
@@ -194,6 +281,18 @@ window.CT_GRAPHS = {
     {
       id: 283,
       title: "Bellman-Ford algorithm",
+      problem:
+        "Given a weighted directed graph and a source, return shortest distances using Bellman-Ford and detect negative cycles if present.",
+      examples: [
+        {
+          input: "V = 3, edges = [[0,1,5],[1,2,-2],[0,2,4]], src = 0",
+          output: "[0,5,3]",
+        },
+        {
+          input: "V = 3, edges = [[0,1,1],[1,2,-1],[2,0,-1]], src = 0",
+          output: "negative cycle",
+        },
+      ],
       tip: "Bellman-Ford relaxes all edges V-1 times — handles negative weights and detects negative cycles",
       iteration: {
         hint: "Repeat V-1 times: for each edge (u,v,w), if dist[u]+w < dist[v], update dist[v]",
@@ -211,6 +310,15 @@ window.CT_GRAPHS = {
     {
       id: 284,
       title: "Floyd-Warshall algorithm",
+      problem:
+        "Given a weighted graph as a distance matrix, compute shortest distances between every pair of vertices.",
+      examples: [
+        {
+          input: "dist = [[0,5,INF],[INF,0,2],[1,INF,0]]",
+          output: "[[0,5,7],[3,0,2],[1,6,0]]",
+        },
+        { input: "dist = [[0,3],[INF,0]]", output: "[[0,3],[INF,0]]" },
+      ],
       tip: "Floyd-Warshall finds all-pairs shortest paths in O(V³) — works with negative weights but not negative cycles",
       iteration: {
         hint: "Triple nested loop: for each intermediate k, relax dist[i][j] via dist[i][k]+dist[k][j]",
@@ -228,6 +336,15 @@ window.CT_GRAPHS = {
     {
       id: 285,
       title: "Prim's algorithm (MST)",
+      problem:
+        "Given a connected weighted undirected graph, return the total weight of a minimum spanning tree using Prim's algorithm.",
+      examples: [
+        {
+          input: "V = 4, edges = [[0,1,1],[0,2,4],[1,2,2],[1,3,5],[2,3,1]]",
+          output: "4",
+        },
+        { input: "V = 3, edges = [[0,1,10],[1,2,5],[0,2,6]]", output: "11" },
+      ],
       tip: "Prim's greedily picks the minimum weight edge crossing the cut — use a min-heap for O(E log V)",
       iteration: {
         hint: "PriorityQueue of {weight, node}, expand minimum edge to unvisited nodes",
@@ -245,6 +362,15 @@ window.CT_GRAPHS = {
     {
       id: 286,
       title: "Kruskal's algorithm (MST, Union-Find)",
+      problem:
+        "Given a connected weighted undirected graph, return the total weight of a minimum spanning tree using Kruskal's algorithm.",
+      examples: [
+        {
+          input: "V = 4, edges = [[0,1,1],[0,2,4],[1,2,2],[1,3,5],[2,3,1]]",
+          output: "4",
+        },
+        { input: "V = 3, edges = [[0,1,10],[1,2,5],[0,2,6]]", output: "11" },
+      ],
       tip: "Kruskal's sorts all edges by weight, adds edge if it doesn't form a cycle (Union-Find) — O(E log E)",
       iteration: {
         hint: "Sort edges, iterate and union endpoints — skip if already in same component",
@@ -262,6 +388,12 @@ window.CT_GRAPHS = {
     {
       id: 287,
       title: "Union-Find with path compression and union by rank",
+      problem:
+        "Design a Union-Find data structure with find and union operations using path compression and union by rank.",
+      examples: [
+        { input: "union(0,1), union(1,2), find(0) == find(2)", output: "true" },
+        { input: "union(0,1), find(0) == find(3)", output: "false" },
+      ],
       tip: "Path compression + union by rank achieves near O(1) amortized per operation (inverse Ackermann)",
       iteration: {
         hint: "find() compresses paths; union() always attaches shorter rank tree under taller",
@@ -279,6 +411,12 @@ window.CT_GRAPHS = {
     {
       id: 288,
       title: "Number of islands (DFS/BFS)",
+      problem:
+        "Given a grid of 1s and 0s, return the number of islands of connected 1s using four-directional adjacency.",
+      examples: [
+        { input: "grid = [[1,1,0],[0,1,0],[1,0,1]]", output: "3" },
+        { input: "grid = [[1,1],[1,1]]", output: "1" },
+      ],
       tip: "Treat grid as graph — flood-fill each unvisited '1' cell with DFS/BFS, counting each flood-fill start",
       iteration: {
         hint: "BFS from each unvisited '1': mark all connected '1's as visited, increment count",
@@ -296,6 +434,15 @@ window.CT_GRAPHS = {
     {
       id: 289,
       title: "Clone a graph (deep copy)",
+      problem:
+        "Given a reference to a node in a connected graph, return a deep copy of the graph.",
+      examples: [
+        {
+          input: "adjList = [[2,4],[1,3],[2,4],[1,3]]",
+          output: "deep copy with same adjacency",
+        },
+        { input: "adjList = [[]]", output: "single copied node" },
+      ],
       tip: "Use a HashMap from original to clone node — BFS/DFS to create all clones and wire neighbors",
       iteration: {
         hint: "BFS: create clone for each node, wire clone's neighbors using the map",
@@ -313,6 +460,15 @@ window.CT_GRAPHS = {
     {
       id: 290,
       title: "Course schedule (cycle detection)",
+      problem:
+        "Given numCourses and prerequisite pairs, return true if all courses can be finished.",
+      examples: [
+        { input: "numCourses = 2, prerequisites = [[1,0]]", output: "true" },
+        {
+          input: "numCourses = 2, prerequisites = [[1,0],[0,1]]",
+          output: "false",
+        },
+      ],
       tip: "Model courses as directed graph — if a cycle exists among prerequisites, schedule is impossible",
       iteration: {
         hint: "Kahn's BFS: if processed nodes < total courses, there's a cycle",
@@ -330,6 +486,15 @@ window.CT_GRAPHS = {
     {
       id: 291,
       title: "Course schedule II (topological sort)",
+      problem:
+        "Given numCourses and prerequisite pairs, return one valid order to take all courses or an empty array if impossible.",
+      examples: [
+        { input: "numCourses = 2, prerequisites = [[1,0]]", output: "[0,1]" },
+        {
+          input: "numCourses = 2, prerequisites = [[1,0],[0,1]]",
+          output: "[]",
+        },
+      ],
       tip: "Topological sort order gives valid course sequence — empty result means cycle (impossible)",
       iteration: {
         hint: "Kahn's BFS accumulates the topological order into result list",
@@ -347,6 +512,19 @@ window.CT_GRAPHS = {
     {
       id: 292,
       title: "Word ladder (BFS)",
+      problem:
+        "Given beginWord, endWord, and a word list, return the length of the shortest transformation sequence changing one letter at a time.",
+      examples: [
+        {
+          input:
+            'begin = "hit", end = "cog", words = ["hot","dot","dog","lot","log","cog"]',
+          output: "5",
+        },
+        {
+          input: 'begin = "hit", end = "cog", words = ["hot","dot","dog"]',
+          output: "0",
+        },
+      ],
       tip: "BFS finds minimum transformation steps — generate neighbors by changing each character to a-z",
       iteration: {
         hint: "BFS with word-level queue, generate all one-char-diff valid words as neighbors",
@@ -364,6 +542,20 @@ window.CT_GRAPHS = {
     {
       id: 293,
       title: "Word ladder II (all shortest paths)",
+      problem:
+        "Given beginWord, endWord, and a word list, return all shortest transformation sequences.",
+      examples: [
+        {
+          input:
+            'begin = "hit", end = "cog", words = ["hot","dot","dog","lot","log","cog"]',
+          output:
+            '[["hit","hot","dot","dog","cog"],["hit","hot","lot","log","cog"]]',
+        },
+        {
+          input: 'begin = "hit", end = "cog", words = ["hot","dot","dog"]',
+          output: "[]",
+        },
+      ],
       tip: "BFS to find min-distance layers, then DFS backtrack to collect all shortest paths",
       iteration: {
         hint: "BFS builds parent map of all predecessors on shortest paths; DFS reconstructs all paths",
@@ -381,6 +573,12 @@ window.CT_GRAPHS = {
     {
       id: 294,
       title: "Alien dictionary (topological sort)",
+      problem:
+        "Given a sorted alien dictionary word list, return a valid character order or an empty string if the order is invalid.",
+      examples: [
+        { input: 'words = ["wrt","wrf","er","ett","rftt"]', output: '"wertf"' },
+        { input: 'words = ["z","x","z"]', output: '""' },
+      ],
       tip: "Compare adjacent words to derive character ordering edges, then topological sort",
       iteration: {
         hint: "For each adjacent word pair, find first differing char — add directed edge, run Kahn's",
@@ -398,6 +596,15 @@ window.CT_GRAPHS = {
     {
       id: 295,
       title: "Network delay time (Dijkstra)",
+      problem:
+        "Given travel times as directed weighted edges, return how long it takes for all nodes to receive a signal from source k, or -1 if impossible.",
+      examples: [
+        {
+          input: "times = [[2,1,1],[2,3,1],[3,4,1]], n = 4, k = 2",
+          output: "2",
+        },
+        { input: "times = [[1,2,1]], n = 2, k = 2", output: "-1" },
+      ],
       tip: "Single-source shortest paths with Dijkstra — answer is max of all shortest distances from source",
       iteration: {
         hint: "Dijkstra from K, track max dist — if any node unreachable, return -1",
@@ -415,6 +622,20 @@ window.CT_GRAPHS = {
     {
       id: 296,
       title: "Cheapest flights within K stops",
+      problem:
+        "Given flights with prices, a source, destination, and maximum stops k, return the cheapest price within k stops or -1.",
+      examples: [
+        {
+          input:
+            "n = 4, flights = [[0,1,100],[1,2,100],[2,3,100],[0,3,500]], src = 0, dst = 3, k = 1",
+          output: "500",
+        },
+        {
+          input:
+            "n = 3, flights = [[0,1,100],[1,2,100],[0,2,500]], src = 0, dst = 2, k = 1",
+          output: "200",
+        },
+      ],
       tip: "Modified Bellman-Ford with exactly K+1 relaxation rounds, or BFS/Dijkstra with state (node, stops)",
       iteration: {
         hint: "Bellman-Ford K+1 passes on a copy of dist array to limit stops",
@@ -432,6 +653,15 @@ window.CT_GRAPHS = {
     {
       id: 297,
       title: "Critical connections / bridges",
+      problem:
+        "Given an undirected connected graph, return all critical connections whose removal disconnects the graph.",
+      examples: [
+        {
+          input: "n = 4, connections = [[0,1],[1,2],[2,0],[1,3]]",
+          output: "[[1,3]]",
+        },
+        { input: "n = 2, connections = [[0,1]]", output: "[[0,1]]" },
+      ],
       tip: "Tarjan's bridge-finding algorithm uses DFS timestamps and low values — a bridge has low[v] > disc[u]",
       iteration: {
         hint: "Iterative DFS with explicit stack tracking discovery time and low values",
@@ -449,6 +679,15 @@ window.CT_GRAPHS = {
     {
       id: 298,
       title: "Articulation points",
+      problem:
+        "Given an undirected graph, return all articulation points whose removal increases the number of connected components.",
+      examples: [
+        {
+          input: "V = 5, edges = [[0,1],[1,2],[2,0],[1,3],[3,4]]",
+          output: "[1,3]",
+        },
+        { input: "V = 3, edges = [[0,1],[1,2],[0,2]]", output: "[]" },
+      ],
       tip: "Articulation point: disc[u] <= low[v] for a child v in DFS tree (or root with 2+ children)",
       iteration: {
         hint: "Iterative DFS tracking disc/low; mark articulation when condition holds on backtrack",
@@ -466,6 +705,15 @@ window.CT_GRAPHS = {
     {
       id: 299,
       title: "Strongly connected components (Kosaraju's)",
+      problem:
+        "Given a directed graph, return its strongly connected components using Kosaraju's algorithm.",
+      examples: [
+        {
+          input: "V = 5, edges = [[0,2],[2,1],[1,0],[0,3],[3,4]]",
+          output: "[[0,1,2],[3],[4]]",
+        },
+        { input: "V = 3, edges = [[0,1],[1,2]]", output: "[[0],[1],[2]]" },
+      ],
       tip: "Kosaraju's: DFS on original, push finish order to stack; DFS on transposed graph in that order",
       iteration: {
         hint: "Two-pass DFS — first fills finish-order stack, second groups SCCs on reversed graph",
@@ -483,6 +731,15 @@ window.CT_GRAPHS = {
     {
       id: 300,
       title: "Strongly connected components (Tarjan's)",
+      problem:
+        "Given a directed graph, return its strongly connected components using Tarjan's low-link algorithm.",
+      examples: [
+        {
+          input: "V = 5, edges = [[0,2],[2,1],[1,0],[0,3],[3,4]]",
+          output: "[[0,1,2],[3],[4]]",
+        },
+        { input: "V = 3, edges = [[0,1],[1,2]]", output: "[[2],[1],[0]]" },
+      ],
       tip: "Tarjan's uses a single DFS with disc/low and a stack — nodes popped together form one SCC",
       iteration: {
         hint: "Iterative Tarjan's is complex; manage the stack simulation carefully",
@@ -500,6 +757,19 @@ window.CT_GRAPHS = {
     {
       id: 301,
       title: "Reconstruct itinerary (Eulerian path)",
+      problem:
+        "Given airline tickets as from-to pairs, reconstruct the itinerary starting at JFK using all tickets once and lexical order when choices tie.",
+      examples: [
+        {
+          input:
+            'tickets = [["MUC","LHR"],["JFK","MUC"],["SFO","SJC"],["LHR","SFO"]]',
+          output: '["JFK","MUC","LHR","SFO","SJC"]',
+        },
+        {
+          input: 'tickets = [["JFK","KUL"],["JFK","NRT"],["NRT","JFK"]]',
+          output: '["JFK","NRT","JFK","KUL"]',
+        },
+      ],
       tip: "Hierholzer's algorithm finds Eulerian path — use greedy DFS with sorted neighbors and post-order",
       iteration: {
         hint: "Iterative Hierholzer: use explicit stack, when no neighbors add to result",
@@ -517,6 +787,15 @@ window.CT_GRAPHS = {
     {
       id: 302,
       title: "Minimum spanning tree cost",
+      problem:
+        "Given a weighted undirected graph, return the minimum spanning tree cost or indicate that no spanning tree exists.",
+      examples: [
+        {
+          input: "V = 4, edges = [[0,1,1],[1,2,2],[2,3,3],[0,3,10]]",
+          output: "6",
+        },
+        { input: "V = 4, edges = [[0,1,1],[2,3,1]]", output: "-1" },
+      ],
       tip: "Use Kruskal's (sort edges + Union-Find) or Prim's (min-heap) to find MST total weight",
       iteration: {
         hint: "Kruskal's: sort edges by weight, union if not same component, accumulate cost",
@@ -534,6 +813,12 @@ window.CT_GRAPHS = {
     {
       id: 303,
       title: "Detect negative weight cycle",
+      problem:
+        "Given a weighted directed graph, return true if it contains a negative weight cycle reachable during relaxation.",
+      examples: [
+        { input: "V = 3, edges = [[0,1,1],[1,2,-1],[2,0,-1]]", output: "true" },
+        { input: "V = 3, edges = [[0,1,4],[1,2,3]]", output: "false" },
+      ],
       tip: "Run Bellman-Ford V-1 times; if any edge still relaxes on the V-th pass, a negative cycle exists",
       iteration: {
         hint: "After V-1 Bellman-Ford passes, do one more — if any dist still decreases, negative cycle exists",
@@ -551,6 +836,12 @@ window.CT_GRAPHS = {
     {
       id: 304,
       title: "Shortest path in binary matrix (BFS)",
+      problem:
+        "Given an n x n binary matrix, return the shortest clear path length from top-left to bottom-right moving in eight directions.",
+      examples: [
+        { input: "grid = [[0,1],[1,0]]", output: "2" },
+        { input: "grid = [[0,0,0],[1,1,0],[1,1,0]]", output: "4" },
+      ],
       tip: "BFS in 8-directional grid, only traversing 0-cells — each level increment is one step",
       iteration: {
         hint: "BFS from (0,0) through 0-cells in 8 directions, return steps when reaching (n-1,n-1)",
@@ -568,6 +859,12 @@ window.CT_GRAPHS = {
     {
       id: 305,
       title: "Number of provinces (Union-Find)",
+      problem:
+        "Given an isConnected matrix, return the number of provinces among all cities.",
+      examples: [
+        { input: "isConnected = [[1,1,0],[1,1,0],[0,0,1]]", output: "2" },
+        { input: "isConnected = [[1,0,0],[0,1,0],[0,0,1]]", output: "3" },
+      ],
       tip: "Each connected component in the adjacency matrix is one province — count with Union-Find or DFS",
       iteration: {
         hint: "Union-Find: union connected cities, count distinct root nodes",
@@ -585,6 +882,12 @@ window.CT_GRAPHS = {
     {
       id: 306,
       title: "Check if graph is connected",
+      problem:
+        "Given an undirected graph, return true if every vertex belongs to a single connected component.",
+      examples: [
+        { input: "V = 4, edges = [[0,1],[1,2],[2,3]]", output: "true" },
+        { input: "V = 4, edges = [[0,1],[2,3]]", output: "false" },
+      ],
       tip: "Start BFS/DFS from node 0 — if all V nodes are visited, graph is connected",
       iteration: {
         hint: "BFS from node 0, count visited nodes — connected if count equals V",
@@ -602,6 +905,12 @@ window.CT_GRAPHS = {
     {
       id: 307,
       title: "Rotten oranges (multi-source BFS)",
+      problem:
+        "Given a grid of fresh and rotten oranges, return the minutes until all fresh oranges rot, or -1 if impossible.",
+      examples: [
+        { input: "grid = [[2,1,1],[1,1,0],[0,1,1]]", output: "4" },
+        { input: "grid = [[2,1,1],[0,1,1],[1,0,1]]", output: "-1" },
+      ],
       tip: "Multi-source BFS from all initially rotten oranges simultaneously — answer is BFS levels count",
       iteration: {
         hint: "Enqueue all rotten oranges at start, BFS spreads rot level by level",
@@ -619,6 +928,15 @@ window.CT_GRAPHS = {
     {
       id: 308,
       title: "Walls and gates (multi-source BFS)",
+      problem:
+        "Given rooms containing gates, walls, and empty rooms, fill each empty room with distance to its nearest gate.",
+      examples: [
+        {
+          input: "rooms = [[INF,-1,0],[INF,INF,INF]]",
+          output: "[[1,-1,0],[2,2,1]]",
+        },
+        { input: "rooms = [[0,INF],[INF,INF]]", output: "[[0,1],[1,2]]" },
+      ],
       tip: "Multi-source BFS from all gates (0-cells) simultaneously fills shortest distances to all empty rooms",
       iteration: {
         hint: "Enqueue all gates, BFS outward updating INF cells with current distance",
@@ -636,6 +954,12 @@ window.CT_GRAPHS = {
     {
       id: 309,
       title: "Redundant connection (Union-Find)",
+      problem:
+        "Given edges of an undirected graph that started as a tree plus one extra edge, return the redundant edge.",
+      examples: [
+        { input: "edges = [[1,2],[1,3],[2,3]]", output: "[2,3]" },
+        { input: "edges = [[1,2],[2,3],[3,4],[1,4],[1,5]]", output: "[1,4]" },
+      ],
       tip: "Process edges in order — the first edge whose both endpoints are already connected is the redundant one",
       iteration: {
         hint: "Union-Find: first edge where find(u)==find(v) is the cycle-forming redundant edge",
@@ -653,6 +977,15 @@ window.CT_GRAPHS = {
     {
       id: 310,
       title: "Graph valid tree",
+      problem:
+        "Given n nodes and undirected edges, return true if the edges form exactly one valid tree.",
+      examples: [
+        { input: "n = 5, edges = [[0,1],[0,2],[0,3],[1,4]]", output: "true" },
+        {
+          input: "n = 5, edges = [[0,1],[1,2],[2,3],[1,3],[1,4]]",
+          output: "false",
+        },
+      ],
       tip: "A valid tree has exactly V-1 edges and is fully connected (no cycles)",
       iteration: {
         hint: "Union-Find: if any edge creates a cycle, not a tree; check all V nodes are connected",
@@ -670,6 +1003,18 @@ window.CT_GRAPHS = {
     {
       id: 311,
       title: "Minimum vertices to reach all nodes",
+      problem:
+        "Given a directed acyclic graph, return the smallest set of vertices from which all nodes are reachable.",
+      examples: [
+        {
+          input: "n = 6, edges = [[0,1],[0,2],[2,5],[3,4],[4,2]]",
+          output: "[0,3]",
+        },
+        {
+          input: "n = 5, edges = [[0,1],[2,1],[3,1],[1,4],[2,4]]",
+          output: "[0,2,3]",
+        },
+      ],
       tip: "Nodes with zero in-degree in a DAG have no predecessors — every other node is reachable from these",
       iteration: {
         hint: "Compute in-degrees; collect all nodes with in-degree 0 — these are the answer",
@@ -687,6 +1032,15 @@ window.CT_GRAPHS = {
     {
       id: 312,
       title: "Find eventual safe states",
+      problem:
+        "Given a directed graph, return all eventual safe nodes whose every path eventually ends at a terminal node.",
+      examples: [
+        {
+          input: "graph = [[1,2],[2,3],[5],[0],[5],[],[]]",
+          output: "[2,4,5,6]",
+        },
+        { input: "graph = [[1,2,3,4],[1,2],[3,4],[0,4],[]]", output: "[4]" },
+      ],
       tip: "Safe nodes are those with no path to a cycle — reverse graph + topological sort, or DFS coloring",
       iteration: {
         hint: "Kahn's on reversed graph: nodes with indegree 0 in reverse are eventual safe states",
@@ -704,6 +1058,12 @@ window.CT_GRAPHS = {
     {
       id: 313,
       title: "Shortest bridge (BFS/DFS)",
+      problem:
+        "Given a binary grid with exactly two islands, return the minimum number of water cells to flip to connect them.",
+      examples: [
+        { input: "grid = [[0,1],[1,0]]", output: "1" },
+        { input: "grid = [[0,1,0],[0,0,0],[0,0,1]]", output: "2" },
+      ],
       tip: "DFS marks first island, then BFS expands outward from it until reaching second island — count BFS levels",
       iteration: {
         hint: "DFS flood-fill first island into queue, then BFS from all its cells to find second island",
@@ -721,6 +1081,20 @@ window.CT_GRAPHS = {
     {
       id: 314,
       title: "Evaluate division (weighted DFS)",
+      problem:
+        "Given equations like a divided by b and query pairs, return each query result or -1 if it cannot be determined.",
+      examples: [
+        {
+          input:
+            'equations = [["a","b"],["b","c"]], values = [2.0,3.0], queries = [["a","c"],["b","a"]]',
+          output: "[6.0,0.5]",
+        },
+        {
+          input:
+            'equations = [["a","b"]], values = [2.0], queries = [["a","e"],["x","x"]]',
+          output: "[-1.0,-1.0]",
+        },
+      ],
       tip: "Model as weighted graph where edge a→b has weight a/b — DFS/BFS multiplies weights along path",
       iteration: {
         hint: "BFS from source variable, multiply edge weights along path to find ratio",
@@ -738,6 +1112,18 @@ window.CT_GRAPHS = {
     {
       id: 315,
       title: "Bus routes (BFS on routes)",
+      problem:
+        "Given bus routes, a source stop, and a target stop, return the minimum number of buses needed or -1 if unreachable.",
+      examples: [
+        {
+          input: "routes = [[1,2,7],[3,6,7]], source = 1, target = 6",
+          output: "2",
+        },
+        {
+          input: "routes = [[7,12],[4,5,15],[6]], source = 15, target = 6",
+          output: "-1",
+        },
+      ],
       tip: "Model stops as nodes sharing route edges — BFS on routes (not stops) avoids TLE on dense graphs",
       iteration: {
         hint: "BFS on routes: from each stop, find all routes through it, add unvisited stops, count bus changes",
@@ -755,6 +1141,12 @@ window.CT_GRAPHS = {
     {
       id: 316,
       title: "Path with minimum effort (Dijkstra/binary search)",
+      problem:
+        "Given a grid of heights, return the minimum effort required to travel from top-left to bottom-right, where effort is the maximum edge height difference on the path.",
+      examples: [
+        { input: "heights = [[1,2,2],[3,8,2],[5,3,5]]", output: "2" },
+        { input: "heights = [[1,2,3],[3,8,4],[5,3,5]]", output: "1" },
+      ],
       tip: "Dijkstra on grid minimizing the max absolute height difference along path (effort = max diff)",
       iteration: {
         hint: "Modified Dijkstra: effort[i][j] = min over all paths of max edge diff; use min-heap",
