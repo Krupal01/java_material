@@ -704,7 +704,7 @@ return parts;`,
 }`,
       },
       stream: {
-        hint: "partitioningBy returns Map<Boolean, List<T>>.",
+        hint: "partitioningBy returns Map<Boolean, List>.",
         snippet: `return list.stream()
     .collect(Collectors.partitioningBy(x -> x % 2 == 0));`,
       },

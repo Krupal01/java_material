@@ -82,11 +82,11 @@
       <h1>🛠️ Java Methods Reference</h1>
       <p class="subtitle">
         Every method you need to know — from String to Stream, with behavioral
-        notes and gotchas. Search across all 16 categories at once.
+        notes and gotchas. Search across all 17 categories at once.
       </p>
       <div class="stats-row">
         <div class="stat"><span class="stat-num">320+</span> Methods</div>
-        <div class="stat"><span class="stat-num">16</span> Categories</div>
+        <div class="stat"><span class="stat-num">17</span> Categories</div>
         <div class="stat"><span class="stat-num">Java 21</span> Up to Date</div>
         <div class="stat">
           <span class="stat-num"><span class="badge-new">NEW</span></span>
@@ -135,101 +135,108 @@
         </div>
         <div
           class="sidebar-link"
+          data-target="creation"
+          onclick="scrollToCard('creation')"
+        >
+          3. Create Objects
+        </div>
+        <div
+          class="sidebar-link"
           data-target="arrays"
           onclick="scrollToCard('arrays')"
         >
-          3. Arrays
+          4. Arrays
         </div>
         <div
           class="sidebar-link"
           data-target="list"
           onclick="scrollToCard('list')"
         >
-          4. List / ArrayList
+          5. List / ArrayList
         </div>
         <div
           class="sidebar-link"
           data-target="conversions"
           onclick="scrollToCard('conversions')"
         >
-          5. Conversions
+          6. Conversions
         </div>
         <div
           class="sidebar-link"
           data-target="map"
           onclick="scrollToCard('map')"
         >
-          6. Map / HashMap
+          7. Map / HashMap
         </div>
         <div
           class="sidebar-link"
           data-target="set"
           onclick="scrollToCard('set')"
         >
-          7. Set / TreeSet
+          8. Set / TreeSet
         </div>
         <div
           class="sidebar-link"
           data-target="queue"
           onclick="scrollToCard('queue')"
         >
-          8. Queue / Deque
+          9. Queue / Deque
         </div>
         <div
           class="sidebar-link"
           data-target="stack"
           onclick="scrollToCard('stack')"
         >
-          9. Stack
+          10. Stack
         </div>
         <div
           class="sidebar-link"
           data-target="collections"
           onclick="scrollToCard('collections')"
         >
-          10. Collections util
+          11. Collections util
         </div>
         <div
           class="sidebar-link"
           data-target="math"
           onclick="scrollToCard('math')"
         >
-          11. Math
+          12. Math
         </div>
         <div
           class="sidebar-link"
           data-target="wrappers"
           onclick="scrollToCard('wrappers')"
         >
-          12. Integer / Wrappers
+          13. Integer / Wrappers
         </div>
         <div
           class="sidebar-link"
           data-target="streams"
           onclick="scrollToCard('streams')"
         >
-          13. Stream API
+          14. Stream API
         </div>
         <div
           class="sidebar-link"
           data-target="optional"
           onclick="scrollToCard('optional')"
         >
-          14. Optional
+          15. Optional
         </div>
         <div
           class="sidebar-link"
           data-target="object"
           onclick="scrollToCard('object')"
         >
-          15. Object
+          16. Object
         </div>
         <div
           class="sidebar-link"
           data-target="comparator"
           onclick="scrollToCard('comparator')"
         >
-          16. Comparable / Comparator
+          17. Comparable / Comparator
         </div>
       </aside>
       <div class="content">
@@ -828,11 +835,476 @@
           </div>
         </section>
 
-        <!-- 3. Arrays -->
+        <!-- 3. Create Data Structure Objects -->
+        <section class="method-section card" id="creation">
+          <div class="card-header m-section-head" onclick="toggle(this)">
+            <h2>
+              <span class="sec-num">03</span>Create Data Structure Objects
+            </h2>
+            <svg
+              class="chevron"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="card-body">
+            <div class="card-inner">
+              <p class="sec-desc">
+                In coding rounds, declare the interface type when possible and
+                choose the implementation by behavior: <code>List</code> for
+                ordered/indexed data, <code>Set</code> for uniqueness,
+                <code>Map</code> for key-value lookup, <code>Queue</code> for
+                FIFO, and <code>Deque</code> for stack/queue operations.
+              </p>
+              <div class="tip-box">
+                <strong>Main points:</strong><br />
+                1. Code to interfaces: <code>List&lt;T&gt;</code>,
+                <code>Set&lt;T&gt;</code>, <code>Map&lt;K,V&gt;</code>,
+                <code>Queue&lt;T&gt;</code>, <code>Deque&lt;T&gt;</code>.<br />
+                2. Use <code>ArrayList</code> for most ordered data;
+                <code>LinkedList</code> is rarely faster unless you already have
+                node/iterator position.<br />
+                3. Use <code>HashMap</code>/<code>HashSet</code> for fast
+                lookup, <code>LinkedHashMap</code>/<code>LinkedHashSet</code>
+                for stable order, and <code>TreeMap</code>/<code>TreeSet</code>
+                for sorted keys or range queries.<br />
+                4. <code>List.of</code>, <code>Set.of</code>,
+                <code>Map.of</code>, and <code>copyOf</code> create unmodifiable
+                collections; wrap with
+                <code>new ArrayList&lt;&gt;(...)</code> when mutation is
+                needed.<br />
+                5. For stack questions, prefer
+                <code>Deque&lt;T&gt; stack = new ArrayDeque&lt;&gt;()</code>;
+                for BFS, prefer
+                <code>Queue&lt;T&gt; q = new ArrayDeque&lt;&gt;()</code>.
+              </div>
+              <div class="warn-box">
+                <strong>Interview gotchas:</strong>
+                <code>Arrays.asList(intArray)</code> creates a
+                <code>List&lt;int[]&gt;</code>, not
+                <code>List&lt;Integer&gt;</code>.
+                <code>Arrays.asList(...)</code> is fixed-size.
+                <code>List.of(...)</code> rejects nulls.
+                <code>HashMap</code> allows one null key, but
+                <code>ConcurrentHashMap</code> allows no null keys or values.
+              </div>
+              <table class="method-table">
+                <thead>
+                  <tr>
+                    <th>Structure</th>
+                    <th>Creation Syntax</th>
+                    <th>Creates</th>
+                    <th>When / Gotcha</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="m-name">Array</td>
+                    <td><code class="m-syntax">int[] a = new int[5]</code></td>
+                    <td>Fixed-size array</td>
+                    <td class="m-note">Fast indexed access. Cannot grow.</td>
+                  </tr>
+                  <tr>
+                    <td class="m-name">Array with values</td>
+                    <td><code class="m-syntax">int[] a = {1, 2, 3}</code></td>
+                    <td>Inline initialized array</td>
+                    <td class="m-note">Best for small examples/test data.</td>
+                  </tr>
+                  <tr>
+                    <td class="m-name">ArrayList default</td>
+                    <td>
+                      <code class="m-syntax"
+                        >List&lt;Integer&gt; list = new
+                        ArrayList&lt;&gt;()</code
+                      >
+                    </td>
+                    <td>Resizable ordered list</td>
+                    <td class="m-note">Best default for most List problems.</td>
+                  </tr>
+                  <tr>
+                    <td class="m-name">ArrayList capacity</td>
+                    <td>
+                      <code class="m-syntax">new ArrayList&lt;&gt;(100)</code>
+                    </td>
+                    <td>Empty list with initial capacity</td>
+                    <td class="m-note">Size is still 0; avoids resizing.</td>
+                  </tr>
+                  <tr>
+                    <td class="m-name">Mutable copy List</td>
+                    <td>
+                      <code class="m-syntax"
+                        >new ArrayList&lt;&gt;(otherList)</code
+                      >
+                    </td>
+                    <td>Resizable shallow copy</td>
+                    <td class="m-note">
+                      Use when original should not be mutated.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="m-name">Empty mutable List</td>
+                    <td>
+                      <code class="m-syntax">new ArrayList&lt;&gt;()</code>
+                    </td>
+                    <td>Resizable empty list</td>
+                    <td class="m-note">Use when you will add results later.</td>
+                  </tr>
+                  <tr>
+                    <td class="m-name">Empty immutable List</td>
+                    <td>
+                      <code class="m-syntax">Collections.emptyList()</code>
+                    </td>
+                    <td>Shared unmodifiable empty list</td>
+                    <td class="m-note">Return when no mutation is needed.</td>
+                  </tr>
+                  <tr>
+                    <td class="m-name">Single item List</td>
+                    <td>
+                      <code class="m-syntax">Collections.singletonList(x)</code>
+                    </td>
+                    <td>Unmodifiable one-element list</td>
+                    <td class="m-note">Allows x to be null; unlike List.of.</td>
+                  </tr>
+                  <tr>
+                    <td class="m-name">Immutable List</td>
+                    <td><code class="m-syntax">List.of(1, 2, 3)</code></td>
+                    <td>Unmodifiable list</td>
+                    <td class="m-note">Java 9+. No nulls. add/remove throw.</td>
+                  </tr>
+                  <tr>
+                    <td class="m-name">Immutable List copy</td>
+                    <td><code class="m-syntax">List.copyOf(list)</code></td>
+                    <td>Unmodifiable snapshot</td>
+                    <td class="m-note">
+                      Rejects nulls. Good defensive return.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="m-name">Fixed-size List</td>
+                    <td>
+                      <code class="m-syntax">Arrays.asList("a", "b")</code>
+                    </td>
+                    <td>Array-backed list view</td>
+                    <td class="m-note">set works; add/remove throw.</td>
+                  </tr>
+                  <tr>
+                    <td class="m-name">LinkedList as List</td>
+                    <td>
+                      <code class="m-syntax"
+                        >List&lt;Integer&gt; list = new
+                        LinkedList&lt;&gt;()</code
+                      >
+                    </td>
+                    <td>Doubly linked list</td>
+                    <td class="m-note">
+                      O(n) random access; rarely best default.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="m-name">HashSet</td>
+                    <td>
+                      <code class="m-syntax"
+                        >Set&lt;Integer&gt; set = new HashSet&lt;&gt;()</code
+                      >
+                    </td>
+                    <td>Unique values</td>
+                    <td class="m-note">O(1) average lookup; no order.</td>
+                  </tr>
+                  <tr>
+                    <td class="m-name">HashSet from List</td>
+                    <td>
+                      <code class="m-syntax">new HashSet&lt;&gt;(list)</code>
+                    </td>
+                    <td>Dedupe + lookup set</td>
+                    <td class="m-note">Loses duplicates and order.</td>
+                  </tr>
+                  <tr>
+                    <td class="m-name">LinkedHashSet</td>
+                    <td>
+                      <code class="m-syntax">new LinkedHashSet&lt;&gt;()</code>
+                    </td>
+                    <td>Unique values in insertion order</td>
+                    <td class="m-note">Use for ordered dedupe.</td>
+                  </tr>
+                  <tr>
+                    <td class="m-name">TreeSet</td>
+                    <td><code class="m-syntax">new TreeSet&lt;&gt;()</code></td>
+                    <td>Sorted unique values</td>
+                    <td class="m-note">
+                      O(log n). floor/ceiling/range support.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="m-name">HashMap</td>
+                    <td>
+                      <code class="m-syntax"
+                        >Map&lt;String, Integer&gt; map = new
+                        HashMap&lt;&gt;()</code
+                      >
+                    </td>
+                    <td>Key-value lookup</td>
+                    <td class="m-note">
+                      Best default for frequency/index maps.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="m-name">LinkedHashMap</td>
+                    <td>
+                      <code class="m-syntax">new LinkedHashMap&lt;&gt;()</code>
+                    </td>
+                    <td>Map in insertion order</td>
+                    <td class="m-note">Use when first-seen order matters.</td>
+                  </tr>
+                  <tr>
+                    <td class="m-name">TreeMap</td>
+                    <td><code class="m-syntax">new TreeMap&lt;&gt;()</code></td>
+                    <td>Sorted-key map</td>
+                    <td class="m-note">O(log n). floorKey/subMap support.</td>
+                  </tr>
+                  <tr>
+                    <td class="m-name">Immutable Map</td>
+                    <td>
+                      <code class="m-syntax">Map.of("a", 1, "b", 2)</code>
+                    </td>
+                    <td>Small unmodifiable map</td>
+                    <td class="m-note">
+                      Max 10 pairs; use Map.ofEntries for more.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="m-name">Large immutable Map</td>
+                    <td>
+                      <code class="m-syntax"
+                        >Map.ofEntries(Map.entry("a", 1), Map.entry("b",
+                        2))</code
+                      >
+                    </td>
+                    <td>Unmodifiable map with many entries</td>
+                    <td class="m-note">
+                      No null keys/values; duplicate keys throw.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="m-name">Immutable Map copy</td>
+                    <td><code class="m-syntax">Map.copyOf(map)</code></td>
+                    <td>Unmodifiable snapshot</td>
+                    <td class="m-note">Use for defensive returns.</td>
+                  </tr>
+                  <tr>
+                    <td class="m-name">Map of Lists</td>
+                    <td>
+                      <code class="m-syntax"
+                        >Map&lt;K, List&lt;V&gt;&gt; map = new
+                        HashMap&lt;&gt;()</code
+                      >
+                    </td>
+                    <td>Grouping / multimap pattern</td>
+                    <td class="m-note">
+                      Add with
+                      <code
+                        >computeIfAbsent(k, x -&gt; new
+                        ArrayList&lt;&gt;())</code
+                      >.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="m-name">Frequency Map</td>
+                    <td>
+                      <code class="m-syntax"
+                        >Map&lt;T, Integer&gt; freq = new
+                        HashMap&lt;&gt;()</code
+                      >
+                    </td>
+                    <td>Counts values</td>
+                    <td class="m-note">
+                      Increment with
+                      <code>freq.merge(x, 1, Integer::sum)</code>.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="m-name">Index Map</td>
+                    <td>
+                      <code class="m-syntax"
+                        >Map&lt;T, Integer&gt; index = new
+                        HashMap&lt;&gt;()</code
+                      >
+                    </td>
+                    <td>Value to last/first index</td>
+                    <td class="m-note">
+                      Common for two-sum and prefix-sum problems.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="m-name">Queue</td>
+                    <td>
+                      <code class="m-syntax"
+                        >Queue&lt;Integer&gt; q = new ArrayDeque&lt;&gt;()</code
+                      >
+                    </td>
+                    <td>FIFO queue</td>
+                    <td class="m-note">Use offer/poll/peek. Great for BFS.</td>
+                  </tr>
+                  <tr>
+                    <td class="m-name">Deque</td>
+                    <td>
+                      <code class="m-syntax"
+                        >Deque&lt;Integer&gt; dq = new
+                        ArrayDeque&lt;&gt;()</code
+                      >
+                    </td>
+                    <td>Double-ended queue</td>
+                    <td class="m-note">Also the modern stack replacement.</td>
+                  </tr>
+                  <tr>
+                    <td class="m-name">LinkedList as Queue</td>
+                    <td>
+                      <code class="m-syntax"
+                        >Queue&lt;Integer&gt; q = new LinkedList&lt;&gt;()</code
+                      >
+                    </td>
+                    <td>FIFO queue with linked nodes</td>
+                    <td class="m-note">ArrayDeque is usually faster.</td>
+                  </tr>
+                  <tr>
+                    <td class="m-name">PriorityQueue</td>
+                    <td>
+                      <code class="m-syntax"
+                        >PriorityQueue&lt;Integer&gt; pq = new
+                        PriorityQueue&lt;&gt;()</code
+                      >
+                    </td>
+                    <td>Min-heap</td>
+                    <td class="m-note">Use for kth/top-k/shortest path.</td>
+                  </tr>
+                  <tr>
+                    <td class="m-name">PriorityQueue custom</td>
+                    <td>
+                      <code class="m-syntax"
+                        >new PriorityQueue&lt;Node&gt;(Comparator.comparingInt(n
+                        -&gt; n.dist))</code
+                      >
+                    </td>
+                    <td>Heap ordered by a field</td>
+                    <td class="m-note">
+                      Used in Dijkstra, merge-k lists, top-k.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="m-name">Max heap</td>
+                    <td>
+                      <code class="m-syntax"
+                        >new
+                        PriorityQueue&lt;&gt;(Comparator.reverseOrder())</code
+                      >
+                    </td>
+                    <td>Largest value first</td>
+                    <td class="m-note">Comparator controls priority.</td>
+                  </tr>
+                  <tr>
+                    <td class="m-name">Stack preferred</td>
+                    <td>
+                      <code class="m-syntax"
+                        >Deque&lt;Integer&gt; stack = new
+                        ArrayDeque&lt;&gt;()</code
+                      >
+                    </td>
+                    <td>LIFO stack</td>
+                    <td class="m-note">
+                      Use push/pop/peek; avoid legacy Stack.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="m-name">Legacy Stack</td>
+                    <td>
+                      <code class="m-syntax">new Stack&lt;Integer&gt;()</code>
+                    </td>
+                    <td>Synchronized old stack class</td>
+                    <td class="m-note">
+                      Know for old code, avoid for new code.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="m-name">ConcurrentHashMap</td>
+                    <td>
+                      <code class="m-syntax"
+                        >new ConcurrentHashMap&lt;&gt;()</code
+                      >
+                    </td>
+                    <td>Thread-safe map</td>
+                    <td class="m-note">No null keys or values.</td>
+                  </tr>
+                  <tr>
+                    <td class="m-name">CopyOnWriteArrayList</td>
+                    <td>
+                      <code class="m-syntax"
+                        >new CopyOnWriteArrayList&lt;&gt;()</code
+                      >
+                    </td>
+                    <td>Thread-safe list optimized for reads</td>
+                    <td class="m-note">
+                      Writes copy array; avoid write-heavy usage.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="m-name">BlockingQueue</td>
+                    <td>
+                      <code class="m-syntax"
+                        >BlockingQueue&lt;Task&gt; q = new
+                        LinkedBlockingQueue&lt;&gt;()</code
+                      >
+                    </td>
+                    <td>Thread-safe producer-consumer queue</td>
+                    <td class="m-note">Use put/take for blocking behavior.</td>
+                  </tr>
+                  <tr>
+                    <td class="m-name">EnumMap</td>
+                    <td>
+                      <code class="m-syntax"
+                        >new EnumMap&lt;Day, Integer&gt;(Day.class)</code
+                      >
+                    </td>
+                    <td>Compact map for enum keys</td>
+                    <td class="m-note">
+                      Very fast when keys are enum constants.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="m-name">IdentityHashMap</td>
+                    <td>
+                      <code class="m-syntax"
+                        >new IdentityHashMap&lt;&gt;()</code
+                      >
+                    </td>
+                    <td>Map comparing keys by ==</td>
+                    <td class="m-note">
+                      Special use only; not normal equals semantics.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="m-name">WeakHashMap</td>
+                    <td>
+                      <code class="m-syntax">new WeakHashMap&lt;&gt;()</code>
+                    </td>
+                    <td>Map with weak keys</td>
+                    <td class="m-note">Entries may disappear after GC.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- 4. Arrays -->
         <section class="method-section card" id="arrays">
           <div class="card-header m-section-head" onclick="toggle(this)">
             <h2>
-              <span class="sec-num">03</span>Array Methods (java.util.Arrays)
+              <span class="sec-num">04</span>Array Methods (java.util.Arrays)
             </h2>
             <svg
               class="chevron"
@@ -1048,10 +1520,10 @@
           </div>
         </section>
 
-        <!-- 4. List & ArrayList -->
+        <!-- 5. List & ArrayList -->
         <section class="method-section card" id="list">
           <div class="card-header m-section-head" onclick="toggle(this)">
-            <h2><span class="sec-num">04</span>List &amp; ArrayList Methods</h2>
+            <h2><span class="sec-num">05</span>List &amp; ArrayList Methods</h2>
             <svg
               class="chevron"
               width="16"
@@ -1292,11 +1764,11 @@
           </div>
         </section>
 
-        <!-- 5. Conversions -->
+        <!-- 6. Conversions -->
         <section class="method-section card" id="conversions">
           <div class="card-header m-section-head" onclick="toggle(this)">
             <h2>
-              <span class="sec-num">05</span>Conversions: Array ↔ List ↔ Stream
+              <span class="sec-num">06</span>Conversions: Array ↔ List ↔ Stream
             </h2>
             <svg
               class="chevron"
@@ -1432,10 +1904,10 @@
           </div>
         </section>
 
-        <!-- 6. Map -->
+        <!-- 7. Map -->
         <section class="method-section card" id="map">
           <div class="card-header m-section-head" onclick="toggle(this)">
-            <h2><span class="sec-num">06</span>Map &amp; HashMap Methods</h2>
+            <h2><span class="sec-num">07</span>Map &amp; HashMap Methods</h2>
             <svg
               class="chevron"
               width="16"
@@ -1712,11 +2184,11 @@
           </div>
         </section>
 
-        <!-- 7. Set -->
+        <!-- 8. Set -->
         <section class="method-section card" id="set">
           <div class="card-header m-section-head" onclick="toggle(this)">
             <h2>
-              <span class="sec-num">07</span>Set, HashSet &amp; TreeSet Methods
+              <span class="sec-num">08</span>Set, HashSet &amp; TreeSet Methods
             </h2>
             <svg
               class="chevron"
@@ -1923,10 +2395,10 @@
           </div>
         </section>
 
-        <!-- 8. Queue & Deque -->
+        <!-- 9. Queue & Deque -->
         <section class="method-section card" id="queue">
           <div class="card-header m-section-head" onclick="toggle(this)">
-            <h2><span class="sec-num">08</span>Queue &amp; Deque Methods</h2>
+            <h2><span class="sec-num">09</span>Queue &amp; Deque Methods</h2>
             <svg
               class="chevron"
               width="16"
@@ -2089,11 +2561,11 @@
           </div>
         </section>
 
-        <!-- 9. Stack -->
+        <!-- 10. Stack -->
         <section class="method-section card" id="stack">
           <div class="card-header m-section-head" onclick="toggle(this)">
             <h2>
-              <span class="sec-num">09</span>Stack Methods (java.util.Stack)
+              <span class="sec-num">10</span>Stack Methods (java.util.Stack)
             </h2>
             <svg
               class="chevron"
@@ -2161,10 +2633,10 @@
           </div>
         </section>
 
-        <!-- 10. Collections util -->
+        <!-- 11. Collections util -->
         <section class="method-section card" id="collections">
           <div class="card-header m-section-head" onclick="toggle(this)">
-            <h2><span class="sec-num">10</span>Collections Utility Methods</h2>
+            <h2><span class="sec-num">11</span>Collections Utility Methods</h2>
             <svg
               class="chevron"
               width="16"
@@ -2396,7 +2868,7 @@
         <section class="method-section card" id="math">
           <div class="card-header m-section-head" onclick="toggle(this)">
             <h2>
-              <span class="sec-num">11</span>Math Methods (java.lang.Math)
+              <span class="sec-num">12</span>Math Methods (java.lang.Math)
             </h2>
             <svg
               class="chevron"
@@ -2644,7 +3116,7 @@
         <section class="method-section card" id="wrappers">
           <div class="card-header m-section-head" onclick="toggle(this)">
             <h2>
-              <span class="sec-num">12</span>Integer &amp; Wrapper Methods
+              <span class="sec-num">13</span>Integer &amp; Wrapper Methods
             </h2>
             <svg
               class="chevron"
@@ -2878,7 +3350,7 @@
         <!-- 13. Streams -->
         <section class="method-section card" id="streams">
           <div class="card-header m-section-head" onclick="toggle(this)">
-            <h2><span class="sec-num">13</span>Stream API Methods</h2>
+            <h2><span class="sec-num">14</span>Stream API Methods</h2>
             <svg
               class="chevron"
               width="16"
@@ -3253,10 +3725,10 @@
           </div>
         </section>
 
-        <!-- 14. Optional -->
+        <!-- 15. Optional -->
         <section class="method-section card" id="optional">
           <div class="card-header m-section-head" onclick="toggle(this)">
-            <h2><span class="sec-num">14</span>Optional Methods</h2>
+            <h2><span class="sec-num">15</span>Optional Methods</h2>
             <svg
               class="chevron"
               width="16"
@@ -3415,7 +3887,7 @@
         <!-- 15. Object -->
         <section class="method-section card" id="object">
           <div class="card-header m-section-head" onclick="toggle(this)">
-            <h2><span class="sec-num">15</span>Object &amp; Objects Methods</h2>
+            <h2><span class="sec-num">16</span>Object &amp; Objects Methods</h2>
             <svg
               class="chevron"
               width="16"
@@ -3583,10 +4055,10 @@
           </div>
         </section>
 
-        <!-- 16. Comparator -->
+        <!-- 17. Comparator -->
         <section class="method-section card" id="comparator">
           <div class="card-header m-section-head" onclick="toggle(this)">
-            <h2><span class="sec-num">16</span>Comparable &amp; Comparator</h2>
+            <h2><span class="sec-num">17</span>Comparable &amp; Comparator</h2>
             <svg
               class="chevron"
               width="16"
